@@ -11,15 +11,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.Crystals.belongsToMany(Crystals, {
+        through: 'favourites',
+        as: 'crystals',
+        foreignKey: 'crystalId',
+      })
     }
   };
   User.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   }, {
     sequelize,
     modelName: 'User',
   });
   return User;
 };
+
+const usersWithCrystals = await User.findAll({
+  include: [{model: Crystal}]
+})
+
+console.log(usersWithCrystals[0])
+
+// const pugsWithFriends = await Pug.findAll({
+//   include: [{model: Friend}]
+// })
+
+// console.log(pugsWithFriends[0])
