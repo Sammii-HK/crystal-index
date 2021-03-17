@@ -1,31 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Crystal extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      // Crystal.User = Crystal.belongsToMany(Users, {
-      Crystal.User.belongsToMany(Users, {
-        through: 'favourites',
-        as: 'users',
-        foreignKey: 'userId',
-      })
+// const { Model } = require('sequelize');
+export default (sequelize, DataTypes) => {
+  // const Users = sequelize.models.User;
 
-      // Users.belongsToMany(models.Groups, {
-      //   through: 'GroupUsers',
-      //   as: 'groups',
-      //   foreignKey: 'userId'
-      // });
-    }
-  };
-  Crystal.init({
+  const Crystal = sequelize.define('Crystal', {
     name: DataTypes.STRING,
     bio: DataTypes.STRING,
     image: DataTypes.STRING,
@@ -35,9 +13,32 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: new Date(),
     createdBy: DataTypes.STRING,
     updatedAt: new Date(),
-  }, {
-    sequelize,
-    modelName: 'Crystal',
   });
+  // class Crystal extends Model {
+  //   /**
+  //    * Helper method for defining associations.
+  //    * This method is not a part of Sequelize lifecycle.
+  //    * The `models/index` file will call this method automatically.
+  //    */
+  //   static associate(models) {
+  //     // define association here 🤘
+  //   }
+  // };
+
+  // Crystal.init({
+    
+  // }, {
+  //   sequelize,
+  //   modelName: 'Crystal',
+  // });
+
+  Crystal.associate = function(models) {
+    Crystal.belongsToMany(models.User, {
+      through: 'Favourites',
+      as: 'users',
+      foreignKey: 'favouriteId',
+    });
+  };
+
   return Crystal;
 };
