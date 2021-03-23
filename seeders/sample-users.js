@@ -8,7 +8,6 @@ module.exports = {
         password: 'pass',
         createdAt: new Date(),
         updatedAt: new Date(),
-        favourites: [0]
       }], {});
   },
 down: (queryInterface, Sequelize) => {
