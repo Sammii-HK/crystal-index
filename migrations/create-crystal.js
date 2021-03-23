@@ -31,15 +31,16 @@ module.exports = {
         type: Sequelize.DATE
       },
       createdBy: {
-        // allowNull: false,
+      //   // allowNull: false,
         type: Sequelize.STRING
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-
-      // favourite: {
+      
+      favourite: {
+        type: Sequelize.STRING
       //   type: Sequelize.ARRAY(Sequelize.INTEGER),
       //   onDelete: 'CASCADE',
       //   references: {
@@ -47,7 +48,7 @@ module.exports = {
       //     key: 'id',
       //     as: 'userId',
       //   }
-      // },
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

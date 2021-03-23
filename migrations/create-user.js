@@ -8,10 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
-      },
-      lastName: {
+      userName: {
         type: Sequelize.STRING
       },
       email: {
@@ -28,16 +25,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-
-      // favourite: {
+      
+      favourite: {
+        type: Sequelize.STRING
       //   type: Sequelize.ARRAY(Sequelize.INTEGER),
       //   onDelete: 'CASCADE',
       //   references: {
@@ -45,7 +35,7 @@ module.exports = {
       //     key: 'id',
       //     as: 'crystalId',
       //   }
-      // },
+      },
 
     });
   },

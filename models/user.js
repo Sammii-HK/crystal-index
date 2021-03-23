@@ -1,11 +1,8 @@
 'use strict';
-// const { Model } = require('sequelize');
-export default (sequelize, DataTypes) => {
-  // const Crystals = sequelize.models.Crystal;
+module.exports = (sequelize, DataTypes) => {
 
   const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    userName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     createdAt: new Date(),
@@ -22,11 +19,6 @@ export default (sequelize, DataTypes) => {
   //     // define association here
   //   }
   // };
-  // User.init({
-  // }, {
-  //   sequelize,
-  //   modelName: 'User',
-  // });
 
   User.associate = function(models) {
     User.belongsToMany(models.Crystal, {
@@ -34,9 +26,17 @@ export default (sequelize, DataTypes) => {
       as: 'crystals',
       foreignKey: 'userId',
     });
+    User.hasOne(models.UserDetails, { 
+      foreignKey: 'userId', 
+      as: 'userDetails' 
+    });
+    // User.belongsTo(models.Crystal, {
+    //   foreignKey: 'crystalId',
+    //   as: 'createdBy',
+    // });
   };
 
   return User;
 };
 
-console.log('User', User);
+console.log('User', this.User);
