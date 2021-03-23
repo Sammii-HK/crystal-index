@@ -6,17 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     crystalId: DataTypes.INTEGER,
   })
 
-  // CreatedCrystal.associate = function(models) {
-  //   CreatedCrystal.belongsTo(models.User, { 
-  //     foreignKey: 'userId', 
-  //     as: 'user' 
-  //   });
-  //   CreatedCrystal.belongsTo(models.Crystal, { 
-  //     foreignKey: 'crystalId', 
-  //     as: 'crystal' 
-  //   });
+  CreatedCrystal.associate = function(models) {
+    CreatedCrystal.belongsTo(models.User, { 
+      foreignKey: 'userId', 
+      as: 'user' 
+    });
+    CreatedCrystal.belongsTo(models.Crystal, { 
+      foreignKey: 'crystalId', 
+      as: 'crystal' 
+    });
     
-  // }
+  }
 
   return CreatedCrystal;
 };

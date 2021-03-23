@@ -10,13 +10,13 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        // references: { model: 'users', key: 'id' },
-        // onDelete: 'CASCADE',
+        references: { model: 'users', key: 'id' },
+        onDelete: 'CASCADE',
       },
       crystalId: {
         type: Sequelize.INTEGER,
-        // references: { model: 'crystals', key: 'id' },
-        // onDelete: 'CASCADE',
+        references: { model: 'crystals', key: 'id' },
+        onDelete: 'CASCADE',
       },
     });
   },

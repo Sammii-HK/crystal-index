@@ -26,15 +26,15 @@ module.exports = {
         type: Sequelize.DATE
       },
       
-      favourite: {
-        type: Sequelize.STRING
+      favourites: {
+        type: Sequelize.STRING,
       //   type: Sequelize.ARRAY(Sequelize.INTEGER),
-      //   onDelete: 'CASCADE',
-      //   references: {
-      //     model: 'Crystals',
-      //     key: 'id',
-      //     as: 'crystalId',
-      //   }
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Favourites',
+          key: 'crystalId',
+          as: 'crystalId',
+        }
       },
 
     });
