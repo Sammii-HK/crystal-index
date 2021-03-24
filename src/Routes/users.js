@@ -23,7 +23,7 @@ module.exports = [{
         include: [{
           model: db.UserDetails,
           as: 'userDetails',
-          forgeinKey: 'id',
+          forgeinKey: 'userId',
         // }, {
         //   model: db.Favourites,
         //   as: 'favourites',
@@ -42,18 +42,21 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/users',
-  handler: async (_, h) => {
+  handler: async (req, h) => {
+    // const {
+    //   firstName, lastName, mobileNum, address, favourites,
+    // } = req.payload;
     try {
       const results = await db.User.findAll({
-        // attributes: ['id', 'userName'],
-        // userDetails: {
-        //   firstName,
-        // },
+        attributes: ['id', 'userName'],
+        userDetails: {
+          // firstName,
+        },
       }, {
         include: [{
           model: db.UserDetails,
           as: 'userDetails',
-          forgeinKey: 'id',
+          forgeinKey: 'userId',
         }, 
         // {
         //   model: db.Favourites,

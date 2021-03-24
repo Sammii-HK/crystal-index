@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const UserDetails = sequelize.define('UserDetails', {
-    userId: DataTypes.INTEGER,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     mobileNum: DataTypes.STRING,
@@ -12,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   // UserDetails.associate = function(models) {
   //   UserDetails.belongsTo(models.User, { 
   //     foreignKey: 'id', 
-  //     as: 'user' 
+  //     as: 'id',
   //   });
   // }
 
