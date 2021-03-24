@@ -39,9 +39,9 @@ module.exports = [{
         where: { id: crystalId },
         attributes: ['id', 'crystalName'],
         include: {
-          model: db.users,
-          as: 'users',
-          attributes: ['id', 'userName', 'name'],
+          model: db.User,
+          as: 'user',
+          attributes: ['id', 'bio', 'name'],
         },
       });
       return results;

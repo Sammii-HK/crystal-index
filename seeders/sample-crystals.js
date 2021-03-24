@@ -8,6 +8,7 @@ module.exports = {
         bio: "Lorem ipsum",
         createdAt: new Date(),
         updatedAt: new Date(),
+        createdBy: 1,
       }], {});
   },
 down: (queryInterface, Sequelize) => {

@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING
@@ -30,24 +30,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      createdBy: {
-      //   // allowNull: false,
-        type: Sequelize.STRING
-      },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      
-      favourite: {
-        type: Sequelize.STRING
-      //   type: Sequelize.ARRAY(Sequelize.INTEGER),
-      //   onDelete: 'CASCADE',
-      //   references: {
-      //     model: 'Users',
-      //     key: 'id',
-      //     as: 'userId',
-      //   }
+      createdBy: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        // references: { model: 'User', key: 'id' },
+        // onDelete: 'CASCADE',
       },
     });
   },

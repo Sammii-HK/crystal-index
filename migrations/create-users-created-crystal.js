@@ -4,19 +4,16 @@ module.exports = {
     await queryInterface.createTable('CrystalCreatedBy', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      userId: {
+        autoIncrement: true,
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
-        onDelete: 'CASCADE',
+        // references: { model: 'User', key: 'id' },
+        // onDelete: 'CASCADE',
       },
       crystalId: {
         type: Sequelize.INTEGER,
-        references: { model: 'crystals', key: 'id' },
-        onDelete: 'CASCADE',
+        // references: { model: 'Crystal', key: 'id' },
+        // onDelete: 'CASCADE',
       },
     });
   },

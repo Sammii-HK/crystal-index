@@ -10,18 +10,19 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   User.associate = function(models) {
-    User.belongsToMany(models.Crystal, {
-      through: 'Favourites',
-      as: 'crystals',
-      foreignKey: 'userId',
-    });
     User.hasOne(models.UserDetails, { 
       foreignKey: 'userId', 
-      as: 'userDetails' 
+      as: 'userDetails' ,
+      onDelete: 'CASCADE'
     });
-    // User.belongsTo(models.Crystal, {
+    // User.hasMany(models.Crystal, {
     //   foreignKey: 'crystalId',
     //   as: 'createdBy',
+    // });
+    // User.belongsToMany(models.Crystal, {
+    //   through: 'favourites',
+    //   foreignKey: 'userId',
+    //   as: 'user',
     // });
   };
 

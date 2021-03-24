@@ -7,15 +7,14 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   CreatedCrystal.associate = function(models) {
-    CreatedCrystal.belongsTo(models.User, { 
-      foreignKey: 'userId', 
-      as: 'user' 
-    });
-    CreatedCrystal.belongsTo(models.Crystal, { 
-      foreignKey: 'crystalId', 
-      as: 'crystal' 
-    });
-    
+    // CreatedCrystal.belongsTo(models.User, { 
+    //   foreignKey: 'id', 
+    //   as: 'userId' 
+    // });
+    // CreatedCrystal.belongsTo(models.Crystal, { 
+    //   foreignKey: 'id', 
+    //   as: 'crystalId' 
+    // });
   }
 
   return CreatedCrystal;

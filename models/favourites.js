@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Favourites.associate = function(models) {
-    Favourites.belongsTo(models.User, { 
-      foreignKey: 'userId', 
-      as: 'user' 
-    });
-    Favourites.belongsTo(models.Crystal, { 
-      foreignKey: 'crystalId', 
-      as: 'crystal' 
-    });
+    // Favourites.belongsTo(models.User, { 
+    //   foreignKey: 'id', 
+    //   as: 'userId' 
+    // });
+    // Favourites.belongsTo(models.Crystal, { 
+    //   foreignKey: 'id', 
+    //   as: 'crystalId' 
+    // });
     
   }
 

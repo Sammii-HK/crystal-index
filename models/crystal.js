@@ -12,17 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: new Date(),
   });
 
-  Crystal.associate = function(models) {
-    Crystal.belongsToMany(models.User, {
-      through: 'Favourites',
-      as: 'users',
-      foreignKey: 'favouriteId',
-    });
-    // Crystal.belongsTo(models.User, {
-    //   foreignKey: 'userId',
-    //   as: 'createdBy',
-    // });
-  };
+  // Crystal.associate = function(models) {
+  //   Crystal.belongsToMany(models.User, {
+  //     through: 'favourites',
+  //     foreignKey: 'id',
+  //     as: 'userId',
+  //   });
+  //   Crystal.hasOne(models.User, { 
+  //     foreignKey: 'id', 
+  //     as: 'createdBy',
+  //   });
+  // };
 
   // node_modules/.bin/sequelize model:generate --name users_crystals --attributes userId:integer,crystalId:integer
 

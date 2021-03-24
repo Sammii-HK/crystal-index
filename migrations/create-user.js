@@ -25,18 +25,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      
-      favourites: {
-        type: Sequelize.STRING,
-      //   type: Sequelize.ARRAY(Sequelize.INTEGER),
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Favourites',
-          key: 'crystalId',
-          as: 'crystalId',
-        }
-      },
-
     });
   },
   down: async (queryInterface, Sequelize) => {

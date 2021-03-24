@@ -5,29 +5,29 @@ module.exports = [{
   path: '/users',
   handler: async (req, h) => {
     const {
-      firstName, lastName, userName, email, password, mobileNum, address, posts,
+      userName, email, password, firstName, lastName, mobileNum, address, favourites,
     } = req.payload;
     try {
       const results = await db.User.create({
-        firstName, lastName,
         userName, email, password,
         userDetails: {
+          firstName, 
+          lastName,
           mobileNum,
           address,
         },
-        posts,
-        groups,
+        // favourites: {
+        //   crystalId
+        // }
       }, {
         include: [{
-          model: db.userDetails,
+          model: db.UserDetails,
           as: 'userDetails',
-        }, {
-          model: db.crystals,
-          as: 'posts',
-        }, {
-          model: db.favourites,
-          as: 'groups',
-          through: db.User_crystals,
+          forgeinKey: 'id',
+        // }, {
+        //   model: db.Favourites,
+        //   as: 'favourites',
+        //   through: db.Favourites,
         }],
       });
       return {
@@ -45,13 +45,21 @@ module.exports = [{
   handler: async (_, h) => {
     try {
       const results = await db.User.findAll({
-        // include: [{
-        //   model: db.userDetails,
-        //   as: 'userDetails',
-        // }, {
-        //   model: db.favourites,
+        // attributes: ['id', 'userName'],
+        // userDetails: {
+        //   firstName,
+        // },
+      }, {
+        include: [{
+          model: db.UserDetails,
+          as: 'userDetails',
+          forgeinKey: 'id',
+        }, 
+        // {
+        //   model: db.Favourites,
         //   as: 'favourites',
-        // }],
+        // }
+        ],
       });
       return results;
     } catch (e) {
@@ -65,13 +73,14 @@ module.exports = [{
   handler: async (req, h) => {
     const { userId } = req.params;
     const {
-      name, userName, mobileNum, address, posts,
+      firstName, lastName, mobileNum, address,
     } = req.payload;
     const updateUsersObject = {
-      name,
       userName,
     };
     const updateUsersDetailsObject = {
+      firstName, 
+      lastName,
       mobileNum,
       address,
     };
@@ -90,21 +99,21 @@ module.exports = [{
       );
       updatePromises.push(updateUserDetailsPromise);
 
-      const updatePostsPromises = posts.map((p) => {
-        const { postTitle, postId } = p;
-        const updateObject = {
-          title: postTitle,
-        };
-        const whereQuery = {
-          userId,
-          id: postId,
-        };
-        return db.posts.update(
-          updateObject,
-          { where: whereQuery },
-        );
-      });
-      updatePromises.push(...updatePostsPromises);
+      // const updatePostsPromises = posts.map((p) => {
+      //   const { postTitle, postId } = p;
+      //   const updateObject = {
+      //     title: postTitle,
+      //   };
+      //   const whereQuery = {
+      //     userId,
+      //     id: postId,
+      //   };
+      //   return db.posts.update(
+      //     updateObject,
+      //     { where: whereQuery },
+      //   );
+      // });
+      // updatePromises.push(...updatePostsPromises);
 
       await Promise.all(updatePromises);
       return 'user records updates';
