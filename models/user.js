@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('User', {
+  const user = sequelize.define('user', {
     userName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -9,24 +9,24 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: new Date(),
   })
 
-  User.associate = function(models) {
-    User.hasOne(models.UserDetails, { 
+  user.associate = function(models) {
+    user.hasOne(models.userDetails, { 
       foreignKey: 'id', 
       as: 'userDetails' ,
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     });
-    // User.hasMany(models.Crystal, {
+    // user.hasMany(models.Crystal, {
     //   foreignKey: 'crystalId',
     //   as: 'createdBy',
     // });
-    // User.belongsToMany(models.Crystal, {
+    // user.belongsToMany(models.Crystal, {
     //   through: 'favourites',
     //   foreignKey: 'userId',
     //   as: 'user',
     // });
   };
 
-  return User;
+  return user;
 };
 
-console.log('User', this.User);
+console.log('user', this.user);

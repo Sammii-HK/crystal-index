@@ -6,7 +6,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { groupName } = req.payload;
     try {
-      await db.Favourites.create({
+      await db.favourites.create({
         groupName,
       });
       return 'ok';
@@ -21,7 +21,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { userId, crystalId } = req.payload;
     try {
-      const results = await db.Favourites.create({
+      const results = await db.favourites.create({
         userId,
         crystalId,
       });

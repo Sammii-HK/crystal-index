@@ -6,7 +6,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { crystalName } = req.payload;
     try {
-      await db.Crystal.create({
+      await db.crystal.create({
         crystalName,
       });
       return 'ok';
@@ -20,7 +20,7 @@ module.exports = [{
   path: '/crystals',
   handler: async (_, h) => {
     try {
-      const results = await db.Crystal.findAll({
+      const results = await db.crystal.findAll({
         attributes: ['id', 'name'],
       });
       return results;
@@ -35,7 +35,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { crystalId } = req.params;
     try {
-      const results = await db.Crystal.findAll({
+      const results = await db.crystal.findAll({
         where: { id: crystalId },
         attributes: ['id', 'crystalName'],
         include: {
@@ -57,7 +57,7 @@ module.exports = [{
     const { crystalId } = req.params;
     const { crystalName } = req.payload;
     try {
-      const noOfRecordsUpdated = await db.Crystal.update({
+      const noOfRecordsUpdated = await db.crystal.update({
         crystalName,
       }, {
         where: { id: crystalId },
@@ -77,7 +77,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { crystalId } = req.params;
     try {
-      const results = await db.Crystal.destroy({
+      const results = await db.crystal.destroy({
         where: { id: crystalId },
       });
       return {

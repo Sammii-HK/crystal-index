@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('CrystalCreatedBy', {
+    await queryInterface.createTable('crystalCreatedBy', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -18,6 +18,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('CrystalCreatedBy');
+    await queryInterface.dropTable('crystalCreatedBy');
   }
 };

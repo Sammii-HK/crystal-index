@@ -5,11 +5,13 @@ module.exports = [{
   path: '/users',
   handler: async (req, h) => {
     const {
-      userName, email, password, firstName, lastName, mobileNum, address, favourites,
+      userName, email, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     try {
-      const results = await db.User.create({
-        userName, email, password,
+      const results = await db.user.create({
+        userName, 
+        email, 
+        password,
         userDetails: {
           firstName, 
           lastName,
@@ -21,9 +23,8 @@ module.exports = [{
         // }
       }, {
         include: [{
-          model: db.UserDetails,
+          model: db.userDetails,
           as: 'userDetails',
-          forgeinKey: 'userId',
         // }, {
         //   model: db.Favourites,
         //   as: 'favourites',
@@ -42,21 +43,15 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/users',
-  handler: async (req, h) => {
-    // const {
-    //   firstName, lastName, mobileNum, address, favourites,
-    // } = req.payload;
+  handler: async (_, h) => {
     try {
-      const results = await db.User.findAll({
-        attributes: ['id', 'userName'],
-        userDetails: {
-          // firstName,
-        },
+      const results = await db.user.findAll({
+        // attributes: ['id', 'userName'],
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
       }, {
         include: [{
-          model: db.UserDetails,
+          model: db.userDetails,
           as: 'userDetails',
-          forgeinKey: 'userId',
         }, 
         // {
         //   model: db.Favourites,
@@ -90,7 +85,7 @@ module.exports = [{
 
     try {
       const updatePromises = [];
-      const updateUsersPromise = db.User.update(
+      const updateUsersPromise = db.user.update(
         updateUsersObject,
         { where: { id: userId } },
       );
@@ -131,7 +126,7 @@ module.exports = [{
   handler: async (req, h) => {
     try {
       const { userId } = req.params;
-      const results = await db.User.destroy({
+      const results = await db.user.destroy({
         where: {
           id: userId,
         },

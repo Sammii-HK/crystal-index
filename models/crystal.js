@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 
-  const Crystal = sequelize.define('Crystal', {
+  const crystal = sequelize.define('crystal', {
     name: DataTypes.STRING,
     bio: DataTypes.STRING,
     image: DataTypes.STRING,
@@ -12,13 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: new Date(),
   });
 
-  // Crystal.associate = function(models) {
-  //   Crystal.belongsToMany(models.User, {
+  // crystal.associate = function(models) {
+  //   crystal.belongsToMany(models.User, {
   //     through: 'favourites',
   //     foreignKey: 'id',
   //     as: 'userId',
   //   });
-  //   Crystal.hasOne(models.User, { 
+  //   crystal.hasOne(models.User, { 
   //     foreignKey: 'id', 
   //     as: 'createdBy',
   //   });
@@ -26,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
 
   // node_modules/.bin/sequelize model:generate --name users_crystals --attributes userId:integer,crystalId:integer
 
-  return Crystal;
+  return crystal;
 };

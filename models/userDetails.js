@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const UserDetails = sequelize.define('UserDetails', {
+  const userDetails = sequelize.define('userDetails', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     mobileNum: DataTypes.STRING,
@@ -8,12 +8,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   // Example of belongsTo association
   // This is commented because we don't need this
-  // UserDetails.associate = function(models) {
-  //   UserDetails.belongsTo(models.User, { 
-  //     foreignKey: 'id', 
-  //     as: 'id',
-  //   });
-  // }
+  userDetails.associate = function(models) {
+    userDetails.belongsTo(models.user, { 
+      foreignKey: 'id', 
+      as: 'userDetails',
+      onDelete: 'CASCADE',
+    });
+  }
 
-  return UserDetails;
+  return userDetails;
 };
