@@ -47,7 +47,7 @@ module.exports = [{
     try {
       const results = await db.users.findAll({
         // attributes: ['id', 'userName'],
-        attributes: { exclude: ['password',] },
+        // attributes: { exclude: ['password',] },
       }, {
         include: [{
           model: db.userDetails,
@@ -88,17 +88,28 @@ module.exports = [{
   handler: async (req, h) => {
     const { userId } = req.params;
     const {
-      firstName, lastName, mobileNum, address,
+      userName, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     const updateUsersObject = {
       userName,
     };
     const updateUsersDetailsObject = {
+      password, 
       firstName, 
       lastName,
       mobileNum,
       address,
     };
+    const results = await db.users.findAll({
+      where: {
+        id: userId,
+      },
+    }, {
+      include: [{
+        model: db.userDetails,
+        as: 'userDetails',
+      }]
+    });
 
     try {
       const updatePromises = [];
@@ -131,7 +142,8 @@ module.exports = [{
       // updatePromises.push(...updatePostsPromises);
 
       await Promise.all(updatePromises);
-      return 'users records updates';
+      // return 'users records updated';
+      return results
     } catch (e) {
       console.log('error updating user:', e);
       return h.response('Failed:', e.message).code(500);
