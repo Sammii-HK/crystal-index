@@ -18,17 +18,9 @@ module.exports = [{
           mobileNum,
           address,
         },
-        // favourites: {
-        //   crystalId
-        // }
-      }, {
         include: [{
           model: db.userDetails,
           as: 'userDetails',
-        // }, {
-        //   model: db.Favourites,
-        //   as: 'favourites',
-        //   through: db.Favourites,
         }],
       });
       return {
@@ -48,16 +40,10 @@ module.exports = [{
       const results = await db.users.findAll({
         // attributes: ['id', 'userName'],
         // attributes: { exclude: ['password',] },
-      }, {
         include: [{
           model: db.userDetails,
           as: 'userDetails',
-        }, 
-        // {
-        //   model: db.Favourites,
-        //   as: 'favourites',
-        // }
-        ],
+        }],
       });
       return results;
     } catch (e) {
@@ -72,6 +58,25 @@ module.exports = [{
     try {
       const { id } = req.params;
       const results = await db.users.findAll({
+        where: { id },
+        include: [{
+          model: db.userDetails,
+          as: 'userDetails',
+        }],
+      });
+      return results;
+    } catch (e) {
+      console.log('error finding user:', e);
+      return h.response('Failed:', e.message).code(500);
+    }
+  },
+}, {
+  method: 'GET',
+  path: '/users/{id}/user-details',
+  handler: async (req, h) => {
+    try {
+      const { id } = req.params;
+      const results = await db.userDetails.findAll({
         where: { id },
       });
       return results;
@@ -100,14 +105,10 @@ module.exports = [{
     };
     const results = await db.users.findAll({
       where: { id },
-    }, {
-      include: [
-        db.userDetails,
-      ]
-      // include: [{
-      //   model: db.userDetails,
-      //   as: 'userDetails',
-      // }]
+      include: [{
+        model: db.userDetails,
+        as: 'userDetails',
+      }],
     });
 
     try {
@@ -122,23 +123,43 @@ module.exports = [{
         updateUsersDetailsObject,
         { where: { id } },
       );
-      updatePromises.push(updateUserDetailsPromise);
+      updatePromises.push(updateUserDetailsPromise); 
 
-      // const updatePostsPromises = posts.map((p) => {
-      //   const { postTitle, postId } = p;
-      //   const updateObject = {
-      //     title: postTitle,
-      //   };
-      //   const whereQuery = {
-      //     id,
-      //     id: postId,
-      //   };
-      //   return db.posts.update(
-      //     updateObject,
-      //     { where: whereQuery },
-      //   );
-      // });
-      // updatePromises.push(...updatePostsPromises);
+      await Promise.all(updatePromises);
+      // return 'users records updated';
+      return results
+    } catch (e) {
+      console.log('error updating user:', e);
+      return h.response('Failed:', e.message).code(500);
+    }
+  },
+}, {
+  method: 'PUT',
+  path: '/users/{id}/user-details',
+  handler: async (req, h) => {
+    const { id } = req.params;
+    const {
+      password, firstName, lastName, mobileNum, address,
+    } = req.payload;
+    const updateUsersDetailsObject = {
+      password, 
+      firstName, 
+      lastName,
+      mobileNum,
+      address,
+    };
+    const results = await db.userDetails.findAll({
+      where: { id },
+    });
+
+    try {
+      const updatePromises = [];
+
+      const updateUserDetailsPromise = db.userDetails.update(
+        updateUsersDetailsObject,
+        { where: { id } },
+      );
+      updatePromises.push(updateUserDetailsPromise);   
 
       await Promise.all(updatePromises);
       // return 'users records updated';
@@ -166,3 +187,19 @@ module.exports = [{
     }
   },
 }];
+
+// const updatePostsPromises = posts.map((p) => {
+      //   const { postTitle, postId } = p;
+      //   const updateObject = {
+      //     title: postTitle,
+      //   };
+      //   const whereQuery = {
+      //     id,
+      //     id: postId,
+      //   };
+      //   return db.posts.update(
+      //     updateObject,
+      //     { where: whereQuery },
+      //   );
+      // });
+      // updatePromises.push(...updatePostsPromises);
