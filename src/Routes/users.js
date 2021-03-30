@@ -67,14 +67,12 @@ module.exports = [{
   },
 }, {
   method: 'GET',
-  path: '/users/{userId}',
+  path: '/users/{id}',
   handler: async (req, h) => {
     try {
-      const { userId } = req.params;
+      const { id } = req.params;
       const results = await db.users.findAll({
-        where: {
-          id: userId,
-        },
+        where: { id },
       });
       return results;
     } catch (e) {
@@ -84,9 +82,9 @@ module.exports = [{
   },
 }, {
   method: 'PUT',
-  path: '/users/{userId}',
+  path: '/users/{id}',
   handler: async (req, h) => {
-    const { userId } = req.params;
+    const { id } = req.params;
     const {
       userName, password, firstName, lastName, mobileNum, address,
     } = req.payload;
@@ -101,27 +99,28 @@ module.exports = [{
       address,
     };
     const results = await db.users.findAll({
-      where: {
-        id: userId,
-      },
+      where: { id },
     }, {
-      include: [{
-        model: db.userDetails,
-        as: 'userDetails',
-      }]
+      include: [
+        db.userDetails,
+      ]
+      // include: [{
+      //   model: db.userDetails,
+      //   as: 'userDetails',
+      // }]
     });
 
     try {
       const updatePromises = [];
       const updateUsersPromise = db.users.update(
         updateUsersObject,
-        { where: { id: userId } },
+        { where: { id } },
       );
       updatePromises.push(updateUsersPromise);
 
       const updateUserDetailsPromise = db.userDetails.update(
         updateUsersDetailsObject,
-        { where: { userId } },
+        { where: { id } },
       );
       updatePromises.push(updateUserDetailsPromise);
 
@@ -131,7 +130,7 @@ module.exports = [{
       //     title: postTitle,
       //   };
       //   const whereQuery = {
-      //     userId,
+      //     id,
       //     id: postId,
       //   };
       //   return db.posts.update(
@@ -151,13 +150,13 @@ module.exports = [{
   },
 }, {
   method: 'DELETE',
-  path: '/users/{userId}',
+  path: '/users/{id}',
   handler: async (req, h) => {
     try {
-      const { userId } = req.params;
+      const { id } = req.params;
       const results = await db.users.destroy({
         where: {
-          id: userId,
+          id: id,
         },
       });
       return results;
