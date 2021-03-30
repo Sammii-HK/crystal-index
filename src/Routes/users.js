@@ -71,21 +71,6 @@ module.exports = [{
     }
   },
 }, {
-  method: 'GET',
-  path: '/users/{id}/user-details',
-  handler: async (req, h) => {
-    try {
-      const { id } = req.params;
-      const results = await db.userDetails.findAll({
-        where: { id },
-      });
-      return results;
-    } catch (e) {
-      console.log('error finding user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
   method: 'PUT',
   path: '/users/{id}',
   handler: async (req, h) => {
@@ -124,42 +109,6 @@ module.exports = [{
         { where: { id } },
       );
       updatePromises.push(updateUserDetailsPromise); 
-
-      await Promise.all(updatePromises);
-      // return 'users records updated';
-      return results
-    } catch (e) {
-      console.log('error updating user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
-  method: 'PUT',
-  path: '/users/{id}/user-details',
-  handler: async (req, h) => {
-    const { id } = req.params;
-    const {
-      password, firstName, lastName, mobileNum, address,
-    } = req.payload;
-    const updateUsersDetailsObject = {
-      password, 
-      firstName, 
-      lastName,
-      mobileNum,
-      address,
-    };
-    const results = await db.userDetails.findAll({
-      where: { id },
-    });
-
-    try {
-      const updatePromises = [];
-
-      const updateUserDetailsPromise = db.userDetails.update(
-        updateUsersDetailsObject,
-        { where: { id } },
-      );
-      updatePromises.push(updateUserDetailsPromise);   
 
       await Promise.all(updatePromises);
       // return 'users records updated';
