@@ -66,6 +66,23 @@ module.exports = [{
     }
   },
 }, {
+  method: 'GET',
+  path: '/users/{userId}',
+  handler: async (req, h) => {
+    try {
+      const { userId } = req.params;
+      const results = await db.users.findAll({
+        where: {
+          id: userId,
+        },
+      });
+      return results;
+    } catch (e) {
+      console.log('error finding user:', e);
+      return h.response('Failed:', e.message).code(500);
+    }
+  },
+}, {
   method: 'PUT',
   path: '/users/{userId}',
   handler: async (req, h) => {
