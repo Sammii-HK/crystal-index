@@ -8,11 +8,11 @@ module.exports = [{
       userName, email, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     try {
-      const results = await db.user.create({
+      const results = await db.users.create({
         userName, 
         email, 
-        password,
         userDetails: {
+          password,
           firstName, 
           lastName,
           mobileNum,
@@ -45,9 +45,9 @@ module.exports = [{
   path: '/users',
   handler: async (_, h) => {
     try {
-      const results = await db.user.findAll({
+      const results = await db.users.findAll({
         // attributes: ['id', 'userName'],
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        attributes: { exclude: ['password',] },
       }, {
         include: [{
           model: db.userDetails,
@@ -61,7 +61,7 @@ module.exports = [{
       });
       return results;
     } catch (e) {
-      console.log('error fetching user:', e);
+      console.log('error fetching users:', e);
       return h.response('Failed:', e.message).code(500);
     }
   },
@@ -85,7 +85,7 @@ module.exports = [{
 
     try {
       const updatePromises = [];
-      const updateUsersPromise = db.user.update(
+      const updateUsersPromise = db.users.update(
         updateUsersObject,
         { where: { id: userId } },
       );
@@ -114,7 +114,7 @@ module.exports = [{
       // updatePromises.push(...updatePostsPromises);
 
       await Promise.all(updatePromises);
-      return 'user records updates';
+      return 'users records updates';
     } catch (e) {
       console.log('error updating user:', e);
       return h.response('Failed:', e.message).code(500);
@@ -126,7 +126,7 @@ module.exports = [{
   handler: async (req, h) => {
     try {
       const { userId } = req.params;
-      const results = await db.user.destroy({
+      const results = await db.users.destroy({
         where: {
           id: userId,
         },

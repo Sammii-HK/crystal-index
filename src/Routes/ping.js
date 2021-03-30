@@ -4,6 +4,6 @@ module.exports = [{
   handler: () => 'pong',
 }, {
   method: 'GET',
-  path: '/',
+  path: '/hello',
   handler: async () => 'Hello World! 🍭',
 } ];
