@@ -17,11 +17,13 @@ module.exports = [{
           lastName,
           mobileNum,
           address,
-        },
+        }
+      }, {
         include: [{
           model: db.userDetails,
           as: 'userDetails',
         }],
+
       });
       return {
         success: true,
