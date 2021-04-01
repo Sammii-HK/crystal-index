@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const userDetails = sequelize.define('userDetails', {
+  const userDetail = sequelize.define('userDetail', {
     password: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   // Example of belongsTo association
   // This is commented because we don't need this
-  userDetails.associate = (models) => {
-    userDetails.belongsTo(models.users, { foreignKey: 'id', as: 'users' });
-  }
+  // userDetail.associate = (models) => {
+  //  1:1 association type
+  //   userDetail.belongsTo(models.user, { foreignKey: 'id', as: 'user' });
+  // }
 
-  return userDetails;
+  return userDetail;
 };

@@ -8,10 +8,10 @@ module.exports = [{
       userName, email, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     try {
-      const results = await db.users.create({
+      const results = await db.user.create({
         userName, 
         email, 
-        userDetails: {
+        userDetail: {
           password,
           firstName, 
           lastName,
@@ -20,8 +20,8 @@ module.exports = [{
         }
       }, {
         include: [{
-          model: db.userDetails,
-          as: 'userDetails',
+          model: db.userDetail,
+          as: 'userDetail',
         }],
 
       });
@@ -39,12 +39,12 @@ module.exports = [{
   path: '/users',
   handler: async (_, h) => {
     try {
-      const results = await db.users.findAll({
+      const results = await db.user.findAll({
         // attributes: ['id', 'userName'],
         // attributes: { exclude: ['password',] },
         include: [{
-          model: db.userDetails,
-          as: 'userDetails',
+          model: db.userDetail,
+          as: 'userDetail',
         }],
       });
       return results;
@@ -59,11 +59,11 @@ module.exports = [{
   handler: async (req, h) => {
     try {
       const { id } = req.params;
-      const results = await db.users.findAll({
+      const results = await db.user.findAll({
         where: { id },
         include: [{
-          model: db.userDetails,
-          as: 'userDetails',
+          model: db.userDetail,
+          as: 'userDetail',
         }],
       });
       return results;
@@ -90,23 +90,23 @@ module.exports = [{
       mobileNum,
       address,
     };
-    const results = await db.users.findAll({
+    const results = await db.user.findAll({
       where: { id },
       include: [{
-        model: db.userDetails,
-        as: 'userDetails',
+        model: db.userDetail,
+        as: 'userDetail',
       }],
     });
 
     try {
       const updatePromises = [];
-      const updateUsersPromise = db.users.update(
+      const updateUsersPromise = db.user.update(
         updateUsersObject,
         { where: { id } },
       );
       updatePromises.push(updateUsersPromise);
 
-      const updateUserDetailsPromise = db.userDetails.update(
+      const updateUserDetailsPromise = db.userDetails.updae(
         updateUsersDetailsObject,
         { where: { id } },
       );
@@ -126,7 +126,7 @@ module.exports = [{
   handler: async (req, h) => {
     try {
       const { id } = req.params;
-      const results = await db.users.destroy({
+      const results = await db.user.destroy({
         where: {
           id: id,
         },
