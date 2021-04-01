@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = (models) => {
     // 1:1 assocation type
     user.hasOne(models.userDetail, { foreignKey: 'id', as: 'userDetail', onDelete: 'CASCADE' });
+    // 1:n
+    user.hasMany(models.crystal, { foreignKey: 'createdBy', as: 'createdCrystals' });
   };
 
   return user;
