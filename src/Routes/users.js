@@ -19,10 +19,12 @@ module.exports = [{
           address,
         }
       }, {
-        include: [{
+        include: [
+        {
           model: db.userDetail,
           as: 'userDetail',
-        }],
+        }
+      ],
 
       });
       return {
@@ -31,7 +33,7 @@ module.exports = [{
       };
     } catch (e) {
       console.log('error creating user:', e);
-      return h.response('Failed:', e.message).code(500);
+      return h.response(`Failed: ${e.message}`).code(500);
     }
   },
 }, {
@@ -42,15 +44,20 @@ module.exports = [{
       const results = await db.user.findAll({
         // attributes: ['id', 'userName'],
         // attributes: { exclude: ['password',] },
-        include: [{
+        include: [
+        {
           model: db.userDetail,
           as: 'userDetail',
-        }],
+        }, {
+          model: db.crystal,
+          as: 'createdCrystals',
+        },
+      ],
       });
       return results;
     } catch (e) {
       console.log('error fetching users:', e);
-      return h.response('Failed:', e.message).code(500);
+      return h.response(`Failed: ${e.message}`).code(500);
     }
   },
 }, {
@@ -61,15 +68,20 @@ module.exports = [{
       const { id } = req.params;
       const results = await db.user.findAll({
         where: { id },
-        include: [{
-          model: db.userDetail,
-          as: 'userDetail',
-        }],
+        include: [
+          {
+            model: db.userDetail,
+            as: 'userDetail',
+          }, {
+            model: db.crystal,
+            as: 'createdCrystals',
+          },
+        ],
       });
       return results;
     } catch (e) {
       console.log('error finding user:', e);
-      return h.response('Failed:', e.message).code(500);
+      return h.response(`Failed: ${e.message}`).code(500);
     }
   },
 }, {
@@ -117,7 +129,7 @@ module.exports = [{
       return results
     } catch (e) {
       console.log('error updating user:', e);
-      return h.response('Failed:', e.message).code(500);
+      return h.response(`Failed: ${e.message}`).code(500);
     }
   },
 }, {
@@ -134,7 +146,7 @@ module.exports = [{
       return results;
     } catch (e) {
       console.log('error deleting user:', e);
-      return h.response('Failed:', e.message).code(500);
+      return h.response(`Failed: ${e.message}`).code(500);
     }
   },
 }];
