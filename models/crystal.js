@@ -1,13 +1,14 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+module.exports = (queryInterface, Sequelize) => {
 
-  const crystal = sequelize.define('crystal', {
-    name: DataTypes.STRING,
-    bio: DataTypes.STRING,
-    image: DataTypes.STRING,
-    otherNames: DataTypes.STRING,
-    colour: DataTypes.ARRAY(DataTypes.STRING),
-    chakra: DataTypes.ARRAY(DataTypes.STRING),
+  const crystal = queryInterface.define('crystal', {
+    name: Sequelize.STRING,
+    bio: Sequelize.STRING,
+    image: Sequelize.STRING,
+    otherNames: Sequelize.STRING,
+    // colour: queryInterface.literal(`ARRAY['a']::"enum_Items_values"[]`),
+    colour: Sequelize.ARRAY(Sequelize.STRING),
+    chakra: Sequelize.ARRAY(Sequelize.STRING),
     createdAt: new Date(),
     updatedAt: new Date(),
   });

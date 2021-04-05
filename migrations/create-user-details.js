@@ -5,8 +5,8 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
 
-      references: { model: 'user', key: 'id' },
-      onDelete: 'CASCADE',
+      // references: { model: 'user', key: 'id' },
+      // onDelete: 'CASCADE', DONT THINK I NEED THIS
     },
     password: {
       type: Sequelize.STRING

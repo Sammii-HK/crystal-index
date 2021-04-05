@@ -1,9 +1,9 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+module.exports = (queryInterface, Sequelize) => {
 
-  const user = sequelize.define('user', {
-    userName: DataTypes.STRING,
-    email: DataTypes.STRING,
+  const user = queryInterface.define('user', {
+    userName: Sequelize.STRING,
+    email: Sequelize.STRING,
   }, {
     timestamps: false
 })
