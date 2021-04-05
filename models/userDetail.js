@@ -1,10 +1,10 @@
-module.exports = (sequelize, DataTypes) => {
-  const userDetail = sequelize.define('userDetail', {
-    password: DataTypes.STRING,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    mobileNum: DataTypes.STRING,
-    address: DataTypes.TEXT,
+module.exports = (queryInterface, Sequelize) => {
+  const userDetail = queryInterface.define('userDetail', {
+    password: Sequelize.STRING,
+    firstName: Sequelize.STRING,
+    lastName: Sequelize.STRING,
+    mobileNum: Sequelize.STRING,
+    address: Sequelize.TEXT,
     createdAt: new Date(),
     updatedAt: new Date(),
   }, {});
