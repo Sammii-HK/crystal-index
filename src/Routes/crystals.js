@@ -5,7 +5,15 @@ module.exports = [{
   path: '/crystals/create',
   handler: async (req, h) => {
     const { 
-      name, bio, image, otherNames, colour, chakra, createdBy
+      name, 
+      bio, 
+      image, 
+      otherNames, 
+      colour, 
+      chakra, 
+      createdBy, 
+      origin,
+      memento,
     } = req.payload;
     try {
       const results = await db.crystal.create({
@@ -16,17 +24,31 @@ module.exports = [{
         colour,
         chakra,
         createdBy,
-        include: [{
-          model: db.users,
-          as: 'createdBy',
-        }],
-        
+        origin,
+        memento,
+        // locationDetails: {
+        //   origin,
+        //   memento,
+        // },
+        include: [
+          {
+            model: db.location,
+            as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
+          },
+          // {
+          //   model: db.crystalLocation,
+          //   as: 'locationDetail',
+          // },
+        ],
       });
       return {
         success: true,
         id: results.id,
       };
-      return results;
     } catch (e) {
       console.log('error creating crystal:', e);
       return h.response(`Failed: ${e.message}`).code(500);
@@ -39,6 +61,20 @@ module.exports = [{
     try {
       const results = await db.crystal.findAll({
         // attributes: ['id', 'name'],
+        include: [
+          {
+            model: db.location,
+            as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
+          },
+          // {
+          //   model: db.crystalLocation,
+          //   as: 'locationDetail',
+          // },
+        ],
       });
       return results;
     } catch (e) {
@@ -55,10 +91,16 @@ module.exports = [{
       const results = await db.crystal.findAll({
         where: { id: id },
 
-        // include: [{
-        //   model: db.user,
-        //   as: 'createdBy',
-        // }],
+        include: [
+          {
+            model: db.location,
+            as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
+          },
+        ],
 
       });
       return results;
@@ -73,12 +115,31 @@ module.exports = [{
   handler: async (req, h) => {
     const { id } = req.params;
     const { 
-      name, bio, image, otherNames, colour, chakra,
+      name, 
+      bio, 
+      image, 
+      otherNames, 
+      colour, 
+      chakra,
+      createdBy,
+      origin, 
+      memento, 
     } = req.payload;
     const results = await db.crystal.findAll({
       where: { id },
+      include: [
+        {
+          model: db.location,
+          as: 'origin',
+        },
+        {
+          model: db.location,
+          as: 'memento',
+        }
+      ],
     });
     try {
+      const updatePromises = [];
       const updateCrystalsObject = await db.crystal.update({
         name,
         bio,
@@ -86,11 +147,15 @@ module.exports = [{
         otherNames,
         colour,
         chakra,
+        createdBy,
+        origin,
+        memento,
       }, {
         where: { id },
       });
+      updatePromises.push(updateCrystalsObject);
 
-      await Promise.all(updateCrystalsObject);
+      await Promise.all(updatePromises);
 
       return results
     } catch (e) {

@@ -1,16 +1,5 @@
 'use strict';
 
-// const colours = [
-//   'white',
-//   'red',
-//   'orange',
-//   'yellow',
-//   'green',
-//   'blue',
-//   'indigo',
-//   'violet',
-// ]
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('crystals', {
@@ -77,24 +66,13 @@ module.exports = {
         // references: { model: 'user', key: 'id' },
         // onDelete: 'CASCADE', DONT THINK I NEED THIS??
       },
-      // origin: {
-      //   lat: {
-      //     type: Sequelize.STRING
-      //   },
-      //   long: {
-      //     type: Sequelize.STRING
-      //   },
-      // },
-      // mementoFrom: {
-      //   lat: {
-      //     type: Sequelize.STRING
-      //   },
-      //   long: {
-      //     type: Sequelize.STRING
-      //   },
-      // },
+      origin: {
+        type: Sequelize.INTEGER,
+      },
+      memento: {
+        type: Sequelize.INTEGER,
+      },
     });
-    // }).then(function() {});
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('crystals');
