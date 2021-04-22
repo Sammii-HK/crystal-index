@@ -5,7 +5,7 @@ module.exports = [{
   path: '/crystals/create',
   handler: async (req, h) => {
     const { 
-      name, bio, image, otherNames, colour, chakra, createdBy
+      name, bio, image, otherNames, colour, chakra, userId,
     } = req.payload;
     try {
       const results = await db.crystal.create({
@@ -15,18 +15,20 @@ module.exports = [{
         otherNames,
         colour,
         chakra,
-        createdBy,
-        include: [{
-          model: db.users,
+        userId,
+
+      }, {
+        include: [
+        {
+          model: db.user,
           as: 'createdBy',
-        }],
-        
+        }
+      ],
+
       });
-      return {
-        success: true,
-        id: results.id,
-      };
+
       return results;
+
     } catch (e) {
       console.log('error creating crystal:', e);
       return h.response(`Failed: ${e.message}`).code(500);
@@ -38,7 +40,13 @@ module.exports = [{
   handler: async (_, h) => {
     try {
       const results = await db.crystal.findAll({
-        // attributes: ['id', 'name'],
+        include: [
+          {
+            model: db.user,
+            as: 'createdBy',
+          }, 
+        ],
+
       });
       return results;
     } catch (e) {
@@ -54,11 +62,13 @@ module.exports = [{
     try {
       const results = await db.crystal.findAll({
         where: { id: id },
-
-        // include: [{
-        //   model: db.user,
-        //   as: 'createdBy',
-        // }],
+      }, {
+        include: [
+          {
+            model: db.users,
+            as: 'createdBy',
+          }, 
+        ],
 
       });
       return results;
@@ -86,8 +96,18 @@ module.exports = [{
         otherNames,
         colour,
         chakra,
+        createdBy,
+        origin,
       }, {
         where: { id },
+      }, {
+        include: [
+          {
+            model: db.users,
+            as: 'createdBy',
+          },
+        ],
+
       });
 
       await Promise.all(updateCrystalsObject);

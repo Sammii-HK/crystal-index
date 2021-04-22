@@ -12,7 +12,7 @@ module.exports = (queryInterface, Sequelize) => {
     // 1:1 assocation type
     user.hasOne(models.userDetail, { foreignKey: 'id', as: 'userDetail', onDelete: 'CASCADE' });
     // 1:n
-    user.hasMany(models.crystal, { foreignKey: 'createdBy', as: 'createdCrystals' });
+    user.hasMany(models.crystal, { foreignKey: 'userId', as: 'createdCrystals' });
   };
 
   return user;
