@@ -10,6 +10,7 @@ module.exports = (queryInterface, Sequelize) => {
   location.associate = (models) => {
     // 1:n
     location.hasMany(models.crystal, { foreignKey: 'originId', as: 'crystalsOfOrigin' });
+    location.hasMany(models.crystal, { foreignKey: 'mementoId', as: 'crystalsOfMemento' });
 
 }
 

@@ -35,7 +35,11 @@ module.exports = [{
           {
             model: db.crystal,
             as: 'crystalsOfOrigin',
-          }
+          },
+          {
+            model: db.crystal,
+            as: 'crystalsOfMemento',
+          },
         ],
       });
 

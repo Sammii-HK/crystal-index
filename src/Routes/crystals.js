@@ -5,7 +5,7 @@ module.exports = [{
   path: '/crystals/create',
   handler: async (req, h) => {
     const { 
-      name, bio, image, otherNames, colour, chakra, userId,
+        name, bio, image, otherNames, colour, chakra, userId, originId, mementoId,
     } = req.payload;
     try {
       const results = await db.crystal.create({
@@ -17,6 +17,7 @@ module.exports = [{
         chakra,
         userId,
         originId,
+        mementoId,
       }, {
         include: [
         {
@@ -26,6 +27,10 @@ module.exports = [{
         {
           model: db.location,
           as: 'origin',
+        },
+        {
+          model: db.location,
+          as: 'memento',
         },
       ],
 
@@ -53,6 +58,10 @@ module.exports = [{
             model: db.location,
             as: 'origin',
           },
+          {
+            model: db.location,
+            as: 'memento',
+          },
         ],
 
       });
@@ -69,7 +78,7 @@ module.exports = [{
     const { id } = req.params;
     try {
       const results = await db.crystal.findAll({
-        where: { id: id },
+        where: { id },
       }, {
         include: [
           {
@@ -79,6 +88,10 @@ module.exports = [{
           {
             model: db.location,
             as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
           },
         ],
 
@@ -95,7 +108,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { id } = req.params;
     const { 
-      name, bio, image, otherNames, colour, chakra, userId, originId, 
+      name, bio, image, otherNames, colour, chakra, userId, originId, mementoId,
     } = req.payload;
     const results = await db.crystal.findAll({
       where: { id },
@@ -110,6 +123,7 @@ module.exports = [{
         chakra,
         userId,
         originId,
+        mementoId,
       }, {
         where: { id },
       }, {
@@ -121,6 +135,10 @@ module.exports = [{
           {
             model: db.location,
             as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
           },
         ],
 

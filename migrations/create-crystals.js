@@ -73,6 +73,13 @@ module.exports = {
         references: { model: 'location', key: 'id' },
         onDelete: 'CASCADE',
       },
+      mementoId: {
+        // allowNull: false,
+        type: Sequelize.INTEGER,
+  
+        references: { model: 'location', key: 'id' },
+        onDelete: 'CASCADE',
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
