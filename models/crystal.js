@@ -6,7 +6,6 @@ module.exports = (queryInterface, Sequelize) => {
     bio: Sequelize.STRING,
     image: Sequelize.STRING,
     otherNames: Sequelize.STRING,
-    // colour: queryInterface.literal(`ARRAY['a']::"enum_Items_values"[]`),
     colour: Sequelize.ARRAY(Sequelize.STRING),
     chakra: Sequelize.ARRAY(Sequelize.STRING),
     createdAt: new Date(),

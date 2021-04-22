@@ -1,16 +1,5 @@
 'use strict';
 
-// const colours = [
-//   'white',
-//   'red',
-//   'orange',
-//   'yellow',
-//   'green',
-//   'blue',
-//   'indigo',
-//   'violet',
-// ]
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('crystals', {
@@ -94,7 +83,6 @@ module.exports = {
       //   },
       // },
     });
-    // }).then(function() {});
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('crystals');
