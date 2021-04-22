@@ -8,7 +8,8 @@ module.exports = (queryInterface, Sequelize) => {
     timestamps: false
   });
   location.associate = (models) => {
-
+    // 1:n
+    location.hasMany(models.crystal, { foreignKey: 'origin', as: 'crystalsOfOrigin' });
 
 }
 
