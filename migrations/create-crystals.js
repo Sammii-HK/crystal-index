@@ -63,25 +63,16 @@ module.exports = {
         // allowNull: false,
         type: Sequelize.INTEGER,
 
-        // references: { model: 'user', key: 'id' },
-        // onDelete: 'CASCADE', DONT THINK I NEED THIS??
+        references: { model: 'user', key: 'id' },
+        onDelete: 'CASCADE',
       },
-      // origin: {
-      //   lat: {
-      //     type: Sequelize.STRING
-      //   },
-      //   long: {
-      //     type: Sequelize.STRING
-      //   },
-      // },
-      // mementoFrom: {
-      //   lat: {
-      //     type: Sequelize.STRING
-      //   },
-      //   long: {
-      //     type: Sequelize.STRING
-      //   },
-      // },
+      origin: {
+        // allowNull: false,
+        type: Sequelize.INTEGER,
+  
+        references: { model: 'location', key: 'id' },
+        onDelete: 'CASCADE',
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
