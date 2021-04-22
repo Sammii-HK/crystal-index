@@ -16,13 +16,17 @@ module.exports = [{
         colour,
         chakra,
         userId,
-
+        originId,
       }, {
         include: [
         {
           model: db.user,
           as: 'createdBy',
-        }
+        },
+        {
+          model: db.location,
+          as: 'origin',
+        },
       ],
 
       });
@@ -45,6 +49,10 @@ module.exports = [{
             model: db.user,
             as: 'createdBy',
           }, 
+          {
+            model: db.location,
+            as: 'origin',
+          },
         ],
 
       });
@@ -65,9 +73,13 @@ module.exports = [{
       }, {
         include: [
           {
-            model: db.users,
+            model: db.user,
             as: 'createdBy',
           }, 
+          {
+            model: db.location,
+            as: 'origin',
+          },
         ],
 
       });
@@ -83,7 +95,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { id } = req.params;
     const { 
-      name, bio, image, otherNames, colour, chakra,
+      name, bio, image, otherNames, colour, chakra, userId, originId, 
     } = req.payload;
     const results = await db.crystal.findAll({
       where: { id },
@@ -96,15 +108,19 @@ module.exports = [{
         otherNames,
         colour,
         chakra,
-        createdBy,
-        origin,
+        userId,
+        originId,
       }, {
         where: { id },
       }, {
         include: [
           {
-            model: db.users,
+            model: db.user,
             as: 'createdBy',
+          },
+          {
+            model: db.location,
+            as: 'origin',
           },
         ],
 

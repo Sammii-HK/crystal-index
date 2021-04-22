@@ -70,8 +70,8 @@ module.exports = {
         // allowNull: false,
         type: Sequelize.INTEGER,
   
-        // references: { model: 'location', key: 'id' },
-        // onDelete: 'CASCADE',
+        references: { model: 'location', key: 'id' },
+        onDelete: 'CASCADE',
       },
     });
   },
