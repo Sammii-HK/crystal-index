@@ -45,14 +45,14 @@ module.exports = [{
         // attributes: ['id', 'userName'],
         // attributes: { exclude: ['password',] },
         include: [
-        {
-          model: db.userDetail,
-          as: 'userDetail',
-        }, {
-          model: db.crystal,
-          as: 'createdCrystals',
-        },
-      ],
+          {
+            model: db.userDetail,
+            as: 'userDetail',
+          }, {
+            model: db.crystal,
+            as: 'createdCrystals',
+          },
+        ],
       });
       return results;
     } catch (e) {
