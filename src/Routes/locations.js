@@ -17,10 +17,9 @@ module.exports = [{
         lat,
         long, 
       });
-      return {
-        success: true,
-        id: results.id,
-      };
+
+      return results;
+
     } catch (e) {
       console.log('error creating location:', e);
       return h.response(`Failed: ${e.message}`).code(500);
@@ -32,9 +31,16 @@ module.exports = [{
   handler: async (_, h) => {
     try {
       const results = await db.location.findAll({
-        // attributes: ['id', 'name'],
+        include: [
+          {
+            model: db.crystal,
+            as: 'crystalsOfOrigin',
+          }
+        ],
       });
+
       return results;
+
     } catch (e) {
       console.log('error creating location:', e);
       return h.response(`Failed: ${e.message}`).code(500);
@@ -47,7 +53,13 @@ module.exports = [{
     const { id } = req.params;
     try {
       const results = await db.location.findAll({
-        where: { id: id },
+        where: { id },
+        include: [
+          {
+            model: db.crystal,
+            as: 'crystalsOfOrigin',
+          }
+        ],
       });
       return results;
     } catch (e) {
