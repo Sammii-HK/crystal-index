@@ -5,7 +5,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
 
-      references: { model: 'users', key: 'id' },
+      references: { model: 'user', key: 'id' },
       onDelete: 'CASCADE',
     },
     password: {

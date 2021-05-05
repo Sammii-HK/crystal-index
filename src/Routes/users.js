@@ -1,6 +1,7 @@
 const db = require('../../models');
 
-module.exports = [{
+module.exports = [
+  {
   method: 'POST',
   path: '/users',
   handler: async (req, h) => {
@@ -8,10 +9,10 @@ module.exports = [{
       userName, email, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     try {
-      const results = await db.users.create({
+      const results = await db.user.create({
         userName, 
         email, 
-        userDetails: {
+        userDetail: {
           password,
           firstName, 
           lastName,
@@ -19,138 +20,169 @@ module.exports = [{
           address,
         }
       }, {
-        include: [{
-          model: db.userDetails,
-          as: 'userDetails',
-        }],
-
+        include: [
+          {
+            model: db.userDetail,
+            as: 'userDetail',
+          },
+        ],
       });
-      return {
-        success: true,
-        id: results.id,
+
+        return {
+          success: true,
+          id: results.id,
+        };
+      } catch (e) {
+        console.log('error creating user:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'GET',
+    path: '/users',
+    handler: async (_, h) => {
+      try {
+        const results = await db.user.findAll({
+          // attributes: ['id', 'userName'],
+          // attributes: { exclude: ['password',] },
+          include: [
+            {
+              model: db.userDetail,
+              as: 'userDetail',
+              attributes: ['firstName'],
+            }, 
+            {
+              model: db.crystal,
+              as: 'createdCrystals',
+              attributes: ['name'],
+              
+            },
+            {
+              model: db.crystal,
+              as: 'favouriteCrystals',
+              attributes: ['name'],
+              through: {
+                model: db.favourite,
+              },
+            },
+          ],
+        });
+        return results;
+      } catch (e) {
+        console.log('error fetching users:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'GET',
+    path: '/users/{id}',
+    handler: async (req, h) => {
+      try {
+        const { id } = req.params;
+        const results = await db.user.findAll({
+          where: { id },
+          include: [
+            {
+              model: db.userDetail,
+              as: 'userDetail',
+              attributes: ['firstName'],
+            }, {
+              model: db.crystal,
+              as: 'createdCrystals',
+            },
+            {
+              model: db.crystal,
+              as: 'favouriteCrystals',
+              through: {
+                model: db.favourite,
+              },
+            },
+          ],
+        });
+        return results;
+      } catch (e) {
+        console.log('error finding user:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'PUT',
+    path: '/users/{id}',
+    handler: async (req, h) => {
+      const { id } = req.params;
+      const {
+        userName, password, firstName, lastName, mobileNum, address,
+      } = req.payload;
+
+      const updateUsersObject = {
+        userName,
       };
-    } catch (e) {
-      console.log('error creating user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
-  method: 'GET',
-  path: '/users',
-  handler: async (_, h) => {
-    try {
-      const results = await db.users.findAll({
-        // attributes: ['id', 'userName'],
-        // attributes: { exclude: ['password',] },
-        include: [{
-          model: db.userDetails,
-          as: 'userDetails',
-        }],
-      });
-      return results;
-    } catch (e) {
-      console.log('error fetching users:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
-  method: 'GET',
-  path: '/users/{id}',
-  handler: async (req, h) => {
-    try {
-      const { id } = req.params;
-      const results = await db.users.findAll({
-        where: { id },
-        include: [{
-          model: db.userDetails,
-          as: 'userDetails',
-        }],
-      });
-      return results;
-    } catch (e) {
-      console.log('error finding user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
-  method: 'PUT',
-  path: '/users/{id}',
-  handler: async (req, h) => {
-    const { id } = req.params;
-    const {
-      userName, password, firstName, lastName, mobileNum, address,
-    } = req.payload;
-    const updateUsersObject = {
-      userName,
-    };
-    const updateUsersDetailsObject = {
-      password, 
-      firstName, 
-      lastName,
-      mobileNum,
-      address,
-    };
-    const results = await db.users.findAll({
-      where: { id },
-      include: [{
-        model: db.userDetails,
-        as: 'userDetails',
-      }],
-    });
 
-    try {
-      const updatePromises = [];
-      const updateUsersPromise = db.users.update(
-        updateUsersObject,
-        { where: { id } },
-      );
-      updatePromises.push(updateUsersPromise);
+      const updateUserDetailsObject = {
+        password, 
+        firstName, 
+        lastName,
+        mobileNum,
+        address,
+      };
 
-      const updateUserDetailsPromise = db.userDetails.update(
-        updateUsersDetailsObject,
-        { where: { id } },
-      );
-      updatePromises.push(updateUserDetailsPromise); 
+      try {
+        const updatePromises = [];
+        const updateUsersPromise = db.user.update(
+          updateUsersObject,
+          { where: { id } },
+        );
+        updatePromises.push(updateUsersPromise);
 
-      await Promise.all(updatePromises);
-      // return 'users records updated';
-      return results
-    } catch (e) {
-      console.log('error updating user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}, {
-  method: 'DELETE',
-  path: '/users/{id}',
-  handler: async (req, h) => {
-    try {
-      const { id } = req.params;
-      const results = await db.users.destroy({
-        where: {
-          id: id,
-        },
-      });
-      return results;
-    } catch (e) {
-      console.log('error deleting user:', e);
-      return h.response('Failed:', e.message).code(500);
-    }
-  },
-}];
+        const updateUserDetailsPromise = db.userDetail.update(
+          updateUserDetailsObject,
+          { where: { id } },
+        );
+        updatePromises.push(updateUserDetailsPromise); 
 
-// const updatePostsPromises = posts.map((p) => {
-      //   const { postTitle, postId } = p;
-      //   const updateObject = {
-      //     title: postTitle,
-      //   };
-      //   const whereQuery = {
-      //     id,
-      //     id: postId,
-      //   };
-      //   return db.posts.update(
-      //     updateObject,
-      //     { where: whereQuery },
-      //   );
-      // });
-      // updatePromises.push(...updatePostsPromises);
+        await Promise.all(updatePromises);
+
+
+        const results = await db.user.findAll({
+          where: { id },
+          include: [
+            {
+              model: db.userDetail,
+              as: 'userDetail',
+            },
+          ],
+        });
+
+        return results
+
+      } catch (e) {
+        console.log('error updating user:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'DELETE',
+    path: '/users/{id}',
+    handler: async (req, h) => {
+      try {
+        const { id } = req.params;
+        const results = await db.user.destroy({
+          where: {
+            id: id,
+          },
+        });
+        return results;
+      } catch (e) {
+        console.log('error deleting user:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }
+];
+
+// TODO: get `UPDATE` `.userDetails` working
+// TODO: work on `DELETE` on how to delete corresponding `.userDetails`

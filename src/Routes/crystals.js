@@ -1,110 +1,202 @@
 const db = require('../../models');
 
-module.exports = [{
+module.exports = [
+  {
   method: 'POST',
   path: '/crystals/create',
   handler: async (req, h) => {
-    const { crystalName } = req.payload;
+    const { 
+        name, bio, image, otherNames, colour, chakra, userId, originId, mementoId,
+    } = req.payload;
     try {
-      await db.crystal.create({
-        crystalName,
-      });
-      return 'ok';
-    } catch (e) {
-      console.log('error creating crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}, {
-  method: 'GET',
-  path: '/crystals',
-  handler: async (_, h) => {
-    try {
-      const results = await db.crystal.findAll({
-        attributes: ['id', 'name'],
-      });
-      return results;
-    } catch (e) {
-      console.log('error creating crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}, {
-  method: 'GET',
-  path: '/crystals/{crystalId}',
-  handler: async (req, h) => {
-    const { crystalId } = req.params;
-    try {
-      const results = await db.crystal.findAll({
-        where: { id: crystalId },
-        attributes: ['id', 'crystalName'],
-        include: {
-          model: db.User,
-          as: 'user',
-          attributes: ['id', 'bio', 'name'],
-        },
-      });
-      return results;
-    } catch (e) {
-      console.log('error creating crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}, {
-  method: 'PUT',
-  path: '/crystals/{crystalId}',
-  handler: async (req, h) => {
-    const { crystalId } = req.params;
-    const { crystalName } = req.payload;
-    try {
-      const noOfRecordsUpdated = await db.crystal.update({
-        crystalName,
+      const results = await db.crystal.create({
+        name,
+        bio,
+        image,
+        otherNames,
+        colour,
+        chakra,
+        userId,
+        originId,
+        mementoId,
       }, {
-        where: { id: crystalId },
+        include: [
+        {
+          model: db.user,
+          as: 'createdBy',
+        },
+        {
+          model: db.location,
+          as: 'origin',
+        },
+        {
+          model: db.location,
+          as: 'memento',
+        },
+      ],
+
       });
-      return {
-        success: true,
-        results: noOfRecordsUpdated,
-      };
-    } catch (e) {
-      console.log('error modifying crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}, {
-  method: 'DELETE',
-  path: '/crystals/{crystalId}',
-  handler: async (req, h) => {
-    const { crystalId } = req.params;
-    try {
-      const results = await db.crystal.destroy({
-        where: { id: crystalId },
+
+      return results;
+
+      } catch (e) {
+        console.log('error creating crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'GET',
+    path: '/crystals',
+    handler: async (_, h) => {
+      try {
+        const results = await db.crystal.findAll({
+          include: [
+            {
+              model: db.user,
+              as: 'createdBy',
+            }, 
+            {
+              model: db.location,
+              as: 'origin',
+            },
+            {
+              model: db.location,
+              as: 'memento',
+            },
+            {
+              model: db.user,
+              as: 'favouritedBy',
+              through: {
+                model: db.favourite,
+              },
+            },
+          ],
+
+        });
+        return results;
+      } catch (e) {
+        console.log('error creating crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'GET',
+    path: '/crystals/{id}',
+    handler: async (req, h) => {
+      const { id } = req.params;
+      try {
+        const results = await db.crystal.findAll({
+          where: { id },
+        }, {
+          include: [
+            {
+              model: db.user,
+              as: 'createdBy',
+            }, 
+            {
+              model: db.location,
+              as: 'origin',
+            },
+            {
+              model: db.location,
+              as: 'memento',
+            },
+            {
+              model: db.user,
+              as: 'favouritedBy',
+              through: {
+                model: db.favourite,
+              },
+            },
+          ],
+
+        });
+        return results;
+      } catch (e) {
+        console.log('error creating crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'PUT',
+    path: '/crystals/{id}',
+    handler: async (req, h) => {
+      const { id } = req.params;
+      const { 
+        name, bio, image, otherNames, colour, chakra, userId, originId, mementoId, favouritedBy,
+      } = req.payload;
+      const results = await db.crystal.findAll({
+        where: { id },
       });
-      return {
-        success: true,
-        results,
-      };
-    } catch (e) {
-      console.log('error modifying crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}, {
-  method: 'DELETE',
-  path: '/crystals/{crystalId}/{userId}',
-  handler: async (req, h) => {
-    const { crystalId, userId } = req.params;
-    try {
-      const results = await db.users_crystals.destroy({
-        where: { crystalId, userId },
-      });
-      return {
-        success: true,
-        results,
-      };
-    } catch (e) {
-      console.log('error modifying crystal:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}];
+      try {
+        const updateCrystalsObject = await db.crystal.update({
+          name,
+          bio,
+          image,
+          otherNames,
+          colour,
+          chakra,
+          userId,
+          originId,
+          mementoId,
+        }, {
+          where: { id },
+        }, {
+          include: [
+            {
+              model: db.user,
+              as: 'createdBy',
+            },
+            {
+              model: db.location,
+              as: 'origin',
+            },
+            {
+              model: db.location,
+              as: 'memento',
+            },
+            {
+              model: db.user,
+              as: 'favouritedBy',
+              through: {
+                model: db.favourite,
+              },
+            },
+          ],
+
+        });
+
+        await Promise.all(updateCrystalsObject);
+
+        return results
+        
+      } catch (e) {
+        console.log('error modifying crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  {
+    method: 'DELETE',
+    path: '/crystals/{crystalId}',
+    handler: async (req, h) => {
+      const { crystalId } = req.params;
+      try {
+        const results = await db.crystal.destroy({
+          where: { id },
+        });
+        return {
+          success: true,
+          results,
+        };
+      } catch (e) {
+        console.log('error modifying crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  }, 
+  
+];

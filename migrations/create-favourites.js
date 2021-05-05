@@ -2,18 +2,20 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('favourites', {
-      id: {
+      userId: {
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
         type: Sequelize.INTEGER,
-        // references: { model: 'User', key: 'id' },
-        // onDelete: 'CASCADE',
+        primaryKey: true,
+
+        references: { model: 'user', key: 'id' },
+        onDelete: 'CASCADE',
       },
       crystalId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        // references: { model: 'Crystal', key: 'id' },
-        // onDelete: 'CASCADE',
+
+        references: { model: 'crystal', key: 'id' },
+        onDelete: 'CASCADE',
       },
     });
   },
