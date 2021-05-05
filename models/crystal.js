@@ -14,8 +14,15 @@ module.exports = (queryInterface, Sequelize) => {
 
   crystal.associate = (models) => {
     crystal.belongsTo(models.user, { foreignKey: 'userId', as: 'createdBy' });
+    
     crystal.belongsTo(models.location, { foreignKey: 'originId', as: 'origin' });
     crystal.belongsTo(models.location, { foreignKey: 'mementoId', as: 'memento' });
+
+    crystal.belongsToMany(models.user, { 
+      foreignKey: 'crystalId', 
+      through: models.favourite, 
+      as: 'favouritedBy', 
+    });
   }
 
   
