@@ -1,6 +1,7 @@
 const db = require('../../models');
 
-module.exports = [{
+module.exports = [
+  {
   method: 'POST',
   path: '/locations',
   handler: async (req, h) => {
@@ -25,7 +26,8 @@ module.exports = [{
       return h.response(`Failed: ${e.message}`).code(500);
     }
   },
-}, {
+}, 
+{
   method: 'GET',
   path: '/locations',
   handler: async (_, h) => {
@@ -50,7 +52,8 @@ module.exports = [{
       return h.response(`Failed: ${e.message}`).code(500);
     }
   },
-}, {
+}, 
+{
   method: 'GET',
   path: '/locations/{id}',
   handler: async (req, h) => {
@@ -71,7 +74,8 @@ module.exports = [{
       return h.response(`Failed: ${e.message}`).code(500);
     }
   },
-}, {
+}, 
+{
   method: 'PUT',
   path: '/locations/{id}',
   handler: async (req, h) => {
@@ -105,7 +109,8 @@ module.exports = [{
       return h.response(`Failed: ${e.message}`).code(500);
     }
   },
-}, {
+}, 
+{
   method: 'DELETE',
   path: '/locations/{crystalId}',
   handler: async (req, h) => {
@@ -123,22 +128,5 @@ module.exports = [{
       return h.response(`Failed: ${e.message}`).code(500);
     }
   },
-}, {
-  method: 'DELETE',
-  path: '/locations/{crystalId}/{userId}',
-  handler: async (req, h) => {
-    const { crystalId, userId } = req.params;
-    try {
-      const results = await db.users_crystal.destroy({
-        where: { crystalId, userId },
-      });
-      return {
-        success: true,
-        results,
-      };
-    } catch (e) {
-      console.log('error modifying location:', e);
-      return h.response(`Failed: ${e.message}`).code(500);
-    }
-  },
-}];
+}, 
+];
