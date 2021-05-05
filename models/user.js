@@ -13,6 +13,12 @@ module.exports = (queryInterface, Sequelize) => {
     user.hasOne(models.userDetail, { foreignKey: 'id', as: 'userDetail', onDelete: 'CASCADE' });
     // 1:n
     user.hasMany(models.crystal, { foreignKey: 'userId', as: 'createdCrystals' });
+    // n:m
+    user.belongsToMany(models.crystal, { 
+      foreignKey: 'userId', 
+      through: models.favourite, 
+      as: 'favouriteCrystals', 
+    });
   };
 
   return user;
