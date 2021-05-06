@@ -6,7 +6,7 @@
   "author": "Samantha Kellow <sammii.h@icloud.com>",
   "license": "MIT",
   "scripts": {
-    "start:client": "nodemon -r dotenv/config app.js",
+    "start:client": "nodemon -r dotenv/config ./src/app.js",
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
     "db:g:migration": "sequelize-cli migration:generate --name",
