@@ -12,3 +12,8 @@ module.exports = [
   ...locations,
   ...favourites,
 ];
+
+// export { default as ping } from './ping'
+// export { default as crystals } from './crystals'
+// export { default as locations } from './locations'
+// export { default as favourites } from './favourites'

@@ -1,7 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
-const Routes = require('./Routes');
+const Routes = require('../crystalAPI/controller');
 
 const init = async () => {
   const server = Hapi.Server({
