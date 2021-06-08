@@ -122,7 +122,7 @@ module.exports = [
         const verify = isVerified(decoded, secret)
         console.log("verify", verify);
 
-        if (verify) {
+        if (verify.isValid) {
           const { id } = req.params;
           const results = await db.user.findOne({
             where: { id },
@@ -133,7 +133,8 @@ module.exports = [
             verify,
             results,
           };
-        } else return Boom.unauthorized('Access Denied')
+        }
+        // } else return Boom.unauthorized('Access Denied')
 
 
       } catch (e) {
@@ -162,15 +163,15 @@ module.exports = [
         console.log("🔒 token", token);
         
         const decoded = decodedToken(token)
-        const verify = isVerified(decoded, secret)
+        const verify = isVerified(decoded, secret, id)
         console.log("verify", verify);
-        const sub = decoded.decoded.payload.sub
-        const isCurrentUser = sub === id
-
+        // const sub = decoded.decoded.payload.sub
+        const isCurrentUser = id == verify.sub
         console.log("isCurrentUser", isCurrentUser);
         
 
         if (verify.isValid && isCurrentUser) {
+        // if (verify.isValid && isCurrentUser) {
           const updatePromises = [];
           const updateUsersPromise = db.user.update(
             updateUsersObject,
@@ -186,8 +187,10 @@ module.exports = [
   
           return {
             verify,
-            results,
             isCurrentUser,
+            currentUser: verify.sub,
+            id,
+            results,
           }
         } else return Boom.unauthorized('Access Denied')
 

@@ -7,8 +7,17 @@ const { secret, tokenExpiry } = require('../config/environment');
 // Greate funtion to verify a token
 const verifyToken = (artifact, secret, options = {}) => {
   try {
+    const sub = artifact.decoded.payload.sub
+    console.log("sub, options", sub, options);
+    
+    const isCurrentUser = artifact.decoded.payload.sub == options.id
     Jwt.token.verify(artifact, secret, options);
-    return { isValid: true };
+    return { 
+      isValid: true,
+      sub,
+      isCurrentUser,
+      options,
+    };
   }
   catch (err) {
     return {
