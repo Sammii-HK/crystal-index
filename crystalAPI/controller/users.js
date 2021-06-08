@@ -12,8 +12,8 @@ module.exports = [
       const results = await db.user.create({
         username, 
         email, 
+        password,
         userDetail: {
-          password,
           firstName, 
           lastName,
           mobileNum,
@@ -119,10 +119,10 @@ module.exports = [
 
       const updateUsersObject = {
         username,
+        password, 
       };
 
       const updateUserDetailsObject = {
-        password, 
         firstName, 
         lastName,
         mobileNum,

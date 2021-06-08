@@ -1,6 +1,5 @@
 module.exports = (queryInterface, Sequelize) => {
   const userDetail = queryInterface.define('userDetail', {
-    password: Sequelize.STRING,
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
     mobileNum: Sequelize.STRING,

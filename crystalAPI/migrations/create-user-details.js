@@ -8,9 +8,6 @@ module.exports = {
       references: { model: 'user', key: 'id' },
       onDelete: 'CASCADE',
     },
-    password: {
-      type: Sequelize.STRING
-    },
     firstName: {
       type: Sequelize.STRING,
     },
