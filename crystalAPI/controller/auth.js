@@ -164,8 +164,13 @@ module.exports = [
         const decoded = decodedToken(token)
         const verify = isVerified(decoded, secret)
         console.log("verify", verify);
+        const sub = decoded.decoded.payload.sub
+        const isCurrentUser = sub === id
 
-        if (verify) {
+        console.log("isCurrentUser", isCurrentUser);
+        
+
+        if (verify.isValid && isCurrentUser) {
           const updatePromises = [];
           const updateUsersPromise = db.user.update(
             updateUsersObject,
@@ -181,9 +186,10 @@ module.exports = [
   
           return {
             verify,
-            results
+            results,
+            isCurrentUser,
           }
-        }
+        } else return Boom.unauthorized('Access Denied')
 
       } catch (e) {
         console.log('error updating user:', e);
