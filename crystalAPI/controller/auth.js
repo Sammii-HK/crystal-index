@@ -133,7 +133,8 @@ module.exports = [
             verify,
             results,
           };
-        }
+        } else return Boom.unauthorized('Access Denied')
+
 
       } catch (e) {
         console.log('error finding user:', e);
