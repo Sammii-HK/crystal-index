@@ -188,8 +188,6 @@ module.exports = [
           return {
             verify,
             isCurrentUser,
-            currentUser: verify.sub,
-            id,
             results,
           }
         } else return Boom.unauthorized('Access Denied')
