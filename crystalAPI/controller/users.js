@@ -6,11 +6,11 @@ module.exports = [
   path: '/users',
   handler: async (req, h) => {
     const {
-      userName, email, password, firstName, lastName, mobileNum, address,
+      username, email, password, firstName, lastName, mobileNum, address,
     } = req.payload;
     try {
       const results = await db.user.create({
-        userName, 
+        username, 
         email, 
         userDetail: {
           password,
@@ -44,7 +44,7 @@ module.exports = [
     handler: async (_, h) => {
       try {
         const results = await db.user.findAll({
-          // attributes: ['id', 'userName'],
+          // attributes: ['id', 'username'],
           // attributes: { exclude: ['password',] },
           include: [
             {
@@ -114,11 +114,11 @@ module.exports = [
     handler: async (req, h) => {
       const { id } = req.params;
       const {
-        userName, password, firstName, lastName, mobileNum, address,
+        username, password, firstName, lastName, mobileNum, address,
       } = req.payload;
 
       const updateUsersObject = {
-        userName,
+        username,
       };
 
       const updateUserDetailsObject = {

@@ -2,7 +2,7 @@
 module.exports = (queryInterface, Sequelize) => {
 
   const user = queryInterface.define('user', {
-    userName: Sequelize.STRING,
+    username: Sequelize.STRING,
     email: Sequelize.STRING,
   }, {
     timestamps: false
