@@ -3,6 +3,7 @@ const users = require('./users');
 const crystals = require('./crystals');
 const locations = require('./locations');
 const favourites = require('./favourites');
+const auth = require('./auth');
 
 
 module.exports = [
@@ -11,6 +12,7 @@ module.exports = [
   ...crystals,
   ...locations,
   ...favourites,
+  ...auth,
 ];
 
 // export { default as ping } from './ping'
