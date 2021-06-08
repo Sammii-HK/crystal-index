@@ -19,12 +19,12 @@ module.exports = [
     },
     handler: async (req, h) => {
       const {
-        username, email, password,
+        username, email, password, firstName, lastName, mobileNum, address,
       } = req.payload;
       try {    
         let message
         await db.user.findOne({ 
-          where: { username, email } })
+          where: { username } })
         .then(async (user) => {
           // only create a user if none are found with matching credentials
           if(!user) {
@@ -32,6 +32,19 @@ module.exports = [
               username, 
               email, 
               password: await bcrypt.hash(password, 10),
+              userDetail: {
+                firstName, 
+                lastName,
+                mobileNum,
+                address,
+              }
+            }, {
+              include: [
+                {
+                  model: db.userDetail,
+                  as: 'userDetail',
+                },
+              ],
             });
             message = {
               success: true,
