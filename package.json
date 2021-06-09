@@ -8,12 +8,13 @@
   "scripts": {
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
-    "db:g:migration": "sequelize-cli migration:generate --name",
-    "db:g:seed": "sequelize-cli seed:generate --name",
-    "db:seeds": "sequelize-cli db:seed:all",
     "db:drop": "sequelize-cli db:drop",
     "start:server": "nodemon crystalAPI/server.js",
-    "start:client": "vue-cli-service serve"
+    "start:client": "crystal-app/ && node serve --open",
+    "serve": "npx vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "help": "vue -h"
   },
   "dependencies": {
     "@hapi/hapi": "^20.1.1",
@@ -21,10 +22,13 @@
     "bcrypt": "^5.0.1",
     "boom": "^7.3.0",
     "buefy": "^0.9.7",
+    "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
+    "pg": "^8.6.0",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0",
     "vue": "2.6.11",
+    "vue-cli": "^2.9.6",
     "vuex": "3.1.2"
   },
   "devDependencies": {
