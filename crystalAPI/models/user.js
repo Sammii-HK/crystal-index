@@ -24,5 +24,3 @@ module.exports = (queryInterface, Sequelize) => {
 
   return user;
 };
-
-console.log('user', this.user);

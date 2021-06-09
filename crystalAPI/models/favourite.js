@@ -15,5 +15,3 @@ module.exports = (queryInterface, Sequelize) => {
 
   return favourite;
 };
-
-console.log('favourite', this.favourite);
