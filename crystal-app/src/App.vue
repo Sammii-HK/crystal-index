@@ -1,12 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <c-navbar/>
     <router-view />
   </div>
 </template>
+
+<script>
+import CNavbar from './components/CNavBar.vue'
+export default {
+  name: 'app',
+  components: {
+    CNavbar,
+  },
+}
+</script>
 
 <style>
 #app {
