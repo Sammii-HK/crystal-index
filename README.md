@@ -1,5 +1,24 @@
-# Backend running on port 4000
-`pipenv run flask run --port=4000`
+# crystal-app
 
-// "build": "vue-cli-service build --dest build",
-//"build": "node  --max_old_space_size=4096 node_modules/.bin/vue-cli-service build",
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Lints and fixes files
+```
+yarn lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
