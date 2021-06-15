@@ -19,6 +19,10 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/crystals-gallery",
+    name: "Crystals Gallery",
+    component: () => import("../views/CrystalsGallery.vue") },
 ];
 
 const router = new VueRouter({
