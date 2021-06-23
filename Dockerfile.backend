@@ -16,7 +16,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY crystal-api .
 
 EXPOSE 3000
-CMD [ "node", "crystal-api/server.js" ]
+CMD [ "node", "server.js" ]
