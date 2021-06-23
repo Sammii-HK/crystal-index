@@ -7,14 +7,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
 
-        references: { model: 'user', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onDelete: 'CASCADE',
       },
       crystalId: {
         allowNull: false,
         type: Sequelize.INTEGER,
 
-        references: { model: 'crystal', key: 'id' },
+        references: { model: 'crystals', key: 'id' },
         onDelete: 'CASCADE',
       },
     });
