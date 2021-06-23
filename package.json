@@ -16,20 +16,23 @@
     "db:drop": "sequelize-cli db:drop"
   },
   "dependencies": {
-    "buefy": "^0.9.7",
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.4.0",
     "@hapi/hapi": "^20.1.1",
     "@hapi/jwt": "^2.0.1",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "boom": "^7.3.0",
+    "buefy": "^0.9.7",
+    "core-js": "^3.6.5",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
+    "sass-loader": "^12.1.0",
     "sequelize": "^6.5.0",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -56,8 +59,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
