@@ -20,11 +20,11 @@
     <template #end>
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
+          <a v-if="!isLoggedIn" class="button is-light"  @click="openRegisterComponent">
             Log in
+          </a>
+          <a v-if="isLoggedIn" class="button is-light"  @click="logout">
+            Log Out
           </a>
         </div>
       </b-navbar-item>
@@ -33,8 +33,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'c-navbar',
+  methods: {
+    openRegisterComponent() {
+      this.$buefy.modal.open({
+          parent: this,
+          component: () => import('@/components/Auth/AuthForm'),
+          hasModalCard: true,
+      })
+    },
+    logout() {
+      this.$store.dispatch('logOut')
+    },
+  },
+  computed: {
+    ...mapGetters([
+      "isLoggedIn"
+    ]),
+  },
+  mounted() {
+    console.log("this.isLoggedIn", this.isLoggedIn);    
+  },
 }
 </script>
 
