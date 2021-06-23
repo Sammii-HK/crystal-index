@@ -5,7 +5,7 @@ const Routes = require('./controller');
 
 const init = async () => {
   const server = Hapi.Server({
-    host: `localhost`,
+    host: `0.0.0.0`,
     port: 3000,
   });
   server.route(Routes);
