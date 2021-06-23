@@ -27,6 +27,6 @@ services:
     container_name: crystalsdb
     image: postgres
     environment:
-      POSTGRES_USER: hellosammii
-      POSTGRES_PASSWORD: hellocrystals
+      POSTGRES_USER: pi
+      POSTGRES_PASSWORD: 
       POSTGRES_DB: crystal_index_dev
