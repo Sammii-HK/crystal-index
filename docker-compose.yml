@@ -14,14 +14,14 @@ services:
       dockerfile: Dockerfile.backend
     ports:
       - "3000:3000"
-      crystalsdb:
-        container_name: crystalsdb
-        image: postgres
+    crystalsdb:
+      container_name: crystalsdb
+      image: postgres
 
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: pass
-          POSTGRES_DB: crystal_index_dev
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: pass
+        POSTGRES_DB: crystal_index_dev
           
         # environment:
         #   DB_HOST: crystalsdb
