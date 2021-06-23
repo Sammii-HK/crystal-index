@@ -1,15 +1,27 @@
-version: "3.9"  # optional since v1.27.0
+version: "3.9"
 services:
-  web:
-    build: .
+  crystalsfrontend:
+    container_name: crystalsfrontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
     ports:
-      - "3000:8080"
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
-    links:
-      - redis
-  redis:
-    image: redis
-volumes:
-  logvolume01: {}
+      - "80:8080"
+  crystalsbackend:
+    container_name: crystalsbackend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: crystalsdb
+      DB_USERNAME: hellosammii
+      DB_PASSWORD: hellocrystals
+  crystalsdb:
+    container_name: crystalsdb
+    image: postgres
+    environment:
+      POSTGRES_USER: hellosammii
+      POSTGRES_PASSWORD: hellocrystals
+      POSTGRES_DB: crystal_index_dev
