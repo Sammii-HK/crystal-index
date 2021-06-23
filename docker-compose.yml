@@ -26,8 +26,6 @@ services:
   crystalsdb:
     container_name: crystalsdb
     image: postgres
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: pi
       POSTGRES_PASSWORD: 
