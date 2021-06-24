@@ -1,11 +1,11 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('userDetails', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('userDetail', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.INTEGER,
 
-      references: { model: 'user', key: 'id' },
+      references: { model: 'users', key: 'id' },
       onDelete: 'CASCADE',
     },
     firstName: {
@@ -29,5 +29,5 @@ module.exports = {
       type: Sequelize.DATE,
     },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('userDetails'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('userDetail'),
 };

@@ -63,21 +63,21 @@ module.exports = {
         // allowNull: false,
         type: Sequelize.INTEGER,
 
-        references: { model: 'user', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onDelete: 'CASCADE',
       },
       originId: {
         // allowNull: false,
         type: Sequelize.INTEGER,
   
-        references: { model: 'location', key: 'id' },
+        references: { model: 'locations', key: 'id' },
         onDelete: 'CASCADE',
       },
       mementoId: {
         // allowNull: false,
         type: Sequelize.INTEGER,
   
-        references: { model: 'location', key: 'id' },
+        references: { model: 'locations', key: 'id' },
         onDelete: 'CASCADE',
       },
     });
