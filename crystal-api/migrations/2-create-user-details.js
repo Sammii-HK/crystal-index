@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('userDetail', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('userDetails', {
     id: {
       allowNull: false,
       primaryKey: true,
