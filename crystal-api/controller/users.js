@@ -183,6 +183,3 @@ module.exports = [
     },
   }
 ];
-
-// TODO: get `UPDATE` `.userDetails` working
-// TODO: work on `DELETE` on how to delete corresponding `.userDetails`
