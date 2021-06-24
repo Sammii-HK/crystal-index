@@ -14,16 +14,15 @@ services:
       dockerfile: Dockerfile.backend
     ports:
       - "3000:3000"
+    environment:
+      DB_HOST: crystalsdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: pi
+    command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
   crystalsdb:
     container_name: crystalsdb
     image: postgres
-
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_dev
-          
-        # environment:
-        #   DB_HOST: crystalsdb
-        #   DB_USERNAME: hellosammii
-        #   DB_PASSWORD: hellocrystals
