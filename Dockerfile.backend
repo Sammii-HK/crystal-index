@@ -1,8 +1,13 @@
-FROM node:14
+FROM node:14 as base
 
 # FROM ubuntu:20.04
 # RUN apt-get update && apt-get install -y curl
 
+FROM base as development
+RUN npm install -g nodemon
+WORKDIR /usr/src/app
+
+FROM base as production
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -19,4 +24,4 @@ RUN npm install
 COPY crystal-api .
 
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+ENTRYPOINT [ "node", "server.js" ]

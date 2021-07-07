@@ -1,19 +1,10 @@
 version: "3.9"
 services:
-  crystalsfrontend:
-    container_name: crystalsfrontend
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    depends_on:
-      - crystalsbackend
-    ports:
-      - 80:8080
   crystalsbackend:
     container_name: crystalsbackend
     build:
       context: .
-      target: production
+      target: development
       dockerfile: Dockerfile.backend
     depends_on:
       - crystalsdb
@@ -23,7 +14,10 @@ services:
       DB_HOST: crystalsdb
       DB_USERNAME: postgres
       DB_PASSWORD: pi
-    command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
+    volumes:
+      - .:/usr/src/app
+    entrypoint: [ "npm", "run", "start:server" ]
+    tty: true
   crystalsdb:
     container_name: crystalsdb
     image: postgres
