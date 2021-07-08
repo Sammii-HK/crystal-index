@@ -3,23 +3,26 @@ FROM node:14 as base
 # FROM ubuntu:20.04
 # RUN apt-get update && apt-get install -y curl
 
-FROM base as development
-RUN npm install -g nodemon
-WORKDIR /usr/src/app
-
-FROM base as production
-# Create app directory
-WORKDIR /usr/src/app
-
+FROM base as builder
+WORKDIR /build
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
-
 RUN npm install
+
+FROM base as development
+WORKDIR /usr/src/app
+RUN npm install -g nodemon
+COPY --from=builder /build/node_modules ./node_modules
+
+FROM base as production
+# Create app directory
+WORKDIR /usr/src/app
 # If you are building your code for production
 # RUN npm ci --only=production
 
+COPY --from=builder /build/node_modules ./node_modules
 # Bundle app source
 COPY crystal-api .
 
