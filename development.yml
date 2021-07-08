@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+  crystalsbackend:
+    container_name: crystalsbackend
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.backend
+    depends_on:
+      - crystalsdb
+    ports:
+      - 3000:3000
+    environment:
+      DB_HOST: crystalsdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: pi
+    volumes:
+      - ./crystal-api:/usr/src/app/crystal-api
+    entrypoint: [ "nodemon", "crystal-api/server.js" ]
+    tty: true
+  crystalsfrontend:
+    container_name: crystalsfrontend
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - crystalsbackend
+    ports:
+      - 80:8080
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./package.json:/usr/src/app/package.json
+    entrypoint: [ "npm", "run", "start:client" ]
+    tty: true
+  crystalsfrontend:
+    container_name: crystalsfrontend
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - crystalsdb
+    ports:
+      - 80:8080
+    environment:
+      DB_HOST: crystalsdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: pi
+    volumes:
+      - ./crystal-api:/usr/src/app/crystal-api
+      - ./package.json:/usr/src/app/package.json
+    entrypoint: [ "npm", "run", "start:client" ]
+    tty: true
+  crystalsdb:
+    container_name: crystalsdb
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pi
+      POSTGRES_DB: crystal_index_dev

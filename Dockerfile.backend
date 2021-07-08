@@ -1,22 +1,19 @@
-FROM node:14
+FROM node:14 as base
 
-# FROM ubuntu:20.04
-# RUN apt-get update && apt-get install -y curl
-
-# Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+FROM base as builder
+WORKDIR /build
 COPY package*.json ./
-
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
 
-# Bundle app source
-COPY crystal-api .
+FROM base as development
+WORKDIR /usr/src/app
+RUN npm install -g nodemon
+COPY --from=builder /build/node_modules ./node_modules
+
+FROM base as production
+WORKDIR /usr/src/app
+COPY --from=builder /build/node_modules ./node_modules
+COPY /crystal-api .
 
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+ENTRYPOINT [ "node", "server.js" ]
