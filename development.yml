@@ -16,8 +16,22 @@ services:
       DB_PASSWORD: pi
     volumes:
       - ./crystal-api:/usr/src/app/crystal-api
+    entrypoint: [ "nodemon", "crystal-api/server.js" ]
+    tty: true
+  crystalsfrontend:
+    container_name: crystalsfrontend
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - crystalsbackend
+    ports:
+      - 80:8080
+    volumes:
+      - ./src:/usr/src/app/src
       - ./package.json:/usr/src/app/package.json
-    entrypoint: [ "npm", "run", "start:server" ]
+    entrypoint: [ "npm", "run", "start:client" ]
     tty: true
   crystalsfrontend:
     container_name: crystalsfrontend
