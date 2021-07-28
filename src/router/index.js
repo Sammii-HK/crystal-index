@@ -11,6 +11,11 @@ const routes = [
     component: Home,
   },
   {
+    path: "/login",
+    name: "Login",
+    component: () => import("../components/Auth/Login") 
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -25,9 +30,15 @@ const routes = [
     component: () => import("../views/CrystalsGallery") 
   },
   {
-    path: "/login",
-    name: "Login",
-    component: () => import("../components/Auth/Login") 
+    path: "/crystal-form",
+    name: "Crystal Form",
+    component: () => import("../views/CrystalForm") 
+  },
+  {
+    path: '/crystals/:id/',
+    name: "View Crystal",
+    // component: () => import("../views/CrystalForm") 
+    component: () => import("../views/CrystalView") 
   },
 ];
 
