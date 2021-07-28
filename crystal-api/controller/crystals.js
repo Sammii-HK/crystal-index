@@ -24,6 +24,7 @@ module.exports = [
         {
           model: db.user,
           as: 'createdBy',
+          attributes: ['id', 'username'],
         },
         {
           model: db.location,
@@ -55,6 +56,7 @@ module.exports = [
             {
               model: db.user,
               as: 'createdBy',
+              attributes: ['id', 'username'],
             }, 
             {
               model: db.location,
@@ -94,6 +96,7 @@ module.exports = [
             {
               model: db.user,
               as: 'createdBy',
+              attributes: ['id', 'username'],
             }, 
             {
               model: db.location,
@@ -149,6 +152,7 @@ module.exports = [
             {
               model: db.user,
               as: 'createdBy',
+              attributes: ['id', 'username'],
             },
             {
               model: db.location,
