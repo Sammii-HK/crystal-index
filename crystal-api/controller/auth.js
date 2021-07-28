@@ -126,6 +126,13 @@ module.exports = [
           const { id } = req.params;
           const results = await db.user.findOne({
             where: { id },
+          }, {
+            include: [
+              {
+                model: db.userDetail,
+                as: 'userDetail',
+              },
+            ],
           });
           
           return {
@@ -183,6 +190,13 @@ module.exports = [
   
           const results = await db.user.findAll({
             where: { id },
+          }, {
+            include: [
+              {
+                model: db.userDetail,
+                as: 'userDetail',
+              },
+            ],
           });
   
           return {
