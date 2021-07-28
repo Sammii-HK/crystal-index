@@ -50,7 +50,7 @@ module.exports = [
             {
               model: db.userDetail,
               as: 'userDetail',
-              attributes: ['firstName'],
+              // attributes: ['firstName'],
             }, 
             {
               model: db.crystal,
@@ -87,7 +87,7 @@ module.exports = [
             {
               model: db.userDetail,
               as: 'userDetail',
-              attributes: ['firstName'],
+              // attributes: ['firstName'],
             }, {
               model: db.crystal,
               as: 'createdCrystals',
