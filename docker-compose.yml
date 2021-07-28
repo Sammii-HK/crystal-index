@@ -33,3 +33,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_dev
+      
