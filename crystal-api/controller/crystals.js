@@ -91,7 +91,6 @@ module.exports = [
       try {
         const results = await db.crystal.findAll({
           where: { id },
-        }, {
           include: [
             {
               model: db.user,
@@ -109,12 +108,12 @@ module.exports = [
             {
               model: db.user,
               as: 'favouritedBy',
+              attributes: ['id', 'username'],
               through: {
                 model: db.favourite,
               },
             },
           ],
-
         });
         return results;
       } catch (e) {
