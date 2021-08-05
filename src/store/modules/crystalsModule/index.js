@@ -3,9 +3,7 @@ import axios from 'axios';
 const defaultState = () => {
   return {
     crystals: [],
-    crystal: {
-      id: null,
-    },
+    crystal: {},
   }
 }
 
@@ -18,23 +16,18 @@ export default {
     UPDATE_CRYSTAL (state, payload) {
       state.crystal = payload
     },
-    // USER_UPDATE(state, payload) {
-    //   state[payload.key] = payload.value
-    // },
   },  
   actions: {
     updateCrystal({ commit }, updatedValues) {
       commit('UPDATE_CRYSTAL', updatedValues)
     },
-    getCrystal ({ commit }, id) {
+    getCrystal({ commit }, id) {
       axios.get(`/api/crystals/${id}`).then((response) => {
         const crystal = response.data[0]
-        
-        console.log("getCrystal", crystal);
         commit('UPDATE_CRYSTAL', crystal)
       });
     },
-    getCrystals ({ commit }) {
+    getCrystals({ commit }) {
       axios.get('/api/crystals').then((response) => {
         commit('UPDATE_CRYSTALS', response.data)
       });
