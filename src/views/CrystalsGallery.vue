@@ -28,13 +28,22 @@
       :key="crystal.id"
       class="column is-4"
       >
-        {{ crystal.name }}
-        <figure class="image" @click="selectedCrystal(crystal.id)">
+        <figure 
+        class="image is-clickable" 
+        @click="selectedCrystal(crystal.id)"
+        @mouseenter="toggleOverlay(crystal.id, true)"
+        @mouseleave="toggleOverlay(crystal.id, false)"
+        >
           <b-image
           :src="crystal.image" 
           :alt="crystal.name"
           ratio="1by1"
           />
+          <div v-if="activeCrystal == crystal.id"
+          class="is-overlay is-flex is-align-items-center is-justify-content-center has-background-primary"
+          >
+            <p class="subtitle">{{ crystal.name }}</p>
+          </div>
         </figure>
       </div>
     </div>
@@ -45,6 +54,12 @@
 import { mapGetters } from "vuex";
 export default {
   name: "crystals-gallery",
+  data() {
+    return {
+      hover: false,
+      activeCrystal: null,
+    }
+  },
   computed: {
     ...mapGetters([
       "crystals"
@@ -57,6 +72,11 @@ export default {
     selectedCrystal(id) {
       this.$router.push(`/crystals/${id}`)
     },
+    toggleOverlay(id, hover) {
+      hover 
+      ? this.activeCrystal = id
+      : this.activeCrystal = null;
+    }
   },
 }
 </script>
