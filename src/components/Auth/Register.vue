@@ -5,7 +5,6 @@
       model="username"
       type="text"
       />
-      <!-- :value="user.username" -->
       <!-- @input="updateUser({ key: 'username', value: $event })" -->
     </b-field>
     <b-field label="password">
@@ -13,7 +12,6 @@
       model="password"
       type="password"
       />
-      <!-- :value="user.password" -->
     </b-field>
     <div class="container">
       <b-button>
