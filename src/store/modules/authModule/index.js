@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const defaultState = () => ({ 
   token: null,
+  user: {},
 })
 
 export default {
