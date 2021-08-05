@@ -5,6 +5,7 @@ import axios from 'axios';
 import crystalsModule from "./modules/crystalsModule"
 import authModule from "./modules/authModule"
 import userModule from "./modules/userModule"
+import locationsModule from "./modules/locationsModule"
 
 axios.defaults.withCredentials = true
 // axios.defaults.baseURL = 'https://gabbyblog.herokuapp.com/';
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     crystalsModule,
     authModule,
     userModule,
+    locationsModule,
   },
   plugins: [createPersistedState()],
 });
