@@ -1,6 +1,5 @@
 <template>
   <div class="section">
-    <p class="title">The Crystal Index</p>
     <crystals-gallery />
   </div>
 </template>
