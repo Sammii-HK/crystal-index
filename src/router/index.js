@@ -40,6 +40,12 @@ const routes = [
     // component: () => import("../views/CrystalForm") 
     component: () => import("../views/CrystalView") 
   },
+  {
+    path: '/profile',
+    name: "Profile",
+    // component: () => import("../views/CrystalForm") 
+    component: () => import("../views/Profile") 
+  },
 ];
 
 const router = new VueRouter({

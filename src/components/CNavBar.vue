@@ -12,6 +12,9 @@
       <b-navbar-item href="/crystal-form">
         Create Crystal
       </b-navbar-item>
+      <b-navbar-item href="/profile">
+        Profile
+      </b-navbar-item>
     </template>
 
     <template #end>
@@ -52,6 +55,9 @@ export default {
     ]),
   },
   mounted() {
+    console.log("this.isLoggedIn", this.isLoggedIn);    
+  },
+  updated() {
     console.log("this.isLoggedIn", this.isLoggedIn);    
   },
 }
