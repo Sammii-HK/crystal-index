@@ -24,13 +24,6 @@ export default {
       commit('USER_UPDATE', updatedValues)
       // commit('CLEAR')
     },
-    logOut({ commit }) {
-      commit('CLEAR')
-      commit('CLEAR_TOKEN')
-      // commit('SET_TOKEN', null, { root: true })
-      console.log("logged out");
-      // router.push('/');
-    },
   },
   getters: {
     isAdmin: (state) => state.roles.includes('admin'),
