@@ -5,7 +5,7 @@
         <p class="subtitle">The Crystal Index</p>
       </b-navbar-item>
     </template>
-    <template #start>
+    <!-- <template #start>
       <b-navbar-item href="/">
         About
       </b-navbar-item>
@@ -15,10 +15,10 @@
       <b-navbar-item href="/profile">
         Profile
       </b-navbar-item>
-    </template>
+    </template> -->
 
     <template #end>
-      <b-navbar-item tag="div">
+      <!-- <b-navbar-item tag="div">
         <div class="buttons">
           <a v-if="!isLoggedIn" class="button is-light"  @click="openRegisterComponent">
             Log in
@@ -27,7 +27,7 @@
             Log Out
           </a>
         </div>
-      </b-navbar-item>
+      </b-navbar-item> -->
     </template>
   </b-navbar>
 </template>
