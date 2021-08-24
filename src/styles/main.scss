@@ -1,0 +1,19 @@
+@charset "utf-8";
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// 1. Import the initial variables
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
+// 2. Set your own initial variables
+@import "./colours.scss";
+
+// Global Styles
+* {
+  color: $primary;
+}
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
