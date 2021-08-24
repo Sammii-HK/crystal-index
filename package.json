@@ -25,8 +25,11 @@
     "core-js": "^3.6.5",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
+    "node": "^16.1.0",
+    "node-sass": "^6.0.1",
     "pg": "^8.6.0",
-    "sass-loader": "^12.1.0",
+    "sass": "^1.38.1",
+    "sass-loader": "^10.2.0",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0",
     "vue": "^2.6.11",
@@ -40,17 +43,14 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "express": "4.17.x",
-    "prettier": "^2.2.1",
     "vue-template-compiler": "^2.6.11"
   },
   "engines": {
-    "node": ">=10.13.3"
+    "node": "16.x"
   },
   "eslintConfig": {
     "root": true,
