@@ -26,10 +26,7 @@
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "node": "^16.1.0",
-    "node-sass": "^6.0.1",
     "pg": "^8.6.0",
-    "sass": "^1.38.1",
-    "sass-loader": "^10.2.0",
     "sequelize": "^6.5.0",
     "sequelize-cli": "^6.2.0",
     "vue": "^2.6.11",
@@ -47,6 +44,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "express": "4.17.x",
+    "sass": "^1.38.2",
+    "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.11"
   },
   "engines": {
