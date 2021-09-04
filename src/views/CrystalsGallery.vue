@@ -40,7 +40,7 @@
           ratio="1by1"
           />
           <div v-if="activeCrystal == crystal.id"
-          class="is-overlay is-flex is-align-items-center is-justify-content-center has-background-primary"
+          class="is-overlay is-flex is-align-items-center is-justify-content-center has-background-transparent-white"
           >
             <p class="subtitle">{{ crystal.name }}</p>
           </div>

@@ -11,7 +11,8 @@
 
 // Global Styles
 * {
-  color: $primary;
+  // color: $primary;
+  box-sizing: border-box;
 }
 
 // Import Bulma and Buefy styles
