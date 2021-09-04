@@ -26,12 +26,14 @@ module.exports = {
           values: [
             'white',
             'red',
+            'pink',
             'orange',
             'yellow',
             'green',
             'blue',
             'indigo',
             'violet',
+            'black',
           ],
             // required: 'Please select a valid colour',
         }))
