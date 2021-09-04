@@ -8,7 +8,7 @@ services:
     depends_on:
       - crystalsbackend
     ports:
-      - 80:8080
+      - 80:80
   crystalsbackend:
     container_name: crystalsbackend
     build:
@@ -17,8 +17,6 @@ services:
       dockerfile: Dockerfile.backend
     depends_on:
       - crystalsdb
-    ports:
-      - 3000:3000
     environment:
       DB_HOST: crystalsdb
       DB_USERNAME: postgres
@@ -27,8 +25,6 @@ services:
   crystalsdb:
     container_name: crystalsdb
     image: postgres
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pi
