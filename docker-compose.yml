@@ -28,7 +28,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pi
-      POSTGRES_DB: crystal_index_dev
+      POSTGRES_DB: crystal_index_db
     volumes:
       - ./data:/var/lib/postgresql/data     
  
