@@ -18,3 +18,7 @@ docker-compose -f development.yml up crystalsbackend crystalsfrontend
 ```
 docker-compose up --build
 ```
+
+_NB_
+```docker-compose up``` 
+will build the container the first time if it's never been built before, but any changes to Dockerfiles or anything to do with it, **you have to manually build again**
