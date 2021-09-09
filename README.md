@@ -1,8 +1,11 @@
-# crystal-app
+# The Crystal Index
+
+A very ambitious side project to catalogue my crystals.
 
 ## Project setup
 ```
-npm install
+docker exec -it crystalsbackend npx sequelize-cli db:create
+docker exec -it crystalsbackend npx sequelize-cli db:migrate
 ```
 
 ### Compiles and hot-reloads for development
@@ -15,11 +18,3 @@ docker-compose -f development.yml up crystalsbackend crystalsfrontend
 ```
 docker-compose up --build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
