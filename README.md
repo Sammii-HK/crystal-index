@@ -7,13 +7,13 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run start:server
-npm fun start:client
+docker-compose -f development.yml build
+docker-compose -f development.yml up crystalsbackend crystalsfrontend
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+docker-compose up --build
 ```
 
 ### Lints and fixes files
