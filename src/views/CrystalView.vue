@@ -16,26 +16,19 @@
         <div class="column is-4 is-offset-1" >
           <p class="title mt-0 mb-6">{{ crystal.name }}</p>
           <div>
-            <b-taglist class="mt-3">
-              <b-tag v-for="colour in crystal.colour" :key="colour">
-                {{colour}}
+            <b-taglist v-for="(tagSet, tagSetIndex) in attrs.secondary" :key="tagSet" class="mt-3">
+              {{tagSet}}:
+              <b-tag v-for="(attr, index) in attrs" :key="index">
+                <!-- {{crystal.tagSet.attr}} -->
+                {{ crystal[attrs.secondary[tagSetIndex]] }}
               </b-tag>
             </b-taglist>
-
-            <b-taglist class="mt-4">
-              <b-tag v-for="chakra in crystal.chakra" :key="chakra">
-                {{chakra}}
-              </b-tag>
-            </b-taglist>
-
           </div>
           <div class="mt-4">
-            <p class="mt-6">{{crystal.bio}}</p>
-            <p class="mt-6">Origin: {{crystal.origin.placeName}}</p>
-            <p class="mt-6">Memento: {{crystal.memento.placeName}}</p>
-
+            <p v-for="attr in attrs.primary" :key="attr" class="mt-6">
+              {{attr}}: {{crystal[attr]}}
+            </p>
           </div>
-
         </div>
       </div>
     </div>
