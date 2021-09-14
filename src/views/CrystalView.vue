@@ -44,11 +44,18 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+const config = {
+  // Attributes to be placed in the dropdown list
+  secondary: ['colour', 'chakra'],
+  excluded: ['id', 'image']
+}
+
 export default {
   name: "crystals-view",
   data() {
     return {
       crystalId: null,
+      attrs: [],
     }
   },
   computed: {
@@ -58,7 +65,8 @@ export default {
   },
   mounted() {
     this.crystalId = this.$route.params.id
-    this.loadCrystal(this.crystalId)
+    this.loadCrystal(this.crystalId)    
+    this.attrs = this.hierarchizeAttributes(Object.keys(this.crystal))
   },
   methods: {
     ...mapActions({
@@ -68,7 +76,15 @@ export default {
     async loadCrystal(id) {
       await this.$store.dispatch("getCrystal", id);
     },
-  },
+    // Organise attrs into main attrs and tag attrs
+    hierarchizeAttributes(attrs) {
+      return attrs.reduce((acc, currentAttr) => {
+        const key = config.secondary.includes(currentAttr.toLowerCase()) ? 'secondary' : 'primary';
+        acc[key] = Array.isArray(acc[key]) ? acc[key].concat(currentAttr) : [ currentAttr ]
+
+        return acc
+      }, {})
+    },
   updated() {
     
   },
