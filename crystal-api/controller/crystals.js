@@ -91,6 +91,7 @@ module.exports = [
       try {
         const results = await db.crystal.findAll({
           where: { id },
+          attributes: { exclude: [ 'originId', 'mementoId', 'userId' ] },
           include: [
             {
               model: db.user,
