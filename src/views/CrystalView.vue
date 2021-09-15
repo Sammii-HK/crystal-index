@@ -74,11 +74,17 @@ export default {
     // Organise attrs into main attrs and tag attrs
     hierarchizeAttributes(attrs) {
       return attrs.reduce((acc, currentAttr) => {
-        const key = config.secondary.includes(currentAttr.toLowerCase()) ? 'secondary' : 'primary';
+        const key = config.tags.includes(currentAttr.toLowerCase()) ? 'tags' 
+        : config.locations.includes(currentAttr.toLowerCase()) ? 'location' 
+        : config.excluded.includes(currentAttr.toLowerCase()) ? 'excluded' 
+        : config.dates.includes(currentAttr.toLowerCase()) ? 'dates' 
+        : 'primary';
+        // if is array, then add attr to array, else make array with attr
         acc[key] = Array.isArray(acc[key]) ? acc[key].concat(currentAttr) : [ currentAttr ]
-
+        
         return acc
-      }, {})
+      }, {}
+      )
     },
   updated() {
     
