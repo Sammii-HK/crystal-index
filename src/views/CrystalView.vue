@@ -39,8 +39,10 @@
 import { mapGetters, mapActions } from "vuex";
 const config = {
   // Attributes to be placed in the dropdown list
-  secondary: ['colour', 'chakra'],
-  excluded: ['id', 'image']
+  tags: ['colour', 'chakra'],
+  locations: ['origin', 'memento'],
+  dates: ['createdAt'],
+  excluded: ['id', 'name', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
 }
 
 export default {
