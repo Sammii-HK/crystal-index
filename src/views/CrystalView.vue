@@ -4,7 +4,7 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
-        <div class="column is-6" >
+        <div class="column is-6-desktop is-8-touch" >
           <figure class="image">
             <b-image
             :src="crystal.image" 
@@ -13,19 +13,18 @@
             />
           </figure>
         </div>
-        <div class="column is-4 is-offset-1" >
+        <div class="column is-4-desktop is-8-touch is-offset-1" >
           <p class="title mt-0 mb-6">{{ crystal.name }}</p>
           <div>
-            <b-taglist v-for="(tagSet, tagSetIndex) in attrs.secondary" :key="tagSet" class="mt-3">
+            <b-taglist v-for="(tagSet, i) in attrs.tags" :key="tagSet" class="mt-3">
               {{tagSet}}:
-              <b-tag v-for="(attr, index) in attrs" :key="index">
-                <!-- {{crystal.tagSet.attr}} -->
-                {{ crystal[attrs.secondary[tagSetIndex]] }}
+              <b-tag v-for="attr in crystal[attrs.tags[i]]" :key="attr">
+                {{attr}}
               </b-tag>
             </b-taglist>
           </div>
           <div class="mt-4">
-            <p v-for="attr in attrs.primary" :key="attr" class="mt-6">
+            <p :v-if="attrs.primary[attr]" v-for="attr in attrs.primary" :key="attr" class="mt-6">
               {{attr}}: {{crystal[attr]}}
             </p>
           </div>
