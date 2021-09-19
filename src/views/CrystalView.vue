@@ -17,17 +17,26 @@
           <p class="title mt-0 mb-6">{{ crystal.name }}</p>
           <div>
             <b-taglist v-for="(tagSet, i) in attrs.tags" :key="tagSet" class="mt-3">
-              {{tagSet}}:
-              <b-tag v-for="attr in crystal[attrs.tags[i]]" :key="attr">
+              <span class="mr-3">{{tagSet}}: </span>
+              <b-tag v-for="attr in crystal[attrs.tags[i]]" :key="attr" class="mb-0 mt-1">
                 {{attr}}
               </b-tag>
             </b-taglist>
           </div>
           <div class="mt-4">
-            <p :v-if="attrs.primary[attr]" v-for="attr in attrs.primary" :key="attr" class="mt-6">
+            <p v-for="(attr) in attrs.primary" :key="attr" class="mt-6">
               {{attr}}: {{crystal[attr]}}
             </p>
           </div>
+          <div class="mt-4">
+            <p 
+            v-for="(attr) in attrs.locations" 
+            :key="attr" 
+            class="mt-6">
+              {{attr}}: {{crystal[attr].placeName}}
+            </p>
+          </div>
+          <div class="has-text-bold is-size-4 mt-4 is-pulled-right mt-6">created by: {{crystal.createdBy.username}}</div>
         </div>
       </div>
     </div>
@@ -37,11 +46,12 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 const config = {
-  // Attributes to be placed in the dropdown list
+  // Attributes to be placed in different elements
+  // toExclude: ['id', 'name', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
   tags: ['colour', 'chakra'],
   locations: ['origin', 'memento'],
   dates: ['createdAt'],
-  excluded: ['id', 'name', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
+  primary: ['bio', 'otherNames']
 }
 
 export default {
@@ -49,7 +59,7 @@ export default {
   data() {
     return {
       crystalId: null,
-      attrs: [],
+      attrs: {},
     }
   },
   computed: {
@@ -59,7 +69,7 @@ export default {
   },
   mounted() {
     this.crystalId = this.$route.params.id
-    this.loadCrystal(this.crystalId)    
+    this.loadCrystal(this.crystalId)
     this.attrs = this.hierarchizeAttributes(Object.keys(this.crystal))
   },
   methods: {
@@ -73,20 +83,20 @@ export default {
     // Organise attrs into main attrs and tag attrs
     hierarchizeAttributes(attrs) {
       return attrs.reduce((acc, currentAttr) => {
-        const key = config.tags.includes(currentAttr.toLowerCase()) ? 'tags' 
-        : config.locations.includes(currentAttr.toLowerCase()) ? 'location' 
-        : config.excluded.includes(currentAttr.toLowerCase()) ? 'excluded' 
-        : config.dates.includes(currentAttr.toLowerCase()) ? 'dates' 
-        : 'primary';
+        const key = this.getKey(currentAttr)
         // if is array, then add attr to array, else make array with attr
         acc[key] = Array.isArray(acc[key]) ? acc[key].concat(currentAttr) : [ currentAttr ]
-        
         return acc
       }, {}
       )
     },
-  updated() {
-    
+    getKey(currentAttr) {
+      if (config.tags.includes(currentAttr.toLowerCase())) return 'tags'
+      else if (config.primary.includes(currentAttr.toLowerCase())) return 'primary'
+      else if (config.locations.includes(currentAttr.toLowerCase())) return 'locations'
+      else if (config.dates.includes(currentAttr.toLowerCase())) return 'dates'
+      return 'toExclude'
+    },
   },
 }
 </script>
