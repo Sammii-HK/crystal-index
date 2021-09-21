@@ -70,7 +70,8 @@ export default {
   mounted() {
     this.crystalId = this.$route.params.id
     this.loadCrystal(this.crystalId)
-    this.attrs = this.hierarchizeAttributes(Object.keys(this.crystal))
+    this.filteredAttrs = this.filterNullAttrs()
+    this.attrs = this.hierarchizeAttributes()
   },
   methods: {
     ...mapActions({
@@ -81,7 +82,9 @@ export default {
       await this.$store.dispatch("getCrystal", id);
     },
     // Organise attrs into main attrs and tag attrs
-    hierarchizeAttributes(attrs) {
+    hierarchizeAttributes() {
+      const attrs = Object.keys(this.filteredAttrs)
+      
       return attrs.reduce((acc, currentAttr) => {
         const key = this.getKey(currentAttr)
         // if is array, then add attr to array, else make array with attr
@@ -96,6 +99,12 @@ export default {
       else if (config.locations.includes(currentAttr.toLowerCase())) return 'locations'
       else if (config.dates.includes(currentAttr.toLowerCase())) return 'dates'
       return 'toExclude'
+    },
+    filterNullAttrs() {
+      const obj = this.crystal
+      return Object.keys(obj)
+      .filter((k) => obj[k] != null)
+      .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
     },
   },
 }
