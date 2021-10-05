@@ -19,8 +19,8 @@ services:
       - crystalsdb
     environment:
       DB_HOST: crystalsdb
-      DB_USERNAME: postgres
-      DB_PASSWORD: pi
+      DB_USERNAME: docker
+      DB_PASSWORD: docker
     command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
   crystalsdb:
     container_name: crystalsdb
@@ -30,5 +30,17 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: crystal_index_db
     volumes:
-      - ./data:/var/lib/postgresql/data     
+      - ./data:/var/lib/postgresql/data
+  # postgresql:
+  #   image: postgres
+  #   container_name: pg-docker
+  #   ports:
+  #     - "5400:5432"
+  #   environment:
+  #     - POSTGRES_USER=docker
+  #     - POSTGRES_PASSWORD=docker
+  #   volumes:
+  #     - ./postgres.conf:/etc/postgresql/postgresql.conf
+  #   command: postgres -c config_file=/etc/postgresql/postgresql.conf
+  #   restart: always
 

@@ -12,8 +12,8 @@ services:
       - 3000:3000
     environment:
       DB_HOST: crystalsdb
-      DB_USERNAME: postgres
-      DB_PASSWORD: pi
+      DB_USERNAME: docker
+      DB_PASSWORD: docker
     volumes:
       - ./crystal-api:/usr/src/app/crystal-api
     entrypoint: [ "nodemon", "crystal-api/server.js" ]
@@ -39,6 +39,6 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pi
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
       POSTGRES_DB: crystal_index_dev
