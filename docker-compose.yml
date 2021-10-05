@@ -29,8 +29,16 @@ services:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: crystal_index_db
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
     volumes:
-      - ./data:/var/lib/postgresql/data
+      # Persist the data between container invocations
+      # - postgresVolume:/var/lib/postgresql/data
+      - crystalsdb:/var/lib/postgresql/data
+      - ./logs:/logs
+
+    # volumes:
+    #   - ./data:/var/lib/postgresql/data
+
   # postgresql:
   #   image: postgres
   #   container_name: pg-docker
@@ -43,4 +51,14 @@ services:
   #     - ./postgres.conf:/etc/postgresql/postgresql.conf
   #   command: postgres -c config_file=/etc/postgresql/postgresql.conf
   #   restart: always
+
+  # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
+  #    environment:
+  #      # Provide the password via an environment variable. If the variable is unset or empty, use a default password
+  #      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-4WXUms893U6j4GE&Hvk3S*hqcqebFgo!vZi}
+  #    # If on a non-Linux OS, make sure you share the drive used here. Go to Docker's settings -> Shared Drives
+  #    volumes:
+  #      # Persist the data between container invocations
+  #      - postgresVolume:/var/lib/postgresql/data
+  #      - ./logs:/logs
 
