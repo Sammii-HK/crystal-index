@@ -33,10 +33,11 @@ services:
     volumes:
       # Persist the data between container invocations
       # - postgresVolume:/var/lib/postgresql/data
-      volumes:
-      - ./data:/var/lib/postgresql/data
-      - ./logs:/logs
-      
+      volumes: [
+        './data:/var/lib/postgresql/data',
+        './logs:/logs'
+      ]
+
       # - ./crystal-api:/usr/src/app/crystal-api
       # - crystalsdb:/var/lib/postgresql/data
 
