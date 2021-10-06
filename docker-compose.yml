@@ -25,8 +25,6 @@ services:
   crystalsdb:
     container_name: crystalsdb
     image: postgres
-    build:
-      context: .
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
@@ -36,9 +34,9 @@ services:
       # Persist the data between container invocations
       # - crystalsdb:/var/lib/postgresql/data
       # - ./data:/var/lib/postgresql/data
-      - crystalsData:/var/lib/postgresql/data
+      - data:/var/lib/postgresql/data
 volumes:
-  crystalsData:
+  data:
 
 
 
