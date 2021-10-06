@@ -25,6 +25,8 @@ services:
   crystalsdb:
     container_name: crystalsdb
     image: postgres
+    build:
+      context: .
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
