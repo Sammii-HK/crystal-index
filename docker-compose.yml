@@ -34,8 +34,9 @@ services:
     # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
     volumes:
       # Persist the data between container invocations
-      - crystalsdb:/var/lib/postgresql/data
+      # - crystalsdb:/var/lib/postgresql/data
       # - ./data:/var/lib/postgresql/data
+      - data:/var/lib/postgresql/data
       # volumes: [
       #   './data:/var/lib/postgresql/data',
       #   './logs:/logs'
@@ -46,19 +47,6 @@ services:
 
     # volumes:
     #   - ./data:/var/lib/postgresql/data
-
-  # postgresql:
-  #   image: postgres
-  #   container_name: pg-docker
-  #   ports:
-  #     - "5400:5432"
-  #   environment:
-  #     - POSTGRES_USER=docker
-  #     - POSTGRES_PASSWORD=docker
-  #   volumes:
-  #     - ./postgres.conf:/etc/postgresql/postgresql.conf
-  #   command: postgres -c config_file=/etc/postgresql/postgresql.conf
-  #   restart: always
 
   # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
   #    environment:
