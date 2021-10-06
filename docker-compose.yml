@@ -25,14 +25,15 @@ services:
   crystalsdb:
     container_name: crystalsdb
     image: postgres
+    restart: always
     environment:
-      POSTGRES_USER: docker
-      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_db
     # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
     volumes:
       # Persist the data between container invocations
-      - ./data:/var/lib/postgresql/data
+      - /home/pi/postgresql_data:/var/lib/postgresql/data:rw,delegated
 volumes:
   data:
 
