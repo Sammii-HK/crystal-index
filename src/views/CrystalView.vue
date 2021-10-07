@@ -7,7 +7,7 @@
         <div class="column is-6-desktop is-8-touch" >
           <figure class="image">
             <b-image
-            :src="crystal.image" 
+            :src="`http://192.168.1.34:94/crystals/${crystal.id}.png`" 
             :alt="crystal.name"
             ratio="1by1"
             />
@@ -45,6 +45,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import moment from 'moment'
+
 const config = {
   // Attributes to be placed in different elements
   // toExclude: ['id', 'name', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
@@ -107,6 +109,11 @@ export default {
       .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
     },
   },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    }
+  }
 }
 </script>
 
