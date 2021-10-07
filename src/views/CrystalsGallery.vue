@@ -3,7 +3,7 @@
 <template>
   <div class="container pt-4">
     <div class="columns is-multiline is-mobile">
-      <div class="column is-12">
+      <!-- <div class="column is-12">
         <div class="columns is-centered">
           <div class="column is-3">
             <b-field>
@@ -12,7 +12,6 @@
               icon="magnify"
               icon-clickable
               >
-              <!-- @icon-click="searchIconClick" -->
               </b-input>
             </b-field>
 
@@ -22,7 +21,8 @@
           </div>
 
         </div>
-      </div>
+      </div> -->
+      
       <div
       v-for="crystal in crystals" 
       :key="crystal.id"
