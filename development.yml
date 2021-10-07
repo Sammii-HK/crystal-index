@@ -39,6 +39,11 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: docker
-      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_dev
+    volumes:
+      # Persist the data between container invocations
+      - ./data:/var/lib/postgresql/data
+volumes:
+  data:
