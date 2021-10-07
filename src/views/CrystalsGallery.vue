@@ -35,7 +35,7 @@
         @mouseleave="toggleOverlay(crystal.id, false)"
         >
           <b-image
-          :src="`http://192.168.1.34:94/crystals/${crystal.id}.png`" 
+          :src="crystal.image" 
           :alt="crystal.name"
           ratio="1by1"
           />
