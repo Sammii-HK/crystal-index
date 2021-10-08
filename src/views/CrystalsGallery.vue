@@ -22,8 +22,6 @@
 
         </div>
       </div> -->
-
-      {{crystals}}
       
       <div
       v-for="crystal in crystals" 
@@ -36,7 +34,6 @@
         @mouseenter="toggleOverlay(crystal.id, true)"
         @mouseleave="toggleOverlay(crystal.id, false)"
         >
-        <p>id: {{crystal.id}}</p>
           <b-image
           :src="`http://192.168.1.34:94/crystals/${crystal.id}.png`"
           :alt="crystal.name"
