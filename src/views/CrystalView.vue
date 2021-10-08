@@ -7,7 +7,7 @@
         <div class="column is-6-desktop is-8-touch" >
           <figure class="image">
             <b-image
-            :src="`http://192.168.1.34:94/crystals/${crystal.id}.png`" 
+            :src="`assets.crystalindex.co.uk/crystals/${crystal.id}.png`" 
             :alt="crystal.name"
             ratio="1by1"
             />
