@@ -35,7 +35,7 @@
         @mouseleave="toggleOverlay(crystal.id, false)"
         >
           <b-image
-          :src="`http://sammii.ddns.net:8443/crystals/${crystal.id}.png`"
+          :src="`https://static.crystalindex.co.uk:8443/crystals/${crystal.id}.png`"
           :alt="crystal.name"
           ratio="1by1"
           />
