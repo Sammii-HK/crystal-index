@@ -38,7 +38,7 @@
         >
         <p>id: {{crystal.id}}</p>
           <b-image
-          :src="crystal.image" 
+          :src="`http://192.168.1.34:94/crystals/${crystal.id}.png`"
           :alt="crystal.name"
           ratio="1by1"
           />
