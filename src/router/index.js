@@ -30,9 +30,9 @@ const routes = [
     component: () => import("../views/CrystalsGallery") 
   },
   {
-    path: "/crystal-form",
-    name: "Crystal Form",
-    component: () => import("../views/CrystalForm") 
+    path: "/crystal-create",
+    name: "Crystal Create Form",
+    component: () => import("../views/CrystalCreateForm") 
   },
   {
     path: '/crystals/:id/',
