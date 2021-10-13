@@ -34,6 +34,8 @@ module.exports = {
             'indigo',
             'violet',
             'black',
+            'brown',
+            'clear',
           ],
             // required: 'Please select a valid colour',
         }))
