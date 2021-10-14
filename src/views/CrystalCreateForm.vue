@@ -4,38 +4,60 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
-        <div class="column" >
+        <div class="column is-10" >
 
-          <div>
-            <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="mt-3">
-              <span class="mr-3">{{tagSet}}: </span>
-              <b-tag
-              v-for="(attr, i) in constants[tagSet]" 
-              :key="attr" 
-              class="mb-0 mt-1 is-clickable"
-              :type="`is-${constants.colours[i]}`"
-              @click="selectTag('event')"
-              >
-                {{attr}}
-              </b-tag>
-            </b-taglist>
-          </div>
-          <hr />
-          {{fields}}
-          <!-- <div class="mt-4">
-            <p v-for="(attr) in attrs.primary" :key="attr" class="mt-6">
-              {{attr}}: {{crystal[attr]}}
-            </p>
-          </div>
-          <div class="mt-4">
-            <p 
-            v-for="(attr) in attrs.locations" 
+          <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="my-5">
+            <span class="mr-3">{{tagSet}}: </span>
+            <b-tag
+            v-for="(attr, i) in constants[tagSet]" 
             :key="attr" 
-            class="mt-6">
-              {{attr}}: {{crystal[attr].placeName}}
-            </p>
-          </div> -->
-          <!-- <div class="has-text-bold is-size-4 mt-4 is-pulled-right mt-6">created by: {{crystal.createdBy.username}}</div> -->
+            class="mb-0 mt-1 is-clickable is-unselectable"
+            :type="`is-${constants.colours[i]} is-light`"
+            @click="click"
+            >
+            <!-- @click="selectTag(constants[tagSet][i])" -->
+              {{attr}}
+            </b-tag>
+          </b-taglist>
+
+          <b-field v-for="(attrType) in fields.input" :key="attrType" :label="attrType">
+            <b-input 
+            :v-model="attrType"
+            >
+            </b-input>
+          </b-field>
+
+          <b-field v-for="(attrType) in fields.textArea" :key="attrType" :label="attrType">
+            <b-input 
+            :v-model="attrType"
+            type="textarea"
+            >
+            </b-input>
+          </b-field>
+
+          <div class="columns mt-5">
+            <b-field 
+            v-for="attr in fields.select" 
+            :key="attr" 
+            :label="fields.select[attr]"
+            class="column is-6"
+            >
+              <b-select
+              :v-model="`selected${attr}`"
+              :placeholder="`Select ${attr}`"
+              expanded
+              >
+                <option
+                v-for="option in constants[attr]"
+                :value="option"
+                :key="option">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -43,53 +65,21 @@
 </template>
 
 <script>
-// import { constants., chakras } from "../constants";
-import moment from 'moment'
-
-const config = {
-  // Attributes to be placed in different elements
-  toExclude: ['id', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
-  tags: ['colour', 'chakra'],
-  locations: ['origin', 'memento'],
-  // primary: ['bio', 'otherNames']
-}
-
-const colours = [
-  'white', 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'brown', 'clear'
-]
-
-const chakras = [ 
-  'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root',
-]
+const colours = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
+const chakras = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
 
 const fields = {
-  input: [
-    "name",
-    "bio",
-    "otherNames",
-  ],
-  select: {
-    locations: [
-      "originId",
-      "mementoId",
-    ],
-    tags: [
-      "colours",
-      "chakras",
-    ]
-    // tags: {
-    //   "colour": constants.,
-    //   "chakra": chakras,
-    // }
-  }
+  input: [ "name", "otherNames", ],
+  textArea: [ "bio", ],
+  tags: [ "colours", "chakras", ],
+  select: [ "origin", "memento", ],
 }
-
-// let { colours, chakras } = consts
 
 export default {
   name: "crystal-create-form",
   data() {
     return {
+      crystal: {},
       fields,
       constants: {
         colours,
@@ -97,46 +87,16 @@ export default {
       },
     }
   },
-  mounted() {
-    // this.crystalId = this.$route.params.id
-    // this.loadCrystal(this.crystalId)
-    // this.filteredAttrs = this.filterNullAttrs()
-    // this.attrs = this.hierarchizeAttributes()
-  },
   methods: {
-    // Organise attrs into main attrs and tag attrs
-    hierarchizeAttributes() {
-      const attrs = Object.keys(this.filteredAttrs)
+    click() {
+      console.log("clicked", );
       
-      return attrs.reduce((acc, currentAttr) => {
-        console.log("currentAttr", currentAttr);
-        
-        const key = this.getKey(currentAttr)
-        // if is array, then add attr to array, else make array with attr
-        acc[key] = Array.isArray(acc[key]) ? acc[key].concat(currentAttr) : [ currentAttr ]
-        return acc
-      }, {}
-      )
     },
-    getKey(currentAttr) {
-      console.log("currentAttr", currentAttr);
-      if (config.tags.includes(currentAttr.toLowerCase())) return 'tags'
-      else if (config.locations.includes(currentAttr.toLowerCase())) return 'locations'
-      else if (config.primary.includes(currentAttr.toLowerCase())) return 'toExclude'
-      return 'primary'
-    },
-    filterNullAttrs() {
-      const obj = this.crystal
-      return Object.keys(obj)
-      .filter((k) => obj[k] != null)
-      .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
-    },
-  },
-  filters: {
-    moment: function (date) {
-      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    selectTag(event) {
+      console.log("event", event);
+      return event
     }
-  }
+  },
 }
 </script>
 
