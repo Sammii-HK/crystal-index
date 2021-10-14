@@ -23,23 +23,21 @@ services:
       dockerfile: Dockerfile.backend
     depends_on:
       - crystalsdb
-    # ports:
-    #   - 3000:3000
     environment:
-      DB_HOST: crystalsdb
-      DB_USERNAME: postgres
-      DB_PASSWORD: pi
+      NODE_ENV: development
+      # DB_HOST: crystalsdb
+      # DB_USERNAME: postgres
+      # DB_PASSWORD: pi
     command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; nodemon crystal-api/server.js"
-    # volumes:
-    #   - ./crystal-api:/usr/src/app/crystal-api
-    # # entrypoint: [ "nodemon", "crystal-api/server.js" ]
-    # tty: true
+    volumes:
+      - ./crystal-api:/usr/src/app/crystal-api
+    entrypoint: [ "nodemon", "crystal-api/server.js" ]
+    tty: true
   crystalsdb:
     container_name: crystalsdb
     image: postgres
-    # ports:
-    #   - 5432:5432
     environment:
+      # NODE_ENV: development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_dev

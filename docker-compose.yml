@@ -18,15 +18,16 @@ services:
     depends_on:
       - crystalsdb
     environment:
-      DB_HOST: crystalsdb
-      DB_USERNAME: postgres
-      DB_PASSWORD: pi
-    command: bash -c "sudo chown -R pi:pi data; sudo chmod -R 777 data; npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
+      # DB_USERNAME: postgres
+      # DB_PASSWORD: pi
+      NODE_ENV: production
+    command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
   crystalsdb:
     container_name: crystalsdb
     image: postgres
     restart: always
     environment:
+      # NODE_ENV: production
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pi
       POSTGRES_DB: crystal_index_db
@@ -36,6 +37,7 @@ services:
 volumes:
   data:
 
+# sudo chown -R pi:pi data; sudo chmod -R 777 data; 
 
   # command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
   #    environment:

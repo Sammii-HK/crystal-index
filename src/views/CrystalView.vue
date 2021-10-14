@@ -48,8 +48,7 @@ import { mapGetters, mapActions } from "vuex";
 import moment from 'moment'
 
 const config = {
-  // Attributes to be placed in different elements
-  // toExclude: ['id', 'name', 'image', 'createdAt', 'updatedAt', 'favouritedBy', 'userId', 'originId', 'locationId'],
+  // Attributes to be displayed in different formats
   tags: ['colour', 'chakra'],
   locations: ['origin', 'memento'],
   dates: ['createdAt'],
