@@ -5,23 +5,20 @@
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
         <div class="column" >
-          <div>
-            <b-field v-for="attr in fields.select.tags" :key="attr" :label="fields.select.tags[attr]">
-              <b-select
-              multiple
-              native-size="7"
-              :v-model="`selected${attr}`"
-              :placeholder="`Select ${attr}`"
-              >
-                <option
-                v-for="option in constants[attr]"
-                :value="option"
-                :key="option">
-                  {{ option }}
-                </option>
-              </b-select>
-            </b-field>
 
+          <div>
+            <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="mt-3">
+              <span class="mr-3">{{tagSet}}: </span>
+              <b-tag
+              v-for="(attr, i) in constants[tagSet]" 
+              :key="attr" 
+              class="mb-0 mt-1 is-clickable"
+              :type="`is-${constants.colours[i]}`"
+              @click="selectTag('event')"
+              >
+                {{attr}}
+              </b-tag>
+            </b-taglist>
           </div>
           <hr />
           {{fields}}

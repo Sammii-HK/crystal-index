@@ -5,8 +5,23 @@ $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
 $twitter: #4099FF;
 $twitter-invert: findColorInvert($twitter);
+// transperencies
 $transparent-white: #ffffff80;
 $transparent-black: #00000080;
+$clear: $transparent-white;
+// monotones
+$white: #fff;
+$black: #333;
+// rainbow
+$red: #e60000;
+$pink: #ff0066;
+$orange: #ff6600;
+$yellow: #ffcc00;
+$green: #ccff33;
+$blue: #66ffff;
+$indigo: #0066cc;
+$violet: #cc66ff;
+$brown: #663300;
 
 // Lists and maps
 $custom-colors: null !default;
@@ -14,65 +29,101 @@ $custom-shades: null !default;
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: mergeColorMaps(
-    (
-        "white": (
-            $white,
-            $black,
-        ),
-        "black": (
-            $black,
-            $white,
-        ),
-        "light": (
-            $light,
-            $light-invert,
-        ),
-        "dark": (
-            $dark,
-            $dark-invert,
-        ),
-        "primary": (
-            $primary,
-            $primary-invert,
-            $primary-light,
-            $primary-dark,
-        ),
-        "link": (
-            $link,
-            $link-invert,
-            $link-light,
-            $link-dark,
-        ),
-        "info": (
-            $info,
-            $info-invert,
-            $info-light,
-            $info-dark,
-        ),
-        "success": (
-            $success,
-            $success-invert,
-            $success-light,
-            $success-dark,
-        ),
-        "warning": (
-            $warning,
-            $warning-invert,
-            $warning-light,
-            $warning-dark,
-        ),
-        "danger": (
-            $danger,
-            $danger-invert,
-            $danger-light,
-            $danger-dark,
-        ),
-        "transparent-white": (
-          $transparent-white,
-          $transparent-black,
-        )
+  (
+    "white": (
+      $white,
+      $black,
     ),
-    $custom-colors
+    "black": (
+      $black,
+      $white,
+    ),
+    "light": (
+      $light,
+      $light-invert,
+    ),
+    "dark": (
+      $dark,
+      $dark-invert,
+    ),
+    "primary": (
+      $primary,
+      $primary-invert,
+      $primary-light,
+      $primary-dark,
+    ),
+    "link": (
+      $link,
+      $link-invert,
+      $link-light,
+      $link-dark,
+    ),
+    "info": (
+      $info,
+      $info-invert,
+      $info-light,
+      $info-dark,
+    ),
+    "success": (
+      $success,
+      $success-invert,
+      $success-light,
+      $success-dark,
+    ),
+    "warning": (
+      $warning,
+      $warning-invert,
+      $warning-light,
+      $warning-dark,
+    ),
+    "danger": (
+      $danger,
+      $danger-invert,
+      $danger-light,
+      $danger-dark,
+    ),
+    "transparent-white": (
+      $transparent-white,
+      $transparent-black,
+    ),
+    "clear": (
+      $transparent-white,
+      $transparent-black,
+    ),
+    "red": (
+      $red,
+      $white,
+    ),
+    "pink": (
+      $pink,
+      $white,
+    ),
+    "orange": (
+      $orange,
+      $white,
+    ),
+    "yellow": (
+      $yellow,
+      $white,
+    ),
+    "green": (
+      $green,
+      $white,
+    ),
+    "blue": (
+      $blue,
+      $white,
+    ),
+    "indigo": (
+      $indigo,
+      $white,
+    ),
+    "violet": (
+      $violet,
+      $white,
+    ),
+  ),
+  $custom-colors
 );
 
 // Links
