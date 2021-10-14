@@ -22,6 +22,15 @@ $blue: #66ffff;
 $indigo: #0066cc;
 $violet: #cc66ff;
 $brown: #663300;
+$red-light: #e6000099;
+$pink-light: #ff006699;
+$orange-light: #ff660099;
+$yellow-light: #ffcc0099;
+$green-light: #ccff3399;
+$blue-light: #66ffff99;
+$indigo-light: #0066cc99;
+$violet-light: #cc66ff99;
+$brown-light: #66330099;
 
 // Lists and maps
 $custom-colors: null !default;
@@ -93,34 +102,42 @@ $colors: mergeColorMaps(
     "red": (
       $red,
       $white,
+      $red-light,
     ),
     "pink": (
       $pink,
       $white,
+      $pink-light,
     ),
     "orange": (
       $orange,
       $white,
+      $orange-light,
     ),
     "yellow": (
       $yellow,
       $white,
+      $yellow-light,
     ),
     "green": (
       $green,
       $white,
+      $green-light,
     ),
     "blue": (
       $blue,
       $white,
+      $blue-light,
     ),
     "indigo": (
       $indigo,
       $white,
+      $indigo-light,
     ),
     "violet": (
       $violet,
       $white,
+      $violet-light,
     ),
   ),
   $custom-colors
