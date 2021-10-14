@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 const colours = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
 const chakras = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
 
@@ -87,7 +89,22 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters([
+      "locations",
+    ])
+  },
+  mounted() {
+    this.loadLocations()
+  },
   methods: {
+    ...mapActions({
+      // get the action from the store
+      getLocations: 'getLocations',
+    }),
+    async loadLocations() {
+      await this.$store.dispatch("getLocations");
+    },
     click() {
       console.log("clicked", );
       
