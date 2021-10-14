@@ -33,6 +33,7 @@ services:
     volumes:
       # Persist the data between container invocations
       - /home/pi/crystal-index/data:/var/lib/postgresql/data
+    command: bash -c "sudo chown -R pi:pi data; sudo chmod -R 777 data"
 volumes:
   data:
 
