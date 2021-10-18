@@ -25,9 +25,9 @@ services:
       - crystalsdb
     environment:
       NODE_ENV: development
-      # DB_HOST: crystalsdb
-      # DB_USERNAME: postgres
-      # DB_PASSWORD: pi
+      DB_HOST: process.env.DB_HOST
+      DB_USERNAME: process.env.DB_USERNAME
+      DB_PASSWORD: process.env.DB_PASSWORD
     command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; nodemon crystal-api/server.js"
     volumes:
       - ./crystal-api:/usr/src/app/crystal-api
