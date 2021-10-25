@@ -21,6 +21,9 @@ services:
       # DB_USERNAME: postgres
       # DB_PASSWORD: pi
       NODE_ENV: production
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; node server.js"
   crystalsdb:
     container_name: crystalsdb
