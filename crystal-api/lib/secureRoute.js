@@ -1,7 +1,7 @@
 'use strict'
 
 const Jwt = require('@hapi/jwt');
-const { secret, tokenExpiry } = require('../config/environment');
+const { secret, tokenExpiry } = require('../config/environment.js');
 
 
 // Greate funtion to verify a token

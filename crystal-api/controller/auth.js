@@ -4,7 +4,7 @@ const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Jwt = require('@hapi/jwt');
-const { secret, tokenExpiry } = require('../config/environment');
+const { secret, tokenExpiry } = require('../config/environment.js');
 const Boom = require('boom');
 const { verifyToken, isVerified, decodedToken } = require('../lib/secureRoute.js')
 

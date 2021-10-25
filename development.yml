@@ -31,7 +31,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     command: bash -c "npx wait-port crystalsdb:5432; npx sequelize-cli db:migrate; nodemon server.js"
     volumes:
-      # - ./crystal-api:/usr/src/app/crystal-api
+    #   # - ./crystal-api:/usr/src/app/crystal-api
       - /Users/samanthahaylock/development/crystal-index/crystal-api/
     tty: true
   crystalsdb:
