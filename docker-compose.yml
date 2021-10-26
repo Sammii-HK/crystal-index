@@ -29,8 +29,8 @@ services:
     image: postgres
     environment:
       # NODE_ENV: production
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USERNAME: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: crystal_index_db
     volumes:
       # Persist the data between container invocations
