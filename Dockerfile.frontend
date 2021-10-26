@@ -3,6 +3,7 @@ FROM node:14 as base
 FROM base as builder
 WORKDIR /build
 COPY /src ./src
+COPY /public ./public
 COPY package*.json ./
 RUN npm install
 RUN npm run build
