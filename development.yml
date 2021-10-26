@@ -4,16 +4,16 @@ services:
     container_name: crystalsfrontend
     build:
       context: .
-      target: development
       dockerfile: Dockerfile.frontend
     depends_on:
       - crystalsbackend
     ports:
-      - 80:8080
+      - 80:80
     volumes:
       - ./src:/usr/src/app/src
       - ./package.json:/usr/src/app/package.json
-    entrypoint: [ "npm", "run", "start:client" ]
+      - ./log/nginx:/var/log/nginx
+    command: [nginx-debug, '-g', 'daemon off;']
     tty: true
   crystalsbackend:
     container_name: crystalsbackend
@@ -39,8 +39,8 @@ services:
     image: postgres
     environment:
       # NODE_ENV: development
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pi
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: crystal_index_dev
     volumes:
       # Persist the data between container invocations
