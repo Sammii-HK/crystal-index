@@ -23,7 +23,7 @@ services:
       DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-    command: bash -c "npx wait-port crystalsdb:5432 && npx sequelize-cli db:migrate && node server.js"
+    command: bash -c "npx wait-port crystalsdb:5432 && npx sequelize-cli db:create && npx sequelize-cli db:migrate && node server.js"
   crystalsdb:
     container_name: crystalsdb
     image: postgres
@@ -31,7 +31,7 @@ services:
       # NODE_ENV: production
       POSTGRES_USERNAME: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: crystal_index_db
+      POSTGRES_DB: crystal_index_prod
     volumes:
       # Persist the data between container invocations
       - /home/pi/crystal-index/data:/var/lib/postgresql/data
