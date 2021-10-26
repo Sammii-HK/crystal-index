@@ -28,3 +28,19 @@ _NB_
 docker-compose up
 ``` 
 will build the container the first time if it's never been built before, but any changes to Dockerfiles or anything to do with it, **you have to manually build again**
+
+```
+docker volume create data
+```
+
+```
+NODE_ENV=productio
+```
+
+```
+echo $NODE_ENV
+```
+
+```
+sudo chown -R pi:pi data; sudo chmod -R 777 data;
+```
