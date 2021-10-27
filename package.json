@@ -10,6 +10,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start:client": "vue-cli-service serve",
+    "start:watch": "vue-cli-service build --watch",
     "start:server": "nodemon crystal-api/server.js",
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
