@@ -10,6 +10,7 @@ services:
     ports:
       - 80:80
     volumes:
+      - ./dist:/usr/share/nginx/html
       - ./src:/usr/src/app/src
       - ./package.json:/usr/src/app/package.json
       - ./log/nginx:/var/log/nginx
@@ -29,7 +30,7 @@ services:
       DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-    command: bash -c "npx wait-port crystalsdb:5432 && npx sequelize-cli db:create && npx sequelize-cli db:migrate && nodemon server.js"
+    command: bash -c "npx wait-port crystalsdb:5432 && npx sequelize-cli db:migrate && nodemon server.js"
     volumes:
     #   # - ./crystal-api:/usr/src/app/crystal-api
       - /Users/samanthahaylock/development/crystal-index/crystal-api/
