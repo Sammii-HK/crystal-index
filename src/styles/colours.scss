@@ -139,6 +139,11 @@ $colors: mergeColorMaps(
       $white,
       $violet-light,
     ),
+    "brown": (
+      $brown,
+      $white,
+      $brown-light,
+    ),
   ),
   $custom-colors
 );
