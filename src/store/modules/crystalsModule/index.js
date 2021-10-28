@@ -22,14 +22,22 @@ export default {
       commit('UPDATE_CRYSTAL', updatedValues)
     },
     getCrystal({ commit }, id) {
-      axios.get(`/api/crystals/${id}`).then((response) => {
+      axios.get(`/api/crystals/${id}`)
+      .then((response) => {
         const crystal = response.data[0]
         commit('UPDATE_CRYSTAL', crystal)
       });
     },
     getCrystals({ commit }) {
-      axios.get('/api/crystals').then((response) => {
+      axios.get('/api/crystals')
+      .then((response) => {
         commit('UPDATE_CRYSTALS', response.data)
+      });
+    },
+    createCrystal({ commit }, crystal) {
+      axios.post('/api/crystals/create', crystal)
+      .then((response) => {
+        commit('UPDATE_CRYSTAL', response.data)
       });
     },
   },
