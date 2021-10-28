@@ -62,6 +62,21 @@
 
           </div>
 
+          <b-field class="is-centered">
+            <b-button @click="checkForm">
+              Submit
+            </b-button>
+          </b-field>
+
+          <div>
+            <p v-if="errors.length">
+              <b>Please correct the following error(s):</b>
+              <ul>
+                <li v-for="error in errors">{{ error }}</li>
+              </ul>
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -73,6 +88,8 @@ import { mapGetters, mapActions } from "vuex";
 
 const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
 const chakra = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
+
+const requiredFields = [ 'name', 'colour' ]
 
 const fields = {
   input: [ "name", "otherNames", ],
@@ -87,10 +104,12 @@ export default {
     return {
       crystal: {},
       fields,
+      requiredFields,
       constants: {
         colour,
         chakra,
       },
+      errors: [],
     }
   },
   computed: {
@@ -102,17 +121,17 @@ export default {
     this.loadLocations()
     this.crystal.userId = 1
   },
-  updated() {
-    console.log("this.crystal", this.crystal);
-    
-  },
   methods: {
     ...mapActions({
       // get the action from the store
       getLocations: 'getLocations',
+      createCrystal: 'createCrystal',
     }),
     async loadLocations() {
       await this.$store.dispatch("getLocations");
+    },
+    async createCrystal(crystal) {
+      await this.$store.dispatch("createCrystal", this.crystal);
     },
     selectTag(tagSet, attr) {
       this.crystal[tagSet] =  this.crystal[tagSet] ? this.crystal[tagSet].concat(attr) : [ attr ]
@@ -126,6 +145,17 @@ export default {
     },
     handleTextInput(attrType, input) {
       this.crystal[attrType] = input
+    },
+    checkForm(e) {
+      if (this.crystal.name && this.crystal.colour) this.createCrystal()
+
+      this.errors = [];
+
+      this.requiredFields.map(field => {
+        if (!this.crystal[field]) this.errors.push(`${field} required.`)
+      })
+
+      e.preventDefault();
     },
   },
 }
