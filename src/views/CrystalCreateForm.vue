@@ -13,7 +13,8 @@
             >
               <b-tag
               class="mb-0 mt-1 is-clickable is-unselectable"
-              :type="`is-${constants.colour[i]} is-light`"
+              :type="`is-${constants.colour[i]}`"
+              :is-selected="isSelectedAttr(tagSet, attr)"
               >
                 {{attr}}
               </b-tag>
@@ -23,7 +24,7 @@
 
           <b-field v-for="(attrType) in fields.input" :key="attrType" :label="attrType">
             <b-input 
-            :v-model="attrType"
+            :value="crystal[attrType]"
             @input="handleTextInput(attrType, $event)"
             >
             </b-input>
@@ -31,7 +32,7 @@
 
           <b-field v-for="(attrType) in fields.textArea" :key="attrType" :label="attrType">
             <b-input 
-            :v-model="attrType"
+            :value="crystal[attrType]"
             type="textarea"
             @input="handleTextInput(attrType, $event)"
             >
@@ -69,10 +70,13 @@
           </b-field>
 
           <div>
+            <p v-if="response">
+              {{response}}
+            </p>
             <p v-if="errors.length">
               <b>Please correct the following error(s):</b>
               <ul>
-                <li v-for="error in errors">{{ error }}</li>
+                <li v-for="(error, index) in errors" :key="`error: ${index}`">{{ error }}</li>
               </ul>
             </p>
           </div>
@@ -110,6 +114,7 @@ export default {
         chakra,
       },
       errors: [],
+      response: null,
     }
   },
   computed: {
@@ -130,14 +135,14 @@ export default {
     async loadLocations() {
       await this.$store.dispatch("getLocations");
     },
-    async createCrystal(crystal) {
+    async createCrystal() {
       await this.$store.dispatch("createCrystal", this.crystal);
+      this.successfulResponse()
+      window.setTimeout(this.clearForm, 5)
+      window.setTimeout(this.clearResponse, 5000)
     },
     selectTag(tagSet, attr) {
       this.crystal[tagSet] =  this.crystal[tagSet] ? this.crystal[tagSet].concat(attr) : [ attr ]
-
-      console.log("this.crystal", this.crystal);
-      
     },
     selectLocation(attr, e) {
       const selectedLocation = this.locations.find(location => location.id === e)
@@ -147,15 +152,30 @@ export default {
       this.crystal[attrType] = input
     },
     checkForm(e) {
-      if (this.crystal.name && this.crystal.colour) this.createCrystal()
-
-      this.errors = [];
-
       this.requiredFields.map(field => {
-        if (!this.crystal[field]) this.errors.push(`${field} required.`)
+        if (!this.crystal[field]) return this.errors.push(`${field} required.`)
+        this.errors = []
+        return this.createCrystal()
       })
-
-      e.preventDefault();
+    },
+    isSelectedAttr(tagSet, attr) {
+      if (!this.crystal[tagSet]) return
+      
+      const isSelected = this.crystal[tagSet].includes(attr)
+      console.log("isSelected", isSelected);
+      
+      return isSelected
+    },
+    successfulResponse() {
+      this.response = `Created ${this.crystal.name}`
+    },
+    clearForm() {
+      console.log("🌈🏝🎈 clearForm");
+      
+      this.crystal = {}
+    },
+    clearResponse() {
+      this.response = null
     },
   },
 }
