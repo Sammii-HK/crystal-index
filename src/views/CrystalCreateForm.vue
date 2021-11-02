@@ -13,12 +13,10 @@
             >
               <b-tag
               class="mb-0 mt-1 is-clickable is-unselectable"
-              :type="`is-${constants.colour[i]}`"
-              :is-selected="isSelectedAttr(tagSet, attr)"
+              :type="`is-${constants.colour[i]} ${(crystal[tagSet] && crystal[tagSet].includes(attr)) ? '' : 'is-light'}`"
               >
                 {{attr}}
               </b-tag>
-
             </a>
           </b-taglist>
 
@@ -106,7 +104,10 @@ export default {
   name: "crystal-create-form",
   data() {
     return {
-      crystal: {},
+      crystal: {
+        colour: null,
+        chakra: null,
+      },
       fields,
       requiredFields,
       constants: {
@@ -138,11 +139,17 @@ export default {
     async createCrystal() {
       await this.$store.dispatch("createCrystal", this.crystal);
       this.successfulResponse()
-      window.setTimeout(this.clearForm, 5)
-      window.setTimeout(this.clearResponse, 5000)
     },
     selectTag(tagSet, attr) {
-      this.crystal[tagSet] =  this.crystal[tagSet] ? this.crystal[tagSet].concat(attr) : [ attr ]
+      if (this.crystal[tagSet]) {
+        if (this.crystal[tagSet].includes(attr)) {
+          this.removeItemOnce(this.crystal[tagSet], attr)
+        } else {
+          this.crystal[tagSet] =  this.crystal[tagSet].concat(attr)
+        }
+      } else {
+        this.crystal[tagSet] = [ attr ]
+      }
     },
     selectLocation(attr, e) {
       const selectedLocation = this.locations.find(location => location.id === e)
@@ -151,32 +158,32 @@ export default {
     handleTextInput(attrType, input) {
       this.crystal[attrType] = input
     },
-    checkForm(e) {
+    checkForm() {
+      this.errors = []
       this.requiredFields.map(field => {
-        if (!this.crystal[field]) return this.errors.push(`${field} required.`)
-        this.errors = []
-        return this.createCrystal()
+        if (this.crystal['name'] && this.crystal['colour']) this.createCrystal()
+        if (!this.crystal[field]) this.errors.push(`${field} required.`)
       })
-    },
-    isSelectedAttr(tagSet, attr) {
-      if (!this.crystal[tagSet]) return
-      
-      const isSelected = this.crystal[tagSet].includes(attr)
-      console.log("isSelected", isSelected);
-      
-      return isSelected
     },
     successfulResponse() {
       this.response = `Created ${this.crystal.name}`
+      window.setTimeout(this.clearForm, 5)
+      window.setTimeout(this.clearResponse, 5000)
     },
     clearForm() {
-      console.log("🌈🏝🎈 clearForm");
-      
       this.crystal = {}
     },
     clearResponse() {
       this.response = null
     },
+    removeItemOnce(arr, value) {
+      const index = arr.indexOf(value);
+      if (index > -1) {
+        arr.splice(index, 1);
+      }
+      return arr;
+    }
+
   },
 }
 </script>
