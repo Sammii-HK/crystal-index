@@ -5,17 +5,17 @@
         <p class="subtitle">The Crystal Index</p>
       </b-navbar-item>
     </template>
-    <!-- <template #start>
-      <b-navbar-item href="/">
+    <template #start>
+      <!-- <b-navbar-item href="/">
         About
-      </b-navbar-item>
-      <b-navbar-item href="/crystal-form">
+      </b-navbar-item> -->
+      <b-navbar-item href="/crystal-create">
         Create Crystal
       </b-navbar-item>
-      <b-navbar-item href="/profile">
+      <!-- <b-navbar-item href="/profile">
         Profile
-      </b-navbar-item>
-    </template> -->
+      </b-navbar-item> -->
+    </template>
 
     <template #end>
       <!-- <b-navbar-item tag="div">
