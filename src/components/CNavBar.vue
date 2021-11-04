@@ -20,10 +20,10 @@
     <template #end>
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a v-if="!isAuthUser.id" class="button is-light"  @click="openRegisterComponent">
+          <a v-if="!authUser.id" class="button" type="is-pink"  @click="openRegisterComponent">
             Log in
           </a>
-          <a v-if="isAuthUser.id" class="button is-light"  @click="logOut">
+          <a v-if="authUser.id" class="button" type="is-purple"  @click="logOut">
             Log Out
           </a>
         </div>
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "isAuthUser"
+      "authUser"
     ]),
   },
 }

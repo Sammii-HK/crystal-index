@@ -41,7 +41,7 @@ export default {
     }),
     ...mapGetters([
       "user",
-      "isAuthUser"
+      "authUser"
     ]),
   },
   methods: {
@@ -68,11 +68,11 @@ export default {
 
     userLoggedIn(e) {
       this.$store.dispatch('setAuthenticatedUser', e)
-      this.$Store.dispatch('updateUser', user);
-      console.log("userLoggedIn", user);
+      this.$Store.dispatch('updateUser', this.user);
+      console.log("userLoggedIn", this.user);
       
       
-      if (this.isAuthUser.auth_user.id) {
+      if (this.authUser.id) {
         this.$emit('success')
         this.$parent.close()
       } else {

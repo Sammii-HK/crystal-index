@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const defaultState = () => ({
   auth_user: {
-    token: null,
+    credentials: null,
     id: null,
     success: null,
     message: null,
@@ -34,6 +34,6 @@ export default {
     },
   },
   getters: {
-    isAuthUser: (state) => state.auth_user,
+    authUser: (state) => state.auth_user,
   },
 }
