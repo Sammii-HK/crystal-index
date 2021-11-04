@@ -1,50 +1,44 @@
 import axios from 'axios';
 
-const defaultState = () => ({ 
-  token: null,
-  auth_user: {},
+const defaultState = () => ({
+  auth_user: {
+    token: null,
+    id: null,
+  } 
 })
 
 export default {
   // namespaced: true,
+  // initial state
   state: defaultState(),
   mutations: {
     SET_TOKEN(state, token) {
-      state.token = token;
-      console.log("state", state);
-      console.log("state.token", state.token);
+      state.auth_user.token = token;
     },
-    CLEAR_TOKEN(state) {
-      state = defaultState();
-      console.log("state", state);
+    CLEAR_STATE(state) {
+      Object.assign(state, defaultState())      
+      // console.log("state.auth_user", state.auth_user); 
     },
-    AUTH_USER_UPDATE(state, payload) {
-      state.auth_user[payload.key] = payload.value
+    SET_AUTH_USER(state, payload) {
+      state.auth_user.id = payload;
+      // console.log("state.auth_user", state.auth_user);
     },
   },
   actions: {
     async setAuthenticatedUser({ commit }, { user }) {     
       await axios.post('/api/login', user).then((response) => {
-        console.log("response", response);
-        commit('CLEAR');
+        commit('CLEAR_STATE');
         commit('SET_TOKEN', response.data.credentials);
-        // dispatch('updateUser', user);
-        commit('AUTH_USER_UPDATE', user)
+        commit('SET_AUTH_USER', response.data.id)
         console.log("login success");
       });
     },
     logOut({ commit }) {
-      // commit('CLEAR')
-      commit('CLEAR_TOKEN')
-      // commit('SET_TOKEN', null, { root: true })
+      commit('CLEAR_STATE');
       console.log("logged out");
-      // router.push('/');
     },
   },
   getters: {
-    // isAuthorised: (state) => !!state.token,
-    isLoggedIn: (state) => state.token,
-    authUser: (state) => state.auth_user
-    // isLoggedIn: (state) => state.response.success,
+    isLoggedIn: (state) => state.auth_user,
   },
 }
