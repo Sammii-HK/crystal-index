@@ -18,16 +18,16 @@
     </template>
 
     <template #end>
-      <!-- <b-navbar-item tag="div">
+      <b-navbar-item tag="div">
         <div class="buttons">
-          <a v-if="!isLoggedIn" class="button is-light"  @click="openRegisterComponent">
+          <a v-if="!isLoggedIn.id" class="button is-light"  @click="openRegisterComponent">
             Log in
           </a>
-          <a v-if="isLoggedIn" class="button is-light"  @click="logout">
+          <a v-if="isLoggedIn.id" class="button is-light"  @click="logOut">
             Log Out
           </a>
         </div>
-      </b-navbar-item> -->
+      </b-navbar-item>
     </template>
   </b-navbar>
 </template>
@@ -45,7 +45,7 @@ export default {
           hasModalCard: true,
       })
     },
-    logout() {
+    logOut() {
       this.$store.dispatch('logOut')
     },
   },
@@ -53,12 +53,6 @@ export default {
     ...mapGetters([
       "isLoggedIn"
     ]),
-  },
-  mounted() {
-    console.log("this.isLoggedIn", this.isLoggedIn);    
-  },
-  updated() {
-    console.log("this.isLoggedIn", this.isLoggedIn);    
   },
 }
 </script>

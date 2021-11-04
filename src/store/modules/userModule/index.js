@@ -3,7 +3,6 @@ const defaultState = () => ({
 });
 
 export default {
-  // initial state
   state: defaultState(),
   // namespaced: true,
   mutations: {
@@ -26,6 +25,5 @@ export default {
   getters: {
     isAdmin: (state) => state.roles.includes('admin'),
     user: (state) => state,
-    // isLoggedIn: (state) => state.isLoggedIn,
-  },
+  }
 };
