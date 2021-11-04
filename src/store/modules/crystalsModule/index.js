@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const defaultState = () => {
-  return {
-    crystals: [],
-    crystal: {},
-  }
-}
+const defaultState = () => ({
+  crystals: [],
+  crystal: {},
+})
 
 export default {
   state: defaultState(),

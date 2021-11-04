@@ -1,28 +1,26 @@
-const defaultState = () => {
-  return {
-    username: '',
-    password: '',
-    // email: '',
-    // roles: [],
-    // id: null,
-  }
-}
+const defaultState = () => ({
+  user: {},
+});
 
 export default {
+  // initial state
   state: defaultState(),
   // namespaced: true,
   mutations: {
-    USER_UPDATE(state, payload) {
+    UPDATE_USER(state, payload) {
       state[payload.key] = payload.value
     },
-    CLEAR(state) {
-      Object.assign(state, defaultState())
+    CLEAR_USER(state) {
+      Object.assign(state, defaultState())      
     },
   },
   actions: {
     updateUser({ commit }, updatedValues) {
-      commit('USER_UPDATE', updatedValues)
-      // commit('CLEAR')
+      commit('CLEAR_USER')
+      commit('UPDATE_USER', updatedValues)
+    },
+    clearUser({ commit }) {
+      commit('CLEAR_USER')
     },
   },
   getters: {
