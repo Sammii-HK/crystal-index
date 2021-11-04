@@ -34,6 +34,6 @@ export default {
     },
   },
   getters: {
-    isLoggedIn: (state) => state.auth_user,
+    isAuthUser: (state) => state.auth_user,
   },
 }
