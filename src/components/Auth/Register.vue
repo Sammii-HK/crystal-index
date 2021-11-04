@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <form class="section">
     <b-field label="username">
       <b-input
       model="username"
@@ -13,12 +13,12 @@
       type="password"
       />
     </b-field>
-    <div class="container">
-      <b-button>
+    <div class="container mt-6 is-flex is-justify-content-center">
+      <b-button type="is-blue">
         Register
       </b-button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>

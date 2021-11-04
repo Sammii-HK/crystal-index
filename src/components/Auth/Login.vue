@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="section">
+  <form class="section">
     <b-field label="username">
       <b-input
       type="text"
@@ -14,12 +14,15 @@
       @input="updateUser({ key: 'password', value: $event })"
       />
     </b-field>
-    <div class="container">
-      <b-button @click="authLogin">
+    <div class="container mt-6 is-flex is-justify-content-center">
+      <b-button @click="authLogin" type="is-pink">
         Log in
       </b-button>
+      <div v-if="errors">
+        {{errors}}
+      </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -29,7 +32,7 @@ export default {
   name: 'login',
   data() {
     return {
-      errors: []
+      errors: null,
     }
   },
   computed: {
@@ -65,8 +68,11 @@ export default {
 
     userLoggedIn(e) {
       this.$store.dispatch('setAuthenticatedUser', e)
-      if (this.isLoggedIn) {
+      this.$Store.dispatch('updateUser', user);
+      
+      if (this.isLoggedIn.auth_user) {
         this.$emit('success')
+        this.$parent.close()
       } else {
         this.addErrorMessage('There was a problem retrieving your details. Please try again.')
       }
