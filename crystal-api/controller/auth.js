@@ -2,12 +2,10 @@
 
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const Jwt = require('@hapi/jwt');
 const { secret, tokenExpiry } = require('../config/environment.js');
 const Boom = require('boom');
 const { verifyToken, isVerified, decodedToken } = require('../lib/secureRoute.js')
-
 
 module.exports = [
   // Register user
@@ -88,9 +86,8 @@ module.exports = [
             message = Boom.unauthorized('The username and/or password to not match our system.');
           } else if (isPasswordValid) {
             // create a token
-            // const token = jwt.sign({ sub: user.id }, secret, { expiresIn: '6h' })
             const token = Jwt.token.generate(
-              { sub: user.id }, { key: secret }, { tokenExpiry }
+              { sub: user.id }, { key: secret }, { ttlSec: tokenExpiry }
             );
             // send it to the client
             message = {
