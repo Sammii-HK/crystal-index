@@ -25,11 +25,11 @@ services:
     depends_on:
       - crystalsdb
     environment:
-      NODE_ENV: development
       env_file: .env
       DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      SECRET: ${SECRET}
     command: bash -c "npx wait-port crystalsdb:5432 && npx sequelize-cli db:migrate && nodemon server.js"
     volumes:
     #   # - ./crystal-api:/usr/src/app/crystal-api
@@ -39,7 +39,6 @@ services:
     container_name: crystalsdb
     image: postgres
     environment:
-      # NODE_ENV: development
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: crystal_index_dev
