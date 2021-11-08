@@ -1,8 +1,8 @@
 'use strict'
 
 const Jwt = require('@hapi/jwt');
-const { secret, tokenExpiry } = require('../config/environment.js');
-
+const db = require('../models');
+const { secret } = require('../config/environment.js');
 
 // Greate funtion to verify a token
 const verifyToken = (artifact, secret, options = {}) => {
@@ -36,4 +36,42 @@ const decodedToken = (token) => Jwt.token.decode(token);
 // const badIssResonse = verifyToken(decodedToken, secret, { iss: 'urn:issuer:different_test' });
 
 // module.exports = { verifyToken, validResponse, badSecretResponse, badIssResonse}
-module.exports = { verifyToken, isVerified, decodedToken }
+
+
+const verificationBus = async (req) => {
+  const token = req.headers.token;
+  console.log("🔒 token", token);
+
+  let message = null;
+
+  if (token) {
+    const decoded = decodedToken(token)
+    const verify = isVerified(decoded, secret)
+    console.log("🔦 verify", verify);
+    
+    const { id } = req.params;
+    const isCurrentUser = id == verify.sub
+    console.log("🧙‍♀️ isCurrentUser", isCurrentUser);
+  
+    message = {
+      ...verify,
+      isCurrentUser,
+      id,
+    }
+  
+    if (verify.isValid) {
+      const results = await db.user.findOne({ where: { id } });
+      message = {
+        ...message,
+        welcome: `Hey ${results.username}!`,
+        // user: results,
+      };
+    }
+  }
+  console.log("message", message);
+  
+  return message
+  
+}
+
+module.exports = { verificationBus };

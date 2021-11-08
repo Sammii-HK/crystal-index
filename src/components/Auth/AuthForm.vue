@@ -1,23 +1,26 @@
 <template lang="html">
   <div class="modal-card">
     <div class="modal-card-body">
-      <b-tabs expanded type="is-boxed" destroy-on-hide v-model="openTab">
+
+      <Login @success="successfulLogin"/>
+
+      <!-- <b-tabs expanded type="is-boxed" destroy-on-hide v-model="openTab">
 
         <b-tab-item v-bind="tabProps['login']" >
-          <Login @success="userLoggedIn"/>
+          <Login @success="successfulLogin"/>
         </b-tab-item>
 
         <b-tab-item v-bind="tabProps['register']" >
           <Register @close="closeModal"/>
         </b-tab-item>
         
-      </b-tabs>
+      </b-tabs> -->
     </div>
   </div>
 </template>
 
 <script>
-import Register from '@/components/Auth/Register'
+// import Register from '@/components/Auth/Register'
 import Login from '@/components/Auth/Login'
 // import ForgotPassword from '@/modules/account/components/Auth/ForgotPassword'
 const createTabProps = tabName => ({ 
@@ -44,14 +47,19 @@ export default {
       default: 'login'
     },
   },
-  components: { Register, Login },
+  components: { 
+    // Register, 
+    Login 
+  },
   methods: {
     closeModal() {
       this.$parent.close()
     },
-    userLoggedIn() {
-      this.$router.push('/dashboard')
-      this.$parent.close()
+    successfulLogin() {
+      console.log("successfulLogin", );
+      
+      this.closeModal()
+      this.$router.push('/')
     }
   },
   mounted() {

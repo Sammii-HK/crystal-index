@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const Jwt = require('@hapi/jwt');
 const { secret, tokenExpiry } = require('../config/environment.js');
 const Boom = require('boom');
-const { verifyToken, isVerified, decodedToken } = require('../lib/secureRoute.js')
+const { verificationBus } = require('../lib/secureRoute.js')
 
 module.exports = [
   // Register user
@@ -112,16 +112,13 @@ module.exports = [
     path: '/profile/{id}',
     handler: async (req, h) => {
       try {
-        const token = req.headers.token;
-        console.log("🔒 token", token);
-        
-        const decoded = decodedToken(token)
-        const verify = isVerified(decoded, secret)
-        console.log("verify", verify);
+        const verify = await verificationBus(req)
+        const { id } = req.params;
+
+        let results = null
 
         if (verify.isValid) {
-          const { id } = req.params;
-          const results = await db.user.findOne({
+          results = await db.user.findOne({
             where: { id },
           }, {
             include: [
@@ -131,15 +128,9 @@ module.exports = [
               },
             ],
           });
-          
-          return {
-            welcome: `Hey ${results.username}!`,
-            verify,
-            results,
-          };
-        }
-        // } else return Boom.unauthorized('Access Denied')
+        } // else return Boom.unauthorized('Access Denied')
 
+        return { verify, results }
 
       } catch (e) {
         console.log('error finding user:', e);
@@ -163,18 +154,9 @@ module.exports = [
       };
 
       try {
-        const token = req.headers.token;
-        console.log("🔒 token", token);
-        
-        const decoded = decodedToken(token)
-        const verify = isVerified(decoded, secret, id)
-        console.log("verify", verify);
-        // const sub = decoded.decoded.payload.sub
-        const isCurrentUser = id == verify.sub
-        console.log("isCurrentUser", isCurrentUser);
-        
+        const verify = await verificationBus(req)
 
-        if (verify.isValid && isCurrentUser) {
+        if (verify.isValid && verify.isCurrentUser) {
         // if (verify.isValid && isCurrentUser) {
           const updatePromises = [];
           const updateUsersPromise = db.user.update(
@@ -185,7 +167,7 @@ module.exports = [
   
           await Promise.all(updatePromises);
   
-          const results = await db.user.findAll({
+          const results = await db.user.findOne({
             where: { id },
           }, {
             include: [
@@ -196,11 +178,8 @@ module.exports = [
             ],
           });
   
-          return {
-            verify,
-            isCurrentUser,
-            results,
-          }
+          return { verify, results }
+
         } else return Boom.unauthorized('Access Denied')
 
       } catch (e) {
