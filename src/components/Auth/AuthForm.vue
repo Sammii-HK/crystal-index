@@ -2,7 +2,7 @@
   <div class="modal-card">
     <div class="modal-card-body">
 
-      <Login @success="successfulLogin"/>
+      <Login @success="successfulLogin" />
 
       <!-- <b-tabs expanded type="is-boxed" destroy-on-hide v-model="openTab">
 
@@ -56,11 +56,9 @@ export default {
       this.$parent.close()
     },
     successfulLogin() {
-      console.log("successfulLogin", );
-      
       this.closeModal()
       this.$router.push('/')
-    }
+    },
   },
   mounted() {
     this.openTab = this.openAsDefault    

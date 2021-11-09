@@ -37,11 +37,11 @@ export default {
   },
   computed: {
     ...mapState({
-      user: state => state.user
+      user: state => state.user,
     }),
     ...mapGetters([
       "user",
-      "authUser"
+      "authUser",
     ]),
   },
   methods: {
@@ -52,12 +52,12 @@ export default {
     async authLogin() {
       // this sends the user data on state as the body of the request
       const user = { username: this.user.username, password: this.user.password };
-      // custom error handling
-      const handler = {
-        error: this.failedLogin,
-        success: this.userLoggedIn
-      }
-      await this.$store.dispatch("setAuthenticatedUser", { user, handler });
+      await this.$store.dispatch("setAuthenticatedUser", { user });
+
+      if (this.authUser.id) {
+        this.$parent.close()
+        this.$emit('success')
+      } else this.addErrorMessage('There was a problem retrieving your details. Please try again.')
     },
     failedLogin(e) {
       this.addErrorMessage(e.error)
@@ -65,21 +65,6 @@ export default {
     addErrorMessage(msg) {
       this.errors = Array.from(new Set([ ...this.errors, msg ]))
     },
-
-    userLoggedIn(e) {
-      this.$store.dispatch('setAuthenticatedUser', e)
-      this.$Store.dispatch('updateUser', this.user);
-      console.log("userLoggedIn", this.user);
-      
-      
-      if (this.authUser.id) {
-        this.$emit('success')
-        this.$parent.close()
-      } else {
-        this.addErrorMessage('There was a problem retrieving your details. Please try again.')
-      }
-    },
-
   },
 }
 </script>

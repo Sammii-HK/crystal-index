@@ -54,6 +54,7 @@ const verificationBus = async (req) => {
     console.log("🧙‍♀️ isCurrentUser", isCurrentUser);
   
     message = {
+      token,
       ...verify,
       isCurrentUser,
       id,
