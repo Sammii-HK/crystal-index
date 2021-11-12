@@ -55,7 +55,6 @@ export default {
       await this.$store.dispatch("setAuthenticatedUser", { user });
 
       if (this.authUser.id) {
-        this.$parent.close()
         this.$emit('success')
       } else this.addErrorMessage('There was a problem retrieving your details. Please try again.')
     },

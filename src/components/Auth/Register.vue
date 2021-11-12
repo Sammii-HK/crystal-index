@@ -31,13 +31,6 @@ export default {
     }
   },
   methods: {
-    // register: function () {
-    //   let username = this.username
-    //   let password = this.password
-    //   this.$store.dispatch('register', { username, password })
-    //   .then(() => this.$router.push('/'))
-    //   .catch(err => console.log(err))
-    // }
   }
 }
 </script>
