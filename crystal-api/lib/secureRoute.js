@@ -42,7 +42,8 @@ const verificationBus = async (req) => {
   const token = req.headers.token;
   console.log("🔒 token", token);
 
-  let message = null;
+  let isValid = null;
+  let credentials = null;
 
   if (token) {
     const decoded = decodedToken(token)
@@ -52,8 +53,10 @@ const verificationBus = async (req) => {
     const { id } = req.params;
     const isCurrentUser = id == verify.sub
     console.log("🧙‍♀️ isCurrentUser", isCurrentUser);
+
+    isValid = verify.isValid; 
   
-    message = {
+    credentials = {
       token,
       ...verify,
       isCurrentUser,
@@ -62,16 +65,16 @@ const verificationBus = async (req) => {
   
     if (verify.isValid) {
       const results = await db.user.findOne({ where: { id } });
-      message = {
-        ...message,
+      credentials = {
+        ...credentials,
         welcome: `Hey ${results.username}!`,
         // user: results,
       };
     }
   }
-  console.log("message", message);
+  console.log("credentials", credentials);
   
-  return message
+  return { isValid, credentials }
   
 }
 
