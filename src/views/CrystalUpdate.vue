@@ -1,76 +1,204 @@
-<template lang="html">
+/* eslint-disable */
+
+<template>
   <div class="section">
-    <b-field label="name">
-      <b-input
-      type="text"
-      @input="updateCrystal({ key: 'name', value: $event })"
-      />
-      <!-- :value="crystal.name" -->
-    </b-field>
-    <b-field label="bio">
-      <b-input
-      type="text"
-      @input="updateCrystal({ key: 'bio', value: $event })"
-      />
-      <!-- :value="crystal.bio" -->
-    </b-field>
-    <div class="container">
-      <b-button @click="authLogin">
-        Submit
-      </b-button>
+    <div class="container pt-4">
+      <div class="columns is-multiline is-mobile is-centered">
+        <div class="column is-10" >
+          {{crystal}}
+          <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="my-5">
+            <span class="mr-3 has-text-weight-bold">{{tagSet}}: </span>
+            <a v-for="(attr, i) in constants[tagSet]" class="mx-2"
+            :key="attr" 
+            @click="selectTag(tagSet, attr)"
+            >
+              <b-tag
+              class="mb-0 mt-1 is-clickable is-unselectable"
+              :type="`is-${constants.colour[i]} ${(crystal[tagSet] && crystal[tagSet].includes(attr)) ? '' : 'is-light'}`"
+              >
+                {{attr}}
+              </b-tag>
+            </a>
+          </b-taglist>
+
+          <b-field v-for="(attrType) in fields.input" :key="attrType" :label="attrType">
+            <b-input 
+            :value="crystal[attrType]"
+            @input="handleTextInput(attrType, $event)"
+            >
+            </b-input>
+          </b-field>
+
+          <b-field v-for="(attrType) in fields.textArea" :key="attrType" :label="attrType">
+            <b-input 
+            :value="crystal[attrType]"
+            type="textarea"
+            @input="handleTextInput(attrType, $event)"
+            >
+            </b-input>
+          </b-field>
+
+          <div class="columns mt-5">
+            <b-field 
+            v-for="attr in fields.select" 
+            :key="attr" 
+            :label="attr"
+            class="column is-6"
+            >
+              <b-select
+              :v-model="crystal[`${attr}Id`]"
+              expanded
+              @input="selectLocation(attr, $event)"
+              >
+                <option
+                v-for="location in locations"
+                :value="location.id"
+                :key="`${attr}: ${location.id}`"
+                >
+                  {{ location.placeName }}
+                </option>
+              </b-select>
+            </b-field>
+
+          </div>
+
+          <b-field class="is-centered">
+            <b-button @click="checkForm">
+              Save
+            </b-button>
+          </b-field>
+
+          <div>
+            <p v-if="response">
+              {{response}}
+            </p>
+            <p v-if="errors.length">
+              <b>Please correct the following error(s):</b>
+              <ul>
+                <li v-for="(error, index) in errors" :key="`error: ${index}`">{{ error }}</li>
+              </ul>
+            </p>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
+
+const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
+const chakra = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
+
+const requiredFields = [ 'name', 'colour' ]
+
+const fields = {
+  input: [ "name", "otherNames", ],
+  textArea: [ "bio", ],
+  tags: [ "colour", "chakra", ],
+  select: [ "origin", "memento", ],
+}
 
 export default {
-  name: 'crystal-form',
+  name: "crystal-update-form",
   data() {
     return {
-      errors: []
+      fields,
+      requiredFields,
+      constants: {
+        colour,
+        chakra,
+      },
+      errors: [],
+      response: null,
+
+      crystalId: null,
+      attrs: {},
     }
   },
   computed: {
-    ...mapState({
-      crystal: state => state.crystal
-    }),
     ...mapGetters([
-      // "user",
+      "crystal",
+      "locations",
+      "locations",
+      "authUser",
     ]),
+  },
+  mounted() {
+    this.crystalId = this.$route.params.id
+    this.loadCrystal(this.crystalId)
+
+    this.loadLocations()
+    this.crystal.userId = 1
   },
   methods: {
     ...mapActions({
-      // get the updateCrystal action from the store
+      // get the action from the store
+      getLocations: 'getLocations',
+      getCrystal: 'getCrystal',
       updateCrystal: 'updateCrystal',
     }),
-    async authLogin() {
-      // this sends the user data on state as the body of the request
-      const crystal = { name: this.crystal.name, bio: this.crystal.bio };
-      // custom error handling
-      const handler = {
-        error: this.failedLogin,
-        success: this.userLoggedIn
+    async loadCrystal(id) {
+      await this.$store.dispatch("getCrystal", id);
+    },
+    async loadLocations() {
+      await this.$store.dispatch("getLocations");
+    },
+    async updateCrystal() {
+      console.log("this.authUser.id, this.crystal.userId", this.authUser.id, this.crystal.userId);
+      if (this.authUser.id !== this.crystal.userId) return this.errors.push(`Unauthorised, you do not have access.`)
+      await this.$store.dispatch("updateCrystal", this.crystal);
+      this.successfulResponse()
+      
+    },
+    selectTag(tagSet, attr) {
+      if (this.crystal[tagSet]) {
+        if (this.crystal[tagSet].includes(attr)) {
+          this.removeItemOnce(this.crystal[tagSet], attr)
+        } else {
+          this.crystal[tagSet] =  this.crystal[tagSet].concat(attr)
+        }
+      } else {
+        this.crystal[tagSet] = [ attr ]
       }
-      await this.$store.dispatch("setAuthenticatedUser", { crystal, handler });
     },
-    failedLogin(e) {
-      this.addErrorMessage(e.error)
+    selectLocation(attr, e) {
+      const selectedLocation = this.locations.find(location => location.id === e)
+      this.crystal[`${attr}Id`] = selectedLocation.id
     },
-    addErrorMessage(msg) {
-      this.errors = Array.from(new Set([ ...this.errors, msg ]))
+    handleTextInput(attrType, input) {
+      this.crystal[attrType] = input
     },
-
-    // userLoggedIn(e) {
-    //   this.$store.dispatch('setAuthenticatedUser', e)
-    //   if (this.isLoggedIn) {
-    //     this.$emit('success')
-    //   } else {
-    //     this.addErrorMessage('There was a problem retrieving your details. Please try again.')
-    //   }
+    checkForm() {
+      this.requiredFields.map(field => {
+        if (this.crystal['name'] && this.crystal['colour']) this.updateCrystal()
+        if (!this.crystal[field]) this.errors.push(`${field} required.`)
+      })
+    },
+    successfulResponse() {
+      this.response = `Updated ${this.crystal.name}`
+      window.setTimeout(this.clearResponse, 5000)
+    },
+    clearResponse() {
+      this.response = null
+    },
+    removeItemOnce(arr, value) {
+      const index = arr.indexOf(value);
+      if (index > -1) {
+        arr.splice(index, 1);
+      }
+      return arr;
+    },
+    // addPlaceholderOption(options) {
+    //   const placeholder = { label: `Select ${attr}`, value: -1, disabled}
+    //   return { placeholder, ...options }
     // },
-
   },
 }
 </script>
+
+<style>
+
+</style>

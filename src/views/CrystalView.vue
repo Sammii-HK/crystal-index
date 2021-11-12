@@ -4,6 +4,9 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
+        <div class="column is-12" v-if="authUser.id === crystal.userId">
+          <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
+        </div>
         <div class="column is-6-desktop is-8-touch" >
           <figure class="image">
             <b-image
@@ -56,7 +59,7 @@ const config = {
 }
 
 export default {
-  name: "crystals-view",
+  name: "crystal-view",
   data() {
     return {
       crystalId: null,
@@ -66,6 +69,7 @@ export default {
   computed: {
     ...mapGetters([
       "crystal",
+      "authUser",
     ])
   },
   mounted() {
@@ -106,6 +110,11 @@ export default {
       return Object.keys(obj)
       .filter((k) => obj[k] != null)
       .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
+    },
+    updateCrystal() {
+      console.log("updateCrystal", );
+      
+      this.$router.push(`/crystals/${this.crystal.id}/update`)
     },
   },
   filters: {
