@@ -17,6 +17,7 @@
     "db:drop": "sequelize-cli db:drop"
   },
   "dependencies": {
+    "@hapi/basic": "^6.0.0",
     "@hapi/hapi": "^20.1.1",
     "@hapi/jwt": "^2.0.1",
     "axios": "^0.21.1",
