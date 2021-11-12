@@ -9,7 +9,7 @@
       <!-- <b-navbar-item href="/">
         About
       </b-navbar-item> -->
-      <b-navbar-item href="/crystal-create">
+      <b-navbar-item v-if="authUser.id" href="/crystal-create">
         Create Crystal
       </b-navbar-item>
       <!-- <b-navbar-item href="/profile">
@@ -20,10 +20,10 @@
     <template #end>
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a v-if="!authUser.id" class="button" type="is-pink"  @click="openRegisterComponent">
+          <a v-if="!authUser.id" class="button" type="is-green"  @click="openRegisterComponent">
             Log in
           </a>
-          <a v-if="authUser.id" class="button" type="is-purple"  @click="logOut">
+          <a v-if="authUser.id" class="button" type="is-indigo"  @click="logOut">
             Log Out
           </a>
         </div>
