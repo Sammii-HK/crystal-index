@@ -4,6 +4,9 @@ module.exports = [
   {
   method: 'POST',
   path: '/crystals/create',
+  options: {
+    auth: 'authUser',
+  },
   handler: async (req, h) => {
     const { 
         name, bio, image, otherNames, colour, chakra, userId, originId, mementoId,
@@ -91,7 +94,7 @@ module.exports = [
       try {
         const results = await db.crystal.findAll({
           where: { id },
-          attributes: { exclude: [ 'originId', 'mementoId', 'userId' ] },
+          // attributes: { exclude: [ 'originId', 'mementoId', 'userId' ] },
           include: [
             {
               model: db.user,
@@ -126,6 +129,9 @@ module.exports = [
   {
     method: 'PUT',
     path: '/crystals/{id}',
+    options: {
+      auth: 'authUser',
+    },
     handler: async (req, h) => {
       const { id } = req.params;
       const { 
@@ -183,24 +189,27 @@ module.exports = [
       }
     },
   }, 
-  {
-    method: 'DELETE',
-    path: '/crystals/{crystalId}',
-    handler: async (req, h) => {
-      const { crystalId } = req.params;
-      try {
-        const results = await db.crystal.destroy({
-          where: { id },
-        });
-        return {
-          success: true,
-          results,
-        };
-      } catch (e) {
-        console.log('error modifying crystal:', e);
-        return h.response(`Failed: ${e.message}`).code(500);
-      }
-    },
-  }, 
+  // {
+  //   method: 'DELETE',
+  //   path: '/crystals/{crystalId}',
+  //   options: {
+  //     auth: 'authUser',
+  //   },
+  //   handler: async (req, h) => {
+  //     const { crystalId } = req.params;
+  //     try {
+  //       const results = await db.crystal.destroy({
+  //         where: { id },
+  //       });
+  //       return {
+  //         success: true,
+  //         results,
+  //       };
+  //     } catch (e) {
+  //       console.log('error modifying crystal:', e);
+  //       return h.response(`Failed: ${e.message}`).code(500);
+  //     }
+  //   },
+  // }, 
   
 ];
