@@ -43,9 +43,9 @@ export default {
         commit('UPDATE_CRYSTAL', response.data)
       });
     },
-    updateCrystal({ commit }, crystal, token) {
+    updateCrystal({ commit }, { crystal, token } ) {
       let config = {
-        headers: { token }
+        headers: { Authorization: 'Bearer ' + token }
       }
       axios.put(`/api/crystals/${crystal.id}`, crystal, config)
       .then((response) => {

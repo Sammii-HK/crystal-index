@@ -4,7 +4,7 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
-        <div class="column is-12" v-if="authUser.id === crystal.userId">
+        <div class="column is-12" v-if="(authUser.id === crystal.userId) || ((crystal.userId === null) && (authUser.id === 1))">
           <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
         </div>
         <div class="column is-6-desktop is-8-touch" >

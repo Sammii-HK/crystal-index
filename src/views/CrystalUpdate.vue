@@ -122,7 +122,6 @@ export default {
     ...mapGetters([
       "crystal",
       "locations",
-      "locations",
       "authUser",
     ]),
   },
@@ -147,9 +146,11 @@ export default {
       await this.$store.dispatch("getLocations");
     },
     async updateCrystal() {
-      console.log("this.authUser.id, this.crystal.userId", this.authUser.id, this.crystal.userId);
+      const token = this.authUser.credentials
+      // if userId on crystal is undefined, set userId: 1
+      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("updateCrystal", { ...this.crystal, userId: 1 }, token);
       if (this.authUser.id !== this.crystal.userId) return this.errors.push(`Unauthorised, you do not have access.`)
-      await this.$store.dispatch("updateCrystal", this.crystal);
+      await this.$store.dispatch("updateCrystal", { crystal: this.crystal, token });
       this.successfulResponse()
       
     },
