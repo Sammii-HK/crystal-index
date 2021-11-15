@@ -9,7 +9,7 @@
       <!-- <b-navbar-item href="/">
         About
       </b-navbar-item> -->
-      <b-navbar-item v-if="authUser.id" href="/crystal-create">
+      <b-navbar-item v-if="authUser.id === 1" href="/crystal-create">
         Create Crystal
       </b-navbar-item>
       <!-- <b-navbar-item href="/profile">
