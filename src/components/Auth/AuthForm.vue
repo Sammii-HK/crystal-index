@@ -57,7 +57,6 @@ export default {
     },
     successfulLogin() {
       this.closeModal()
-      this.$router.push('/')
     },
   },
   mounted() {
