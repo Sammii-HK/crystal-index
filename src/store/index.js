@@ -8,7 +8,6 @@ import userModule from "./modules/userModule"
 import locationsModule from "./modules/locationsModule"
 
 axios.defaults.withCredentials = true
-// axios.defaults.baseURL = 'https://gabbyblog.herokuapp.com/';
 
 Vue.use(Vuex);
 
