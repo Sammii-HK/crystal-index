@@ -39,42 +39,36 @@ const decodedToken = (token) => Jwt.token.decode(token);
 
 
 const verificationBus = async (req) => {
-  const token = req.headers.token;
+  const token = req.headers.authorization.replace('Bearer ', '');  
   console.log("🔒 token", token);
 
   let isValid = null;
   let credentials = null;
+  let artifacts = null;
 
   if (token) {
     const decoded = decodedToken(token)
     const verify = isVerified(decoded, secret)
     console.log("🔦 verify", verify);
-    
-    const { id } = req.params;
-    const isCurrentUser = id == verify.sub
-    console.log("🧙‍♀️ isCurrentUser", isCurrentUser);
 
-    isValid = verify.isValid; 
+    isValid = verify.isValid
+    credentials = { token };
   
-    credentials = {
-      token,
-      ...verify,
-      isCurrentUser,
-      id,
-    }
+    artifacts = {
+      id: verify.sub,
+      errors: verify.errors,
+    };
   
     if (verify.isValid) {
-      const results = await db.user.findOne({ where: { id } });
-      credentials = {
-        ...credentials,
-        welcome: `Hey ${results.username}!`,
-        // user: results,
+      const results = await db.user.findOne({ where: { id: verify.sub } });
+      artifacts = {
+        ...artifacts,
+        username: results.username,
       };
     }
   }
-  console.log("credentials", credentials);
   
-  return { isValid, credentials }
+  return { isValid, credentials, artifacts }
   
 }
 
