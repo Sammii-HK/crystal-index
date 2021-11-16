@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import moment from 'moment'
 
 const config = {
@@ -66,17 +66,21 @@ export default {
       attrs: {},
     }
   },
+  ...mapState({
+    crystal: state => state.crystalsModule.crystal,
+  }),
+  watch: {
+    crystal: [ 'filterNullAttrs', 'hierarchizeAttributes' ]
+  },
   computed: {
     ...mapGetters({
       crystal: "crystalsModule/crystal",
       authUser: "authModule/authUser",
     })
   },
-  created() {
+  mounted() {
     this.crystalId = this.$route.params.id
     this.loadCrystal(this.crystalId)
-    this.filteredAttrs = this.filterNullAttrs()
-    this.attrs = this.hierarchizeAttributes()
   },
   methods: {
     ...mapActions({
@@ -90,7 +94,7 @@ export default {
     hierarchizeAttributes() {
       const attrs = Object.keys(this.filteredAttrs)
       
-      return attrs.reduce((acc, currentAttr) => {
+      this.attrs = attrs.reduce((acc, currentAttr) => {
         const key = this.getKey(currentAttr)
         // if is array, then add attr to array, else make array with attr
         acc[key] = Array.isArray(acc[key]) ? acc[key].concat(currentAttr) : [ currentAttr ]
@@ -107,7 +111,7 @@ export default {
     },
     filterNullAttrs() {
       const obj = this.crystal
-      return Object.keys(obj)
+      this.filteredAttrs = Object.keys(obj)
       .filter((k) => obj[k] != null)
       .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
     },
