@@ -9,7 +9,7 @@
       <!-- <b-navbar-item href="/">
         About
       </b-navbar-item> -->
-      <b-navbar-item v-if="authUser.id === 1" href="/crystal-create">
+      <b-navbar-item v-if="authUser && authUser.id === 1" href="/crystal-create">
         Create Crystal
       </b-navbar-item>
       <!-- <b-navbar-item href="/profile">
@@ -46,13 +46,13 @@ export default {
       })
     },
     logOut() {
-      this.$store.dispatch('logOut')
+      this.$store.dispatch('authModule/logOut')
     },
   },
   computed: {
-    ...mapGetters([
-      "authUser"
-    ]),
+    ...mapGetters({
+      authUser: "authModule/authUser",
+    }),
   },
 }
 </script>
