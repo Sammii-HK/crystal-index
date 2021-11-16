@@ -9,6 +9,7 @@ const defaultState = () => {
 
 export default {
   state: defaultState(),
+  namespaced: true,
   mutations: {
     UPDATE_LOCATIONS (state, payload) {
       state.locations = payload;

@@ -119,13 +119,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "crystal",
-      "locations",
-      "authUser",
-    ]),
+    ...mapGetters({
+      crystal: "crystalsModule/crystal",
+      locations: "locationsModule/locations",
+      authUser: "authModule/authUser",
+    }),
   },
-  mounted() {
+  created() {
     this.crystalId = this.$route.params.id
     this.loadCrystal(this.crystalId)
 
@@ -135,22 +135,22 @@ export default {
   methods: {
     ...mapActions({
       // get the action from the store
-      getLocations: 'getLocations',
-      getCrystal: 'getCrystal',
-      updateCrystal: 'updateCrystal',
+      getLocations: 'locationsModule/getLocations',
+      getCrystal: 'crystalsModule/getCrystal',
+      updateCrystal: 'crystalsModule/updateCrystal',
     }),
     async loadCrystal(id) {
-      await this.$store.dispatch("getCrystal", id);
+      await this.$store.dispatch("crystalsModule/getCrystal", id);
     },
     async loadLocations() {
-      await this.$store.dispatch("getLocations");
+      await this.$store.dispatch("locationsModule/getLocations");
     },
     async updateCrystal() {
       const token = this.authUser.credentials
       // if userId on crystal is undefined, set userId: 1
-      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("updateCrystal", { ...this.crystal, userId: 1 }, token);
+      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("crystalsModule/updateCrystal", { ...this.crystal, userId: 1 }, token);
       if (this.authUser.id !== this.crystal.userId) return this.errors.push(`Unauthorised, you do not have access.`)
-      await this.$store.dispatch("updateCrystal", { crystal: this.crystal, token });
+      await this.$store.dispatch("crystalsModule/updateCrystal", { crystal: this.crystal, token });
       this.successfulResponse()
       
     },

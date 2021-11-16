@@ -4,7 +4,7 @@ const defaultState = () => ({
 
 export default {
   state: defaultState(),
-  // namespaced: true,
+  namespaced: true,
   mutations: {
     UPDATE_USER(state, payload) {
       state[payload.key] = payload.value
@@ -23,7 +23,6 @@ export default {
     },
   },
   getters: {
-    isAdmin: (state) => state.roles.includes('admin'),
     user: (state) => state,
   }
 };

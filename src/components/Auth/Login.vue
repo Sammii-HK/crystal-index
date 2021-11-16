@@ -39,20 +39,20 @@ export default {
     ...mapState({
       user: state => state.user,
     }),
-    ...mapGetters([
-      "user",
-      "authUser",
-    ]),
+    ...mapGetters({
+      user: "userModule/user",
+      authUser: "authModule/authUser",
+    }),
   },
   methods: {
     ...mapActions({
       // get the updateUser action from the store
-      updateUser: 'updateUser',
+      updateUser: 'userModule/updateUser',
     }),
     async authLogin() {
       // this sends the user data on state as the body of the request
       const user = { username: this.user.username, password: this.user.password };
-      await this.$store.dispatch("setAuthenticatedUser", { user });
+      await this.$store.dispatch("authModule/setAuthenticatedUser", { user });
 
       if (this.authUser.id) {
         this.$emit('success')

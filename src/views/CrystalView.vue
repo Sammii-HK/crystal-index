@@ -67,12 +67,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "crystal",
-      "authUser",
-    ])
+    ...mapGetters({
+      crystal: "crystalsModule/crystal",
+      authUser: "authModule/authUser",
+    })
   },
-  mounted() {
+  created() {
     this.crystalId = this.$route.params.id
     this.loadCrystal(this.crystalId)
     this.filteredAttrs = this.filterNullAttrs()
@@ -81,10 +81,10 @@ export default {
   methods: {
     ...mapActions({
       // get the action from the store
-      getCrystal: 'getCrystal',
+      getCrystal: 'crystalsModule/getCrystal',
     }),
     async loadCrystal(id) {
-      await this.$store.dispatch("getCrystal", id);
+      await this.$store.dispatch("crystalsModule/getCrystal", id);
     },
     // Organise attrs into main attrs and tag attrs
     hierarchizeAttributes() {

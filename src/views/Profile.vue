@@ -18,11 +18,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "authUser",
-    ])
+    ...mapGetters({
+      authUser: "authModule/authUser",
+    })
   },
-  mounted() {
+  created() {
     // this.userId = this.$route.params.id
     // this.loadUser(this.userId)
     console.log("this.authUser", this.authUser);
@@ -33,9 +33,6 @@ export default {
       // get the action from the store
       // getUser: 'getUser',
     }),
-    // async loadUser(id) {
-    //   // await this.$store.dispatch("getUser", id);
-    // },
   },
   updated() {
     

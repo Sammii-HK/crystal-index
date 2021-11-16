@@ -119,25 +119,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "locations",
-    ]),
+    ...mapGetters({
+      locations: "locationsModule/locations",
+    }),
   },
-  mounted() {
+  created() {
     this.loadLocations()
     this.crystal.userId = 1
   },
   methods: {
     ...mapActions({
       // get the action from the store
-      getLocations: 'getLocations',
-      createCrystal: 'createCrystal',
+      getLocations: 'locationsModulegetLocations',
+      createCrystal: 'crystalsModule/createCrystal',
     }),
     async loadLocations() {
-      await this.$store.dispatch("getLocations");
+      await this.$store.dispatch("locationsModule/getLocations");
     },
     async createCrystal() {
-      await this.$store.dispatch("createCrystal", this.crystal);
+      await this.$store.dispatch("crystalsModule/createCrystal", this.crystal);
       this.successfulResponse()
     },
     selectTag(tagSet, attr) {

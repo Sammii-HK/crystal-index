@@ -10,7 +10,7 @@ const defaultState = () => ({
 })
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state: defaultState(),
   mutations: {
     CLEAR_STATE(state) {

@@ -7,6 +7,7 @@ const defaultState = () => ({
 
 export default {
   state: defaultState(),
+  namespaced: true,
   mutations: {
     UPDATE_CRYSTALS (state, payload) {
       state.crystals = payload;

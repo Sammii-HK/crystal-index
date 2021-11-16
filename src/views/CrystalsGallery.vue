@@ -61,12 +61,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "crystals"
-    ])
+    ...mapGetters({
+      crystals: "crystalsModule/crystals",
+    })
   },
   created() {
-    this.$store.dispatch("getCrystals");
+    this.$store.dispatch("crystalsModule/getCrystals");
   },
   methods: {
     selectedCrystal(id) {
