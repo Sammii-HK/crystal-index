@@ -46,7 +46,7 @@
             class="column is-6"
             >
               <b-select
-              :v-model="crystal[`${attr}Id`]"
+              :value="crystal[`${attr}Id`]"
               expanded
               @input="selectLocation(attr, $event)"
               >
