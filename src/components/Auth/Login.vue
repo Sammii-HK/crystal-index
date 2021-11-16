@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     ...mapState({
-      user: state => state.user,
+      user: state => state.userModule.user,
     }),
     ...mapGetters({
       user: "userModule/user",
