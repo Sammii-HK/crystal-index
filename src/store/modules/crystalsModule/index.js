@@ -13,7 +13,7 @@ export default {
       state.crystals = payload;
     },
     UPDATE_CRYSTAL (state, payload) {
-      state.crystal = payload
+      state.crystal = payload;
     },
     CLEAR_STATE(state) {
       Object.assign(state, defaultState())      
@@ -51,7 +51,7 @@ export default {
       axios.put(`/api/crystals/${crystal.id}`, crystal, config)
       .then((response) => {
         commit('CLEAR_STATE');
-        commit('UPDATE_CRYSTAL', response.data)
+        commit('UPDATE_CRYSTAL', response.data[0])
       });
     },
   },
