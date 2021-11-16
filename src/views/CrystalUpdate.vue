@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
 const chakra = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
@@ -118,6 +118,12 @@ export default {
       attrs: {},
     }
   },
+  ...mapState({
+    crystal: state => state.crystalsModule.crystal,
+  }),
+  watch: {
+    crystal: [ 'loadLocations' ]
+  },
   computed: {
     ...mapGetters({
       crystal: "crystalsModule/crystal",
@@ -125,12 +131,10 @@ export default {
       authUser: "authModule/authUser",
     }),
   },
-  created() {
+  mounted() {
     this.crystalId = this.$route.params.id
-    this.loadCrystal(this.crystalId)
-
-    this.loadLocations()
-    this.crystal.userId = 1
+    this.loadCrystal()
+    // this.crystal.userId = 1
   },
   methods: {
     ...mapActions({
@@ -139,8 +143,8 @@ export default {
       getCrystal: 'crystalsModule/getCrystal',
       updateCrystal: 'crystalsModule/updateCrystal',
     }),
-    async loadCrystal(id) {
-      await this.$store.dispatch("crystalsModule/getCrystal", id);
+    async loadCrystal() {
+      await this.$store.dispatch("crystalsModule/getCrystal", this.crystalId);
     },
     async loadLocations() {
       await this.$store.dispatch("locationsModule/getLocations");
