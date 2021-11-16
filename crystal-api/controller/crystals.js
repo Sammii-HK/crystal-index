@@ -137,9 +137,6 @@ module.exports = [
       const { 
         name, bio, image, otherNames, colour, chakra, userId, originId, mementoId, favouritedBy,
       } = req.payload;
-      const results = await db.crystal.findAll({
-        where: { id },
-      });
       try {
         const updateCrystalsObject = await db.crystal.update({
           name,
@@ -180,6 +177,10 @@ module.exports = [
         });
 
         await Promise.all(updateCrystalsObject);
+
+        const results = await db.crystal.findAll({
+          where: { id },
+        });
 
         return results
         
