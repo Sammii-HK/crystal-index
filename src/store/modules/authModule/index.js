@@ -25,7 +25,6 @@ export default {
       await axios.post('/api/login', user).then((response) => {
         commit('CLEAR_STATE');
         commit('SET_AUTH_USER', response.data)
-        commit('UPDATE_USER', response.data)
         console.log("Login success:", response.data.message, "🌈");
       });
     },
