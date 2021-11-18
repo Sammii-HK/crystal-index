@@ -173,7 +173,7 @@ export default {
     successfulResponse() {
       this.response = `Created ${this.crystal.name}`
       window.setTimeout(this.clearForm, 5)
-      window.setTimeout(this.clearResponse, 5)
+      window.setTimeout(this.clearResponse, 5000)
     }, 
     clearForm() {
       this.crystal = {}
