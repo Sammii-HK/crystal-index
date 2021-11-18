@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../../../router';
 
 const defaultState = () => ({
   crystals: [],
@@ -37,11 +38,17 @@ export default {
         commit('UPDATE_CRYSTALS', response.data)
       });
     },
-    createCrystal({ commit }, crystal) {
-      axios.post('/api/crystals/create', crystal)
+    createCrystal({ commit },  { crystal, token }) {
+      let config = {
+        headers: { Authorization: 'Bearer ' + token }
+      }
+      console.log("config, token", config, token);
+      
+      axios.post('/api/crystals/create', crystal, config)
       .then((response) => {
         commit('CLEAR_STATE');
         commit('UPDATE_CRYSTAL', response.data)
+        router.push(`/crystals/${response.data.id}`)
       });
     },
     updateCrystal({ commit }, { crystal, token } ) {
