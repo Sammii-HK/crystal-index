@@ -5,7 +5,6 @@
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
         <div class="column is-10" >
-          {{crystal}}
           <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="my-5">
             <span class="mr-3 has-text-weight-bold">{{tagSet}}: </span>
             <a v-for="(attr, i) in constants[tagSet]" class="mx-2"
@@ -118,9 +117,6 @@ export default {
       attrs: {},
     }
   },
-  ...mapState({
-    crystal: state => state.crystalsModule.crystal,
-  }),
   watch: {
     crystal: [ 'loadLocations' ]
   },
@@ -130,11 +126,13 @@ export default {
       locations: "locationsModule/locations",
       authUser: "authModule/authUser",
     }),
+    ...mapState({
+      crystal: state => state.crystalsModule.crystal,
+    }),
   },
   mounted() {
     this.crystalId = this.$route.params.id
     this.loadCrystal()
-    // this.crystal.userId = 1
   },
   methods: {
     ...mapActions({
