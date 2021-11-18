@@ -46,7 +46,8 @@ export default {
       })
     },
     logOut() {
-      this.$store.dispatch('authModule/logOut')
+      this.$store.dispatch('authModule/logOut');
+      this.$router.push('/');
     },
   },
   computed: {
