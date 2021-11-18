@@ -42,5 +42,5 @@ echo $NODE_ENV
 ```
 
 ```
-sudo chown -R pi:pi data; sudo chmod -R 777 data;
+sudo chown -R pi:pi data; sudo chmod -R 777 data; docker-compose up --build;
 ```
