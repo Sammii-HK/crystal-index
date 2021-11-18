@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
 const chakra = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
@@ -121,6 +121,10 @@ export default {
   computed: {
     ...mapGetters({
       locations: "locationsModule/locations",
+      authUser: "authModule/authUser",
+    }),
+    ...mapState({
+      crystalStore: state => state.crystalsModule.crystal,
     }),
   },
   created() {
@@ -137,7 +141,8 @@ export default {
       await this.$store.dispatch("locationsModule/getLocations");
     },
     async createCrystal() {
-      await this.$store.dispatch("crystalsModule/createCrystal", this.crystal);
+      const token = this.authUser.credentials
+      await this.$store.dispatch("crystalsModule/createCrystal", { crystal: this.crystal, token });
       this.successfulResponse()
     },
     selectTag(tagSet, attr) {
@@ -168,8 +173,8 @@ export default {
     successfulResponse() {
       this.response = `Created ${this.crystal.name}`
       window.setTimeout(this.clearForm, 5)
-      window.setTimeout(this.clearResponse, 5000)
-    },
+      window.setTimeout(this.clearResponse, 5)
+    }, 
     clearForm() {
       this.crystal = {}
     },
