@@ -134,8 +134,8 @@ export default {
   methods: {
     ...mapActions({
       // get the action from the store
-      getLocations: 'locationsModulegetLocations',
-      createCrystal: 'crystalsModule/createCrystal',
+      // getLocations: 'locationsModulegetLocations',
+      // createCrystal: 'crystalsModule/createCrystal',
     }),
     async loadLocations() {
       await this.$store.dispatch("locationsModule/getLocations");
@@ -150,7 +150,7 @@ export default {
         if (this.crystal[tagSet].includes(attr)) {
           this.removeItemOnce(this.crystal[tagSet], attr)
         } else {
-          this.crystal[tagSet] =  this.crystal[tagSet].concat(attr)
+          this.crystal[tagSet] = this.crystal[tagSet].concat(attr)
         }
       } else {
         this.crystal[tagSet] = [ attr ]
@@ -166,9 +166,10 @@ export default {
     checkForm() {
       this.errors = []
       this.requiredFields.map(field => {
-        if (this.crystal['name'] && this.crystal['colour']) this.createCrystal()
-        if (!this.crystal[field]) this.errors.push(`${field} required.`)
+        if (this.crystal['name'] && this.crystal['colour']) return
+        return this.errors.push(`${field} required.`)
       })
+      if (this.errors.length === 0) return this.createCrystal()
     },
     successfulResponse() {
       this.response = `Created ${this.crystal.name}`

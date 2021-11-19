@@ -41,9 +41,7 @@ export default {
     createCrystal({ commit },  { crystal, token }) {
       let config = {
         headers: { Authorization: 'Bearer ' + token }
-      }
-      console.log("config, token", config, token);
-      
+      }      
       axios.post('/api/crystals/create', crystal, config)
       .then((response) => {
         commit('CLEAR_STATE');
