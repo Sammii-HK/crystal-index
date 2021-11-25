@@ -3,7 +3,7 @@
 <template>
   <div class="container pt-4">
     <div class="columns is-multiline is-mobile">
-      <!-- <div class="column is-12">
+      <div class="column is-12">
         <div class="columns is-centered">
           <div class="column is-3">
             <b-field>
@@ -11,8 +11,9 @@
               type="search"
               icon="magnify"
               icon-clickable
-              >
-              </b-input>
+              @input="searchCrystals"
+              :value="searchCrystalInput"
+              />
             </b-field>
 
             <div class="column is-3">
@@ -21,10 +22,10 @@
           </div>
 
         </div>
-      </div> -->
+      </div>
       
       <div
-      v-for="crystal in crystals" 
+      v-for="crystal in searchCrystalsResults" 
       :key="crystal.id"
       class="column is-4"
       >
@@ -58,15 +59,18 @@ export default {
     return {
       hover: false,
       activeCrystal: null,
+      searchCrystalsResults: [],
+      searchCrystalInput: null,
     }
   },
   computed: {
     ...mapGetters({
       crystals: "crystalsModule/crystals",
-    })
+    }),
   },
   created() {
     this.$store.dispatch("crystalsModule/getCrystals");
+    this.searchCrystalsResults = this.crystals;
   },
   methods: {
     selectedCrystal(id) {
@@ -76,7 +80,19 @@ export default {
       hover 
       ? this.activeCrystal = id
       : this.activeCrystal = null;
-    }
+    },
+    searchCrystals(e) {
+      let searchValue = this.searchCrystalInput = e
+      if (!searchValue) return this.searchCrystalsResults = this.crystals
+      const results = this.crystals.filter(crystal => { 
+        return (crystal.name?.includes(searchValue)) 
+          || (crystal.memento?.placeName.includes(searchValue))
+          || (crystal.colour?.includes(searchValue))
+          || (crystal.chakra?.includes(searchValue))
+      })
+      this.searchCrystalsResults = results
+    },
+
   },
 }
 </script>
