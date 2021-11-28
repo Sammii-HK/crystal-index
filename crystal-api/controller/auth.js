@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const Jwt = require('@hapi/jwt');
 const { secret, tokenExpiry } = require('../config/environment.js');
 const Boom = require('boom');
-const { verificationBus } = require('../lib/secureRoute.js')
 
 module.exports = [
   // Register user
@@ -110,27 +109,34 @@ module.exports = [
   {
     method: 'GET',
     path: '/profile/{id}',
+    options: {
+      auth: 'authUser',
+    },
     handler: async (req, h) => {
       try {
-        const verify = await verificationBus(req)
         const { id } = req.params;
-
-        let results = null
-
-        if (verify.isValid) {
-          results = await db.user.findOne({
-            where: { id },
-          }, {
-            include: [
-              {
-                model: db.userDetail,
-                as: 'userDetail',
+        const results = await db.user.findAll({
+          where: { id },
+          include: [
+            {
+              model: db.userDetail,
+              as: 'userDetail',
+              // attributes: ['firstName'],
+            }, {
+              model: db.crystal,
+              as: 'createdCrystals',
+            },
+            {
+              model: db.crystal,
+              as: 'favouriteCrystals',
+              through: {
+                model: db.favourite,
               },
-            ],
-          });
-        } // else return Boom.unauthorized('Access Denied')
+            },
+          ],
+        });
 
-        return { verify, results }
+        return results;
 
       } catch (e) {
         console.log('error finding user:', e);
@@ -142,10 +148,13 @@ module.exports = [
   {
     method: 'PUT',
     path: '/profile/{id}',
+    options: {
+      auth: 'authUser',
+    },
     handler: async (req, h) => {
       const { id } = req.params;
       const {
-        username, password,
+        username, password, firstName, lastName, mobileNum, address,
       } = req.payload;
 
       const updateUsersObject = {
@@ -153,34 +162,41 @@ module.exports = [
         password, 
       };
 
+      const updateUserDetailsObject = {
+        firstName, 
+        lastName,
+        mobileNum,
+        address,
+      };
+
       try {
-        const verify = await verificationBus(req)
+        const updatePromises = [];
+        const updateUsersPromise = db.user.update(
+          updateUsersObject,
+          { where: { id } },
+        );
+        updatePromises.push(updateUsersPromise);
 
-        if (verify.isValid && verify.isCurrentUser) {
-        // if (verify.isValid && isCurrentUser) {
-          const updatePromises = [];
-          const updateUsersPromise = db.user.update(
-            updateUsersObject,
-            { where: { id } },
-          );
-          updatePromises.push(updateUsersPromise);
-  
-          await Promise.all(updatePromises);
-  
-          const results = await db.user.findOne({
-            where: { id },
-          }, {
-            include: [
-              {
-                model: db.userDetail,
-                as: 'userDetail',
-              },
-            ],
-          });
-  
-          return { verify, results }
+        const updateUserDetailsPromise = db.userDetail.update(
+          updateUserDetailsObject,
+          { where: { id } },
+        );
+        updatePromises.push(updateUserDetailsPromise); 
 
-        } else return Boom.unauthorized('Access Denied')
+        await Promise.all(updatePromises);
+
+
+        const results = await db.user.findAll({
+          where: { id },
+          include: [
+            {
+              model: db.userDetail,
+              as: 'userDetail',
+            },
+          ],
+        });
+
+        return results
 
       } catch (e) {
         console.log('error updating user:', e);
@@ -191,6 +207,9 @@ module.exports = [
   {
     method: 'DELETE',
     path: '/goodbye/{id}',
+    options: {
+      auth: 'authUser',
+    },
     handler: async (req, h) => {
       try {
         const { id } = req.params;
