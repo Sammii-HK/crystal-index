@@ -6,6 +6,7 @@ import crystalsModule from "./modules/crystalsModule"
 import authModule from "./modules/authModule"
 import userModule from "./modules/userModule"
 import locationsModule from "./modules/locationsModule"
+import favouritesModule from "./modules/favouritesModule"
 
 axios.defaults.withCredentials = true
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     authModule,
     userModule,
     locationsModule,
+    favouritesModule,
   },
   plugins: [createPersistedState()],
 });

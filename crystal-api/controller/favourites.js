@@ -36,5 +36,30 @@ module.exports = [
       }
     },
   }, 
-
+  {
+    method: 'DELETE',
+    path: '/favourites/removeCrystal',
+    handler: async (req, h) => {
+      const { userId, crystalId } = req.payload;
+      try {
+        // const results = await db.favourite.findOne({
+        //   userId,
+        //   crystalId,
+        // });
+        const results = await db.favourite.destroy({
+          where: {
+            userId,
+            crystalId,
+          }
+        })
+        return {
+          success: true,
+          results,
+        };
+      } catch (e) {
+        console.log('error creating group:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    },
+  },
 ];
