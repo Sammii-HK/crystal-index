@@ -4,8 +4,19 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
-        <div class="column is-12" v-if="(authUser.id === crystal.userId) || ((crystal.userId === null) && (authUser.id === 1))">
-          <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
+        <div class="column is-1 is-offset-10 is-flex is-align-items-center is-justify-content-flex-end">
+          <div v-if="(authUser.id === crystal.userId) || ((crystal.userId === null) && (authUser.id === 1))">
+            <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
+          </div>
+        </div>
+        <div class="column" v-if="authUser">
+          <div @click="handleFavouriteCrystals">
+            <b-icon 
+            class="mdi mdi-heart is-clickable" 
+            size="is-large"
+            :type="{ 'is-red': isFavourited }"
+            />
+          </div>
         </div>
         <div class="column is-6-desktop is-8-touch" >
           <figure class="image">
@@ -76,7 +87,10 @@ export default {
     ...mapGetters({
       crystal: "crystalsModule/crystal",
       authUser: "authModule/authUser",
-    })
+    }),
+    isFavourited() {
+      return !!this.crystal.favouritedBy?.find(user => user.id === this.authUser.id);
+    },
   },
   mounted() {
     this.crystalId = this.$route.params.id
@@ -86,6 +100,7 @@ export default {
     ...mapActions({
       // get the action from the store
       getCrystal: 'crystalsModule/getCrystal',
+      updateCrystal: 'crystalsModule/updateCrystal',
     }),
     async loadCrystal(id) {
       await this.$store.dispatch("crystalsModule/getCrystal", id);
@@ -116,9 +131,19 @@ export default {
       .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
     },
     updateCrystal() {
-      console.log("updateCrystal", );
-      
       this.$router.push(`/crystals/${this.crystal.id}/update`)
+    },
+    handleFavouriteCrystals() {
+      return this.isFavourited ? this.removeFavourite() : this.addFavourite();
+    },
+    async removeFavourite() {
+      await this.$store.dispatch("favouritesModule/removeFavourite", { userId: this.authUser.id, crystalId: this.crystal.id  });
+      this.loadCrystal(this.crystal.id)
+    },
+    async addFavourite() {
+      // const token = this.authUser.credentials
+      await this.$store.dispatch("favouritesModule/createFavourite", { userId: this.authUser.id, crystalId: this.crystal.id  });
+      this.loadCrystal(this.crystal.id)
     },
   },
   filters: {

@@ -42,10 +42,6 @@ module.exports = [
     handler: async (req, h) => {
       const { userId, crystalId } = req.payload;
       try {
-        // const results = await db.favourite.findOne({
-        //   userId,
-        //   crystalId,
-        // });
         const results = await db.favourite.destroy({
           where: {
             userId,
