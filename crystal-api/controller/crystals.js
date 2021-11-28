@@ -178,9 +178,33 @@ module.exports = [
 
         await Promise.all(updateCrystalsObject);
 
-        const results = await db.crystal.findAll({
-          where: { id },
-        });
+        const results = await db.crystal.findAll(
+          { where: { id } },
+          {
+            include: [
+              {
+                model: db.user,
+                as: 'createdBy',
+                attributes: ['id', 'username'],
+              },
+              {
+                model: db.location,
+                as: 'origin',
+              },
+              {
+                model: db.location,
+                as: 'memento',
+              },
+              {
+                model: db.user,
+                as: 'favouritedBy',
+                through: {
+                  model: db.favourite,
+                },
+              },
+            ],
+          },
+        );
 
         return results
         
