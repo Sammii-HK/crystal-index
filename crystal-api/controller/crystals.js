@@ -72,6 +72,7 @@ module.exports = [
             {
               model: db.user,
               as: 'favouritedBy',
+              attributes: ['id', 'username'],
               through: {
                 model: db.favourite,
               },
@@ -168,6 +169,7 @@ module.exports = [
             {
               model: db.user,
               as: 'favouritedBy',
+              attributes: ['id', 'username'],
               through: {
                 model: db.favourite,
               },
@@ -198,6 +200,7 @@ module.exports = [
               {
                 model: db.user,
                 as: 'favouritedBy',
+                attributes: ['id', 'username'],
                 through: {
                   model: db.favourite,
                 },
