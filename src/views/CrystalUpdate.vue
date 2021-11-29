@@ -150,7 +150,7 @@ export default {
     async updateCrystal() {
       const token = this.authUser.credentials
       // if userId on crystal is undefined, set userId: 1
-      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("crystalsModule/updateCrystal", { ...this.crystal, userId: 1 }, token);
+      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("crystalsModule/updateCrystal", { crystal: {...this.crystal, userId: 1 }, token });
       if (this.authUser.id !== this.crystal.userId) return this.errors.push(`Unauthorised, you do not have access.`)
       await this.$store.dispatch("crystalsModule/updateCrystal", { crystal: this.crystal, token });
       this.successfulResponse()
