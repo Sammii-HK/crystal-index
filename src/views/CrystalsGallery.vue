@@ -83,14 +83,14 @@ export default {
     },
     searchCrystals(e) {
       let searchValue = this.searchCrystalInput = e
-      if (!searchValue) return this.searchCrystalsResults = this.crystals
+      if (!searchValue) return this.crystals;
       const results = this.crystals.filter(crystal => { 
-        return (crystal.name?.includes(searchValue)) 
-          || (crystal.memento?.placeName.includes(searchValue))
-          || (crystal.colour?.includes(searchValue))
-          || (crystal.chakra?.includes(searchValue))
+        return (crystal.name && crystal.name.includes(searchValue)) 
+          || (crystal.memento && crystal.memento.placeName.includes(searchValue))
+          || (crystal.colour && crystal.colour.includes(searchValue))
+          || (crystal.chakra && crystal.chakra.includes(searchValue));
       })
-      this.searchCrystalsResults = results
+      this.searchCrystalsResults = results;
     },
 
   },

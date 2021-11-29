@@ -89,7 +89,7 @@ export default {
       authUser: "authModule/authUser",
     }),
     isFavourited() {
-      return !!this.crystal.favouritedBy?.find(user => user.id === this.authUser.id);
+      return !!(this.crystal.favouritedBy && this.crystal.favouritedBy.find(user => user.id === this.authUser.id));
     },
   },
   mounted() {
