@@ -4,21 +4,25 @@
   <div class="section">
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
-        <div class="column is-1 is-offset-10 is-flex is-align-items-center is-justify-content-flex-end">
-          <div v-if="(authUser.id === crystal.userId) || ((crystal.userId === null) && (authUser.id === 1))">
-            <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
+        <div class="column is-10">
+          <div class="columns is-mobile is-flex is-justify-content-flex-end">
+            <div class="column is-1 is-3-touch is-flex is-align-items-center is-justify-content-flex-end">
+              <div v-if="(authUser.id === crystal.userId) || ((crystal.userId === null) && (authUser.id === 1))">
+                <b-button label="Edit" @click="updateCrystal" size="is-small" type="is-violet" class="is-pulled-right" />
+              </div>
+            </div>
+            <div class="column is-1 is-3-touch" v-if="authUser.id">
+              <div @click="handleFavouriteCrystals">
+                <b-icon 
+                class="mdi mdi-heart is-clickable" 
+                size="is-large"
+                :type="{ 'is-red': isFavourited }"
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div class="column" v-if="authUser">
-          <div @click="handleFavouriteCrystals">
-            <b-icon 
-            class="mdi mdi-heart is-clickable" 
-            size="is-large"
-            :type="{ 'is-red': isFavourited }"
-            />
-          </div>
-        </div>
-        <div class="column is-6-desktop is-8-touch" >
+        <div class="column is-6-desktop is-10-touch" >
           <figure class="image">
             <b-image
             :src="`https://static.crystalindex.co.uk:8443/crystals/${crystal.id}.jpeg`" 
