@@ -60,6 +60,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import moment from 'moment'
+import axios from 'axios';
 
 const config = {
   // Attributes to be displayed in different formats
@@ -137,12 +138,17 @@ export default {
       return this.isFavourited ? this.removeFavourite() : this.addFavourite();
     },
     async removeFavourite() {
-      await this.$store.dispatch("favouritesModule/removeFavourite", { userId: this.authUser.id, crystalId: this.crystal.id  });
+      const data = { userId: this.authUser.id, crystalId: this.crystal.id  }
+      await axios.delete('/api/favourites/removeCrystal', { data: data }).then((response) => {
+        return response;
+      });
       this.loadCrystal(this.crystal.id)
     },
     async addFavourite() {
-      // const token = this.authUser.credentials
-      await this.$store.dispatch("favouritesModule/createFavourite", { userId: this.authUser.id, crystalId: this.crystal.id  });
+      const data = { userId: this.authUser.id, crystalId: this.crystal.id  }
+      await axios.post('/api/favourites/addCrystal', data).then((response) => {
+        return response;
+      });
       this.loadCrystal(this.crystal.id)
     },
   },
