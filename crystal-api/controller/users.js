@@ -27,6 +27,7 @@ module.exports = [
               attributes: ['name'],
               through: {
                 model: db.favourite,
+                attributes: [],
               },
             },
           ],
@@ -44,25 +45,30 @@ module.exports = [
     handler: async (req, h) => {
       try {
         const { id } = req.params;
-        const results = await db.user.findAll({
+        const results = await db.user.findOne({
           where: { id },
           include: [
             {
               model: db.userDetail,
               as: 'userDetail',
               attributes: ['firstName'],
-            }, {
+            }, 
+            {
               model: db.crystal,
               as: 'createdCrystals',
+              attributes: [ 'id' ],
             },
             {
               model: db.crystal,
               as: 'favouriteCrystals',
+              attributes: ['id'],
               through: {
                 model: db.favourite,
+                attributes: [],
               },
             },
           ],
+          exclude: [ 'password' ]
         });
         return results;
       } catch (e) {

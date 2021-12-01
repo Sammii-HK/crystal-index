@@ -121,16 +121,19 @@ module.exports = [
             {
               model: db.userDetail,
               as: 'userDetail',
-              // attributes: ['firstName'],
+              attributes: ['firstName'],
             }, {
               model: db.crystal,
               as: 'createdCrystals',
+              attributes: ['id'],
             },
             {
               model: db.crystal,
               as: 'favouriteCrystals',
+              attributes: ['id'],
               through: {
                 model: db.favourite,
+                attributes: [],
               },
             },
           ],
