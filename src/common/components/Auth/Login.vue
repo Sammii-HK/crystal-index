@@ -27,6 +27,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
+import axios from 'axios';
 
 export default {
   name: 'login',
@@ -53,10 +54,17 @@ export default {
       // this sends the user data on state as the body of the request
       const user = { username: this.user.username, password: this.user.password };
       await this.$store.dispatch("authModule/setAuthenticatedUser", { user });
+      // await axios.post('/api/login', user).then((response) => {
+      //   return response;
+      // });
 
       if (this.authUser.id) {
+        this.loadUser()
         this.$emit('success')
       } else this.addErrorMessage('There was a problem retrieving your details. Please try again.')
+    },
+    async loadUser(id) {
+      await this.$store.dispatch("userModule/getUser", this.authUser.id);
     },
     failedLogin(e) {
       this.addErrorMessage(e.error)

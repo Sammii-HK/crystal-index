@@ -12,9 +12,9 @@
       <b-navbar-item v-if="authUser && authUser.id === 1" href="/crystal-create">
         Create Crystal
       </b-navbar-item>
-      <!-- <b-navbar-item href="/profile">
+      <b-navbar-item v-if="authUser.id" :href="`/profile/${authUser.id}`">
         Profile
-      </b-navbar-item> -->
+      </b-navbar-item>
     </template>
 
     <template #end>
@@ -47,6 +47,7 @@ export default {
     },
     logOut() {
       this.$store.dispatch('authModule/logOut');
+      this.$store.dispatch('userModule/clearUser');
       this.$router.push('/');
     },
   },

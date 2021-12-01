@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CNavbar from './components/CNavBar.vue'
+import CNavbar from './common/components/CNavBar.vue'
 export default {
   name: 'app',
   components: {

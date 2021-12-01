@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../common/views/Home";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../components/Auth/Login") 
+    component: () => import("../common/components/Auth/Login") 
   },
   {
     path: "/about",
@@ -23,29 +23,29 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About"),
+      import(/* webpackChunkName: "about" */ "../common/views/About"),
   },
   {
     path: "/crystal-create",
     name: "Crystal Create Form",
-    component: () => import("../views/CrystalCreateForm"),
+    component: () => import("../common/views/CrystalCreateForm"),
     meta: { requiresAuth: true },
   },
   {
     path: '/crystals/:id/',
     name: "View Crystal",
-    component: () => import("../views/CrystalView") 
+    component: () => import("../common/views/CrystalView") 
   },
   {
     path: '/crystals/:id/update',
     name: "Update Crystal",
-    component: () => import("../views/CrystalUpdate"),
+    component: () => import("../common/views/CrystalUpdate"),
     meta: { requiresAuth: true },
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: "Profile",
-    component: () => import("../views/Profile"),
+    component: () => import("../common/views/Profile"),
     meta: { requiresAuth: true },
   },
 ];
