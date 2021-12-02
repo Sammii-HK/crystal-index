@@ -20,9 +20,9 @@
 </template>
 
 <script>
-// import Register from '@/components/Auth/Register'
-import Login from '@/components/Auth/Login'
-// import ForgotPassword from '@/modules/account/components/Auth/ForgotPassword'
+// import Register from './Register'
+import Login from './Login'
+// import ForgotPassword from '@/modules/account/common/components/Auth/ForgotPassword'
 const createTabProps = tabName => ({ 
   [tabName]: { 
     label: tabName,

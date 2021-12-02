@@ -27,7 +27,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   name: 'login',
@@ -63,7 +63,7 @@ export default {
         this.$emit('success')
       } else this.addErrorMessage('There was a problem retrieving your details. Please try again.')
     },
-    async loadUser(id) {
+    async loadUser() {
       await this.$store.dispatch("userModule/getUser", this.authUser.id);
     },
     failedLogin(e) {

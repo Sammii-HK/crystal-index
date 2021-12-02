@@ -41,7 +41,7 @@ export default {
     openRegisterComponent() {
       this.$buefy.modal.open({
           parent: this,
-          component: () => import('@/components/Auth/AuthForm'),
+          component: () => import('./Auth/AuthForm'),
           hasModalCard: true,
       })
     },
