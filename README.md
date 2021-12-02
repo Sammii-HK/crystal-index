@@ -1,4 +1,6 @@
-# The Crystal Index
+# 🔮 The Crystal Index
+
+[Live Site](www.crystalindex.co.uk)
 
 A very ambitious side project to catalogue my crystals.
 
