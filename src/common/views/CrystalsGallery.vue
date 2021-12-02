@@ -47,9 +47,11 @@ export default {
       crystals: "crystalsModule/crystals",
     }),
   },
+  watch: {
+    crystals: 'setSearchCrystals'
+  },
   created() {
-    this.$store.dispatch("crystalsModule/getCrystals");
-    this.searchCrystalsResults = this.crystals;
+    this.$store.dispatch("crystalsModule/getCrystals");    
   },
   methods: {
     searchCrystals(e) {
@@ -62,6 +64,9 @@ export default {
           || (crystal.chakra && crystal.chakra.includes(searchValue));
       })
       this.searchCrystalsResults = results;
+    },
+    setSearchCrystals() {
+      this.searchCrystalsResults = this.crystals;
     },
   },
   components: {
