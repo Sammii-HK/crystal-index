@@ -16,49 +16,28 @@
               />
             </b-field>
 
-            <div class="column is-3">
+            <!-- <div class="column is-3">
 
-            </div>
+            </div> -->
           </div>
 
         </div>
       </div>
+
+      <c-image-gallery :images="searchCrystalsResults" />
       
-      <div
-      v-for="crystal in searchCrystalsResults" 
-      :key="crystal.id"
-      class="column is-4"
-      >
-        <figure 
-        class="image is-clickable" 
-        @click="selectedCrystal(crystal.id)"
-        @mouseenter="toggleOverlay(crystal.id, true)"
-        @mouseleave="toggleOverlay(crystal.id, false)"
-        >
-          <b-image
-          :src="`https://static.crystalindex.co.uk:8443/crystals/${crystal.id}.jpeg`"
-          :alt="crystal.name"
-          ratio="1by1"
-          />
-          <div v-if="activeCrystal == crystal.id"
-          class="is-overlay is-flex is-align-items-center is-justify-content-center has-background-transparent-white"
-          >
-            <p class="subtitle">{{ crystal.name }}</p>
-          </div>
-        </figure>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import CImageGallery from '../components/Organisms/CImageGallery.vue';
+
 export default {
   name: "crystals-gallery",
   data() {
     return {
-      hover: false,
-      activeCrystal: null,
       searchCrystalsResults: [],
       searchCrystalInput: null,
     }
@@ -73,14 +52,6 @@ export default {
     this.searchCrystalsResults = this.crystals;
   },
   methods: {
-    selectedCrystal(id) {
-      this.$router.push(`/crystals/${id}`)
-    },
-    toggleOverlay(id, hover) {
-      hover 
-      ? this.activeCrystal = id
-      : this.activeCrystal = null;
-    },
     searchCrystals(e) {
       let searchValue = this.searchCrystalInput = e
       if (!searchValue) return this.crystals;
@@ -92,7 +63,9 @@ export default {
       })
       this.searchCrystalsResults = results;
     },
-
+  },
+  components: {
+    CImageGallery,
   },
 }
 </script>
