@@ -56,7 +56,7 @@ export default {
   methods: {
     searchCrystals(e) {
       let searchValue = this.searchCrystalInput = e
-      if (!searchValue) return this.crystals;
+      if (!searchValue.length === 0) return this.crystals;
       const results = this.crystals.filter(crystal => { 
         return (crystal.name && crystal.name.includes(searchValue)) 
           || (crystal.memento && crystal.memento.placeName.includes(searchValue))
