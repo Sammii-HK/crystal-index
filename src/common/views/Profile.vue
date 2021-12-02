@@ -3,13 +3,13 @@
 <template>
   <div class="section">
     <div class="container pt-4">
-      favourited
-      {{ favouritedCrystals }}
+      <c-image-gallery :images="favouritedCrystals" />
     </div>
   </div>
 </template>
 
 <script>
+import CImageGallery from '../components/Organisms/CImageGallery.vue';
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "profile",
@@ -20,13 +20,15 @@ export default {
   computed: {
     ...mapGetters({
       authUser: "authModule/authUser",
+      crystals: "crystalsModule/crystals",
       user: "userModule/user",
     }),
     createdCrystals() {
       return this.reduceCrystalIds(this.user.user.createdCrystals)
     },
     favouritedCrystals() {
-      return this.reduceCrystalIds(this.user.user.favouriteCrystals)
+      const favouriteCrystals = this.reduceCrystalIds(this.user.user.favouriteCrystals)
+      return this.crystals.filter(crystal => favouriteCrystals.includes(crystal.id))
     },
   },
   created() {
@@ -46,6 +48,9 @@ export default {
     reduceCrystalIds(crystalType) {
       return crystalType.map(crystal => crystal.id);
     },
+  },
+  components: {
+    CImageGallery, 
   },
 }
 </script>
