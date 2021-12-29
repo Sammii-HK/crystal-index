@@ -1,9 +1,11 @@
 <template>
-  <b-image
-  :src="`/api/images/${imageId}`"
-  :alt="`crystal image ${imageId}`"
-  ratio="1by1"
-  />
+  <div>
+    <b-image
+    :src="getImageSrc"
+    :alt="`crystal image ${imageId}`"
+    ratio="1by1"
+    />
+  </div>
 </template>
 
 <script>
@@ -12,8 +14,12 @@ export default {
   props: {
     imageId: {
       type: Number,
-      required: true,
     }
+  },
+  computed: {
+    getImageSrc() {
+      return this.imageId ? `/api/images/${this.imageId}` : '/src/assets/placeholder.png';
+    },
   },
 }
 </script>

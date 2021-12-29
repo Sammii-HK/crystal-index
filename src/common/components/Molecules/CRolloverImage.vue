@@ -1,16 +1,11 @@
 <template>
-  <!-- @click="imageClicked(imageItem.id)" -->
   <figure 
   @click="$emit('click', imageItem.id)"
   class="image is-clickable" 
   @mouseenter="toggleOverlay(imageItem.id, true)"
   @mouseleave="toggleOverlay(imageItem.id, false)"
   >
-    <b-image
-    :src="`https://static.crystalindex.co.uk:8443/crystals/${imageItem.id}.jpeg`"
-    :alt="imageItem.name"
-    ratio="1by1"
-    />
+    <c-image :imageId="imageItem.image && imageItem.image.id" />
     <div v-if="activeCrystal == imageItem.id"
     class="is-overlay is-flex is-align-items-center is-justify-content-center has-background-transparent-white"
     >
@@ -20,12 +15,17 @@
 </template>
 
 <script>
+import CImage from "../Atoms/CImage.vue"
+
 export default {
   name: 'c-rollover-image',
   data() {
     return {
       activeCrystal: null,
     }
+  },
+  components: {
+    CImage,
   },
   props: {
     imageItem: Object,
