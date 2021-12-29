@@ -5,6 +5,7 @@
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
         <div class="column is-10" >
+          <c-upload-image @change="saveImage" />
           <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="my-5">
             <span class="mr-3 has-text-weight-bold">{{tagSet}}: </span>
             <a v-for="(attr, i) in constants[tagSet]" class="mx-2"
@@ -87,6 +88,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import CUploadImage from '../components/Organisms/CUploadImage.vue';
 
 const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
 const chakra = [ 'Crown', 'Third Eye', 'Throat', 'Heart', 'Solar Plexus', 'Sacral', 'Root', ]
@@ -116,6 +118,9 @@ export default {
       crystalId: null,
       attrs: {},
     }
+  },
+  components: {
+    CUploadImage,
   },
   watch: {
     crystal: [ 'loadLocations' ]
@@ -150,9 +155,22 @@ export default {
     async updateCrystal() {
       const token = this.authUser.credentials
       // if userId on crystal is undefined, set userId: 1
-      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch("crystalsModule/updateCrystal", { crystal: {...this.crystal, userId: 1 }, token });
+      if (!this.crystal.userId && (this.authUser.id === 1)) await this.$store.dispatch(
+        "crystalsModule/updateCrystal", 
+        { 
+          crystal: {...this.crystal, userId: 1 }, 
+          image: this.image,
+          token 
+        }
+      );
       if (this.authUser.id !== this.crystal.userId) return this.errors.push(`Unauthorised, you do not have access.`)
-      await this.$store.dispatch("crystalsModule/updateCrystal", { crystal: this.crystal, token });
+      await this.$store.dispatch("crystalsModule/updateCrystal", 
+        { 
+          crystal: this.crystal, 
+          image: this.image,
+          token,
+        }
+      );
       this.successfulResponse()
       
     },
@@ -175,10 +193,12 @@ export default {
       this.crystal[attrType] = input
     },
     checkForm() {
+      this.errors = []
       this.requiredFields.map(field => {
-        if (this.crystal['name'] && this.crystal['colour']) this.updateCrystal()
-        if (!this.crystal[field]) this.errors.push(`${field} required.`)
+        if (this.crystal['name'] && this.crystal['colour']) return
+        return this.errors.push(`${field} required.`)
       })
+      if (this.errors.length === 0) return this.updateCrystal()
     },
     successfulResponse() {
       this.response = `Updated ${this.crystal.name}`
@@ -193,6 +213,9 @@ export default {
         arr.splice(index, 1);
       }
       return arr;
+    },
+    saveImage(image) {
+      this.image = image
     },
     // addPlaceholderOption(options) {
     //   const placeholder = { label: `Select ${attr}`, value: -1, disabled}

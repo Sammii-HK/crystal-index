@@ -24,7 +24,7 @@
         </div>
         <div class="column is-6-desktop is-10-touch" >
           <figure class="image">
-            <c-image :image="crystal.image" />
+            <c-image :imageId="crystal.image && crystal.image.id" />
           </figure>
         </div>
         <div class="column is-4-desktop is-8-touch is-offset-1" >

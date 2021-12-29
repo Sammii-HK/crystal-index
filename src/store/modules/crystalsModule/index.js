@@ -56,11 +56,17 @@ export default {
         router.push(`/crystals/${response.data.id}`)
       });
     },
-    updateCrystal({ commit }, { crystal, token } ) {
+    updateCrystal({ commit }, { crystal, image, token } ) {
       let config = {
         headers: { Authorization: 'Bearer ' + token }
       }
-      axios.put(`/api/crystals/${crystal.id}`, crystal, config)
+      // Create a new form instance
+      const form = new FormData();
+
+      if (image) form.append('image', image.file, image.name);
+      form.append('crystal', JSON.stringify(crystal)); 
+
+      axios.put(`/api/crystals/${crystal.id}`, form, config)
       .then((response) => {
         commit('CLEAR_STATE');
         commit('UPDATE_CRYSTAL', response.data[0])
