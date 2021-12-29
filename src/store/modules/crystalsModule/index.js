@@ -27,7 +27,8 @@ export default {
     getCrystal({ commit }, id) {
       axios.get(`/api/crystals/${id}`)
       .then((response) => {
-        const crystal = response.data[0]
+        const crystal = response.data;
+        
         commit('UPDATE_CRYSTAL', crystal)
       });
     },

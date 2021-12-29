@@ -24,11 +24,7 @@
         </div>
         <div class="column is-6-desktop is-10-touch" >
           <figure class="image">
-            <b-image
-            :src="`https://static.crystalindex.co.uk:8443/crystals/${crystal.id}.jpeg`" 
-            :alt="crystal.name"
-            ratio="1by1"
-            />
+            <c-image :image="crystal.image" />
           </figure>
         </div>
         <div class="column is-4-desktop is-8-touch is-offset-1" >
@@ -65,6 +61,7 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 import moment from 'moment'
 import axios from 'axios';
+import CImage from "../components/Atoms/CImage.vue"
 
 const config = {
   // Attributes to be displayed in different formats
@@ -81,6 +78,9 @@ export default {
       crystalId: null,
       attrs: {},
     }
+  },
+  components: {
+    CImage,
   },
   ...mapState({
     crystal: state => state.crystalsModule.crystal,
