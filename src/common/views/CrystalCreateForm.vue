@@ -5,6 +5,9 @@
     <div class="container pt-4">
       <div class="columns is-multiline is-mobile is-centered">
         <div class="column is-10" >
+
+          <c-upload-image @change="saveImage" />
+
           <b-taglist v-for="(tagSet) in fields.tags" :key="tagSet" class="my-5">
             <span class="mr-3 has-text-weight-bold">{{tagSet}}: </span>
             <a v-for="(attr, i) in constants[tagSet]" class="mx-2"
@@ -86,6 +89,7 @@
 </template>
 
 <script>
+import CUploadImage from '../components/Organisms/CUploadImage';
 import { mapGetters, mapActions, mapState } from "vuex";
 
 const colour = [ 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear' ]
@@ -127,6 +131,9 @@ export default {
       crystalStore: state => state.crystalsModule.crystal,
     }),
   },
+  components: {
+    CUploadImage 
+  },
   created() {
     this.loadLocations()
     this.crystal.userId = 1
@@ -142,7 +149,11 @@ export default {
     },
     async createCrystal() {
       const token = this.authUser.credentials
-      await this.$store.dispatch("crystalsModule/createCrystal", { crystal: this.crystal, token });
+      await this.$store.dispatch("crystalsModule/createCrystal", { 
+        crystal: this.crystal,
+        image: this.image,
+        token 
+      });
       this.successfulResponse()
     },
     selectTag(tagSet, attr) {
@@ -188,7 +199,10 @@ export default {
         arr.splice(index, 1);
       }
       return arr;
-    }
+    },
+    saveImage(image) {
+      this.image = image
+    },
 
   },
 }
