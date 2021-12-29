@@ -6,16 +6,32 @@ module.exports = [
   path: '/crystals/create',
   options: {
     auth: 'authUser',
+    payload: {
+      parse: true,
+      output: 'data',
+      allow: 'multipart/form-data',
+      multipart: true,
+      maxBytes: 209715200,
+    },
   },
   handler: async (req, h) => {
-    const { 
-        name, bio, image, otherNames, colour, chakra, userId, originId, mementoId,
-    } = req.payload;
+    const { crystal, image } = req.payload;
     try {
+      const { 
+          name, bio, otherNames, colour, chakra, userId, originId, mementoId,
+      } = JSON.parse(crystal);
+
+      const imageResults = await db.image.create({
+        type: 'image/jpeg', 
+        file: image,
+      });
+
+      console.log("imageResults", imageResults);
+      
+
       const results = await db.crystal.create({
         name,
         bio,
-        image,
         otherNames,
         colour,
         chakra,
