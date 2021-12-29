@@ -38,11 +38,17 @@ export default {
         commit('UPDATE_CRYSTALS', response.data)
       });
     },
-    createCrystal({ commit },  { crystal, token }) {
+    createCrystal({ commit },  { crystal, image, token }) {
       let config = {
         headers: { Authorization: 'Bearer ' + token }
-      }      
-      axios.post('/api/crystals/create', crystal, config)
+      }
+      // Create a new form instance
+      const form = new FormData();
+
+      if (image) form.append('image', image.file, image.name);
+      form.append('crystal', JSON.stringify(crystal)); 
+
+      axios.post('/api/crystals/create', form, config)
       .then((response) => {
         commit('CLEAR_STATE');
         commit('UPDATE_CRYSTAL', response.data)
