@@ -21,14 +21,6 @@ module.exports = [
           name, bio, otherNames, colour, chakra, userId, originId, mementoId,
       } = JSON.parse(crystal);
 
-      const imageResults = await db.image.create({
-        type: 'image/jpeg', 
-        file: image,
-      });
-
-      console.log("imageResults", imageResults);
-      
-
       const results = await db.crystal.create({
         name,
         bio,
@@ -38,23 +30,31 @@ module.exports = [
         userId,
         originId,
         mementoId,
+        image: {
+          type: 'image/jpeg', 
+          file: image,
+        },
       }, {
         include: [
-        {
-          model: db.user,
-          as: 'createdBy',
-          attributes: ['id', 'username'],
-        },
-        {
-          model: db.location,
-          as: 'origin',
-        },
-        {
-          model: db.location,
-          as: 'memento',
-        },
-      ],
-
+          {
+            model: db.user,
+            as: 'createdBy',
+            attributes: ['id', 'username'],
+          },
+          {
+            model: db.location,
+            as: 'origin',
+          },
+          {
+            model: db.location,
+            as: 'memento',
+          },
+          {
+            model: db.image,
+            as: 'image',
+            attributes: ['id'],
+          },
+        ],
       });
 
       return results;
@@ -93,6 +93,11 @@ module.exports = [
                 model: db.favourite,
               },
             },
+            {
+              model: db.image,
+              as: 'image',
+              attributes: ['id'],
+            },
           ],
 
         });
@@ -109,7 +114,7 @@ module.exports = [
     handler: async (req, h) => {
       const { id } = req.params;
       try {
-        const results = await db.crystal.findAll({
+        const results = await db.crystal.findOne({
           where: { id },
           // attributes: { exclude: [ 'originId', 'mementoId', 'userId' ] },
           include: [
@@ -133,6 +138,10 @@ module.exports = [
               through: {
                 model: db.favourite,
               },
+            },
+            {
+              model: db.image,
+              as: 'image',
             },
           ],
         });
@@ -189,6 +198,11 @@ module.exports = [
               through: {
                 model: db.favourite,
               },
+            },
+            {
+              model: db.image,
+              as: 'image',
+              attributes: ['id'],
             },
           ],
 

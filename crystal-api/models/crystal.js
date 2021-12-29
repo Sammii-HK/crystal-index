@@ -4,7 +4,6 @@ module.exports = (queryInterface, Sequelize) => {
   const crystal = queryInterface.define('crystal', {
     name: Sequelize.STRING,
     bio: Sequelize.STRING,
-    image: Sequelize.STRING,
     otherNames: Sequelize.STRING,
     colour: Sequelize.ARRAY(Sequelize.STRING),
     chakra: Sequelize.ARRAY(Sequelize.STRING),
@@ -17,6 +16,8 @@ module.exports = (queryInterface, Sequelize) => {
     
     crystal.belongsTo(models.location, { foreignKey: 'originId', as: 'origin' });
     crystal.belongsTo(models.location, { foreignKey: 'mementoId', as: 'memento' });
+    
+    crystal.hasOne(models.image, { foreignKey: 'crystalId', as: 'image' });
 
     crystal.belongsToMany(models.user, { 
       foreignKey: 'crystalId', 

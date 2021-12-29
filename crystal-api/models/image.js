@@ -7,5 +7,9 @@ module.exports = (queryInterface, Sequelize) => {
     timestamps: false
   });
 
+  image.associate = (models) => {
+    image.belongsTo(models.crystal, { foreignKey: 'crystalId', as: 'image' })
+  };
+
   return image;
 };
