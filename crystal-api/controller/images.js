@@ -24,8 +24,13 @@ module.exports = [
       try {
         const results = await db.image.findOne({
           where: { id },
-        })
-        return results
+        });
+        const image = results.dataValues.file
+
+        return h.response(image)
+          .header('Content-Disposition','inline')
+          .header('Content-type', results.dataValues.type)
+          .header('Cache-Control', 'max-age=3600000000000000000');
       } catch (e) {
         console.log('error fetching users:', e);
         return h.response(`Failed: ${e.message}`).code(500);

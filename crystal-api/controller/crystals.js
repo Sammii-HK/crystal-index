@@ -142,6 +142,7 @@ module.exports = [
             {
               model: db.image,
               as: 'image',
+              attributes: ['id'],
             },
           ],
         });
