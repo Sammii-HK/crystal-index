@@ -18,7 +18,7 @@ module.exports = [
     const { crystal, image } = req.payload;
     try {
       const { 
-          name, bio, otherNames, colour, chakra, userId, originId, mementoId,
+        name, bio, otherNames, colour, chakra, userId, originId, mementoId,
       } = JSON.parse(crystal);
 
       const results = await db.crystal.create({
@@ -158,13 +158,37 @@ module.exports = [
     path: '/crystals/{id}',
     options: {
       auth: 'authUser',
+      payload: {
+        parse: true,
+        output: 'data',
+        allow: 'multipart/form-data',
+        multipart: true,
+        maxBytes: 209715200,
+      },
     },
     handler: async (req, h) => {
+      const { crystal, image } = req.payload;
       const { id } = req.params;
-      const { 
-        name, bio, image, otherNames, colour, chakra, userId, originId, mementoId, favouritedBy,
-      } = req.payload;
+
       try {
+        const { 
+          name, bio, otherNames, colour, chakra, userId, originId, mementoId,
+        } = JSON.parse(crystal);
+
+        if (image) {
+          await db.image.update({
+            crystalId: null,
+          }, {
+            where: { crystalId: id },
+          });
+  
+          await db.image.create({
+            type: 'image/jpeg', 
+            file: image,
+            crystalId: id,
+          });
+        }
+
         const updateCrystalsObject = await db.crystal.update({
           name,
           bio,
