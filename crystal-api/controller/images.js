@@ -1,4 +1,5 @@
 const db = require('../models');
+const sharp = require('sharp');
 
 module.exports = [
   {
@@ -18,16 +19,24 @@ module.exports = [
   }, 
   {
     method: 'GET',
-    path: '/images/{id}',
+    path: '/images/{id}/{width?}',
     handler: async (req, h) => {
-      const { id } = req.params;
+      const { id, width } = req.params;
       try {
         const results = await db.image.findOne({
           where: { id },
         });
-        const image = results.dataValues.file
 
-        return h.response(image)
+        const image = results.dataValues.file
+        const numericalWidth = width ? parseInt(width) : 500;
+
+        const resizedImage = await sharp(image)
+          .resize(numericalWidth, numericalWidth)
+          .jpeg()
+          .toBuffer();
+
+
+        return h.response(resizedImage)
           .header('Content-Disposition','inline')
           .header('Content-type', results.dataValues.type)
           .header('Cache-Control', 'max-age=3600000000000000000');
