@@ -1,6 +1,10 @@
-# The Crystal Index
+# 🔮 The Crystal Index
+
+[Live Site](www.crystalindex.co.uk)
 
 A very ambitious side project to catalogue my crystals.
+
+<img width="1679" alt="Screenshot 2021-12-02 at 22 46 52" src="https://user-images.githubusercontent.com/40900195/144515279-bc1acfd4-ab8c-43d2-aa9c-dd838a433c7c.png">
 
 ## Project setup
 ```
