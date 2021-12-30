@@ -39,16 +39,50 @@ module.exports = [
   }, 
   {
     method: 'PUT',
-    path: '/images/{id}/{crystalId}',
+    path: '/images/{id}',
     options: {
       auth: 'authUser',
     },
     handler: async (req, h) => {
-      const { id, crystalId } = req.params;
+      const { id } = req.params;
+      const { crystalId } = req.payload;
 
       try {
-        await db.image.update({
+        return await db.image.update({
           crystalId,
+        }, 
+        {
+          where: { id },
+          returning: true,
+        })
+
+      } catch (e) {
+        console.log('error creating crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    } 
+  },
+  {
+    method: 'PUT',
+    path: '/images/{id}/file/update',
+    options: {
+      auth: 'authUser',
+      payload: {
+        parse: true,
+        output: 'data',
+        allow: 'multipart/form-data',
+        multipart: true,
+        maxBytes: 209715200,
+      },
+    },
+    handler: async (req, h) => {
+      const { image } = req.payload;
+      const { file } = image;
+      const { id } = req.params;
+
+      try {
+        const results = await db.image.update({
+          file,
         }, 
         {
           where: { id },
@@ -58,13 +92,6 @@ module.exports = [
           }
         })
 
-        const results = await db.image.findOne({
-          where: { id },
-          include: {
-            attributes: ['id', 'crystalId', ],
-          },
-        })
-
         return results;
 
       } catch (e) {
@@ -72,5 +99,5 @@ module.exports = [
         return h.response(`Failed: ${e.message}`).code(500);
       }
     } 
-  },
+  }
 ];
