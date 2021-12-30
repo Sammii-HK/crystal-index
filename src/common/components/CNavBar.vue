@@ -20,12 +20,12 @@
     <template #end>
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a v-if="!authUser.id" class="button" type="is-green"  @click="openRegisterComponent">
+          <b-button v-if="!authUser.id" type="is-violet"  @click="openRegisterComponent">
             Log in
-          </a>
-          <a v-if="authUser.id" class="button" type="is-indigo"  @click="logOut">
+          </b-button>
+          <b-button v-if="authUser.id" type="is-indigo"  @click="logOut">
             Log Out
-          </a>
+          </b-button>
         </div>
       </b-navbar-item>
     </template>

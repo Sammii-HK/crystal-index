@@ -5,12 +5,14 @@
     <div class="columns is-multiline is-mobile">
       <div class="column is-12">
         <div class="columns is-centered">
-          <div class="column is-3">
+          <div class="column is-4">
             <b-field>
               <b-input placeholder="Search..."
               type="search"
               icon="magnify"
+              custom-class="is-violet mb-6"
               icon-clickable
+              expanded
               @input="searchCrystals"
               :value="searchCrystalInput"
               />

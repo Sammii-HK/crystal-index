@@ -4,7 +4,7 @@
 			<div
 				v-for="(image, index) in images"
 				:key="`imageId-${image.id}-image-gallery-${index}`"
-				class="column is-4"
+				class="column is-6-mobile is-4-tablet"
 			>
 				<c-rollover-image :imageItem="image" @click="selectItem" />
 			</div>
