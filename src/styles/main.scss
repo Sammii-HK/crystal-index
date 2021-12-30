@@ -15,6 +15,48 @@
   box-sizing: border-box;
 }
 
+@media (prefers-color-scheme: dark) {
+  html, nav.navbar, div.navbar-menu, input {
+    background-color: $black !important;
+  }
+  body, input {
+    color: $white !important;
+  }
+  .title, .subtitle {
+    color: $white !important;
+  }
+  a {
+    color: #777676 !important;
+  }
+  a.navbar-item {
+    &:hover {
+      color: $pink !important;
+      background-color: #262124 !important;
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html, nav.navbar, div.navbar-menu, input {
+    background-color: $white !important;
+  }
+  body, input {
+    color: $black !important;
+  }
+  .title, .subtitle {
+    color: $black !important;
+  }
+  a {
+    color: #454545 !important;
+  }
+  a.navbar-item {
+    &:hover {
+      color: $pink !important;
+      background-color: #262124 !important;
+    }
+  }
+}
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
