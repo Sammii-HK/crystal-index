@@ -37,4 +37,40 @@ module.exports = [
       }
     },
   }, 
+  {
+    method: 'PUT',
+    path: '/images/{id}/{crystalId}',
+    options: {
+      auth: 'authUser',
+    },
+    handler: async (req, h) => {
+      const { id, crystalId } = req.params;
+
+      try {
+        await db.image.update({
+          crystalId,
+        }, 
+        {
+          where: { id },
+        }, {
+          include: {
+            attributes: ['id', 'crystalId'],
+          }
+        })
+
+        const results = await db.image.findOne({
+          where: { id },
+          include: {
+            attributes: ['id', 'crystalId', ],
+          },
+        })
+
+        return results;
+
+      } catch (e) {
+        console.log('error creating crystal:', e);
+        return h.response(`Failed: ${e.message}`).code(500);
+      }
+    } 
+  },
 ];
