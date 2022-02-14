@@ -2,49 +2,76 @@
 
 [Live Site](www.crystalindex.co.uk)
 
-A very ambitious side project to catalogue my crystals.
+A full-stack app, which is an index to record crystals, with a Vue front-end, running an Express server which is serving a Sequelize API.
 
-<img width="1679" alt="Screenshot 2021-12-02 at 22 46 52" src="https://user-images.githubusercontent.com/40900195/144515279-bc1acfd4-ab8c-43d2-aa9c-dd838a433c7c.png">
+![main gallery]('./../public/project-images/gallery.jpeg)
 
-## Project setup
-```
-docker exec -it crystalsbackend npx sequelize-cli db:create
-```
-```
-docker exec -it crystalsbackend npx sequelize-cli db:migrate
-```
+## Details
 
-### Compiles and hot-reloads for development
-```
-docker-compose -f development.yml build
-```
-```
-docker-compose -f development.yml up crystalsbackend crystalsfrontend
-```
+### Timeframe
 
-### Compiles and minifies for production
-```
-docker-compose up --build
-```
+On-going
 
-_NB_
-```
-docker-compose up
-``` 
-will build the container the first time if it's never been built before, but any changes to Dockerfiles or anything to do with it, **you have to manually build again**
+### Technologies Used
 
-```
-docker volume create data
-```
+* Javascript
+* Sequelize
+* Vue
+* Docker
+* Vuex
+* Hapi
+* Bcrypt
+* JWT
 
-```
-NODE_ENV=productio
-```
+### App Overview
 
-```
-echo $NODE_ENV
-```
+This app was created as a solution to document an ever growing collection of crystals which have been purchased from all over the globe as mementos of holidays, and then being a searchable database to rediscover old crystals or identify new ones.
 
-```
-sudo chown -R pi:pi data; sudo chmod -R 777 data; docker-compose up --build;
-```
+#### Development Process
+
+The most important piece of architecture to design for the app was the relational database models.
+I wanted to record the basic information about the crystals alongside locational information not only about where the crystal originated from, but where the crystal was bought. This meant that a location was a database model which crystals were belonged to, by either origin or memento.
+
+#### Functionality
+
+##### Main Gallery
+
+The homepage is a gallery view of all the crystals on the database.
+
+![main gallery view]('./../public/project-images/gallery-view.jpeg)
+
+This page includes a search feature where crystals may be searched by multiple properties including: name, origin location, memento location, colour and chakra.
+
+![search](./public/project-images/search.jpeg)
+
+##### Crystal Page
+
+All of the information about the crystal is displayed on each crystals' page. This is where users can favourite a crystal, and if they are the creator of the entry, a user can amend information and see crystal properties which are personal to them, such as the memento location.
+
+![crystal view]('./../public/project-images/crystal-view.jpeg)
+
+##### Create/Edit crystals
+
+To create or edit a crystal, information is entered into a form, this form ustilises different field types depending on the information required. 
+For the ENUMs (eg: colour, chakra) tag buttons are created to avoid spelling mistakes
+For a crystals' locational relationships a location but already be entered into the database, for which the crystal is related to, to handle this data type a drop down list is used.
+
+![creating/editing crystals page]('./../public/project-images/crystal-edit.jpeg)
+
+##### Profile Page
+
+Every crystal a user has favourited is showcased on the profile page.
+
+
+![profile page]('./../public/project-images/profile.jpeg)
+
+
+### Challenges & Achievements
+
+An achievement is storing images as binary arrays on the database, instilling a fast loading time for images, which will continue to increase in number.
+
+## Future enhancements
+
+The database needs to be fully populated with the entire collection of crystals, but this will be an ongoing process.
+
+Another enhancement is to create an extra tab on the profile page for all the crystals which a user has created, so they may easily look at their collection and review the information.
