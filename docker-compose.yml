@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  crystalsdb:
+    container_name: crystalsdb
+    image: postgres
+    environment:
+      # NODE_ENV: production
+      env_file: .env
+      POSTGRES_USERNAME: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: crystal_index_dev
+    ports:
+      - 5432:5432
+    volumes:
+      # Persist the data between container invocations
+      - ./data:/var/lib/postgresql/data
+  # crystalsnext:
+  #   container_name: crystalsnext
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   environment:
+  #     env_file: .env
+  #     DATABASE_URL: postgresql://${DB_USERNAME}:${DB_PASSWORD}@crystalsdb:5432/crystal_index_dev?schema=public"
+
+  #   volumes:
+  #     - ./:/app
+  #     - /app/node_modules
+  #     - /app/.next

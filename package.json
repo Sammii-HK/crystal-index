@@ -5,73 +5,33 @@
   "repository": "git@github.com:Sammii-HK/crystal-index.git",
   "author": "Samantha Kellow <sammii.h@icloud.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start:client": "vue-cli-service serve",
-    "start:watch": "vue-cli-service build --watch",
-    "start:server": "nodemon crystal-api/server.js",
-    "db:create": "sequelize-cli db:create",
-    "db:migrate": "sequelize-cli db:migrate",
-    "db:drop": "sequelize-cli db:drop"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "migrate": "npx prisma migrate dev"
+  },
+  "prisma": {
+    "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "dependencies": {
-    "@hapi/basic": "^6.0.0",
-    "@hapi/hapi": "^20.1.1",
-    "@hapi/jwt": "^2.0.1",
-    "axios": "^0.21.1",
-    "bcrypt": "^5.0.1",
-    "boom": "^7.3.0",
-    "buefy": "^0.9.7",
-    "core-js": "^3.6.5",
-    "dotenv": "^10.0.0",
-    "hapi-auth-bearer-token": "^8.0.0",
-    "jsonwebtoken": "^8.5.1",
-    "pg": "^8.6.0",
-    "sequelize": "^6.5.0",
-    "sequelize-cli": "^6.2.0",
-    "sharp": "^0.29.3",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vue-upload-image": "^1.1.5",
-    "vuex": "^3.4.0",
-    "vuex-persistedstate": "^4.1.0"
+    "@next-auth/prisma-adapter": "^1.0.3",
+    "@prisma/client": "^3.11.0",
+    "axios": "^0.26.1",
+    "next": "12.1.0",
+    "next-auth": "^4.3.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "express": "4.17.x",
-    "sass": "^1.38.2",
-    "sass-loader": "^7.3.1",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "engines": {
-    "node": ">=10.13.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@types/node": "17.0.21",
+    "@types/react": "17.0.40",
+    "eslint": "8.11.0",
+    "eslint-config-next": "12.1.0",
+    "prisma": "^3.11.0",
+    "ts-node": "^10.7.0",
+    "typescript": "4.6.2"
+  }
 }
