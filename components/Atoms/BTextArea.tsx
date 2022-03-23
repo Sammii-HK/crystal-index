@@ -1,10 +1,9 @@
 
 const BInput: React.FC<InputProps> = (props) => {
   return (
-    <input 
+    <textarea 
     id={props.id}
-    className='input'
-    type="text" 
+    className='textarea'
     placeholder={props.placeholder} 
     required={props.required} 
     />
