@@ -1,1 +1,1 @@
-export { default as BTagContainer } from './BTagContainer';
+export { default as BTags } from './BTags';

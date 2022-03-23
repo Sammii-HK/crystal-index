@@ -5,15 +5,15 @@ export default function Navbar() {
   if (session?.user) {
     return (
       <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <p>signed in as {session.user.email} <br /> </p>
+        <button className="button is-primary" onClick={() => signOut()}>Sign out</button>
       </>
     )
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button className="button is-primary" onClick={() => signIn()}>Sign in</button>
     </>
   )
 }
