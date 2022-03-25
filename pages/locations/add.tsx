@@ -1,9 +1,22 @@
 import axios from 'axios';
 import { Location } from '@prisma/client';
-import { FormEventHandler, useCallback } from 'react'
+import { FormEventHandler, useCallback, useState } from 'react'
 import { BField, BInput } from '../../components/Atoms';
 
-const locationFields = [
+type LocationState = {
+  placeName: string,
+  country: string,
+  lat: string,
+  long: string,
+}
+
+const locationFields: {
+  key: keyof LocationState,
+  label: string,
+  placeHolder: string,
+  required: boolean,
+  options?: string[]
+}[] = [
   {
     key: 'placeName',
     label: 'Place Name',
@@ -20,44 +33,37 @@ const locationFields = [
     key: 'lat',
     label: 'Latitudinal Coordinates',
     placeHolder: '51.5117',
-    required: true,
+    required: false,
   },
   {
     key: 'long',
     label: 'Longitudinal Coordinates',
     placeHolder: '0.1240',
-    required: true,
+    required: false,
   },
 ]
 
 const CreateLocations: React.FC = () => {
 
+  const [locationState, setLocationState] = useState<LocationState>({
+    placeName: "",
+    country: "",
+    lat: "",
+    long: "",
+  })
+
   const createLocation: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
 
-    const target = event.target as typeof event.target & {
-      placeName: {value: string}
-      country: {value: string}
-      lat: {value: string}
-      long: {value: string}
-    };
-
-    const locationData = {
-      placeName: target.placeName.value,
-      country: target.country.value,
-      lat: target.lat.value,
-      long: target.long.value,
-    };
-
-
-    const res = await axios.post<{location?: Location, error: string}>('/api/location/create', 
-    locationData,
-    { headers: { 'Content-Type': 'application/json' } }
+    const res = await axios.post<{location?: Location, error: string}>(
+      '/api/location/create', 
+      locationState,
+      { headers: { 'Content-Type': 'application/json' } }
     );
   
     const result = await res.data;
     console.log("Location create API result", result);
-  }, []);
+  }, [locationState]);
 
 
   return (
@@ -65,8 +71,16 @@ const CreateLocations: React.FC = () => {
       <div>
       <form onSubmit={createLocation}>
         {locationFields.map(field => (
-          <BField label={field.label}>
-            <BInput id={field.key} placeholder={field.placeHolder} required={field.required} />
+          <BField label={field.label} key={field.key}>
+            <BInput 
+              id={field.key} 
+              placeholder={field.placeHolder} 
+              required={field.required}
+              value={locationState[field.key]}
+              onChange={(newValue: any) => {
+                setLocationState((oldLocationState) => ({...oldLocationState, [field.key]: newValue}))
+              }}
+            />
           </BField>
         ))}
         <button type="submit" className="button">Create</button> 
