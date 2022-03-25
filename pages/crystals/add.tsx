@@ -1,76 +1,23 @@
 import axios from 'axios';
 import { Crystal } from '@prisma/client';
 import { FormEventHandler, useCallback, useState } from 'react'
-import { BField, BInput, BTextArea } from '../../components/Atoms';
-import { BTags } from '../../components/Molecules';
+import { BField } from '../../components/Atoms';
 import useUserId from '../../lib/hooks';
+import type { RestrictedReactFC } from '../../lib/hooks'
+import { crystalFields, CrystalState } from '../../lib/types/crystal';
 
-type CrystalState = {
-  name: string,
-  bio: string,
-  otherNames: string,
-  colour: string[],
-  chakra: string[]
-  createdById: string,
-}
-
-const crystalFields: {
-  key: keyof CrystalState,
-  component: React.FC<any>,
-  label: string,
-  placeHolder: string,
-  required: boolean,
-  options?: string[]
-}[] = [
-  {
-    key: 'name',
-    component: BInput,
-    label: 'Crystal Name',
-    placeHolder: 'Rose Quartz',
-    required: true,
-  },
-  {
-    key: 'bio',
-    component: BTextArea,
-    label: 'Bio',
-    placeHolder: 'England',
-    required: false,
-  },
-  {
-    key: 'otherNames',
-    component: BInput,
-    label: 'Other Names',
-    placeHolder: 'England',
-    required: false,
-  },
-  {
-    key: 'colour',
-    component: BTags,
-    label: 'Colour',
-    placeHolder: 'Select colour(s)',
-    options: [ 'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'white', 'clear' ],
-    required: true,
-  },
-  {
-    key: 'chakra',
-    component: BTags,
-    label: 'Chakra',
-    placeHolder: 'Select chakra(s)',
-    options: [ 'crown', 'third eye', 'throat', 'heart', 'solar plexus', 'sacral', 'root' ],
-    required: false,
-  },
-];
-
-const CreateCrystals: React.FC = () => {
+const CreateCrystals: RestrictedReactFC = () => {
   const { userId } = useUserId();
-  // const session = await getSession({ req });
+
   const [crystalState, setCrystalState] = useState<CrystalState>({
-    name: "",
-    bio: "",
-    otherNames: "",
+    name: undefined,
+    bio: undefined,
+    otherNames: undefined,
     chakra: [],
     colour: [],
-    // createdById: userId
+    createdById: userId,
+    mementoId: undefined,
+    originId: undefined,
   })
 
   const createCrystal: FormEventHandler = useCallback(async (event) => {
@@ -109,13 +56,12 @@ const CreateCrystals: React.FC = () => {
         </form>
         <hr />
         {JSON.stringify(crystalState)}
-        <hr />
-        {JSON.stringify(userId)}
-
       </div>
     </div>
   )
 }
 
 export default CreateCrystals
+
+CreateCrystals.requireAuth = true
 
