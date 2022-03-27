@@ -16,12 +16,14 @@ const CreateCrystals: RestrictedReactFC = () => {
     chakra: [],
     colour: [],
     createdById: userId,
-    mementoId: undefined,
-    originId: undefined,
+    memento: undefined,
+    origin: undefined,
   })
 
   const createCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
+
+    // const filteredCrystalState = crystalState.filter(property => property === 'createdById')
 
     const res = await axios.post<{crystal?: Crystal, error: string}>(
       '/api/crystal/create', 

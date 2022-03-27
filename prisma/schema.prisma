@@ -38,14 +38,15 @@ model Session {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  createdCrystals Crystal[]
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  createdCrystals   Crystal[]  @relation("createdBy")
+  favouriteCrystals Crystal[]  @relation("favouriteCrystals")
 }
 
 model VerificationToken {
@@ -58,30 +59,37 @@ model VerificationToken {
 
 // CRYSTALS
 model Crystal {
-  id            Int      @default(autoincrement()) @id
-  createdBy     User     @relation(fields: [createdById], references: [id])
-  createdById   String
-  name          String
-  bio           String
-  otherNames    String
-  colour        String[]
-  chakra        String[]
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  id                Int      @default(autoincrement()) @id
+  createdById       String
+  createdBy         User     @relation("createdBy", fields: [createdById], references: [id])
+  name              String
+  bio               String
+  otherNames        String
+  colour            String[]
+  chakra            String[]
+  createdAt         DateTime  @default(now()) @map(name: "created_at")
+  updatedAt         DateTime  @default(now()) @map(name: "updated_at")
+  memento           String?
+  mementoLocation   Location?  @relation("memento", fields: [memento], references: [placeName])
+  origin            String?
+  originLocation    Location?  @relation("origin", fields: [origin], references: [placeName])
+  favouritedBy      User[]    @relation("favouriteCrystals")
 }
 
 model Favourite {
-  id         Int      @default(autoincrement()) @id
+  id         Int  @default(autoincrement()) @id
   userId     Int
   crystalId  Int
 }
 
 model Location {
-  id          Int      @default(autoincrement()) @id
-  placeName   String
-  country     String
-  lat         String
-  long        String
+  id                  Int         @default(autoincrement()) @id
+  placeName           String      @unique
+  country             String
+  lat                 String
+  long                String
+  crystalsOfMemento   Crystal[]   @relation("memento")
+  crystalsOfOrigin    Crystal[]   @relation("origin")
 }
 
 // model Image {

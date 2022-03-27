@@ -8,8 +8,8 @@ export type CrystalState = {
   colour: string[],
   chakra: string[]
   createdById: string | undefined, //how to say this will always be defined because of the page reroute
-  mementoId: number | undefined | null,
-  originId: number | undefined | null,
+  memento: string | undefined | null,
+  origin: string | undefined | null,
 }
 
 export const crystalFields: {
@@ -66,7 +66,7 @@ export const crystalFields: {
   //   required: false,
   // },
   // {
-  //   key: 'mementoId',
+  //   key: ',
   //   component: BSelect,
   //   label: 'Memento Location',
   //   placeHolder: 'Select location',

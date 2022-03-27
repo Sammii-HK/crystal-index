@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
 // import { Crystal } from '@prisma/client';
 
-const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'name', 'bio', 'otherNames',  ]
+const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'name', 'bio', 'otherNames', 'origin', 'memento'  ]
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
 // const objectKeys = Object.keys(props.crystal)
 
