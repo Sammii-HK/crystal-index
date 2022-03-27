@@ -25,7 +25,7 @@ export default async function main(
     return result
   } catch (err) {
     console.log(err);
-    res.status(403).json({ crystal: undefined, error: "Error occured while creating a new user." });
+    res.status(403).json({ crystal: undefined, error: `Error occured while updating a crystal id: ${id}.` });
   }
 }
 
