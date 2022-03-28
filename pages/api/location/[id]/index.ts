@@ -17,6 +17,7 @@ export default async function locationHandler(
   const result = await prisma.location.findUnique(
     { 
       where: { id: parseInt(id as string) },
+      include: { crystalsOfMemento: true, crystalsOfOrigin: true }
     }
   );
   if (result) res.status(200).json({ location: result })
