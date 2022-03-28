@@ -63,24 +63,25 @@ model Crystal {
   createdById       String
   createdBy         User     @relation("createdBy", fields: [createdById], references: [id])
   name              String
-  bio               String
-  otherNames        String
+  bio               String?
+  otherNames        String?
   colour            String[]
   chakra            String[]
-  createdAt         DateTime  @default(now()) @map(name: "created_at")
-  updatedAt         DateTime  @default(now()) @map(name: "updated_at")
+  createdAt         DateTime   @default(now()) @map(name: "created_at")
+  updatedAt         DateTime   @default(now()) @map(name: "updated_at")
   memento           String?
   mementoLocation   Location?  @relation("memento", fields: [memento], references: [placeName])
   origin            String?
   originLocation    Location?  @relation("origin", fields: [origin], references: [placeName])
-  favouritedBy      User[]    @relation("favouriteCrystals")
+  favouritedBy      User[]     @relation("favouriteCrystals")
+  image             Image[]
 }
 
-model Favourite {
-  id         Int  @default(autoincrement()) @id
-  userId     Int
-  crystalId  Int
-}
+// model Favourite {
+//   id         Int  @default(autoincrement()) @id
+//   userId     Int
+//   crystalId  Int
+// }
 
 model Location {
   id                  Int         @default(autoincrement()) @id
@@ -92,9 +93,11 @@ model Location {
   crystalsOfOrigin    Crystal[]   @relation("origin")
 }
 
-// model Image {
-//   id         Int      @default(autoincrement()) @id
-//   name       String
-//   type       String
-//   file       Blob
-// }
+model Image {
+  id         Int      @default(autoincrement()) @id
+  name       String
+  type       String
+  file       Bytes
+  crystalId  Int?     
+  crystal    Crystal?  @relation(fields: [crystalId], references: [id])
+}
