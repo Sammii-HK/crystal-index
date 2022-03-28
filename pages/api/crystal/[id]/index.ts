@@ -20,8 +20,10 @@ export default async function crystalHandler(
         createdBy: true, 
         originLocation: true, 
         mementoLocation: true,
+        image: true,
       },
     }
-  );
+  )
+  
   if (result) res.status(200).json({ crystal: result })
 }

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Crystal } from '@prisma/client'
+import { Crystal, Image } from '@prisma/client'
 import prisma from '../../../lib/prisma';
 
 
@@ -12,11 +12,15 @@ export default async function main(
   req: NextApiRequest,
   res: NextApiResponse<CrystalProps>
 ) {
-  const data = req.body;
+  const { crystal, imageIds }: { crystal: Crystal, imageIds: number[] } = req.body;
 
   try {
     const result = await prisma.crystal.create({
-      data: { ...data },
+      data: {
+        ...crystal,
+        image: {
+          connect: imageIds.map(id => ({ id }))
+        }},
     });
 
     res.status(200).json({ crystal: result });
@@ -26,4 +30,3 @@ export default async function main(
     res.status(403).json({ crystal: undefined, error: "Error occured while creating a new user." });
   }
 }
-

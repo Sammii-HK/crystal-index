@@ -12,13 +12,18 @@ export default async function main(
   req: NextApiRequest,
   res: NextApiResponse<CrystalProps>
 ) {
-  const data = req.body;
+  const { crystal, imageIds }: { crystal: Crystal, imageIds: number[] } = req.body;
   const { id } = req.query
 
   try {
     const result = await prisma.crystal.update({
       where: { id: parseInt(id as string) },
-      data: { ...data },
+      data: {
+        ...crystal,
+        image: {
+          connect: imageIds.map(id => ({ id }))
+        },
+      }
     });
 
     res.status(200).json({ crystal: result });
