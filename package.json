@@ -19,14 +19,19 @@
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^3.11.0",
+    "@types/formidable": "^2.0.4",
+    "@types/sharp": "^0.30.0",
     "axios": "^0.26.1",
     "bulma": "^0.9.3",
     "classnames": "^2.3.1",
+    "formidable": "^2.0.1",
     "next": "12.1.0",
     "next-auth": "^4.3.1",
     "node-sass": "^7.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-responsive-carousel": "^3.2.23",
+    "sharp": "^0.30.3"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
