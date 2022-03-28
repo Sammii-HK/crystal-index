@@ -1,18 +1,61 @@
-@import '~bulma/bulma';
+@charset "utf-8";
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+// 1. Import the initial variables
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+@import "../node_modules/bulma/sass/utilities/functions";
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+// 2. Set your own initial variables
+@import "./colours.scss";
 
+// Global Styles
 * {
+  // color: $primary;
   box-sizing: border-box;
 }
+
+@media (prefers-color-scheme: dark) {
+  html, nav.navbar, div.navbar-menu, input {
+    background-color: $black !important;
+  }
+  body, input {
+    color: $white !important;
+  }
+  .title, .subtitle, .body {
+    color: $white !important;
+  }
+  a {
+    color: #777676 !important;
+  }
+  a.navbar-item {
+    &:hover {
+      color: $pink !important;
+      background-color: #262124 !important;
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html, nav.navbar, div.navbar-menu, input {
+    background-color: $white !important;
+  }
+  body, input {
+    color: $black !important;
+  }
+  .title, .subtitle {
+    color: $black !important;
+  }
+  a {
+    color: #454545 !important;
+  }
+  a.navbar-item {
+    &:hover {
+      color: $pink !important;
+      background-color: #262124 !important;
+    }
+  }
+}
+
+// Import Bulma and Buefy styles
+@import "~bulma";

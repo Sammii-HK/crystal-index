@@ -1,0 +1,163 @@
+// Set your colors
+$primary: #ef67df;
+$primary-light: findLightColor($primary);
+$primary-dark: findDarkColor($primary);
+$primary-invert: findColorInvert($primary);
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+// transperencies
+$transparent-white: #ffffff80;
+$transparent-black: #00000080;
+$clear: $transparent-white;
+// monotones
+$white: #fff;
+$black: #333;
+// rainbow
+$red: #e60000;
+$pink: #ff0066;
+$orange: #ff6600;
+$yellow: #ffcc00;
+$green: #ccff33;
+$blue: #66ffff;
+$indigo: #0066cc;
+$violet: #cc66ff;
+$brown: #663300;
+$red-light: #e6000026;
+$pink-light: #ff006626;
+$orange-light: #ff626026;
+$yellow-light: #ffcc0026;
+$green-light: #ccff3326;
+$blue-light: #66ffff26;
+$indigo-light: #0066cc26;
+$violet-light: #cc66ff26;
+$brown-light: #66330026;
+
+// Lists and maps
+$custom-colors: null !default;
+$custom-shades: null !default;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: mergeColorMaps(
+  (
+    "white": (
+      $white,
+      $black,
+    ),
+    "black": (
+      $black,
+      $white,
+    ),
+    "light": (
+      $light,
+      $light-invert,
+    ),
+    "dark": (
+      $dark,
+      $dark-invert,
+    ),
+    "primary": (
+      $primary,
+      $primary-invert,
+      $primary-light,
+      $primary-dark,
+    ),
+    "link": (
+      $link,
+      $link-invert,
+      $link-light,
+      $link-dark,
+    ),
+    "info": (
+      $info,
+      $info-invert,
+      $info-light,
+      $info-dark,
+    ),
+    "success": (
+      $success,
+      $success-invert,
+      $success-light,
+      $success-dark,
+    ),
+    "warning": (
+      $warning,
+      $warning-invert,
+      $warning-light,
+      $warning-dark,
+    ),
+    "danger": (
+      $danger,
+      $danger-invert,
+      $danger-light,
+      $danger-dark,
+    ),
+    "transparent-white": (
+      $transparent-white,
+      $transparent-black,
+    ),
+    "clear": (
+      $transparent-white,
+      $transparent-black,
+    ),
+    "red": (
+      $red,
+      $white,
+      $red-light,
+      $white,
+    ),
+    "pink": (
+      $pink,
+      $white,
+      $pink-light,
+      $white,
+    ),
+    "orange": (
+      $orange,
+      $white,
+      $orange-light,
+      $white,
+    ),
+    "yellow": (
+      $yellow,
+      $white,
+      $yellow-light,
+      $white,
+    ),
+    "green": (
+      $green,
+      $white,
+      $green-light,
+      $white,
+    ),
+    "blue": (
+      $blue,
+      $white,
+      $blue-light,
+      $white,
+    ),
+    "indigo": (
+      $indigo,
+      $white,
+      $indigo-light,
+      $white,
+    ),
+    "violet": (
+      $violet,
+      $white,
+      $violet-light,
+      $white,
+    ),
+    "brown": (
+      $brown,
+      $white,
+      $brown-light,
+      $white,
+    ),
+  ),
+  $custom-colors
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
