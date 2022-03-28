@@ -5,6 +5,7 @@ import { BField } from '../../components/Atoms';
 import useUserId from '../../lib/hooks';
 import type { RestrictedReactFC } from '../../lib/hooks'
 import { crystalFields, CrystalState } from '../../lib/types/crystal';
+import BImageFileUploader from '../../components/Molecules/BImageFileUploader';
 
 const CreateCrystals: RestrictedReactFC = () => {
   const { userId } = useUserId();
@@ -18,7 +19,9 @@ const CreateCrystals: RestrictedReactFC = () => {
     createdById: userId,
     memento: undefined,
     origin: undefined,
-  })
+  });
+
+  const [imageIds, setImageIds] = useState<number[]>([]);
 
   const createCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
@@ -27,18 +30,24 @@ const CreateCrystals: RestrictedReactFC = () => {
 
     const res = await axios.post<{crystal?: Crystal, error: string}>(
       '/api/crystal/create', 
-      crystalState,
+      {crystal: crystalState, imageIds},
       { headers: { 'Content-Type': 'application/json' } }
     );
   
     const result = await res.data;
     console.log("Crystal create API result", result);
-  }, [crystalState]);
+  }, [crystalState, imageIds]);
 
 
   return (
     <div className="section">
       <div>
+        <BImageFileUploader
+          imageIds={imageIds}
+          onChange={(newImageIds: number[]) => {
+            setImageIds(newImageIds)
+          }}
+          />
         <form onSubmit={createCrystal}>
           {crystalFields.map(field => (
             <BField label={field.label} key={field.key}>

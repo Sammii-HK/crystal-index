@@ -6,8 +6,11 @@ import { BImage } from '../Atoms';
 {/* <Carousel showArrows={true} onChange={onChange} onClickItem={onClickItem} onClickThumb={onClickThumb}></Carousel> */}
 
 const BCarousel: React.FC<CarouselProps> = (props) => {
-  return (
-    <Carousel>
+  if (props.imageIds && props.imageIds.length === 1) return (
+    <BImage imageId={props.imageIds[0]} />
+  )
+  else return (
+    <Carousel showArrows={true}>
       {props.imageIds?.map(id => (
         <div key={id}>
           <BImage imageId={id} />
