@@ -1,12 +1,12 @@
-export type LocationState = {
-  placeName: string | undefined,
-  country: string | undefined,
-  lat: string | undefined,
-  long: string | undefined,
+export type CrystalLocation = {
+  placeName: string,
+  country: string,
+  lat: string,
+  long: string,
 }
 
 export const locationFields: {
-  key: keyof LocationState,
+  key: keyof CrystalLocation,
   label: string,
   placeHolder: string,
   required: boolean,
