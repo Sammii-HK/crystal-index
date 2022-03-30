@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 // export default ({ children: React.FC }) => {
 const Layout: React.FC<any> = (props) => {
   return (
-    <div className="container">
+    <div className="container is-fullheight">
       <Head>
         <title>Next Typescript</title>
         <meta name="Crystal Index" content="An Index of Crystals" />

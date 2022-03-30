@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import { Location } from '@prisma/client';
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
+import { Map } from '../../../components/Organisms';
 
 const fieldsToShow: (keyof Location)[] = [ 'placeName', 'country', 'lat', 'long',  ]
 
@@ -29,6 +30,8 @@ const ViewCrystal: React.FC<ViewCrystalocationProps> = (props) => {
         </div>
       ))}
       <hr />
+
+      <Map locationData={[location]}/>
       
     </div>
   )

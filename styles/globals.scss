@@ -15,12 +15,26 @@
   box-sizing: border-box;
 }
 
+.is-fullheight {
+  min-height: 100vh !important;
+  height: 100%;
+}
+
 select, div.select {
   width: 100%;
 }
 
 .bring-to-front {
   z-index: 15 !important;
+}
+
+// GLOBE
+.globeContainer {
+  min-height: 90% !important;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  position: absolute;
 }
 
 // DARK COLOUR SCHEME
