@@ -2,7 +2,7 @@ import useUserId from '../../../lib/hooks';
 import prisma from '../../../lib/prisma';
 import { GetServerSideProps } from 'next';
 import { BCarousel, BTags } from '../../../components/Molecules';
-import { Crystal, User } from '@prisma/client';
+import { Crystal } from '@prisma/client';
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
 
@@ -37,13 +37,13 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
         </div>
         <div className="column is-offset-1">
           {tagsToShow.map(field => (
-          <div key={field} className="mb-4">
-            <h1 className='has-text-weight-bold is-capitalized mb-3'>{field}</h1>
-            <BTags options={crystal[field]} value={crystal[field]} />
-          </div>
-        ))}
+            crystal[field].length > 0 && <div key={field} className="mb-4">
+              <h1 className='has-text-weight-bold is-capitalized mb-3'>{field}</h1>
+              <BTags options={crystal[field]} value={crystal[field]} />
+            </div>
+          ))}
         {fieldsToShow.map(field => (
-          <div key={field}>
+          crystal[field] && <div key={field}>
             <p className='my-3'>
               <span className='has-text-weight-bold is-capitalized'>{field}: </span>
               {crystal[field]}
@@ -62,7 +62,14 @@ type ViewCrystalProps = {
   crystal: null | SerialisableCrystalWithUser
 }
 
-type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & {createdBy: User, image: number[]} & {createdAt: string, updatedAt: string}
+type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
+  {
+    createdBy: string | null, 
+    image: number[], 
+    originLocation: string | null, 
+    mementoLocation: string | null,
+  } 
+  & {createdAt: string, updatedAt: string}
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
@@ -71,8 +78,10 @@ export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (c
     { 
       where: { id: parseInt(id as string) },
       include: { 
-        createdBy: true,
-        image: true,
+        createdBy: {select: {name: true}},
+        image: {select: {id: true}},
+        originLocation: {select: {placeName: true}},
+        mementoLocation: {select: {placeName: true}},
       },
     }
   );
@@ -82,6 +91,9 @@ export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (c
     createdAt: crystal.createdAt.toISOString(),
     updatedAt: crystal.updatedAt.toISOString(),
     image: crystal.image.map(image => image.id),
+    createdBy: crystal.createdBy.name,
+    mementoLocation: crystal.mementoLocation?.placeName || null,
+    originLocation: crystal.originLocation?.placeName || null,
   };
 
   console.log(`GET Crystal ${id} result: `, serialisableCrystal)

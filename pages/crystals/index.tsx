@@ -19,7 +19,7 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
     <div className="section">
       <div className="columns">
         {crystals.map(crystal => (
-          <div className="column is-4">
+          <div className="column is-4" key={crystal.id}>
             <a onClick={() => viewCrystal(crystal.id)}>
               <BImage imageId={crystal.image[0]} />
             </a>

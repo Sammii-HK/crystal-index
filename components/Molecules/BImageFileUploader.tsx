@@ -11,7 +11,11 @@ const BImageFileUploader: React.FC<BImageFileUploaderProps> = (props) => {
 
   return (
     <div>      
-      {(props.imageIds !== undefined) && <BCarousel imageIds={props.imageIds}/>}
+      {(props.imageIds !== undefined) &&
+        <div className="mb-6">
+          <BCarousel imageIds={props.imageIds}/>
+        </div>
+      }
       <BFile onChange={addImage}/>
     </div>
   )

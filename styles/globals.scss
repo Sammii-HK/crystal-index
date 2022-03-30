@@ -16,16 +16,16 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  html, nav.navbar, div.navbar-menu, input {
+  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
     background-color: $black !important;
   }
-  body, input {
+  body, input, label, textarea, select, button, .file-cta, .tag {
     color: $white !important;
   }
-  .title, .subtitle, .body {
+  .title, .subtitle, .body, .textarea {
     color: $white !important;
   }
-  a {
+  a, ::placeholder {
     color: #777676 !important;
   }
   a.navbar-item {
@@ -34,19 +34,22 @@
       background-color: #262124 !important;
     }
   }
+  span.tag {
+    border: 0.1px solid $white;
+  }
 }
 
 @media (prefers-color-scheme: light) {
-  html, nav.navbar, div.navbar-menu, input {
+  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
     background-color: $white !important;
   }
-  body, input {
+  body, input, label, textarea, select, button, .file-cta, .tag {
     color: $black !important;
   }
-  .title, .subtitle {
+  .title, .subtitle, .body {
     color: $black !important;
   }
-  a {
+  a, ::placeholder {
     color: #454545 !important;
   }
   a.navbar-item {
@@ -55,6 +58,13 @@
       background-color: #262124 !important;
     }
   }
+  span.tag {
+    border: 0.1px solid $black;
+  }
+}
+
+select, div.select {
+  width: 100%;
 }
 
 // Import Bulma and Buefy styles

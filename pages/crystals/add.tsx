@@ -41,34 +41,37 @@ const CreateCrystals: RestrictedReactFC = () => {
 
   return (
     <div className="section">
-      <div>
-        <BImageFileUploader
-          imageIds={imageIds}
-          onChange={(newImageIds: number[]) => {
-            setImageIds(newImageIds)
-          }}
+      <div className="columns">
+        <div className="column is-5">
+          <BImageFileUploader
+            imageIds={imageIds}
+            onChange={(newImageIds: number[]) => {
+              setImageIds(newImageIds)
+            }}
           />
-        <form onSubmit={createCrystal}>
-          {crystalFields.map(field => (
-            <BField label={field.label} key={field.key}>
-              <field.component 
-                id={field.key} 
-                placeholder={field.placeHolder} 
-                required={field.required}
-                options={field.options}
-                value={crystalState[field.key]}
-                onChange={(newValue: any) => {
-                  setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
-                }}
-              />
-            </BField>
-          ))}
-          <button type="submit" className="button">Create</button> 
-        </form>
-        <hr />
-        {JSON.stringify(crystalState)}
+        </div>
+        <div className="column is-5">
+          <form onSubmit={createCrystal}>
+            {crystalFields.map(field => (
+              <BField label={field.label} key={field.key}>
+                <field.component 
+                  id={field.key} 
+                  placeholder={field.placeHolder} 
+                  required={field.required}
+                  options={field.options}
+                  value={crystalState[field.key]}
+                  onChange={(newValue: any) => {
+                    setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
+                  }}
+                />
+              </BField>
+            ))}
+            <button type="submit" className="button mt-4">Create</button> 
+          </form>
+        </div>
       </div>
     </div>
+    
   )
 }
 

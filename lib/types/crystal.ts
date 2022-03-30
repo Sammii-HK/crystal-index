@@ -3,8 +3,8 @@ import { BTags } from '../../components/Molecules';
 
 export type CrystalState = {
   name: string | undefined,
-  bio: string | undefined,
-  otherNames: string | undefined,
+  bio: string | undefined | null,
+  otherNames: string | undefined | null,
   colour: string[],
   chakra: string[]
   createdById: string | undefined, //how to say this will always be defined because of the page reroute
