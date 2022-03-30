@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Crystal, User, Location } from '@prisma/client';
 import { FormEventHandler, useCallback, useState } from 'react'
 import { BField, BSelect } from '../../../components/Atoms';
-import useUserId from '../../../lib/hooks';
+import useUser from '../../../lib/hooks';
 import type { RestrictedReactFC } from '../../../lib/hooks'
 import { crystalFields, CrystalState } from '../../../lib/types/crystal';
 import { useRouter } from 'next/router';
@@ -34,7 +34,7 @@ const crystalLocations: {
 ]
 
 const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
-  const { userId } = useUserId();
+  const { userId } = useUser();
   const crystal = props.crystal;
   const locations = props.locations?.map(location => location.placeName);
   const router = useRouter()

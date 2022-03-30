@@ -47,6 +47,7 @@ model User {
   sessions          Session[]
   createdCrystals   Crystal[]  @relation("createdBy")
   favouriteCrystals Crystal[]  @relation("favouriteCrystals")
+  role              String?
 }
 
 model VerificationToken {

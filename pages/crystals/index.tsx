@@ -1,4 +1,3 @@
-import useUserId from '../../lib/hooks';
 import prisma from '../../lib/prisma';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router'
@@ -45,9 +44,7 @@ type SerialisableCrystal = {
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
 
-  const crystalsResults = await prisma.crystal.findMany({
-    include: { image: true }
-  });
+  const crystalsResults = await prisma.crystal.findMany({ include: { image: true } });
 
   const serialisableCrystals = crystalsResults.map(crystal => {
     return {

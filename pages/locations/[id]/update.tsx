@@ -2,15 +2,15 @@ import axios from 'axios';
 import { Location } from '@prisma/client';
 import { FormEventHandler, useCallback, useState } from 'react'
 import { BField, BInput } from '../../../components/Atoms';
-import useUserId from '../../../lib/hooks';
+import useUser from '../../../lib/hooks';
 import type { RestrictedReactFC } from '../../../lib/hooks'
 import { locationFields, LocationState } from '../../../lib/types/location';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import prisma from '../../../lib/prisma';
 
-const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
-  const { userId } = useUserId();
+const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
+  const { role } = useUser()
   const location = props.location;
   const router = useRouter()
 
@@ -47,8 +47,7 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
                 id={field.key} 
                 placeholder={field.placeHolder} 
                 required={field.required}
-                options={field.options}
-                value={crystalState[field.key]}
+                value={crystalState[field.key] || ''}
                 onChange={(newValue: any) => {
                   setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
                 }}
@@ -56,8 +55,7 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
             </BField>
           ))}
 
-          {/* {(userId === crystalState.createdById) && <button type="button" className="button mb-4" onClick={updateCrystal}>Update</button>} */}
-          <button type="button" className="button mb-4" onClick={updateCrystal}>Update</button>
+          {role === 'unicorn' && <button type="button" className="button mb-4" onClick={updateCrystal}>Update</button>}
           
         </form>
       </div>
@@ -67,7 +65,7 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
 
 export default UpdateCrystal
 
-// CreateCrystals.requireAuth = true
+UpdateCrystal.requireAuth = true
 
 
 type ViewCrystalProps = {
@@ -76,13 +74,7 @@ type ViewCrystalProps = {
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
-
-  const location = await prisma.location.findUnique(
-    { 
-      where: { id: parseInt(id as string) },
-    }
-  );
-  
+  const location = await prisma.location.findUnique({ where: { id: parseInt(id as string) } });
 
   console.log(`UPDATE Location ${id} result: `, location)
   return { 

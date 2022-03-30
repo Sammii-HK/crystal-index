@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import useUserId from '../../lib/hooks'
+import useUser from '../../lib/hooks'
 
 const AuthGuard: React.FC<any> = (props) => {
   const router = useRouter()
-  const { status } = useUserId();
+  const { status } = useUser();
 
   if (status === 'unauthenticated') router.push('/api/auth/signin')
   if (status === 'authenticated') return (

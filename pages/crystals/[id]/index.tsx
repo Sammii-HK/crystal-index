@@ -1,4 +1,4 @@
-import useUserId from '../../../lib/hooks';
+import useUser from '../../../lib/hooks';
 import prisma from '../../../lib/prisma';
 import { GetServerSideProps } from 'next';
 import { BCarousel, BTags } from '../../../components/Molecules';
@@ -10,7 +10,7 @@ const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'bio', 'otherNames
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
 
 const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
-  const { userId } = useUserId();
+  const { userId } = useUser();
   const crystal = props.crystal;
   const router = useRouter();
   

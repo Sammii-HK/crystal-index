@@ -2,13 +2,13 @@ import axios from 'axios';
 import { Crystal } from '@prisma/client';
 import { FormEventHandler, useCallback, useState } from 'react'
 import { BField } from '../../components/Atoms';
-import useUserId from '../../lib/hooks';
+import useUser from '../../lib/hooks';
 import type { RestrictedReactFC } from '../../lib/hooks'
 import { crystalFields, CrystalState } from '../../lib/types/crystal';
 import BImageFileUploader from '../../components/Molecules/BImageFileUploader';
 
 const CreateCrystals: RestrictedReactFC<any> = () => {
-  const { userId } = useUserId();
+  const { userId, role } = useUser();
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
     name: undefined,
@@ -72,7 +72,7 @@ const CreateCrystals: RestrictedReactFC<any> = () => {
                 />
               </BField>
             ))}
-            <button type="submit" className="button mt-4">Create</button> 
+            {role === 'unicorn' && <button type="submit" className="button mt-4">Create</button>} 
           </form>
         </div>
       </div>
