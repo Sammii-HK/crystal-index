@@ -11,6 +11,7 @@ export default function useUser() {
   return {
     userId: session?.userId as string | undefined,
     role: session?.role as string | undefined,
+    userName: session?.user?.name,
     status
   };
 }

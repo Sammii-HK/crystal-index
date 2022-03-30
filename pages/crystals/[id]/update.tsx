@@ -55,8 +55,6 @@ const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
   const updateCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
 
-    // if (crystal?.createdById !== userId) return //res.status(403)
-
     const res = await axios.put<{crystal?: Crystal, error: string}>(
       `/api/crystal/${router.query.id}/update`, 
       {crystal: crystalState, imageIds},
