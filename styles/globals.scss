@@ -15,6 +15,15 @@
   box-sizing: border-box;
 }
 
+select, div.select {
+  width: 100%;
+}
+
+.bring-to-front {
+  z-index: 15 !important;
+}
+
+// DARK COLOUR SCHEME
 @media (prefers-color-scheme: dark) {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
     background-color: $black !important;
@@ -39,6 +48,7 @@
   }
 }
 
+// LIGHT COLOUR SCHEME
 @media (prefers-color-scheme: light) {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
     background-color: $white !important;
@@ -61,10 +71,6 @@
   span.tag {
     border: 0.1px solid $black;
   }
-}
-
-select, div.select {
-  width: 100%;
 }
 
 // Import Bulma and Buefy styles

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, useCallback, useState } from "react"
+import { FaUpload } from 'react-icons/fa';
 
 const BFile: React.FC<InputProps> = (props) => {
   const [error, setError] = useState<string | undefined>();
@@ -32,7 +33,7 @@ const BFile: React.FC<InputProps> = (props) => {
             />
           <span className="file-cta">
             <span className="file-icon">
-              <i className="fas fa-upload"></i>
+              <FaUpload />
             </span>
             <span className="file-label">
               Choose a file…

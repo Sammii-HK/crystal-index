@@ -33,7 +33,7 @@ const crystalLocations: {
   },
 ]
 
-const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
+const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
   const { userId } = useUserId();
   const crystal = props.crystal;
   const locations = props.locations?.map(location => location.placeName);
@@ -50,7 +50,7 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
     origin: crystal?.origin,
   })
 
-  const [imageIds, setImageIds] = useState<number[]>()
+  const [imageIds, setImageIds] = useState<number[]>(crystal?.image || [])
 
   const updateCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
@@ -73,12 +73,16 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
       <div className="columns">
         <div className="column is-5">
           <BImageFileUploader
-            imageIds={imageIds? imageIds : crystal?.image}
+            imageIds={imageIds}
             onChange={(newImageIds: number[]) => {
               setImageIds(newImageIds)
             }}
+            onRemoveImage={(removedImageId: number) => {
+              setImageIds((oldImageIds) => (oldImageIds?.filter(imageId => imageId !== removedImageId)))
+            }}
           />
         </div>
+        
         <div className="column is-offset-1">
           <form onSubmit={updateCrystal}>
             {crystalFields.map(field => (
@@ -121,10 +125,9 @@ const UpdateCrystal: React.FC<ViewCrystalProps> = (props) => {
   )
 }
 
-export default UpdateCrystal
+UpdateCrystal.requireAuth = true;
 
-// CreateCrystals.requireAuth = true
-
+export default UpdateCrystal;
 
 type ViewCrystalProps = {
   crystal: null | SerialisableCrystalWithUser

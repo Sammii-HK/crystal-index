@@ -7,7 +7,7 @@ import type { RestrictedReactFC } from '../../lib/hooks'
 import { crystalFields, CrystalState } from '../../lib/types/crystal';
 import BImageFileUploader from '../../components/Molecules/BImageFileUploader';
 
-const CreateCrystals: RestrictedReactFC = () => {
+const CreateCrystals: RestrictedReactFC<any> = () => {
   const { userId } = useUserId();
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
@@ -48,6 +48,9 @@ const CreateCrystals: RestrictedReactFC = () => {
             onChange={(newImageIds: number[]) => {
               setImageIds(newImageIds)
             }}
+            onRemoveImage={(removedImageId: number) => {
+              setImageIds((oldImageIds) => (oldImageIds?.filter(imageId => imageId !== removedImageId)))
+            }}
           />
         </div>
         <div className="column is-5">
@@ -63,6 +66,9 @@ const CreateCrystals: RestrictedReactFC = () => {
                   onChange={(newValue: any) => {
                     setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
                   }}
+                  onClick={(newValue: any) => {
+                    setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
+                  }}
                 />
               </BField>
             ))}
@@ -75,7 +81,8 @@ const CreateCrystals: RestrictedReactFC = () => {
   )
 }
 
+CreateCrystals.requireAuth = true
+
 export default CreateCrystals
 
-CreateCrystals.requireAuth = true
 

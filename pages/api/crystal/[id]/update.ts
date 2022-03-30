@@ -21,7 +21,7 @@ export default async function main(
       data: {
         ...crystal,
         image: {
-          connect: imageIds.map(id => ({ id }))
+          set: imageIds.map(id => ({ id })),
         },
       }
     });
