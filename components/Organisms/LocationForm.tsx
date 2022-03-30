@@ -4,14 +4,15 @@ import { BField, BInput } from "../Atoms";
 
 type LocationFormProps = {
   onCreateLocation: (location: CrystalLocation) => void
+  location?: CrystalLocation
 }
 
 const LocationForm: React.FC<LocationFormProps> = (props) => {
   const [locationState, setLocationState] = useState<Partial<CrystalLocation>>({
-    placeName: undefined,
-    country: undefined,
-    lat: undefined,
-    long: undefined,
+    placeName: props.location?.placeName || undefined,
+    country: props.location?.country || undefined,
+    lat: props.location?.lat || undefined,
+    long: props.location?.long || undefined,
   })
 
   const onSubmit: FormEventHandler = useCallback(event => {
