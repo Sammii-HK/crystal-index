@@ -1,7 +1,7 @@
 const BField: React.FC<InputProps> = (props) => {
   return (
     <div className="field"> 
-    <label className="label">{props.label}</label>
+    {props.label && <label className="label">{props.label}</label>}
     <div className="control">
       {props.children}
     </div>
@@ -12,6 +12,6 @@ const BField: React.FC<InputProps> = (props) => {
 export default BField
 
 type InputProps = {
-  label: string,
+  label?: string,
 }
 

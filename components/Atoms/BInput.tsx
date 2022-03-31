@@ -18,7 +18,7 @@ export default BInput
 type InputProps = {
   id: string,
   placeholder: string,
-  required: boolean,
+  required?: boolean | false,
   value: string,
   onChange: (newValue: string) => void
 }

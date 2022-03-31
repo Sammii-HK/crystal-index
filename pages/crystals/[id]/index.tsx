@@ -9,6 +9,20 @@ import { FormEventHandler, useCallback } from 'react';
 const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'bio', 'otherNames', 'origin', 'memento',  ]
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
 
+type ViewCrystalProps = {
+  crystal: null | SerialisableCrystalWithUser
+}
+
+type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
+  {
+    createdBy: string | null, 
+    image: number[], 
+    originLocation: string | null, 
+    mementoLocation: string | null,
+  } 
+  & {createdAt: string, updatedAt: string}
+
+
 const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   const { userId } = useUser();
   const crystal = props.crystal;
@@ -57,19 +71,6 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
 }
 
 export default ViewCrystal;
-
-type ViewCrystalProps = {
-  crystal: null | SerialisableCrystalWithUser
-}
-
-type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
-  {
-    createdBy: string | null, 
-    image: number[], 
-    originLocation: string | null, 
-    mementoLocation: string | null,
-  } 
-  & {createdAt: string, updatedAt: string}
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;

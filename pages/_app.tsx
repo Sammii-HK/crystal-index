@@ -10,7 +10,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <SessionProvider session={pageProps.session}>
       <Layout>
         {/* if requireAuth property is present - protect the page */}
-        {(Component as RestrictedReactFC).requireAuth ? (
+        {(Component as RestrictedReactFC<any>).requireAuth ? (
           <AuthGuard>
             <Component {...pageProps} />
           </AuthGuard>
