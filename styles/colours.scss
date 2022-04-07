@@ -8,7 +8,7 @@ $twitter-invert: findColorInvert($twitter);
 // transperencies
 $transparent-white: #ffffff80;
 $transparent-black: #00000080;
-$clear: $transparent-white;
+$clear: #ffffff00;
 // monotones
 $white: #fff;
 $black: #333;
@@ -96,8 +96,8 @@ $colors: mergeColorMaps(
       $transparent-black,
     ),
     "clear": (
-      $transparent-white,
-      $transparent-black,
+      $clear,
+      $grey,
     ),
     "red": (
       $red,

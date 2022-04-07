@@ -15,6 +15,11 @@
   box-sizing: border-box;
 }
 
+#svg {
+  width:100%;
+  height: auto;
+}
+
 .is-fullheight {
   min-height: 100vh !important;
   height: 100%;
@@ -29,20 +34,29 @@ select, div.select {
 }
 
 // GLOBE
-.globeContainer {
-  min-height: 90% !important;
+.globe-container {
+  width: 100%;
   display: flex;
-  align-self: center;
   align-items: center;
-  position: absolute;
+  justify-content: center;
+}
+
+.location-map {
+  height: 100%;
+  min-height: 70vh;
+}
+
+.locations-map {
+  height: 100%;
+  min-height: 90vh;
 }
 
 // DARK COLOUR SCHEME
 @media (prefers-color-scheme: dark) {
-  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
+  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {
     background-color: $black !important;
   }
-  body, input, label, textarea, select, button, .file-cta, .tag {
+  body, input, label, textarea, select, button, .file-cta {
     color: $white !important;
   }
   .title, .subtitle, .body, .textarea {
@@ -64,10 +78,10 @@ select, div.select {
 
 // LIGHT COLOUR SCHEME
 @media (prefers-color-scheme: light) {
-  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta, .tag {
+  html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {
     background-color: $white !important;
   }
-  body, input, label, textarea, select, button, .file-cta, .tag {
+  body, input, label, textarea, select, button, .file-cta {
     color: $black !important;
   }
   .title, .subtitle, .body {

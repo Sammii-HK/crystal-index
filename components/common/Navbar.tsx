@@ -24,8 +24,8 @@ export default function Navbar() {
         <a className="navbar-item" onClick={() => router.push('/crystals')}>
           Crystals
         </a>
-        <a className="navbar-item" onClick={() => router.push('/map')}>
-          Map
+        <a className="navbar-item" onClick={() => router.push('/locations')}>
+          Locations
         </a>
         {user.role === 'unicorn' && 
           <>
@@ -42,7 +42,7 @@ export default function Navbar() {
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-            {user && 
+            {user.userId && 
               <div className="is-flex">
                 <div className="navbar-item">
                   <p className="body is-text-weight-bold">Hi {user.userName}! 💎</p>
@@ -50,7 +50,7 @@ export default function Navbar() {
                 <button className="button is-primary" onClick={() => signOut()}>Sign out</button>
               </div>
             }
-            {!user && 
+            {!user.userId && 
               <div>
                 <button className="button is-primary" onClick={() => signIn()}>Sign in</button>
               </div>
