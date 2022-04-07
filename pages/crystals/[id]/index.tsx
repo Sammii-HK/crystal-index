@@ -5,6 +5,9 @@ import { BCarousel, BTags } from '../../../components/Molecules';
 import { Crystal } from '@prisma/client';
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
+import { FaHeart } from 'react-icons/fa';
+import axios from 'axios';
+import classNames from "classnames";
 
 const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'bio', 'otherNames', 'origin', 'memento',  ]
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
@@ -19,6 +22,7 @@ type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> &
     image: number[], 
     originLocation: string | null, 
     mementoLocation: string | null,
+    favouritedBy: string[],
   } 
   & {createdAt: string, updatedAt: string}
 
@@ -33,6 +37,24 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
     router.push(`/crystals/${crystal?.id}/update`)
   }, []);
 
+  const isFavourite = userId && crystal?.favouritedBy.includes(userId) ? true : false;
+  
+  const handleFavouriteCrystal: FormEventHandler = useCallback(async (event) => {
+    event.preventDefault();
+    if (!userId) return
+    const setFavourite = !isFavourite;
+
+
+    await axios.put<{crystal?: Crystal, error: string}>(
+      `/api/crystal/${router.query.id}/set-favourite`,
+      { userId, setFavourite },
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+
+    router.replace(router.asPath);
+
+  }, [userId, router.query.id, isFavourite])
+
   if (!crystal) return <p>Crystal not found</p>;
 
   return (
@@ -42,7 +64,24 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
           <h1 className='title is-capitalized'>{crystal.name}</h1>
         </div>
         <div className="column is-flex is-justify-content-flex-end p-0">
-          {(userId === crystal.createdById) && <button type="button" className="button mb-4 is-pulled-right" onClick={editCrystal}>Edit</button>}
+          <div className="columns">
+            {(userId === crystal.createdById) && 
+              <div className="column">
+                <button type="button" className="button mb-4 is-pulled-right" onClick={editCrystal}>Edit</button>
+              </div>
+            }
+
+            {userId && 
+              <div className="column">
+                <button className="button is-ghost" onClick={handleFavouriteCrystal}>
+                  <span className={classNames("icon", { 'has-text-pink': isFavourite})}>  
+                    <FaHeart />
+                  </span>
+                </button>
+              </div>
+            }
+
+          </div>
         </div>
       </div>
       <div className="columns pt-2">
@@ -83,6 +122,7 @@ export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (c
         image: {select: {id: true}},
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},
+        favouritedBy: {select: {id: true}},
       },
     }
   );
@@ -95,6 +135,7 @@ export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (c
     createdBy: crystal.createdBy.name,
     mementoLocation: crystal.mementoLocation?.placeName || null,
     originLocation: crystal.originLocation?.placeName || null,
+    favouritedBy: crystal.favouritedBy.map(user => user.id)
   };
 
   console.log(`GET Crystal ${id} result: `, serialisableCrystal)

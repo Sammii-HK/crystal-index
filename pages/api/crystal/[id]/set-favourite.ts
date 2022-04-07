@@ -12,9 +12,9 @@ export default async function main(
   req: NextApiRequest,
   res: NextApiResponse<CrystalProps>
 ) {
-  const { crystal, imageIds }: { 
-    crystal: Crystal, 
-    imageIds: number[],
+  const { userId, setFavourite }: { 
+    userId: string,
+    setFavourite: boolean,
   } = req.body;
   const { id } = req.query
 
@@ -22,9 +22,9 @@ export default async function main(
     const result = await prisma.crystal.update({
       where: { id: parseInt(id as string) },
       data: {
-        ...crystal,
-        image: {
-          set: imageIds.map(id => ({ id })),
+        favouritedBy: {
+          connect: setFavourite ? { id: userId } : undefined,
+          disconnect: !setFavourite ? { id: userId } : undefined,
         },
       }
     });
