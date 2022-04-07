@@ -19,7 +19,7 @@ const Map: React.FC<{locationData: CrystalLocation[]}> = (props) => {
   }, [container.current, locationData])
   
   return (
-    <div ref={container} key={JSON.stringify(locationData)} className="globeContainer" />
+    <div ref={container} key={JSON.stringify(locationData)} className="globe-container" />
   )
 }
 

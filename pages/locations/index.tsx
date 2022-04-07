@@ -4,7 +4,10 @@ import prisma from '../../lib/prisma';
 import { CrystalLocation } from '../../lib/types/location';
 
 const MapView: React.FC<MapViewProps> = (props) => {
-  return <Map locationData={props.locations} />
+  return (
+    <div className="container is-flex is-align-content-center locations-map">
+      <Map locationData={props.locations} />
+    </div>)
 }
 
 export default MapView
