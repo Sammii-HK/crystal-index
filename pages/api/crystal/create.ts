@@ -19,7 +19,7 @@ export default async function main(
     const { crystal, imageIds }: { crystal: Crystal, imageIds: number[] } = req.body;
   
     try {
-      const result = await prisma.crystal.create({
+      const result = await prisma().crystal.create({
         data: {
           ...crystal,
           image: {

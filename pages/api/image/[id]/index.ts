@@ -9,7 +9,7 @@ export default async function crystalHandler(
 ) {
   const { id, width } = req.query;
   
-  const result = await prisma.image.findUnique(
+  const result = await prisma().image.findUnique(
     { where: { id: parseInt(id as string) } }
   );
 

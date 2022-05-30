@@ -137,7 +137,7 @@ type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & {c
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
 
-  const crystal = await prisma.crystal.findUnique(
+  const crystal = await prisma().crystal.findUnique(
     { 
       where: { id: parseInt(id as string) },
       include: { 
@@ -147,7 +147,7 @@ export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (c
     }
   );
 
-  const allLocations = await prisma.location.findMany()
+  const allLocations = await prisma().location.findMany()
   
 
   const serialisableCrystal = crystal && {

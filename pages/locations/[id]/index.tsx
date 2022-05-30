@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
 import { Map } from '../../../components/Organisms';
 
-const fieldsToShow: (keyof Location)[] = [ 'placeName', 'country', 'lat', 'long',  ]
+const fieldsToShow: (keyof Location)[] = [ 'placeName', 'country' ];
 
 const ViewCrystal: React.FC<ViewCrystalocationProps> = (props) => {
   const location = props.location;
@@ -19,19 +19,29 @@ const ViewCrystal: React.FC<ViewCrystalocationProps> = (props) => {
   if (!location) return <p>Location not found</p>;
 
   return (
-    <div className="section">
-      <button type="button" className="button mb-4" onClick={editLocation}>Edit</button>
-      {fieldsToShow.map(field => (
-        <div key={field}>
+    <div className="container">
+      <div className="columns mt-6">
+        <div className="column">
           <p className='my-3'>
-            <span className='has-text-weight-bold is-capitalized'>{field}: </span>
-            {location[field]}
+            <span className='has-text-weight-bold is-capitalized'>Location: </span>
+            {location.placeName}, {location.country}
           </p>
         </div>
-      ))}
-      <hr />
+        <div className="column">
+          <p className='my-3'>
+            <span className='has-text-weight-bold is-capitalized'>Coordinates: </span>
+            {location.lat}, {location.long}
+          </p>
+        </div>
+        <div className="column is-1">
+          <button type="button" className="button mb-4" onClick={editLocation}>Edit</button>
+        </div>
+      </div>
 
-      <Map locationData={[location]}/>
+      <div className="container is-flex is-align-content-center location-map">
+        <Map locationData={[location]}/>
+      </div>
+
       
     </div>
   )
@@ -45,7 +55,7 @@ type ViewCrystalocationProps = {
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalocationProps> = async (context) => {
   const { id } = context.params!;
-  const location = await prisma.location.findUnique( { where: { id: parseInt(id as string) } } );
+  const location = await prisma().location.findUnique( { where: { id: parseInt(id as string) } } );
 
   console.log(`GET Location ${id} result: `, location)
   return { props: {location: location }}

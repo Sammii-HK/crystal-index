@@ -11,7 +11,7 @@ export default async function crystalsHandler(
   req: NextApiRequest,
   res: NextApiResponse<CrystalProps>
 ) {
-  const results = await prisma.image.findMany();
+  const results = await prisma().image.findMany();
   
   res.status(200).json({ images: results })
 }

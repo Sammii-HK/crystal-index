@@ -114,7 +114,7 @@ export default ViewCrystal;
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
 
-  const crystal = await prisma.crystal.findUnique(
+  const crystal = await prisma().crystal.findUnique(
     { 
       where: { id: parseInt(id as string) },
       include: { 

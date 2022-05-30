@@ -17,7 +17,7 @@ export default async function main(
 
   if (user?.role === 'unicorn') {
     try {
-      const result = await prisma.location.create({
+      const result = await prisma().location.create({
         data: { ...data },
       });
   

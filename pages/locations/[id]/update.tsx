@@ -45,7 +45,7 @@ type ViewCrystalProps = {
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
-  const location = await prisma.location.findUnique({ where: { id: parseInt(id as string) } });
+  const location = await prisma().location.findUnique({ where: { id: parseInt(id as string) } });
 
   console.log(`UPDATE Location ${id} result: `, location)
   return { 

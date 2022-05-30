@@ -16,7 +16,7 @@ export default async function main(
   const { id } = req.query
 
   try {
-    const result = await prisma.location.update({
+    const result = await prisma().location.update({
       where: { id: parseInt(id as string) },
       data: { ...data },
     });

@@ -21,14 +21,12 @@ const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
   const crystals = props.crystals;
   const router = useRouter();
 
-  if (!crystals) return <p>Crystals not found</p>;
-
   const [searchState, setSearchState] = useState<string>('')
 
   const searchResults = useMemo(() => {
     const searchValue = searchState.toLowerCase();
 
-    return  crystals!.filter(crystal => { 
+    return  (crystals || []).filter(crystal => { 
       return (crystal.name && crystal.name.toLowerCase().includes(searchValue)) 
           || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
           || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
@@ -37,6 +35,8 @@ const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
       }
     )
   }, [crystals, searchState]);
+
+  if (!crystals) return <p>Crystals not found</p>;
 
   return (
     <div className="section">
@@ -68,7 +68,7 @@ export default ViewCrystals;
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalsProps> = async (context) => {
 
-  const crystalsResults = await prisma.crystal.findMany({
+  const crystalsResults = await prisma().crystal.findMany({
     include: { 
         createdBy: {select: {name: true}},
         image: {select: {id: true}},

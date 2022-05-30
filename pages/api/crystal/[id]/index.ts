@@ -13,7 +13,7 @@ export default async function crystalHandler(
 ) {
   const { id } = req.query;
   
-  const result = await prisma.crystal.findUnique(
+  const result = await prisma().crystal.findUnique(
     { 
       where: { id: parseInt(id as string) },
       include: { 

@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     form.parse(req, async (err, fields, files) => {
       if (err) throw({ err })
 
-      const image = await prisma.image.create({
+      const image = await prisma().image.create({
         data: {
           file: await fs.readFile((files.file as File).filepath),
           name: fields.name as string,

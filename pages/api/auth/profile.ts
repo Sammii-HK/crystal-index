@@ -14,7 +14,7 @@ export default async function UserHandler(
 
   const data = req.body
 
-  const results = await prisma.user.findUnique({
+  const results = await prisma().user.findUnique({
     where: {
       email: data.user.email,
     },

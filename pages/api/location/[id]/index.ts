@@ -14,7 +14,7 @@ export default async function locationHandler(
   const { id } = req.query
   console.log("id", id);
   
-  const result = await prisma.location.findUnique(
+  const result = await prisma().location.findUnique(
     { 
       where: { id: parseInt(id as string) },
       include: { crystalsOfMemento: true, crystalsOfOrigin: true }

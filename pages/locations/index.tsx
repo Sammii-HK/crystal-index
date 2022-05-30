@@ -17,6 +17,6 @@ type MapViewProps = {
 }
 
 export const getServerSideProps: GetServerSideProps<MapViewProps> = async () => {
-  const locations = await prisma.location.findMany();
+  const locations = await prisma().location.findMany();
   return { props: { locations: locations }}
 }

@@ -19,7 +19,7 @@ export default async function main(
   const { id } = req.query
 
   try {
-    const result = await prisma.crystal.update({
+    const result = await prisma().crystal.update({
       where: { id: parseInt(id as string) },
       data: {
         ...crystal,

@@ -2,6 +2,9 @@ import { PrismaClient } from '@prisma/client';
 
 let prisma: PrismaClient;
 
-prisma = new PrismaClient();
-
-export default prisma;
+export default function initOrGetPrisma() {
+  if (!prisma) {
+    prisma = new PrismaClient();
+  }
+  return prisma;
+};
