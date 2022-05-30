@@ -6,12 +6,16 @@
   "author": "Samantha Kellow <sammii.h@icloud.com>",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "test": "jest --watch"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
@@ -39,10 +43,13 @@
     "topojson": "^3.0.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "^13.0.0",
     "@types/node": "17.0.21",
     "@types/react": "17.0.40",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
+    "jest": "^27.5.1",
     "prisma": "^3.11.0",
     "ts-node": "^10.7.0",
     "typescript": "4.6.2"
