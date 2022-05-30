@@ -9,7 +9,6 @@ const Layout: React.FC<any> = (props) => {
         <title>Next Typescript</title>
         <meta name="Crystal Index" content="An Index of Crystals" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Navbar />
