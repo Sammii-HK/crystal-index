@@ -7,7 +7,7 @@ import { Map } from '../../../components/Organisms';
 
 const fieldsToShow: (keyof Location)[] = [ 'placeName', 'country' ];
 
-const ViewCrystal: React.FC<ViewCrystalocationProps> = (props) => {
+const ViewLocation: React.FC<ViewLocationProps> = (props) => {
   const location = props.location;
   const router = useRouter();
   
@@ -47,13 +47,13 @@ const ViewCrystal: React.FC<ViewCrystalocationProps> = (props) => {
   )
 }
 
-export default ViewCrystal;
+export default ViewLocation;
 
-type ViewCrystalocationProps = {
+type ViewLocationProps = {
   location: null | Location
 }
 
-export const getServerSideProps: GetServerSideProps<ViewCrystalocationProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<ViewLocationProps> = async (context) => {
   const { id } = context.params!;
   const location = await prisma().location.findUnique( { where: { id: parseInt(id as string) } } );
 

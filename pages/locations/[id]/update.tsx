@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next';
 import prisma from '../../../lib/prisma';
 import { LocationForm } from '../../../components/Organisms';
 
-const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
+const UpdateLocation: RestrictedReactFC<ViewLocationProps> = (props) => {
   const { role } = useUser()
   const router = useRouter()
 
@@ -34,16 +34,16 @@ const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
   )
 }
 
-export default UpdateCrystal
+export default UpdateLocation
 
-UpdateCrystal.requireAuth = true
+UpdateLocation.requireAuth = true
 
 
-type ViewCrystalProps = {
+type ViewLocationProps = {
   location: null | Location
 }
 
-export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<ViewLocationProps> = async (context) => {
   const { id } = context.params!;
   const location = await prisma().location.findUnique({ where: { id: parseInt(id as string) } });
 
