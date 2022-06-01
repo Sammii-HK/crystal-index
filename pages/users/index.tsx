@@ -1,34 +1,45 @@
+import { User } from '@prisma/client';
 import { GetServerSideProps } from 'next';
+import router from 'next/router';
+import { RestrictedReactFC } from '../../lib/hooks';
 import prisma from '../../lib/prisma';
-import { User } from '../../lib/types'
 
 const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
   return (
-    <div>
-      {props.users.map((user, index) =>
-        <div key={user.id} className="container is-flex">
-          <p>
-            {index}
-          </p>
-          |
-          <p>
-            {user.id}
-          </p>
-          |
-          <p>
-            {user.name}
-          </p>
-          |
-          <p>
-            {user.role}
-          </p>
-        </div> 
-      )}
+    <div className="section is-flex is-justify-content-center">
+      <table className='table'>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+        {props.users.map((user: User, index: number) =>
+          <tr key={user.id}> 
+            <th>{index}</th>
+            <td>{user.id}</td>
+            <td>{user.name}</td>
+            <td>{user.role}</td>
+            <td>
+              <button className='button is-small' onClick={() => router.push(`/users/${user.id}`)}>
+                View
+              </button>
+            </td>
+          </tr> 
+        )}
+        </tbody>
+      </table>
     </div>
   )
 }
 
 export default UsersView
+
+UsersView.requireAuth = true
 
 type UsersViewProps = {
   users: User[]

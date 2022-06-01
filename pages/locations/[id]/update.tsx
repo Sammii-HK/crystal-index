@@ -20,7 +20,7 @@ const UpdateLocation: RestrictedReactFC<ViewLocationProps> = (props) => {
     );
   
     const result = await res.data;
-    console.log("Location create API result", result);
+    console.log("Location update API result", result);
   }, []);
 
   if (!props.location) return <p>No location found</p>
