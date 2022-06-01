@@ -1,13 +1,31 @@
 import { User } from '@prisma/client';
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import router from 'next/router';
+import { useCallback } from 'react';
+import { BField, BSelect } from '../../components/Atoms';
 import { RestrictedReactFC } from '../../lib/hooks';
 import prisma from '../../lib/prisma';
+import { userRoles, UserRole } from '../../lib/types/user';
 
 const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
+
+  const updateUserRole = useCallback(async (userId, newValue: UserRole) => {
+
+    const res = await axios.put<{user?: User, error: string}>(
+      `api/admin/${userId}/set-role`,
+      { role: newValue },
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+
+    console.log("res", res);
+
+    return res
+  }, [])
+
   return (
     <div className="section is-flex is-justify-content-center">
-      <table className='table'>
+      <table className='table is-hoverable'>
         <thead>
           <tr>
             <th>Index</th>
@@ -23,9 +41,20 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
             <th>{index}</th>
             <td>{user.id}</td>
             <td>{user.name}</td>
-            <td>{user.role}</td>
             <td>
-              <button className='button is-small' onClick={() => router.push(`/users/${user.id}`)}>
+              <BField>
+                <BSelect
+                  placeholder='Select Role'
+                  options={userRoles}
+                  selected={user.role}
+                  onChange={(newValue: any) => {
+                    updateUserRole(user.id, newValue)
+                  }}
+                />
+              </BField>
+            </td>
+            <td>
+              <button className='button' onClick={() => router.push(`/users/${user.id}`)}>
                 View
               </button>
             </td>
