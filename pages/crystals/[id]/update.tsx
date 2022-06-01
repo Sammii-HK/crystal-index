@@ -4,34 +4,11 @@ import { FormEventHandler, useCallback, useState } from 'react'
 import { BField, BSelect } from '../../../components/Atoms';
 import useUser from '../../../lib/hooks';
 import type { RestrictedReactFC } from '../../../lib/hooks'
-import { crystalFields, CrystalState } from '../../../lib/types/crystal';
+import { crystalFields, crystalLocations, CrystalState } from '../../../lib/types/crystal';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import prisma from '../../../lib/prisma';
 import { BImageFileUploader } from '../../../components/Molecules';
-
-const crystalLocations: {
-  key: keyof CrystalState,
-  component: React.FC<any>,
-  label: string,
-  placeHolder: string,
-  required: boolean,
-}[] = [
-  {
-    key: 'origin',
-    component: BSelect,
-    label: 'Origin Location',
-    placeHolder: 'Select location',
-    required: false,
-  },
-  {
-    key: 'memento',
-    component: BSelect,
-    label: 'Memento Location',
-    placeHolder: 'Select location',
-    required: false,
-  },
-]
 
 const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
   const { userId } = useUser();

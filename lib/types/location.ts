@@ -1,3 +1,5 @@
+import { basicField } from './field';
+
 export type CrystalLocation = {
   placeName: string,
   country: string,
@@ -5,13 +7,9 @@ export type CrystalLocation = {
   long: string,
 }
 
-export const locationFields: {
+export const locationFields: ({
   key: keyof CrystalLocation,
-  label: string,
-  placeHolder: string,
-  required: boolean,
-  options?: string[]
-}[] = [
+} & basicField )[] = [
   {
     key: 'placeName',
     label: 'Place Name',

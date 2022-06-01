@@ -1,3 +1,4 @@
+import { basicField } from './field';
 import { BInput, BSelect, BTextArea } from '../../components/Atoms';
 import { BTags } from '../../components/Molecules';
 
@@ -12,14 +13,9 @@ export type CrystalState = {
   origin: string | undefined | null,
 }
 
-export const crystalFields: {
+export const crystalFields: ({
   key: keyof CrystalState,
-  component: React.FC<any>,
-  label: string,
-  placeHolder: string,
-  required: boolean,
-  options?: string[]
-}[] = [
+} & basicField )[] = [
   {
     key: 'name',
     component: BInput,
@@ -56,21 +52,24 @@ export const crystalFields: {
     placeHolder: 'Select chakra(s)',
     options: [ 'crown', 'third eye', 'throat', 'heart', 'solar plexus', 'sacral', 'root' ],
     required: false,
+  }
+];
+
+export const crystalLocations: ({
+  key: keyof CrystalState,
+} & basicField )[] = [
+  {
+    key: 'origin',
+    component: BSelect,
+    label: 'Origin Location',
+    placeHolder: 'Select location',
+    required: false,
   },
-  // {
-  //   key: 'originId',
-  //   component: BSelect,
-  //   label: 'Origin Location',
-  //   placeHolder: 'Select location',
-  //   // options: options,
-  //   required: false,
-  // },
-  // {
-  //   key: ',
-  //   component: BSelect,
-  //   label: 'Memento Location',
-  //   placeHolder: 'Select location',
-  //   // options: options,
-  //   required: false,
-  // },
+  {
+    key: 'memento',
+    component: BSelect,
+    label: 'Memento Location',
+    placeHolder: 'Select location',
+    required: false,
+  },
 ];
