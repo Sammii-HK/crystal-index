@@ -4,24 +4,21 @@ import { GetServerSideProps } from 'next';
 import router from 'next/router';
 import { useCallback } from 'react';
 import { BField, BSelect } from '../../components/Atoms';
-import { RestrictedReactFC } from '../../lib/hooks';
+import useUser, { RestrictedReactFC } from '../../lib/hooks';
 import prisma from '../../lib/prisma';
 import { userRoles, UserRole } from '../../lib/types/user';
 
 const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
-
+  const { role } = useUser()
   const updateUserRole = useCallback(async (userId, newValue: UserRole) => {
-
-    const res = await axios.put<{user?: User, error: string}>(
+    return await axios.put<{user?: User, error: string}>(
       `api/admin/${userId}/set-role`,
       { role: newValue },
       { headers: { 'Content-Type': 'application/json' } }
     )
-
-    console.log("res", res);
-
-    return res
   }, [])
+
+  if (role !== 'unicorn') router.push('/')
 
   return (
     <div className="section is-flex is-justify-content-center">
