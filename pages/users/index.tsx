@@ -22,7 +22,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
 
   return (
     <div className="section is-flex is-justify-content-center">
-      <table className='table is-hoverable'>
+      <table className='table is-dark'>
         <thead>
           <tr>
             <th>Index</th>
@@ -47,6 +47,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
                   onChange={(newValue: any) => {
                     updateUserRole(user.id, newValue)
                   }}
+                  disabled={user.email === process.env.NEXT_PUBLIC_UNICORN_USER}
                 />
               </BField>
             </td>

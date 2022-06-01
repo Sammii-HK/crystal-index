@@ -34,6 +34,6 @@ export default async function main(
       res.status(403).json({ crystal: undefined, error: "Error occured while creating a new crystal." });
     }
     
-  } else res.status(403).json({ crystal: undefined, error: "You do not have access to create a crystal."})
+  } else res.status(401).json({ crystal: undefined, error: "You do not have access to create a crystal."})
 
 }

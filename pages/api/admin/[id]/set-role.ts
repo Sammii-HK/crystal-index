@@ -1,4 +1,3 @@
-import { UserRole } from './../../../../lib/types/user';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { User } from '@prisma/client'
 import prisma from '../../../../lib/prisma';
@@ -20,6 +19,9 @@ export default async function main(
     const { id } = req.query
   
     try {
+      const userToEdit = await prisma().user.findUnique({ where: { id: (id as string)}})
+      if (userToEdit?.email === process.env.NEXT_PUBLIC_UNICORN_USER) return res.status(409).json({ user: undefined, error: 'You can not change permissions for this user.'})
+      
       const result = await prisma().user.update({
         where: { id: (id as string) },
         data: { 
@@ -31,7 +33,7 @@ export default async function main(
       return result
     } catch (err) {
       console.log(err);
-      res.status(403).json({ user: undefined, error: `Error occured while setting role to user` })
+      res.status(500).json({ user: undefined, error: `Error occured while setting role to user` })
     }
   } else res.status(401).json({ user: undefined, error: "You do not have the permissions to change roles" })
 }
