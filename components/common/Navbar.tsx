@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn, signOut } from "next-auth/react"
 import router from "next/router";
 import { useState } from "react";
 import useUser from "../../lib/hooks";
