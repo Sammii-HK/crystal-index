@@ -8,7 +8,7 @@ import useUser from "../../lib/hooks";
 export default function Navbar() {
   const user = useUser()
 
-  const [ isBurgerActive, toggleBurgerMenu] = useState(false);
+  const [ isBurgerActive, toggleBurgerMenu] = useState<boolean>(false);
 
   function handleBurgerClick() {
     toggleBurgerMenu(!isBurgerActive);

@@ -12,7 +12,7 @@ const CreateLocations: React.FC = () => {
       { headers: { 'Content-Type': 'application/json' } }
     );
   
-    const result = await res.data;
+    const result = res.data;
     console.log("Location create API result", result);
   }, []);
 

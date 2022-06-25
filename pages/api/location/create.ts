@@ -27,7 +27,7 @@ export default async function main(
       console.log(err);
       res.status(403).json({ location: undefined, error: "Error occured while creating a new location." });
     }
-  } else res.status(403).json({ location: undefined, error: "You do not have access to create a location."})
+  } else res.status(401).json({ location: undefined, error: "You do not have access to create a location."})
 
 }
 
