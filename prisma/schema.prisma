@@ -78,15 +78,11 @@ model Crystal {
   image             Image[]
 }
 
-// model Favourite {
-//   id         Int  @default(autoincrement()) @id
-//   userId     Int
-//   crystalId  Int
-// }
-
 model Location {
   id                  Int         @default(autoincrement()) @id
   placeName           String      @unique
+  city                String?
+  county              String?
   country             String
   lat                 String
   long                String
