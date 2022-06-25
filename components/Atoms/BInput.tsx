@@ -1,7 +1,10 @@
+import { FormEventHandler } from "react"
+import { IconType } from "react-icons/lib"
 
 const BInput: React.FC<InputProps> = (props) => {
   return (
-    <input 
+    <p className={`control has-icons-${props.iconAlign}`}>
+      <input 
       id={props.id}
       className='input'
       type="text" 
@@ -9,7 +12,13 @@ const BInput: React.FC<InputProps> = (props) => {
       required={props.required}
       value={props.value}
       onChange={event => props.onChange(event.target.value)}
-    />
+      />
+      {props.icon &&
+        <span className={`icon is-${props.iconSize} is-${props.iconAlign} is-clickable`}>
+          <props.icon />
+        </span>
+      }
+    </p>
   )
 }
 
@@ -21,5 +30,9 @@ type InputProps = {
   required?: boolean | false,
   value: string,
   onChange: (newValue: string) => void
+  icon?: IconType,
+  iconSize?: string,
+  iconAlign?: string,
+  iconOnClick?: FormEventHandler,
 }
 
