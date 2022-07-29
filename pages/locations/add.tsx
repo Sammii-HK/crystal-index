@@ -18,7 +18,7 @@ const CreateLocations: React.FC = () => {
 
 
   return (
-    <div className="section">
+    <div className="my-2">
       <LocationForm onCreateLocation={createLocation} />
     </div>
   )

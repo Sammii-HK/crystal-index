@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import prisma from '../../../lib/prisma';
 import { BImageFileUploader } from '../../../components/Molecules';
+import CreateLocations from '../../locations/add';
 
 const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
   const { userId } = useUser();
@@ -74,6 +75,7 @@ const UpdateCrystal: RestrictedReactFC<ViewCrystalProps> = (props) => {
                 />
               </BField>
             ))}
+            <CreateLocations />
             <div className="columns">
               {crystalLocations.map(field => (
                 <div className="column" key={field.key}>

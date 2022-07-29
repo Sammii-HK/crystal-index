@@ -51,9 +51,9 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
   }
 
   return (
-    <div className="section">
+    <div className="mt-4">
       <div>
-        <form onSubmit={onSubmit}>
+        <div onSubmit={onSubmit}>
           {locationFields.map(field => (
             <BField label={field.label} key={field.key}>
               <BInput 
@@ -71,7 +71,7 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
               />
             </BField>
           ))}
-        </form>
+        </div>
         <div className="mt-5">
           {resultState.map((result, index) => (
             <div 
