@@ -2,6 +2,8 @@ import { basicField } from './field';
 
 export type CrystalLocation = {
   placeName: string,
+  city?: string,
+  county?: string,
   country: string,
   lat: string,
   long: string,
@@ -12,26 +14,8 @@ export const locationFields: ({
 } & basicField )[] = [
   {
     key: 'placeName',
-    label: 'Place Name',
-    placeHolder: 'Covent Gardens',
+    label: 'Find a location',
+    placeHolder: 'Covent Gardens, London, WC2',
     required: true,
-  },
-  {
-    key: 'country',
-    label: 'Country',
-    placeHolder: 'England',
-    required: true,
-  },
-  {
-    key: 'lat',
-    label: 'Latitudinal Coordinates',
-    placeHolder: '51.5117',
-    required: false,
-  },
-  {
-    key: 'long',
-    label: 'Longitudinal Coordinates',
-    placeHolder: '0.1240',
-    required: false,
   },
 ];
