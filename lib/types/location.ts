@@ -2,9 +2,9 @@ import { basicField } from './field';
 
 export type CrystalLocation = {
   placeName: string,
-  city?: string,
-  county?: string,
-  country: string,
+  city?: string | null,
+  county?: string | null,
+  country: string | null,
   lat: string,
   long: string,
 }

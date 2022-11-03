@@ -1,6 +1,7 @@
 import { basicField } from './field';
 import { BInput, BSelect, BTextArea } from '../../components/Atoms';
 import { BTags } from '../../components/Molecules';
+import { Crystal, User, Location } from '@prisma/client';
 
 export type CrystalState = {
   name: string | undefined,
@@ -73,3 +74,12 @@ export const crystalLocations: ({
     required: false,
   },
 ];
+
+
+export type ViewCrystalProps = {
+  crystal: null | SerialisableCrystalWithUser
+  locations: null | Location[]
+}
+
+export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & {createdBy: User, image: number[]} & {createdAt: string, updatedAt: string}
+
