@@ -5,17 +5,15 @@ import useUser from '../../lib/hooks';
 import { 
   crystalFields, 
   crystalLocations, 
-  CrystalState, 
-  SerialisableCrystalWithUser
+  CrystalState,
+  ViewCrystalProps
 } from '../../lib/types/crystal';
 // import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
 import CreateLocations from '../../pages/locations/add';
 
-type CrystalFormProps = {
+type CrystalFormProps = ViewCrystalProps & {
   onCreateCrystal: (crystal: CrystalState) => void
-  crystal: SerialisableCrystalWithUser,
-  locations: null | Location[]
 }
 
 const CrystalForm: React.FC<CrystalFormProps> = (props) => {
