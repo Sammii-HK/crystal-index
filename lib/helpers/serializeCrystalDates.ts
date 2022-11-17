@@ -1,6 +1,6 @@
 import prisma from "../prisma";
 
-  export const findAndSerializeCrystal = async (id: string): Promise<any> => {
+export const findAndSerializeCrystal = async (id: string): Promise<any> => {
   const crystal = await prisma().crystal.findUnique(
     { 
       where: { id: parseInt(id as string) },
@@ -26,4 +26,4 @@ import prisma from "../prisma";
     crystal: serialisableCrystal,
     locations: allLocations,
   }
-}
+};
