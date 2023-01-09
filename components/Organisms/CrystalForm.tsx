@@ -4,13 +4,14 @@ import { BField, BSelect } from '../../components/Atoms';
 import useUser from '../../lib/hooks';
 import { 
   crystalFields, 
-  crystalLocations, 
+  crystalLocationFields, 
   CrystalState,
   ViewCrystalProps
 } from '../../lib/types/crystal';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
-import CreateLocations from '../../pages/locations/add';
+import NewLocationForm from './NewLocationForm';
+import { FaArrowLeft } from 'react-icons/fa';
 
 type CrystalFormProps = ViewCrystalProps & {
   onCreateCrystal: (crystal: CrystalState) => void
@@ -19,10 +20,10 @@ type CrystalFormProps = ViewCrystalProps & {
 const CrystalForm: React.FC<CrystalFormProps> = (props) => {
   const { userId } = useUser();
   const crystal = props.crystal;
-  const locations = props.locations?.map((location) => location.placeName);
+  const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
+  const crystalHref=`/crystals/${crystal?.id}`
 
-  
-  // const router = useRouter()
+  const router = useRouter()
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
     name: crystal?.name,
@@ -52,8 +53,20 @@ const CrystalForm: React.FC<CrystalFormProps> = (props) => {
     props.onCreateCrystal(crystal as CrystalState)
   }
 
+  const backArrowOnClick = (e: Event) => {
+    e.preventDefault()
+    router.push(crystalHref)
+  }
+
   return (
     <div className="section">
+      <div className="mb-4" >
+        <a href={crystalHref}>
+        <span className={`icon is-small is-left is-clickable`} onClick={backArrowOnClick}>
+          <FaArrowLeft />
+        </span>
+        </a>
+      </div>
       <div className="columns">
         <div className="column is-5">
           <BImageFileUploader
@@ -83,19 +96,22 @@ const CrystalForm: React.FC<CrystalFormProps> = (props) => {
                 />
               </BField>
             ))}
-            <CreateLocations />
             <div className="columns">
-              {crystalLocations.map(field => (
+              {crystalLocationFields.map(field => (
                 <div className="column" key={field.key}>
                   <BField label={field.label}>
                     <BSelect
                       placeholder={field.placeHolder} 
                       options={locations}
                       selected={crystalState[field.key]}
-                      onChange={(newValue: any) => {
+                      onChange={(newValue) => {
                         setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
                       }}
                       />
+                      <NewLocationForm onCreateLocation={(location) => {
+                        setLocations(old => [...old, location.placeName]);
+                        setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: location.placeName}))
+                      }} />
                   </BField>
                 </div>
               ))}
