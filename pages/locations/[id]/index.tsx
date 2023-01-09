@@ -1,9 +1,10 @@
-import prisma from '../../../lib/prisma';
 import { GetServerSideProps } from 'next';
 import { Location } from '@prisma/client';
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
 import { Map } from '../../../components/Organisms';
+import { findLocation } from '../../../lib/helpers/locationRequests';
+import { ViewLocationProps } from '../../../lib/types/location';
 
 const fieldsToShow: (keyof Location)[] = [ 'placeName', 'country' ];
 
@@ -49,14 +50,10 @@ const ViewLocation: React.FC<ViewLocationProps> = (props) => {
 
 export default ViewLocation;
 
-type ViewLocationProps = {
-  location: null | Location
-}
-
 export const getServerSideProps: GetServerSideProps<ViewLocationProps> = async (context) => {
   const { id } = context.params!;
-  const location = await prisma().location.findUnique( { where: { id: parseInt(id as string) } } );
+  const location = await findLocation(id as string);
 
   console.log(`GET Location ${id} result: `, location)
-  return { props: {location: location }}
+  return { props: { ...location }}
 }
