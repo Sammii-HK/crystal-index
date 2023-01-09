@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { Location } from '@prisma/client';
 import prisma from '../prisma';
+import { CrystalLocation } from '../types/location';
 
-export const createLocation = async (location: Location): Promise<any> => {
+export const createLocation = async (location: CrystalLocation): Promise<Location | undefined> => {
   const res = await axios.post<{location?: Location, error: string}>(
     '/api/location/create', 
     location,
     { headers: { 'Content-Type': 'application/json' } }
   );
 
-  const result = res.data;
-  console.log("Location create API result", result);
+  console.log("createLocation: ", res.data);
+
+  return res.data.location
 };
 
 export const findLocation = async (id: string): Promise<any> => {
@@ -30,6 +32,5 @@ export const searchLocation = async (event: Event, placeName: string) => {
     }
   );
 
-  // console.log("res", res);
   return res.data
 };
