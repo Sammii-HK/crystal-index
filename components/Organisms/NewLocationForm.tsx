@@ -1,23 +1,27 @@
 import axios from "axios";
+import { Location } from '@prisma/client';
 import { FormEventHandler, useCallback, useState } from "react"
 import { FaSearch, FaRegTimesCircle } from "react-icons/fa";
 import { GeoencodedLocation } from "../../lib/types/geoencodedLocation";
 import { locationFields, CrystalLocation } from '../../lib/types/location';
 import { BField, BInput } from "../Atoms";
+import { createLocation } from '../../lib/helpers/locationRequests';
+
+// Location fields need to work for a search dropdown with just a place name, and a full list for amends
 
 type LocationFormProps = {
-  onCreateLocation: (location: CrystalLocation) => void
-  location?: CrystalLocation
+  onCreateLocation: (location: Location) => void
+  location?: Omit<CrystalLocation, 'id'>
 }
 
-const LocationForm: React.FC<LocationFormProps> = (props) => {
+const NewLocationForm: React.FC<LocationFormProps> = (props) => {
   const [locationState, setLocationState] = useState<Partial<CrystalLocation>>({
     placeName: props.location?.placeName || undefined,
   })
 
   const [resultState, setResultState] = useState<GeoencodedLocation[]>([])
 
-  const onSubmit: FormEventHandler = useCallback(async event => {
+  const onSubmitLocation: FormEventHandler = useCallback(async event => {
     event.preventDefault();
 
     await axios.get(
@@ -29,12 +33,7 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
         },
       }
     )
-    .then(res => {
-      // if (res.data.locations[0]) {}      
-      console.log("res.data.results[0]", res.data.results[0]);
-      
-      setResultState(res.data.results)
-    })    
+    .then(res => setResultState(res.data.results))    
   }, [locationState])
 
   const resultClicked = async (index: number): Promise<any> => {
@@ -47,13 +46,16 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
       long: (resultState[index].geometry.lng).toString(),
     }
     setLocationState(location)
-    props.onCreateLocation(location as CrystalLocation)
+    props.onCreateLocation(location as Location)
+    createLocation(location)
+    setResultState([])
+    setLocationState({})
   }
 
   return (
     <div className="mt-4">
       <div>
-        <div onSubmit={onSubmit}>
+        
           {locationFields.map(field => (
             <BField label={field.label} key={field.key}>
               <BInput 
@@ -67,11 +69,12 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
                 icon={FaSearch}
                 iconSize="small"
                 iconAlign="right"
-                iconOnClick={onSubmit}
+                iconOnClick={onSubmitLocation}
+                onEnterKey={onSubmitLocation}
               />
             </BField>
           ))}
-        </div>
+        
         <div className="mt-5">
           {resultState.map((result, index) => (
             <div 
@@ -87,4 +90,4 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
   )
 }
 
-export default LocationForm
+export default NewLocationForm
