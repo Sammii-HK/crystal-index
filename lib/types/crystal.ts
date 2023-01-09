@@ -56,7 +56,7 @@ export const crystalFields: ({
   }
 ];
 
-export const crystalLocations: ({
+export const crystalLocationFields: ({
   key: keyof CrystalState,
 } & basicField )[] = [
   {

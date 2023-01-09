@@ -1,6 +1,8 @@
 import { basicField } from './field';
+import { Location } from '@prisma/client';
 
 export type CrystalLocation = {
+  id?: number,
   placeName: string,
   city?: string | null,
   county?: string | null,
@@ -9,8 +11,13 @@ export type CrystalLocation = {
   long: string,
 }
 
+export type ViewLocationProps = {
+  location: null | Location,
+  children: React.ReactNode
+}
+
 export const locationFields: ({
-  key: keyof CrystalLocation,
+  key: keyof Omit<CrystalLocation, 'id'>,
 } & basicField )[] = [
   {
     key: 'placeName',
