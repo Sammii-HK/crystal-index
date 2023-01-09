@@ -12,9 +12,12 @@ const BInput: React.FC<InputProps> = (props) => {
       required={props.required}
       value={props.value}
       onChange={event => props.onChange(event.target.value)}
+      onKeyDown={event => {
+        if (event.code === "Enter") props.onEnterKey}
+      }
       />
       {props.icon &&
-        <span className={`icon is-${props.iconSize} is-${props.iconAlign} is-clickable`}>
+        <span className={`icon is-${props.iconSize} is-${props.iconAlign} is-clickable`} onClick={props.iconOnClick}>
           <props.icon />
         </span>
       }
@@ -34,5 +37,6 @@ type InputProps = {
   iconSize?: string,
   iconAlign?: string,
   iconOnClick?: FormEventHandler,
+  onEnterKey?: FormEventHandler,
 }
 
