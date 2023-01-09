@@ -2,7 +2,7 @@ const BSelect: React.FC<InputProps> = (props) => {
   return (
     <div className="select">
       <select 
-        defaultValue={props.selected ? props.selected : props.placeholder}
+        value={props.selected ? props.selected : props.placeholder}
         onChange={event => props.onChange(event.target.value)}
         disabled={props.disabled}
         >
