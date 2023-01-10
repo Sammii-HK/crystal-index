@@ -2,7 +2,7 @@ version: "3.9"
 services:
   crystalsdb:
     container_name: crystalsdb
-    image: postgres
+    image: postgres:14
     environment:
       # NODE_ENV: production
       env_file: .env
@@ -14,6 +14,7 @@ services:
     volumes:
       # Persist the data between container invocations
       - ./data:/var/lib/postgresql/data
+      - ./backup:/backup
   # crystalsnext:
   #   container_name: crystalsnext
   #   build:
