@@ -10,8 +10,7 @@ export const findAndSerializeCrystal = async (id: string): Promise<any> => {
       },
     }
   );
-  const allLocations = await prisma().location.findMany();  
-  
+  const allLocations = await prisma().location.findMany();
 
   const serialisableCrystal = crystal && {
     ...crystal,
@@ -19,8 +18,6 @@ export const findAndSerializeCrystal = async (id: string): Promise<any> => {
     updatedAt: crystal.updatedAt.toISOString(),
     image: crystal.image.map(image => image.id),
   };
-
-  console.log(`UPDATE Crystal ${id} result: `, serialisableCrystal)
   
   return {
     crystal: serialisableCrystal,
