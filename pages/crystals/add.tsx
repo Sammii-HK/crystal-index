@@ -7,7 +7,7 @@ import type { RestrictedReactFC } from '../../lib/hooks'
 import { crystalFields, CrystalState } from '../../lib/types/crystal';
 import BImageFileUploader from '../../components/Molecules/BImageFileUploader';
 
-const CreateCrystals: RestrictedReactFC<any> = () => {
+const CreateCrystals: RestrictedReactFC<CrystalState> = () => {
   const { userId, role } = useUser();
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
