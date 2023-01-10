@@ -87,8 +87,8 @@ export default function Navbar() {
             }
             {!user.userId && 
               <div>
-                <button className="button is-primary is-hidden-touch" onClick={() => signIn()}>Sign in</button>
-                <p className="is-hidden-desktop has-text-green is-clickable" onClick={() => signIn()}>Sign in</p>
+                <button className="button is-primary is-hidden-touch" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</button>
+                <p className="is-hidden-desktop has-text-green is-clickable" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</p>
               </div>
             }
           </div>

@@ -51,7 +51,7 @@ const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
         />
       </BField>
       
-      <div className="columns">
+      <div className="columns is-multiline mt-5">
         {searchResults.map(crystal => (
           <div className="column is-4" key={crystal.id}>
             <a onClick={() => router.push(`/crystals/${crystal.id}`)}>
