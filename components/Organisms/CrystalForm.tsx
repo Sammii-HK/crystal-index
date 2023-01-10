@@ -1,10 +1,10 @@
-import { FormEventHandler, useCallback, useState } from 'react'
-import { Location } from "@prisma/client"
+import { FormEventHandler, SyntheticEvent, useCallback, useState } from 'react'
 import { BField, BSelect } from '../../components/Atoms';
-import useUser from '../../lib/hooks';
+import useUser, { RestrictedReactFC } from '../../lib/hooks';
 import { 
   crystalFields, 
   crystalLocationFields, 
+  CrystalRequestData,
   CrystalState,
   ViewCrystalProps
 } from '../../lib/types/crystal';
@@ -14,15 +14,14 @@ import NewLocationForm from './NewLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
 
 type CrystalFormProps = ViewCrystalProps & {
-  onCreateCrystal: (crystal: CrystalState) => void
+  onSubmitCrystal: (crystal: CrystalRequestData) => void
 }
 
-const CrystalForm: React.FC<CrystalFormProps> = (props) => {
+const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   const { userId } = useUser();
   const crystal = props.crystal;
   const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
   const crystalHref=`/crystals/${crystal?.id}`
-
   const router = useRouter()
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
@@ -34,40 +33,39 @@ const CrystalForm: React.FC<CrystalFormProps> = (props) => {
     createdById: crystal?.createdById,
     memento: crystal?.memento,
     origin: crystal?.origin,
-  })
+  })  
 
   const [imageIds, setImageIds] = useState<number[]>(crystal?.image || [])
 
   const onSubmit: FormEventHandler = useCallback(async event => {
-    event.preventDefault();
-
-    console.log("event", event);
-    
+    event.preventDefault();    
     submitCrystal()
   }, [crystalState])
 
   const submitCrystal = async (): Promise<any> => {
     const crystal = crystalState
+    const crystalReq = { crystal, imageIds}
 
     setCrystalState(crystal)
-    props.onCreateCrystal(crystal as CrystalState)
+    
+    props.onSubmitCrystal(crystalReq as CrystalRequestData)
   }
 
-  const backArrowOnClick = (e: Event) => {
+  const backArrowOnClick = (e: SyntheticEvent): void => {
     e.preventDefault()
     router.push(crystalHref)
   }
 
   return (
     <div className="section">
-      <div className="mb-4" >
+      <div className="mb-5" >
         <a href={crystalHref}>
         <span className={`icon is-small is-left is-clickable`} onClick={backArrowOnClick}>
           <FaArrowLeft />
         </span>
         </a>
       </div>
-      <div className="columns">
+      <div className="columns container">
         <div className="column is-5">
           <BImageFileUploader
             imageIds={imageIds}
@@ -117,8 +115,7 @@ const CrystalForm: React.FC<CrystalFormProps> = (props) => {
               ))}
             </div>
 
-            {
-            (userId === crystalState.createdById) && 
+            {(userId === crystalState.createdById) && 
               <button 
               type="button" 
               className="button mt-4" 
@@ -134,6 +131,6 @@ const CrystalForm: React.FC<CrystalFormProps> = (props) => {
   )
 }
 
-// CrystalForm.requireAuth = true;
+CrystalForm.requireAuth = true;
 
 export default CrystalForm;

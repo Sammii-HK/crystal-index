@@ -14,6 +14,11 @@ export type CrystalState = {
   origin: string | undefined | null,
 }
 
+export type CrystalRequestData = Omit<CrystalState, 'createdById'> & {
+  crystal: Crystal, 
+  imageIds: number[],
+}
+
 export const crystalFields: ({
   key: keyof CrystalState,
 } & basicField )[] = [
