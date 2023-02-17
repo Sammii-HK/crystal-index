@@ -61,6 +61,9 @@ export default function Navbar() {
         <a className="navbar-item" onClick={() => router.push('/locations')}>
           Locations
         </a>
+        {user.userId && <a className="navbar-item" onClick={() => router.push(`/profile/${user.userId}`)}>
+          Profile
+        </a>}
         {user.role === 'unicorn' && 
           <>
             <a className="navbar-item" onClick={() => router.push('/crystals/add')}>
@@ -79,7 +82,11 @@ export default function Navbar() {
             {user.userId && 
               <div className="is-flex">
                 <div className="navbar-item is-hidden-touch">
-                  <p className="body is-text-weight-bold">Hi {user.userName}! 💎</p>
+                  <p className="body is-text-weight-bold mb-1">Hi {user.userName}!
+                    <span>
+                      {user.role === 'unicorn' ? ' 🦄' : ' 💎'}
+                    </span>
+                  </p>
                 </div>
                 <button className="button is-primary is-hidden-touch" onClick={() => signOut()}>Sign out</button>
                 <p className="is-hidden-desktop has-text-pink is-clickable" onClick={() => signOut()}>Sign out</p>
