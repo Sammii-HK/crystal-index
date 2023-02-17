@@ -1,5 +1,4 @@
 import useUser from '../../../lib/hooks';
-import prisma from '../../../lib/prisma';
 import { GetServerSideProps } from 'next';
 import { BCarousel, BTags } from '../../../components/Molecules';
 import { Crystal } from '@prisma/client';
@@ -8,24 +7,11 @@ import { FormEventHandler, useCallback } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import axios from 'axios';
 import classNames from "classnames";
+import { ViewCrystalProps, SerialisableCrystalWithUser } from '../../../lib/types/crystal';
+import { findAndSerializeCrystal } from '../../../lib/helpers/serializeCrystalDates';
 
 const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'bio', 'otherNames', 'origin', 'memento',  ]
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
-
-type ViewCrystalProps = {
-  crystal: null | SerialisableCrystalWithUser
-}
-
-type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
-  {
-    createdBy: string | null, 
-    image: number[], 
-    originLocation: string | null, 
-    mementoLocation: string | null,
-    favouritedBy: string[],
-  } 
-  & {createdAt: string, updatedAt: string}
-
 
 const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   const { userId } = useUser();
@@ -37,7 +23,7 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
     router.push(`/crystals/${crystal?.id}/update`)
   }, []);
 
-  const isFavourite = userId && crystal?.favouritedBy.includes(userId) ? true : false;
+  const isFavourite = userId && crystal?.favouritedBy?.includes(userId) ? true : false;
   
   const handleFavouriteCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
@@ -58,12 +44,12 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   if (!crystal) return <p>Crystal not found</p>;
 
   return (
-    <div className="section">
+    <div className="section container">
       <div className='columns my-5'>
-        <div className="column p-0">
+        <div className="column p-0 is-5 is-offset-1">
           <h1 className='title is-capitalized'>{crystal.name}</h1>
         </div>
-        <div className="column is-flex is-justify-content-flex-end p-0">
+        <div className="column is-flex is-justify-content-flex-end p-0 is-5">
           <div className="columns">
             {(userId === crystal.createdById) && 
               <div className="column">
@@ -85,7 +71,7 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
         </div>
       </div>
       <div className="columns pt-2">
-        <div className="column is-7 p-0">
+        <div className="column p-0 is-5 is-offset-1">
           <BCarousel imageIds={crystal.image} />
         </div>
         <div className="column is-offset-1">
@@ -113,31 +99,7 @@ export default ViewCrystal;
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
+  const serialisableCrystal = await findAndSerializeCrystal(id as string)
 
-  const crystal = await prisma().crystal.findUnique(
-    { 
-      where: { id: parseInt(id as string) },
-      include: { 
-        createdBy: {select: {name: true}},
-        image: {select: {id: true}},
-        originLocation: {select: {placeName: true}},
-        mementoLocation: {select: {placeName: true}},
-        favouritedBy: {select: {id: true}},
-      },
-    }
-  );
-
-  const serialisableCrystal = crystal && {
-    ...crystal,
-    createdAt: crystal.createdAt.toISOString(),
-    updatedAt: crystal.updatedAt.toISOString(),
-    image: crystal.image.map(image => image.id),
-    createdBy: crystal.createdBy.name,
-    mementoLocation: crystal.mementoLocation?.placeName || null,
-    originLocation: crystal.originLocation?.placeName || null,
-    favouritedBy: crystal.favouritedBy.map(user => user.id)
-  };
-
-  console.log(`GET Crystal ${id} result: `, serialisableCrystal)
-  return { props: {crystal: serialisableCrystal }}
+  return { props: { crystal: serialisableCrystal }}
 }
