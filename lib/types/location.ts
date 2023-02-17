@@ -1,5 +1,6 @@
 import { basicField } from './field';
 import { Location } from '@prisma/client';
+import { BInput } from '../../components/Atoms';
 
 export type CrystalLocation = {
   id?: number,
@@ -24,5 +25,6 @@ export const locationFields: ({
     label: 'Find a location',
     placeHolder: 'Covent Gardens, London, WC2',
     required: true,
+    component: BInput
   },
 ];
