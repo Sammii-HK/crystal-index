@@ -6,23 +6,23 @@ import {
   crystalLocationFields, 
   CrystalRequestData,
   CrystalState,
-  ViewCrystalProps
+  CrystalProps,
 } from '../../lib/types/crystal';
 import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
 import NewLocationForm from './NewLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
 
-type CrystalFormProps = ViewCrystalProps & {
+type CrystalFormProps = CrystalProps & {
   onSubmitCrystal: (crystal: CrystalRequestData) => void
 }
 
 const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
+  const router = useRouter()
   const { userId } = useUser();
   const crystal = props.crystal;
   const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
   const crystalHref=`/crystals/${crystal?.id}`
-  const router = useRouter()
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
     name: crystal?.name,
