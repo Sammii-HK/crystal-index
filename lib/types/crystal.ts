@@ -9,7 +9,7 @@ export type CrystalState = {
   otherNames: string | undefined | null,
   colour: string[],
   chakra: string[]
-  createdById: string | undefined, //how to say this will always be defined because of the page reroute
+  createdById: string | undefined,
   memento: string | undefined | null,
   origin: string | undefined | null,
 }
@@ -18,6 +18,32 @@ export type CrystalRequestData = Omit<CrystalState, 'createdById'> & {
   crystal: Crystal, 
   imageIds: number[],
 }
+
+export type ViewCrystalProps = {
+  crystal: null | SerialisableCrystalWithUser
+}
+
+export type ViewCrystalsProps = {
+  crystals: null | SerialisableCrystalWithUser[]
+}
+
+export type CrystalProps = {
+  crystal: null | SerialisableCrystalWithUser
+  locations: null | Location[]
+}
+
+export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
+  {
+    // createdBy: User, 
+    createdBy: string | null, 
+    image: number[],
+    originLocation: string | null, 
+    mementoLocation: string | null,
+    favouritedBy: string[],
+  } & { 
+    createdAt: string, 
+    updatedAt: string 
+  }
 
 export const crystalFields: ({
   key: keyof CrystalState,
@@ -79,12 +105,3 @@ export const crystalLocationFields: ({
     required: false,
   },
 ];
-
-
-export type ViewCrystalProps = {
-  crystal: null | SerialisableCrystalWithUser
-  locations: null | Location[]
-}
-
-export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & {createdBy: User, image: number[]} & {createdAt: string, updatedAt: string}
-
