@@ -61,44 +61,43 @@ export default function Navbar() {
         <a className="navbar-item" onClick={() => router.push('/locations')}>
           Locations
         </a>
-        {user.userId && <a className="navbar-item" onClick={() => router.push(`/profile/${user.userId}`)}>
-          Profile
-        </a>}
+      </div>
+
+      <div className="navbar-end is-align-content-center">
+        {user.userId && 
+          <div className=" is-flex">
+            <div className="navbar-item is-hidden-touch">
+              <p className="body is-text-weight-bold mb-1 mr-3">Hi {user.userName}!
+                <span>
+                  {user.role === 'unicorn' ? ' 🦄' : ' 💎'}
+                </span>
+              </p>
+            </div>
+            <a className="navbar-item" onClick={() => router.push(`/profile/${user.userId}` )}>
+              Profile
+            </a>
+          </div>
+        }
         {user.role === 'unicorn' && 
           <>
-            <a className="navbar-item" onClick={() => router.push('/crystals/add')}>
+            <a className="navbar-item is-secondary" onClick={() => router.push('/crystals/add')}>
               Add Crystal
-            </a>
-            <a className="navbar-item" onClick={() => router.push('/locations/add')}>
-              Add Location
             </a>
           </>
         }
-      </div>
-
-      <div className="navbar-end">
-        <div className="navbar-item">
-          <div className="buttons">
-            {user.userId && 
-              <div className="is-flex">
-                <div className="navbar-item is-hidden-touch">
-                  <p className="body is-text-weight-bold mb-1">Hi {user.userName}!
-                    <span>
-                      {user.role === 'unicorn' ? ' 🦄' : ' 💎'}
-                    </span>
-                  </p>
-                </div>
-                <button className="button is-primary is-hidden-touch" onClick={() => signOut()}>Sign out</button>
-                <p className="is-hidden-desktop has-text-pink is-clickable" onClick={() => signOut()}>Sign out</p>
-              </div>
-            }
-            {!user.userId && 
-              <div>
-                <button className="button is-primary is-hidden-touch" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</button>
-                <p className="is-hidden-desktop has-text-green is-clickable" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</p>
-              </div>
-            }
+        {user.userId && 
+          <>
+            <button className="navbar-item button is-primary is-hidden-touch mt-1 ml-3" onClick={() => signOut()}>Sign out</button>
+            <p className="navbar-item is-hidden-desktop has-text-pink is-clickable" onClick={() => signOut()}>Sign out</p>
+          </>
+        }
+        {!user.userId && 
+          <div>
+            <button className="navbar-item button is-primary is-hidden-touch mb-0" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</button>
+            <p className="navbar-item is-hidden-desktop has-text-green is-clickable" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</p>
           </div>
+        }
+        <div className="buttons">
         </div>
       </div>
     </div>
