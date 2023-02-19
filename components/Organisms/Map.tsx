@@ -1,9 +1,15 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import setupGlobe from '../../lib/d3-map';
 import { CrystalLocation } from '../../lib/types/location';
 
-const Map: React.FC<{locationData: CrystalLocation[], onLocationHovered?: (locationId: number) => void}> = (props) => {
-  const { locationData, onLocationHovered } = props;
+const Map: React.FC<
+    {
+      locationData: CrystalLocation[], 
+      onLocationHovered?: (locationId: number) => void,
+      onLocationClicked?: () => void
+    }
+  > = (props) => {
+  const { locationData, onLocationHovered, onLocationClicked } = props;
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -13,7 +19,8 @@ const Map: React.FC<{locationData: CrystalLocation[], onLocationHovered?: (locat
       const cleanUpGlobe = setupGlobe({
         container: container.current,
         locationData,
-        onLocationHovered: onLocationHovered || (() => {})
+        onLocationHovered: onLocationHovered || (() => {}),
+        onLocationClicked: onLocationClicked || (() => {})
       });
 
       return () => {
@@ -21,7 +28,7 @@ const Map: React.FC<{locationData: CrystalLocation[], onLocationHovered?: (locat
         cleanUpGlobe();
       }
     }
-  }, [container.current, locationData, onLocationHovered])
+  }, [container.current, locationData, onLocationHovered, onLocationClicked])
   
   return (
       <div ref={container} className="globe-container" />
