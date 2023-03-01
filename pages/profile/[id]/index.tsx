@@ -24,13 +24,13 @@ const ViewProfile: React.FC<ViewProfileProps> = (props) => {
     }
   ]
   const getActiveTab = (tabName: string) => tabList.find(tab => tab.name === tabName);
-
+  if (!getActiveTab('created')?.crystals.length) tabList.pop();
   return (
     <div className='section'>
       <div className='tabs is-centered'>
         <ul>
           {tabList.map(tab => {
-            return (tab.name !== 'created' || getActiveTab('created')!.crystals.length) && <li
+            return (tab.name !== 'created' || getActiveTab('created')?.crystals.length) && <li
               key={tab.name}
               className={classNames('is-capitalized', tab.name === activeTab && "is-active")} 
               onClick={() => setActiveTab(tab.name)}>
