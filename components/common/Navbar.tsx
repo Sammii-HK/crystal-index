@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { signIn, signOut } from "next-auth/react"
 import router from "next/router";
 import { useState } from "react";
+import { checkUser } from "../../lib/helpers/checkUser";
 import useUser from "../../lib/hooks";
 
 
@@ -50,24 +51,24 @@ export default function Navbar() {
     }
     >
       <div className="navbar-start">
-        {user.userId &&
+        {user?.userId &&
           <div className="navbar-item">
-            <p className="body is-text-weight-bold is-hidden-desktop">Hi {user.userName}! 💎</p>
+            <p className="body is-text-weight-bold is-hidden-desktop">Hi {user.username}! 💎</p>
           </div>
         }
         <a className="navbar-item" onClick={() => router.push('/crystals')}>
           Crystals
         </a>
-        <a className="navbar-item" onClick={() => router.push('/locations')}>
+        {/* <a className="navbar-item" onClick={() => router.push('/locations')}>
           Locations
-        </a>
+        </a> */}
       </div>
 
       <div className="navbar-end is-align-content-center">
-        {user.userId && 
+        {user?.userId && 
           <div className=" is-flex">
             <div className="navbar-item is-hidden-touch">
-              <p className="body is-text-weight-bold mb-1 mr-3">Hi {user.userName}!
+              <p className="body is-text-weight-bold mb-1 mr-3">Hi {user.username}!
                 <span>
                   {user.role === 'unicorn' ? ' 🦄' : ' 💎'}
                 </span>
@@ -78,20 +79,23 @@ export default function Navbar() {
             </a>
           </div>
         }
-        {user.role === 'unicorn' && 
+        {user && checkUser(user) && 
           <>
             <a className="navbar-item is-secondary" onClick={() => router.push('/crystals/add')}>
               Add Crystal
             </a>
+            <a className="navbar-item is-secondary" onClick={() => router.push('/users')}>
+              Admin
+            </a>
           </>
         }
-        {user.userId && 
+        {user?.userId && 
           <>
             <button className="navbar-item button is-primary is-hidden-touch mt-1 ml-3" onClick={() => signOut()}>Sign out</button>
             <p className="navbar-item is-hidden-desktop has-text-pink is-clickable" onClick={() => signOut()}>Sign out</p>
           </>
         }
-        {!user.userId && 
+        {!user?.userId && 
           <div>
             <button className="navbar-item button is-primary is-hidden-touch mb-0" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</button>
             <p className="navbar-item is-hidden-desktop has-text-green is-clickable" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</p>
