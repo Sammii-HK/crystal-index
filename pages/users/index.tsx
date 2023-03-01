@@ -4,12 +4,13 @@ import { GetServerSideProps } from 'next';
 import router from 'next/router';
 import { useCallback } from 'react';
 import { BField, BSelect } from '../../components/Atoms';
+import { checkUser } from '../../lib/helpers/checkUser';
 import useUser, { RestrictedReactFC } from '../../lib/hooks';
 import prisma from '../../lib/prisma';
 import { userRoles, UserRole } from '../../lib/types/user';
 
 const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
-  const { role } = useUser()
+  const user = useUser()
   const updateUserRole = useCallback(async (userId, newValue: UserRole) => {
     return await axios.put<{user?: User, error: string}>(
       `api/admin/${userId}/set-role`,
@@ -18,7 +19,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
     )
   }, [])
 
-  if (role !== 'unicorn') router.push('/')
+  if (user && !checkUser(user)) router.push('/')
 
   return (
     <div className="section is-flex is-justify-content-center">
@@ -47,12 +48,12 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
                   onChange={(newValue: any) => {
                     updateUserRole(user.id, newValue)
                   }}
-                  disabled={user.email === process.env.NEXT_PUBLIC_UNICORN_USER}
+                  disabled={!checkUser(useUser())}
                 />
               </BField>
             </td>
             <td>
-              <button className='button' onClick={() => router.push(`/users/${user.id}`)}>
+              <button className='button' onClick={() => router.push(`/profile/${user.id}`)}>
                 View
               </button>
             </td>
