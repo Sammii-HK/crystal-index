@@ -10,13 +10,20 @@ import classNames from "classnames";
 import { ViewCrystalProps, SerialisableCrystalWithUser } from '../../../lib/types/crystal';
 import { findAndSerializeCrystal } from '../../../lib/helpers/serializeCrystalDates';
 
-const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 'bio', 'otherNames', 'origin', 'memento',  ]
-const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra',  ]
+const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra' ]
+const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 
+  'bio', 
+  'otherNames', 
+  'origin',
+  'memento'
+]
 
 const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
-  const { userId } = useUser();
+  const user = useUser();
+  const userId = user?.userId;
   const crystal = props.crystal;
   const router = useRouter();
+  if (user && userId !== crystal?.createdById) fieldsToShow.pop()
   
   const editCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
@@ -81,14 +88,23 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
               <BTags options={crystal[field]} value={crystal[field]} />
             </div>
           ))}
-        {fieldsToShow.map(field => (
-          crystal[field] && <div key={field}>
-            <p className='my-3'>
-              <span className='has-text-weight-bold is-capitalized'>{field}: </span>
-              {crystal[field]}
-            </p>
-          </div>
-        ))}
+          {fieldsToShow.map(field => (
+            crystal[field] && <div key={field}>
+              <p className='my-3'>
+                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
+                {crystal[field]}
+              </p>
+            </div>
+          ))}
+          {fieldsToShow.map(field => (
+            crystal[field] &&
+              <div key={field}>
+                <p className='my-3'>
+                  <span className='has-text-weight-bold is-capitalized'>{field}: </span>
+                  {crystal[field]}
+                </p>
+              </div>
+          ))}
         </div>
       </div>
     </div>
