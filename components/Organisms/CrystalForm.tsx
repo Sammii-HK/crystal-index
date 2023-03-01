@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
 import NewLocationForm from './NewLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
+import { checkUser } from '../../lib/helpers/checkUser';
 
 type CrystalFormProps = CrystalProps & {
   onSubmitCrystal: (crystal: CrystalRequestData) => void
@@ -19,7 +20,7 @@ type CrystalFormProps = CrystalProps & {
 
 const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   const router = useRouter()
-  const { userId } = useUser();
+  const user = useUser();
   const crystal = props.crystal;
   const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
   const crystalHref=`/crystals/${crystal?.id}`
@@ -30,7 +31,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
     otherNames: crystal?.otherNames,
     chakra: crystal?.chakra!,
     colour: crystal?.colour!,
-    createdById: crystal?.createdById,
+    createdById: crystal?.createdById || user!.userId!,
     memento: crystal?.memento,
     origin: crystal?.origin,
   })  
@@ -105,17 +106,17 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
                       onChange={(newValue) => {
                         setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: newValue}))
                       }}
-                      />
-                      <NewLocationForm onCreateLocation={(location) => {
-                        setLocations(old => [...old, location.placeName]);
-                        setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: location.placeName}))
-                      }} />
+                    />
+                    <NewLocationForm onCreateLocation={(location) => {
+                      setLocations(old => [...old, location.placeName]);
+                      setCrystalState((oldCrystalState) => ({...oldCrystalState, [field.key]: location.placeName}))
+                    }} />
                   </BField>
                 </div>
               ))}
             </div>
 
-            {(userId === crystalState.createdById) && 
+            {user && checkUser(user) && 
               <button 
               type="button" 
               className="button mt-4" 

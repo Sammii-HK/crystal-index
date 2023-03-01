@@ -7,7 +7,7 @@ type LocationProps = {
   locations: Location[]
 }
 
-export default async function crystalsHandler(
+export default async function locationsHandler(
   req: NextApiRequest,
   res: NextApiResponse<LocationProps>
 ) {

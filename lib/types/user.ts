@@ -18,6 +18,14 @@ export type UserWithRelations = User & {
   favouriteCrystals: SerialisableCrystalWithUser[],
 }
 
+export type UserSession = {
+  userId: string,
+  role: "user" | "admin" | "unicorn",
+  username: string | undefined,
+  email: string,
+  status?: "authenticated" | "loading" | "unauthenticated"
+}
+
 export const userFields: ({
   key: keyof UserState,
 } & basicField)[] = [

@@ -1,3 +1,4 @@
+import { checkUser } from './../../../lib/helpers/checkUser';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Crystal } from '@prisma/client'
 import prisma from '../../../lib/prisma';
@@ -15,7 +16,7 @@ export default async function main(
 ) {
   const user = await getUserFromAPISession(req);
 
-  if (user?.role === 'unicorn') {
+  if (user && checkUser(user)) {
     const { crystal, imageIds }: { crystal: Crystal, imageIds: number[] } = req.body;
   
     try {

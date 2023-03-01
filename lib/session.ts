@@ -7,6 +7,8 @@ export async function getUserFromAPISession(req: IncomingMessage) {
 
   return session as (Session & {
     userId: string,
-    role: string
+    role: 'unicorn' | 'admin' | 'user',
+    username: string,
+    email: string
   }) | null;
 }
