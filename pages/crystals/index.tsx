@@ -11,13 +11,12 @@ const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
 
   const searchResults = useMemo(() => {
     const searchValue = searchState.toLowerCase();
-
-    return  (crystals || []).filter(crystal => { 
+    return  (crystals || []).filter(crystal => {
       return (crystal.name && crystal.name.toLowerCase().includes(searchValue)) 
-          || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
-          || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
-          || (crystal.colour && crystal.colour.map(colour => colour.toLowerCase().includes(searchValue)))
-          || (crystal.chakra && crystal.chakra.includes(searchValue));
+        || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
+        || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
+        || (crystal.colour && crystal.colour.find(colour => colour.toLowerCase().includes(searchValue)))
+        || (crystal.chakra && crystal.chakra.find(chakra => chakra.toLowerCase().includes(searchValue)))
       }
     )
   }, [crystals, searchState]);
