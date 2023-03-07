@@ -48,7 +48,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
                   onChange={(newValue: any) => {
                     updateUserRole(user.id, newValue)
                   }}
-                  disabled={!checkUser(useUser())}
+                  disabled={user && !checkUser(user)}
                 />
               </BField>
             </td>
