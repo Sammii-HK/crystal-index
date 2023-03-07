@@ -9,9 +9,8 @@ import { CrystalRequestData, CrystalProps } from '../../../lib/types/crystal';
 import { findAndSerializeCrystalWithLocations } from '../../../lib/helpers/serializeCrystalDates';
 
 const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
-  const router = useRouter()
-  const crystal = props.crystal;
-  const locations = props.locations;
+  const router = useRouter();
+  const { locations, crystal, form } = props;
 
   const updateCrystal = useCallback(async (crystal: CrystalRequestData) => {
     const res = await axios.put<{crystal?: Crystal, error: string}>(
@@ -26,7 +25,12 @@ const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
 
 
   return (
-    <CrystalForm onSubmitCrystal={updateCrystal} crystal={crystal} locations={locations} />
+    <CrystalForm 
+    onSubmitCrystal={updateCrystal} 
+    crystal={crystal} 
+    locations={locations} 
+    form={form}
+    />
   )
 }
 
@@ -39,5 +43,5 @@ export const getServerSideProps: GetServerSideProps<CrystalProps> = async (conte
   let serializedCrystal
   if (id) serializedCrystal = await findAndSerializeCrystalWithLocations(id as string);
 
-  return { props: { ...serializedCrystal }}
+  return { props: { ...serializedCrystal, form: 'update' }}
 }

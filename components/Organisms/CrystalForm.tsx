@@ -22,6 +22,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   const router = useRouter()
   const user = useUser();
   const crystal = props.crystal;
+  const form = props.form;
   const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
   const crystalHref=`/crystals/${crystal?.id}`
 
@@ -59,13 +60,13 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
 
   return (
     <div className="section">
-      <div className="mb-5" >
+      {form === 'update' && <div className="mb-5" >
         <a href={crystalHref}>
         <span className={`icon is-small is-left is-clickable`} onClick={backArrowOnClick}>
           <FaArrowLeft />
         </span>
         </a>
-      </div>
+      </div>}
       <div className="columns container">
         <div className="column is-5">
           <BImageFileUploader
@@ -95,7 +96,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
                 />
               </BField>
             ))}
-            <div className="columns">
+            <div className="columns mb-0">
               {crystalLocationFields.map(field => (
                 <div className="column" key={field.key}>
                   <BField label={field.label}>
@@ -117,12 +118,14 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
             </div>
 
             {user && checkUser(user) && 
-              <button 
-              type="button" 
-              className="button mt-4" 
-              onClick={() => submitCrystal()}>
-                Update
-              </button>
+              <div className="column is-12 is-flex is-justify-content-center m-0 p-0">
+                <button 
+                type="button" 
+                className="button mt-4 is-capitalized is-green" 
+                onClick={() => submitCrystal()}>
+                  {form}
+                </button>
+              </div>
             }
 
           </form>

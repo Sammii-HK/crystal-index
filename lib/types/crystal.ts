@@ -30,6 +30,7 @@ export type ViewCrystalsProps = {
 export type CrystalProps = {
   crystal: null | SerialisableCrystalWithUser
   locations: null | Location[]
+  form: string
 }
 
 export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 

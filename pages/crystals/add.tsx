@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next';
 import prisma from '../../lib/prisma';
 
 const CreateCrystals: RestrictedReactFC<CrystalProps> = (props) => {
-  const { locations, crystal, form } = props
+  const { locations, crystal, form } = props;
 
   const createCrystal = useCallback(async (crystal: CrystalRequestData) => {
     const res = await axios.post<{crystal?: Crystal, error: string}>(
