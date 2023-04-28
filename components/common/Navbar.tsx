@@ -59,9 +59,9 @@ export default function Navbar() {
         <a className="navbar-item" onClick={() => router.push('/crystals')}>
           Crystals
         </a>
-        {/* <a className="navbar-item" onClick={() => router.push('/locations')}>
+        <a className="navbar-item" onClick={() => router.push('/locations')}>
           Locations
-        </a> */}
+        </a>
       </div>
 
       <div className="navbar-end is-align-content-center">
