@@ -1,8 +1,10 @@
 import { Location } from '@prisma/client';
 import { GetServerSideProps } from 'next';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import { Map } from '../../components/Organisms';
 import prisma from '../../lib/prisma';
+import { Canvas } from '@react-three/fiber'
+import { Stats } from '@react-three/drei';
 
 const MapView: React.FC<MapViewProps> = (props) => {
   const [hoveredLocationId, setHoveredLocationId] = useState<number | undefined>();
@@ -21,11 +23,16 @@ const MapView: React.FC<MapViewProps> = (props) => {
   return (
     <>
       <div className="container is-flex is-align-content-center locations-map">
-        <Map 
-        locationData={props.locations} 
-        onLocationHovered={setHoveredLocationId}
-        onLocationClicked={viewCurrentLocation}
-        />
+        <Canvas>
+          <Suspense fallback={null}>
+            <Map 
+            locationData={props.locations} 
+            onLocationHovered={setHoveredLocationId}
+            // onLocationClicked={viewCurrentLocation}
+            />
+          </Suspense>
+          <Stats />
+        </Canvas>
       </div>
     </>
   )
