@@ -13,15 +13,17 @@ import { Marker } from '../Molecules/Marker';
 
 const Map: React.FC<
     {
-      locationData: CrystalLocation[], 
+      locationData: CrystalLocation[],
+      hoveredLocationId: number,
       onLocationHovered?: (locationId: number) => void,
       onLocationClicked?: () => void
     }
   > = (props) => {
     const container = useRef<HTMLDivElement>(null);
     const cloudsRef = useRef();
-    const radius = 1
-    const { locationData, onLocationHovered, onLocationClicked } = props;
+    const radius = 2;
+    const thetaStart = 250;
+    const { locationData, onLocationHovered, onLocationClicked, hoveredLocationId } = props;
     const [colorMap, normalMap, specularMap, cloudMap] = 
       useLoader(TextureLoader, [EarthNightMap.src, EarthNormalMap.src, EarthSpecularMap.src, EarthCloudsMap.src]);
   
@@ -44,7 +46,7 @@ const Map: React.FC<
         fade={true}
         />
         <mesh ref={cloudsRef}>
-          <sphereGeometry args={[1.005, 32, 32]} />
+          <sphereGeometry args={[2.01, 32, 32]} />
           <meshPhongMaterial 
           map={cloudMap} 
           opacity={0.15}
@@ -53,9 +55,12 @@ const Map: React.FC<
           side={THREE.DoubleSide}
           /> 
         </mesh>
-        {locationData.map((location) => {
+        {/* <group rotation={[-Math.PI / 2, 0, 0]}> */}
+        <group>
+          {locationData.map((location) => {
             return <Marker 
               key={location.id} 
+              markerId={location.id}
               radius={radius} 
               coord={
                 {
@@ -63,13 +68,18 @@ const Map: React.FC<
                   lon: parseFloat(location.long)
                 }
               }
+              label={location.placeName}
+              hoveredLocationId={hoveredLocationId}
+              onLocationHovered={onLocationHovered}
+              onLocationClicked={onLocationClicked}
             />
           })}
-        <mesh>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshPhongMaterial specularMap={specularMap} /> 
-          <meshStandardMaterial map={colorMap} normalMap={normalMap} />
-        </mesh>
+          <mesh>
+            <sphereGeometry args={[radius, 32, 32]} />
+            <meshPhongMaterial specularMap={specularMap} /> 
+            <meshStandardMaterial map={colorMap} normalMap={normalMap} />
+          </mesh>
+        </group>
         <OrbitControls
           enableZoom={true}
           enablePan={false}

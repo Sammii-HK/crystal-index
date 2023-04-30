@@ -7,32 +7,41 @@ import { Canvas } from '@react-three/fiber'
 import { Stats } from '@react-three/drei';
 
 const MapView: React.FC<MapViewProps> = (props) => {
-  const [hoveredLocationId, setHoveredLocationId] = useState<number | undefined>();
-  const [activeLocation, setActiveLocation] = useState<boolean>();
-  // setActiveLocation(false)
-  
-  const currentLocation = useMemo(() => {
-    // const currentLocation = props.locations.find(location => location.id == hoveredLocationId);
-    setActiveLocation(true)
+  const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
+  const [activeLocation, setActiveLocation] = useState<number | false>();
+
+  const viewCurrentLocation = (locationId: Location["id"]) => {
+
+    console.log("props.locations[locationId]", props.locations[locationId - 1]);
     
-  }, [activeLocation])
-
+    
+    setActiveLocation(locationId)
+    console.log("activeLocation", activeLocation);
+    
+  }
   
   
-
+  // /is-flex-direction-column
   return (
     <>
-      <div className="container is-flex is-align-content-center locations-map">
+      <div className="container is-flex is-align-content-center locations-map"> 
         <Canvas>
           <Suspense fallback={null}>
             <Map 
             locationData={props.locations} 
-            onLocationHovered={setHoveredLocationId}
-            // onLocationClicked={viewCurrentLocation}
+            onLocationHovered={setHoveredLocation}
+            onLocationClicked={viewCurrentLocation}
+            hoveredLocationId={hoveredLocationId}
             />
           </Suspense>
           <Stats />
         </Canvas>
+        {activeLocation && <div>
+          <button onClick={() => setActiveLocation(false)}>
+            X
+          </button>
+            {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
+        </div>}
       </div>
     </>
   )

@@ -3,7 +3,7 @@ import { Location } from '@prisma/client';
 import { BInput } from '../../components/Atoms';
 
 export type CrystalLocation = {
-  id?: number,
+  id: number,
   placeName: string,
   city?: string | null,
   county?: string | null,

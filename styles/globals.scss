@@ -55,6 +55,11 @@ select, div.select {
   justify-content: center;
 }
 
+.label {
+  display: hidden;
+  color: white;
+}
+
 // DARK COLOUR SCHEME
 @media (prefers-color-scheme: dark) {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {
