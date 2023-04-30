@@ -1,10 +1,11 @@
 import { basicField } from './field';
 import { BInput, BSelect, BTextArea } from '../../components/Atoms';
 import { BTags } from '../../components/Molecules';
-import { Crystal, User, Location } from '@prisma/client';
+import { Crystal, User, Location, CrystalInfo } from '@prisma/client';
 
 export type CrystalState = {
   name: string | undefined,
+  crystalInfoId: number | undefined | null,
   bio: string | undefined | null,
   otherNames: string | undefined | null,
   colour: string[],
@@ -30,6 +31,7 @@ export type ViewCrystalsProps = {
 export type CrystalProps = {
   crystal: null | SerialisableCrystalWithUser
   locations: null | Location[]
+  crystalInfos: null | CrystalInfo[]
   form: string
 }
 
@@ -38,6 +40,7 @@ export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt
     // createdBy: User, 
     createdBy: string | null, 
     image: number[],
+    crystalInfo: CrystalInfo | null,
     originLocation: string | null, 
     mementoLocation: string | null,
     favouritedBy: string[],
@@ -56,11 +59,14 @@ export const crystalFields: ({
     placeHolder: 'Rose Quartz',
     required: true,
   },
+];
+
+export const crystalInfoFields = [
   {
-    key: 'bio',
+    key: 'info',
     component: BTextArea,
-    label: 'Bio',
-    placeHolder: 'England',
+    label: 'Info',
+    placeHolder: 'Description',
     required: false,
   },
   {

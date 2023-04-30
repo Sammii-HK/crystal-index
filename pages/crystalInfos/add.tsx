@@ -32,7 +32,7 @@ const CreateCrystalInfo: RestrictedReactFC<{}> = (props) => {
 			<input type="submit" value="Create"/>
       </form><br/>
 			Resolved bio:<br/>
-			<div style={{whiteSpace: "pre-wrap", maxWidth: "30rem"}}>{createdCrystalInfo?.bio}</div>
+			<div style={{whiteSpace: "pre-wrap", maxWidth: "30rem"}}>{JSON.stringify(createdCrystalInfo)}</div>
 		</div>
 	);
 };

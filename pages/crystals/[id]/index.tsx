@@ -1,7 +1,7 @@
 import useUser from '../../../lib/hooks';
 import { GetServerSideProps } from 'next';
 import { BCarousel, BTags } from '../../../components/Molecules';
-import { Crystal } from '@prisma/client';
+import { Crystal, CrystalInfo } from '@prisma/client';
 import { useRouter } from 'next/router'
 import { FormEventHandler, useCallback } from 'react';
 import { FaHeart } from 'react-icons/fa';
@@ -10,13 +10,17 @@ import classNames from "classnames";
 import { ViewCrystalProps, SerialisableCrystalWithUser } from '../../../lib/types/crystal';
 import { findAndSerializeCrystal } from '../../../lib/helpers/serializeCrystalDates';
 
-const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra' ]
 const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 
   'bio', 
   'otherNames', 
   'origin',
   'memento'
 ]
+
+const infoFieldsToShow: (keyof CrystalInfo)[] = [
+  'info',
+]
+const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra' ]
 
 const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   const user = useUser();
@@ -82,18 +86,27 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
           <BCarousel imageIds={crystal.image} />
         </div>
         <div className="column is-offset-1">
-          {tagsToShow.map(field => (
-            crystal[field].length > 0 && <div key={field} className="mb-4">
-              <h1 className='has-text-weight-bold is-capitalized mb-3'>{field}</h1>
-              <BTags options={crystal[field]} value={crystal[field]} />
-            </div>
-          ))}
+          
           {fieldsToShow.map(field => (
             crystal[field] && <div key={field}>
               <p className='my-3'>
                 <span className='has-text-weight-bold is-capitalized'>{field}: </span>
                 {crystal[field]}
               </p>
+            </div>
+          ))}
+          {infoFieldsToShow.map(field => (
+            crystal.crystalInfo?.[field] && <div key={field}>
+              <p className='my-3'>
+                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
+                {crystal.crystalInfo[field]}
+              </p>
+            </div>
+          ))}
+          {tagsToShow.map(field => (
+            crystal.crystalInfo?.[field]?.length && <div key={field} className="mb-4">
+              <h1 className='has-text-weight-bold is-capitalized mb-3'>{field}</h1>
+              <BTags options={crystal.crystalInfo?.[field]} value={crystal.crystalInfo?.[field]} />
             </div>
           ))}
         </div>

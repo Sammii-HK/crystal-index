@@ -4,7 +4,7 @@ const BTag: React.FC<InputProps> = (props) => {
 	return (
 		<span
 			className={classNames("tag", "is-clickable", "is-clear", {
-				[`is-${props.label}`]: props.selected,
+				[`is-${props.label.toLowerCase()}`]: props.selected,
 			})}
 			onClick={props.onToggle}
 		>

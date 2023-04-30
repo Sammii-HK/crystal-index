@@ -2,11 +2,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getUserFromAPISession } from "../../../lib/session";
 import { checkUser } from "../../../lib/helpers/checkUser";
 import { Configuration, OpenAIApi } from "openai";
+import prisma from '../../../lib/prisma';
 
 export type CrystalInfoResponse = {
   crystalInfo?: {
+    id: number,
     name: string,
-    bio: string
+    info: string,
+    colour: string[],
+    chakra: string[]
   },
   error?: string
 }
@@ -31,7 +35,7 @@ export default async function createCrystalInfo(
       model: "gpt-4",
       messages: [
         {role: "system", content: `You are a knowledgable reiki master and provide descriptions of the properties of crystals. If a user asks you about something that isn't a crystal, simply respond with '{"error": "Not a crystal."}'.`},
-        {role: "user", content: `Please describe the crystal '${name}' in about 50 words. Put the description into a field  called 'bio' in a JSON object, and also add 'colors' and 'chakras' properties, both of which are arrays of strings.`}
+        {role: "user", content: `Please describe the crystal '${name}' in about 50 words. Put the description into a field  called 'info' in a JSON object, and also add 'colour' and 'chakra' properties, both of which are arrays of strings.`}
       ]
     });
 
@@ -42,12 +46,19 @@ export default async function createCrystalInfo(
     console.log(openAIJSON);
     
     if (openAIJSON) {
-      const {bio, chakras, colors, error} = JSON.parse(openAIJSON);
-      if (bio) {
-        res.status(200).json({crystalInfo: {
-          name,
-          bio
-        }});
+      const {info, chakra, colour, error} = JSON.parse(openAIJSON);
+
+      if (info) {
+        const createdInfo = await prisma().crystalInfo.create({
+          data: {
+            name,
+            info,
+            chakra,
+            colour
+          }
+        })
+
+        res.status(200).json({crystalInfo: createdInfo});
       } else {
         res.status(406).json({error});
       }

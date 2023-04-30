@@ -106,6 +106,8 @@ model CrystalInfo {
   id            Int          @default(autoincrement()) @id
   name          String       @unique
   info          String       @unique
+  colour        String[]
+  chakra        String[]
   // crystals   Crystal[]    @relation("crystalInfo")
   crystalIds    Crystal[]
 }

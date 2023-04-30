@@ -7,10 +7,11 @@ import { GetServerSideProps } from 'next';
 import CrystalForm from '../../../components/Organisms/CrystalForm';
 import { CrystalRequestData, CrystalProps } from '../../../lib/types/crystal';
 import { findAndSerializeCrystalWithLocations } from '../../../lib/helpers/serializeCrystalDates';
+import prisma from '../../../lib/prisma';
 
 const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
   const router = useRouter();
-  const { locations, crystal, form } = props;
+  const { locations, crystalInfos, crystal, form } = props;
 
   const updateCrystal = useCallback(async (crystal: CrystalRequestData) => {
     const res = await axios.put<{crystal?: Crystal, error: string}>(
@@ -29,6 +30,7 @@ const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
     onSubmitCrystal={updateCrystal} 
     crystal={crystal} 
     locations={locations} 
+    crystalInfos={crystalInfos}
     form={form}
     />
   )
@@ -43,5 +45,8 @@ export const getServerSideProps: GetServerSideProps<CrystalProps> = async (conte
   let serializedCrystal
   if (id) serializedCrystal = await findAndSerializeCrystalWithLocations(id as string);
 
-  return { props: { ...serializedCrystal, form: 'update' }}
+  const locations = await prisma().location.findMany();
+  const crystalInfos = await prisma().crystalInfo.findMany();
+
+  return { props: { ...serializedCrystal, form: 'update', locations, crystalInfos }}
 }

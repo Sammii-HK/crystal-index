@@ -1,4 +1,4 @@
-import { FormEventHandler, SyntheticEvent, useCallback, useState } from 'react'
+import { FormEventHandler, SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { BField, BSelect } from '../../components/Atoms';
 import useUser, { RestrictedReactFC } from '../../lib/hooks';
 import { 
@@ -13,6 +13,7 @@ import { BImageFileUploader } from '../Molecules';
 import NewLocationForm from './NewLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
 import { checkUser } from '../../lib/helpers/checkUser';
+import { NewCrystalInfoForm } from './NewCrystalInfoForm';
 
 type CrystalFormProps = CrystalProps & {
   onSubmitCrystal: (crystal: CrystalRequestData) => void
@@ -24,10 +25,12 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   const crystal = props.crystal;
   const form = props.form;
   const [locations, setLocations] = useState(props.locations?.map((location) => location.placeName) || []);
+  const [existingCrystalInfos, setExistingCrystalInfos] = useState(props.crystalInfos || []);
   const crystalHref=`/crystals/${crystal?.id}`
 
   const [crystalState, setCrystalState] = useState<CrystalState>({
     name: crystal?.name,
+    crystalInfoId: crystal?.crystalInfoId,
     bio: crystal?.bio,
     otherNames: crystal?.otherNames,
     chakra: crystal?.chakra!,
@@ -38,6 +41,14 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   })  
 
   const [imageIds, setImageIds] = useState<number[]>(crystal?.image || [])
+
+  useEffect(() => {
+    const matchingExistingInfo = existingCrystalInfos.find(info => info.name === crystalState.name);
+
+    if (matchingExistingInfo) {
+      setCrystalState(old => ({...old, crystalInfoId: matchingExistingInfo.id}));
+    }
+  }, [crystalState.name, existingCrystalInfos])
 
   const onSubmit: FormEventHandler = useCallback(async event => {
     event.preventDefault();    
@@ -82,6 +93,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
         
         <div className="column is-offset-1">
           <form onSubmit={onSubmit}>
+         
             {crystalFields.map(field => (
               <BField label={field.label} key={field.key}>
                 <field.component 
@@ -96,6 +108,36 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
                 />
               </BField>
             ))}
+
+            <BField label="Existing Crystal Info">
+              <BSelect
+                placeholder="" 
+                options={
+                  useMemo(
+                    () => existingCrystalInfos.map(info => info.name),
+                    [existingCrystalInfos]
+                  )
+                }
+                selected={
+                  useMemo(
+                    () => existingCrystalInfos.find(
+                      info => info.id == crystalState.crystalInfoId
+                    )?.name,
+                    [existingCrystalInfos, crystalState.crystalInfoId]
+                  )
+                }
+                onChange={(newValue) => {
+                  const selectedId = existingCrystalInfos.find(info => info.name === newValue)?.id;
+                  setCrystalState((oldCrystalState) => ({...oldCrystalState, crystalInfoId: selectedId, }))
+                }}
+              />
+
+              <NewCrystalInfoForm defaultName={crystalState.name} onCreateCrystalInfo={(crystalInfo) => {
+                setExistingCrystalInfos(old => [...old, crystalInfo]);
+                setCrystalState((oldCrystalState) => ({...oldCrystalState, crystalInfoId: crystalInfo.id}))
+              }} />
+            </BField>
+
             <div className="columns mb-0">
               {crystalLocationFields.map(field => (
                 <div className="column" key={field.key}>
