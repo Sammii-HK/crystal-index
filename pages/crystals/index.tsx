@@ -15,8 +15,8 @@ const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
       return (crystal.name && crystal.name.toLowerCase().includes(searchValue)) 
         || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
         || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
-        || (crystal.colour && crystal.colour.find(colour => colour.toLowerCase().includes(searchValue)))
-        || (crystal.chakra && crystal.chakra.find(chakra => chakra.toLowerCase().includes(searchValue)))
+        || (crystal.colour && crystal.crystalInfo?.colour.find(colour => colour.toLowerCase().includes(searchValue)))
+        || (crystal.chakra && crystal.crystalInfo?.chakra.find(chakra => chakra.toLowerCase().includes(searchValue)))
       }
     )
   }, [crystals, searchState]);

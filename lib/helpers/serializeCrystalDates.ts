@@ -52,6 +52,7 @@ export const findAndSerializeAllCrystals = async (): Promise<any> => {
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},
         favouritedBy: { select: { id: true }},
+        crystalInfo: true
       },
   });
 

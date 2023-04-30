@@ -1,2 +1,2 @@
-export { default as NewLocationForm } from './NewLocationForm';
+export { default as ChooseLocationForm } from './ChooseLocationForm';
 export { default as Map } from './Map';
