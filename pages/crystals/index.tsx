@@ -1,39 +1,18 @@
 import { GetServerSideProps } from 'next';
-import { useMemo, useState } from 'react';
-import { BField, BInput } from '../../components/Atoms';
+import { useState } from 'react';
 import CrystalGallery from '../../components/Organisms/CrystalGallery';
-import { ViewCrystalsProps } from '../../lib/types/crystal';
+import { SerialisableCrystalWithUser, ViewCrystalsProps } from '../../lib/types/crystal';
 import { findAndSerializeAllCrystals } from '../../lib/helpers/serializeCrystalDates';
+import SearchCrystals from '../../components/Molecules/SearchCrystals';
 
 const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
-  const crystals = props.crystals;  
-  const [searchState, setSearchState] = useState<string>('')
-
-  const searchResults = useMemo(() => {
-    const searchValue = searchState.toLowerCase();
-    return  (crystals || []).filter(crystal => {
-      return (crystal.name && crystal.name.toLowerCase().includes(searchValue)) 
-        || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
-        || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
-        || (crystal.colour && crystal.crystalInfo?.colour.find(colour => colour.toLowerCase().includes(searchValue)))
-        || (crystal.chakra && crystal.crystalInfo?.chakra.find(chakra => chakra.toLowerCase().includes(searchValue)))
-      }
-    )
-  }, [crystals, searchState]);
+  const crystals = props.crystals;
+  const [matchingCrystals, setMatchingCrystals] = useState<SerialisableCrystalWithUser[]>(crystals || [])
 
   return (
     <div className="section">
-      <BField>
-        <BInput
-        id="search"
-        placeholder='Search...'
-        value={searchState}
-        onChange={(newValue: string) => {
-          setSearchState(newValue)
-        }}
-        />
-      </BField>
-      <CrystalGallery crystals={searchResults} />
+      <SearchCrystals crystals={crystals} onCrystalSearch={setMatchingCrystals} />
+      <CrystalGallery crystals={matchingCrystals} />
     </div>
   )
 }

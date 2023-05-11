@@ -5,6 +5,8 @@ import CrystalGallery from '../../../components/Organisms/CrystalGallery'
 import { findAndSerializeCrystal } from '../../../lib/helpers/serializeCrystalDates';
 import { useState } from 'react';
 import classNames from 'classnames';
+import SearchCrystals from '../../../components/Molecules/SearchCrystals';
+import { SerialisableCrystalWithUser } from '../../../lib/types/crystal';
 
 type ViewProfileProps = {
   user: null | UserWithRelations
@@ -12,6 +14,7 @@ type ViewProfileProps = {
 
 const ViewProfile: React.FC<ViewProfileProps> = (props) => {
   const [activeTab, setActiveTab] = useState<string>('favourited');
+  const [matchingCrystals, setMatchingCrystals] = useState<SerialisableCrystalWithUser[]>(props.user?.favouriteCrystals || [])
   const user = props.user;
   const tabList = [
     {
@@ -45,8 +48,14 @@ const ViewProfile: React.FC<ViewProfileProps> = (props) => {
             && !getActiveTab(activeTab)!.crystals.length && <p>You have no favourite crystals yet 😶</p>
         }
         { 
-          getActiveTab(activeTab)!.crystals &&
-          <CrystalGallery crystals={getActiveTab(activeTab)!.crystals} />
+          getActiveTab(activeTab)!.crystals && (
+            <>
+              <SearchCrystals
+              crystals={getActiveTab(activeTab)!.crystals}
+              onCrystalSearch={setMatchingCrystals} />
+              <CrystalGallery crystals={matchingCrystals} />
+            </>
+          )
         }
       </div>
     </div>
