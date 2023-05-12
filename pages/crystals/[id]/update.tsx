@@ -8,10 +8,12 @@ import CrystalForm from '../../../components/Organisms/CrystalForm';
 import { CrystalRequestData, CrystalProps } from '../../../lib/types/crystal';
 import { findAndSerializeCrystalWithLocations } from '../../../lib/helpers/serializeCrystalDates';
 import prisma from '../../../lib/prisma';
+import { useCrystalResponse } from '../../../lib/helpers/useCrystalResponse';
 
 const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
   const router = useRouter();
-  const { locations, crystalInfos, crystal, form } = props;
+  const { locations, crystalInfos, crystal } = props;
+  const {crystalResponse, onCrystalResponse} = useCrystalResponse();
 
   const updateCrystal = useCallback(async (crystal: CrystalRequestData) => {
     const res = await axios.put<{crystal?: Crystal, error: string}>(
@@ -22,6 +24,8 @@ const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
     
     const result = await res.data;
     console.log("Crystal create API result", result);
+    
+    onCrystalResponse(res);
   }, []);
 
 
@@ -31,7 +35,8 @@ const UpdateCrystal: RestrictedReactFC<CrystalProps> = (props) => {
     crystal={crystal} 
     locations={locations} 
     crystalInfos={crystalInfos}
-    form={form}
+    form={"update"}
+    response={crystalResponse}
     />
   )
 }

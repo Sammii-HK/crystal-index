@@ -7,6 +7,7 @@ import {
   CrystalRequestData,
   CrystalState,
   CrystalProps,
+  CrystalResponse,
 } from '../../lib/types/crystal';
 import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
@@ -14,14 +15,11 @@ import ChooseLocationForm from './ChooseLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
 import { checkUser } from '../../lib/helpers/checkUser';
 import { ChooseCrystalInfoForm } from './ChooseCrystalInfoForm';
-import { BSelectOrCreate } from '../Molecules/BSelectOrCreate';
-import axios from 'axios';
-import { CrystalInfoResponse } from '../../pages/api/crystalInfo/create';
-import { createLocation } from '../../lib/helpers/locationRequests';
-import { BSelectOrCreateWithLookup } from '../Molecules/BSelectOrCreateWithLookup';
 
 type CrystalFormProps = CrystalProps & {
-  onSubmitCrystal: (crystal: CrystalRequestData) => void
+  onSubmitCrystal: (crystal: CrystalRequestData) => void,
+  form: "create" | "update",
+  response?: CrystalResponse
 }
 
 const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
@@ -29,6 +27,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   const user = useUser();
   const crystal = props.crystal;
   const form = props.form;
+  const crystalResponse = props.response
   const [locations, setLocations] = useState(props.locations || []);
   const [existingCrystalInfos, setExistingCrystalInfos] = useState(props.crystalInfos || []);
   const crystalHref=`/crystals/${crystal?.id}`
@@ -61,11 +60,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
   }, [crystalState])
 
   const submitCrystal = async (): Promise<any> => {
-    const crystal = crystalState
-    const crystalReq = { crystal, imageIds}
-
-    setCrystalState(crystal)
-    
+    const crystalReq = { crystal: crystalState, imageIds}
     props.onSubmitCrystal(crystalReq as CrystalRequestData)
   }
 
@@ -150,13 +145,18 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
 							<div className="column is-12 is-flex is-justify-content-center m-0 p-0">
 								<button
 									type="button"
-									className="button mt-4 is-capitalized is-green"
+									className="button mt-4 is-capitalized is-green is-outlined"
 									onClick={() => submitCrystal()}
 								>
 									{form}
 								</button>
 							</div>
 						)}
+            {crystalResponse?.status === 200 && 
+              <p className='mt-5'>
+                {crystalResponse.resultName} has been {form}d
+              </p>
+            }
 					</form>
 				</div>
 			</div>

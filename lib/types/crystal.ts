@@ -20,6 +20,11 @@ export type CrystalRequestData = Omit<CrystalState, 'createdById'> & {
   imageIds: number[],
 }
 
+export type CrystalResponse = {
+  status: number,
+  resultName: string,
+}
+
 export type ViewCrystalProps = {
   crystal: null | SerialisableCrystalWithUser
 }
@@ -32,7 +37,6 @@ export type CrystalProps = {
   crystal: null | SerialisableCrystalWithUser
   locations: null | Location[]
   crystalInfos: null | CrystalInfo[]
-  form: string
 }
 
 export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt'> & 
