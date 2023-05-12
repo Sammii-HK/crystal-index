@@ -4,10 +4,10 @@ import { TextureLoader } from 'three';
 import { useFrame, useLoader } from '@react-three/fiber';
 import * as THREE from 'three'
 
-import EarthNightMap from '../../public/assets/textures/8k_earth_nightmap.jpg'
+import EarthNightMap from '../../public/assets/textures/8k_earth_daymap_low_saturation.jpg'
 import EarthNormalMap from '../../public/assets/textures/8k_earth_normal_map.jpg'
 import EarthSpecularMap from '../../public/assets/textures/8k_earth_specular_map.jpg'
-import EarthCloudsMap from '../../public/assets/textures/8k_earth_clouds.jpg'
+import EarthCloudsMap from '../../public/assets/textures/8k_earth_clouds_xsmall.jpg'
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Marker } from '../Molecules/Marker';
 
