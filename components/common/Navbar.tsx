@@ -18,7 +18,10 @@ export default function Navbar() {
   return (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
-      <a className="navbar-item" onClick={() => router.push('/')}>
+      <a className="navbar-item" onClick={() => {
+          handleBurgerClick()
+          router.push('/')
+        }}>
         Crystal Index
       </a>
 
@@ -56,10 +59,16 @@ export default function Navbar() {
             <p className="body is-text-weight-bold is-hidden-desktop">Hi {user.username}! 💎</p>
           </div>
         }
-        <a className="navbar-item" onClick={() => router.push('/crystals')}>
+        <a className="navbar-item" onClick={() => {
+            handleBurgerClick()
+            router.push('/crystals')
+          }}>
           Crystals
         </a>
-        <a className="navbar-item" onClick={() => router.push('/locations')}>
+        <a className="navbar-item" onClick={() => {
+            handleBurgerClick()
+            router.push('/locations')
+          }}>
           Locations
         </a>
       </div>
@@ -74,17 +83,26 @@ export default function Navbar() {
                 </span>
               </p>
             </div>
-            <a className="navbar-item" onClick={() => router.push(`/profile/${user.userId}` )}>
+            <a className="navbar-item" onClick={() => {
+                handleBurgerClick()
+                router.push(`/profile/${user.userId}` )
+              }}>
               Profile
             </a>
           </div>
         }
         {user && checkUser(user) && 
           <>
-            <a className="navbar-item is-secondary" onClick={() => router.push('/crystals/add')}>
+            <a className="navbar-item is-secondary" onClick={() => {
+                handleBurgerClick()
+                router.push('/crystals/add')
+              }}>
               Add Crystal
             </a>
-            <a className="navbar-item is-secondary" onClick={() => router.push('/users')}>
+            <a className="navbar-item is-secondary" onClick={() => {
+                handleBurgerClick()
+                router.push('/users')
+              }}>
               Admin
             </a>
           </>
