@@ -9,7 +9,7 @@ const A = {
 	Sphere: animated(Sphere),
 };
 
-function placeObjectOnPlanet(
+export function placeObjectOnPlanet(
 	lat: number,
 	lon: number,
 	radius: number
@@ -80,12 +80,11 @@ export function Marker({
 			scale={springProps.scale}
 		>
 			<meshBasicMaterial color={0xffe600} />
-      <Html>
+      <Html style={{pointerEvents: "none"}}>
         <div 
         className={classNames("label has-text-white is-size-3", {"is-hidden": (markerId !== hoveredLocationId)})}
-        style={{pointerEvents: "none"}}
         >
-          {label.substring(0, 10)}
+          {label.substring(0, 25)}
         </div>
       </Html>
 		</A.Sphere>

@@ -60,6 +60,13 @@ select, div.select {
   color: white;
 }
 
+.locationInformation {
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-width: 300px;
+}
+
 // DARK COLOUR SCHEME
 @media (prefers-color-scheme: dark) {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {

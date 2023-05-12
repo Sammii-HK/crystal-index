@@ -4,7 +4,7 @@ import { useState, useMemo, Suspense } from 'react';
 import { Map } from '../../components/Organisms';
 import prisma from '../../lib/prisma';
 import { Canvas } from '@react-three/fiber'
-import { Stats } from '@react-three/drei';
+import { Html, Stats } from '@react-three/drei';
 
 const MapView: React.FC<MapViewProps> = (props) => {
   const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
@@ -20,8 +20,6 @@ const MapView: React.FC<MapViewProps> = (props) => {
     
   }
   
-  
-  // /is-flex-direction-column
   return (
     <>
       <div className="container is-flex is-align-content-center locations-map"> 
@@ -32,16 +30,34 @@ const MapView: React.FC<MapViewProps> = (props) => {
             onLocationHovered={setHoveredLocation}
             onLocationClicked={viewCurrentLocation}
             hoveredLocationId={hoveredLocationId}
+            activeLocationId={activeLocation || undefined}
             />
           </Suspense>
           <Stats />
+          {/* <Html position={[3,1.5,0]}> */}
+          {/* <Html position={[0,0,0]}>
+            {activeLocation && 
+              <div className="locationInformation is-flex is-flex-direction-column">
+                <button className='mb-3 is-justify-self-flex-end' onClick={() => setActiveLocation(false)}>
+                  X
+                </button>
+                <p>
+                  {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
+                </p>
+              </div>
+            }
+          </Html> */}
         </Canvas>
-        {activeLocation && <div>
-          <button onClick={() => setActiveLocation(false)}>
-            X
-          </button>
-            {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
-        </div>}
+        {activeLocation && 
+          <div className="locationInformation is-flex is-flex-direction-column">
+            <button className='mb-3 is-justify-self-flex-end' onClick={() => setActiveLocation(false)}>
+              X
+            </button>
+            <p>
+              {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
+            </p>
+          </div>
+        }
       </div>
     </>
   )
