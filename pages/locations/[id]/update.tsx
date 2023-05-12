@@ -4,7 +4,7 @@ import useUser from '../../../lib/hooks';
 import type { RestrictedReactFC } from '../../../lib/hooks'
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { LocationForm } from '../../../components/Organisms';
+// import { LocationForm } from '../../../components/Organisms';
 import { findLocation } from '../../../lib/helpers/locationRequests';
 import { ViewLocationProps } from '../../../lib/types/location';
 
@@ -29,10 +29,10 @@ const UpdateLocation: RestrictedReactFC<ViewLocationProps> = (props) => {
   if (!props) return <p>No location found</p>
   return (
     <div className="section">
-      <LocationForm 
+      {/* <LocationForm 
         onCreateLocation={updateLocation}
         location={props}
-      />
+      /> */}
     </div>
   )
 }
