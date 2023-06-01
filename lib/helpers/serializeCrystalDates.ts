@@ -19,10 +19,10 @@ const serializeCrystal = (crystal: CrystalWithRelations) => ({
   favouritedBy: crystal.favouritedBy.map(user => user.id)
 });
 
-export const findAndSerializeCrystal = async (id: string): Promise<any> => {
+export const findAndSerializeCrystal = async (id: number): Promise<any> => {
   const crystal = await prisma().crystal.findUnique(
     { 
-      where: { id: parseInt(id) },
+      where: { id },
       include: {
         createdBy: true,
         image: true,
@@ -37,7 +37,7 @@ export const findAndSerializeCrystal = async (id: string): Promise<any> => {
   return crystal && serializeCrystal(crystal);
 };
 
-export const findAndSerializeCrystalWithLocations = async (id: string): Promise<any> => {
+export const findAndSerializeCrystalWithLocations = async (id: number): Promise<any> => {
   return {
     crystal: await findAndSerializeCrystal(id),
     locations: await prisma().location.findMany()

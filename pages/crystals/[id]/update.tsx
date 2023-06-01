@@ -48,7 +48,7 @@ export default UpdateCrystal;
 export const getServerSideProps: GetServerSideProps<CrystalProps> = async (context) => {
   const { id } = context.params!;
   let serializedCrystal
-  if (id) serializedCrystal = await findAndSerializeCrystalWithLocations(id as string);
+  if (id) serializedCrystal = await findAndSerializeCrystalWithLocations(parseInt(id as string));
 
   const locations = await prisma().location.findMany();
   const crystalInfos = await prisma().crystalInfo.findMany();

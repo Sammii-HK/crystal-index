@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps<ViewProfileProps> = async (c
     }
   )
 
-  const serialiseCrystal = async (id: number) => await findAndSerializeCrystal(JSON.stringify(id));
+  const serialiseCrystal = async (id: number) => await findAndSerializeCrystal(id);
   const serialisedCrystals = (crystals: { id: number }[]) => Promise.all(crystals.map(crystal => serialiseCrystal(crystal.id)))
 
   const userWithRelations = user && {
