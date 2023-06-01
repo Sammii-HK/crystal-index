@@ -13,14 +13,14 @@ $clear: #ffffff00;
 $white: #fff;
 $black: #333;
 // rainbow
-$red: #e60000;
-$pink: #ff0066;
-$orange: #ff6600;
-$yellow: #ffcc00;
-$green: #ccff33;
-$blue: #66ffff;
+$red: #c82020;
+$pink: #d72c70;
+$orange: #eb5e00;
+$yellow: #daa000;
+$green: #95c012;
+$blue: #16c3c3;
 $indigo: #0066cc;
-$violet: #cc66ff;
+$violet: #9c4cc5;
 $brown: #663300;
 $red-light: #e6000026;
 $pink-light: #ff006626;
@@ -102,56 +102,84 @@ $colors: mergeColorMaps(
     "red": (
       $red,
       $white,
-      $red-light,
-      $white,
+      $clear,
+      $red,
     ),
     "pink": (
       $pink,
       $white,
-      $pink-light,
-      $white,
+      $clear,
+      $pink,
     ),
     "orange": (
       $orange,
       $white,
-      $orange-light,
-      $white,
+      $clear,
+      $orange,
     ),
     "yellow": (
       $yellow,
       $white,
-      $yellow-light,
-      $white,
+      $clear,
+      $yellow,
     ),
     "green": (
       $green,
       $white,
-      $green-light,
-      $white,
+      $clear,
+      $green,
     ),
     "blue": (
       $blue,
       $white,
-      $blue-light,
-      $white,
+      $clear,
+      $blue,
     ),
     "indigo": (
       $indigo,
       $white,
-      $indigo-light,
-      $white,
+      $clear,
+      $indigo,
     ),
     "violet": (
       $violet,
       $white,
-      $violet-light,
-      $white,
+      $clear,
+      $violet,
     ),
     "brown": (
       $brown,
       $white,
-      $brown-light,
-      $white,
+      $clear,
+      $brown,
+    ),
+    "crown": (
+      $clear,
+      $violet,
+    ),
+    "third": (
+      $clear,
+      $indigo,
+    ),
+    "throat": (
+      $clear,
+      $blue,
+    ),
+    "heart": (
+      $clear,
+      $green,
+    ),
+    "solar": (
+      $clear,
+      $yellow,
+    ),
+    "sacral": (
+      $clear,
+      $orange,
+    ),
+    "root": (
+      $clear,
+      $red,
     ),
   ),
   $custom-colors

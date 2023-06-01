@@ -34,7 +34,7 @@ interface MarkerProps {
   label: string;
   hoveredLocationId: number;
 	onLocationHovered: (locationId: number | false) => void;
-	onLocationClicked?: () => void;
+	onLocationClicked?: (locationId: number) => void;
 }
 
 export function Marker({
@@ -49,7 +49,7 @@ export function Marker({
 	const [isHovered, setIsHovered] = useState(false);
 
 	const springProps = useSpring({
-		scale: isHovered ? 1.4 : 1,
+		scale: isHovered ? 3 : 1.5,
 	});
 
 	const { rotation, position } = placeObjectOnPlanet(
@@ -60,7 +60,6 @@ export function Marker({
 
 	return (
 		<A.Sphere
-			// onClick={() => (window.location.hash = coord.hash)}
 			position={position}
 			rotation={rotation}
 			args={[0.01, 10, 10]}
@@ -75,14 +74,15 @@ export function Marker({
         onLocationHovered(false);
 			}}
       onClick={() => {
-        onLocationClicked(markerId);
+				setIsHovered(true);
+        onLocationClicked?.(markerId);
       }}
 			scale={springProps.scale}
 		>
-			<meshBasicMaterial color={0xffe600} />
+			<meshBasicMaterial />
       <Html style={{pointerEvents: "none"}}>
         <div 
-        className={classNames("label has-text-white is-size-3", {"is-hidden": (markerId !== hoveredLocationId)})}
+        className={classNames("globe-label has-text-white is-size-4", {"is-hidden": (markerId !== hoveredLocationId)})}
         >
           {label.substring(0, 25)}
         </div>

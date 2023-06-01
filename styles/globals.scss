@@ -55,9 +55,18 @@ select, div.select {
   justify-content: center;
 }
 
-.label {
+.globe-label {
   display: hidden;
   color: white;
+  // min-width: 250px;
+  width: fit-content;
+  min-width: 100px;
+  padding: 0.2rem;
+  // line-break: strict;
+  background-color: hsla(211, 12%, 48%, 0.5);
+  border-radius: 10px;
+  
+  
 }
 
 .locationInformation {
@@ -65,6 +74,14 @@ select, div.select {
   right: 0;
   top: 0;
   max-width: 300px;
+  width: 300px;
+  background-color: hsla(211, 12%, 48%, 0.25);
+  max-height: 90dvh;
+  overflow: scroll;
+}
+
+.locationInformationContaier {
+  border-radius: 10px;
 }
 
 // DARK COLOUR SCHEME
@@ -72,7 +89,7 @@ select, div.select {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {
     background-color: $black !important;
   }
-  body, input, label, textarea, select, button, .file-cta {
+  body, input, label, textarea, select, button, li, .file-cta {
     color: $white !important;
   }
   .title, .subtitle, .body, .textarea {
@@ -97,10 +114,10 @@ select, div.select {
   html, nav.navbar, div.navbar-menu, input, label, textarea, select, button, .file-cta {
     background-color: $white !important;
   }
-  body, input, label, textarea, select, button, .file-cta {
+  body, input, label, textarea, select, button, li, .file-cta {
     color: $black !important;
   }
-  .title, .subtitle, .body {
+  .title, .subtitle, .body, .textarea {
     color: $black !important;
   }
   a, ::placeholder {
