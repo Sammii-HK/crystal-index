@@ -1,24 +1,29 @@
 import { Location } from '@prisma/client';
 import { GetServerSideProps } from 'next';
-import { useState, useMemo, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { Map } from '../../components/Organisms';
 import prisma from '../../lib/prisma';
 import { Canvas } from '@react-three/fiber'
-import { Html, Stats } from '@react-three/drei';
+import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
+import { CrystalLocationWithRelations } from '../../lib/types/location';
+import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
 
 const MapView: React.FC<MapViewProps> = (props) => {
   const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
-  const [activeLocation, setActiveLocation] = useState<number | false>();
+  const [activeLocationId, setActiveLocation] = useState<number | false>();
 
   const viewCurrentLocation = (locationId: Location["id"]) => {
 
-    console.log("props.locations[locationId]", props.locations[locationId - 1]);
+    console.log("props.locations[locationId]", props.locations[locationId]);
     
     
     setActiveLocation(locationId)
-    console.log("activeLocation", activeLocation);
+    console.log("activeLocation", activeLocationId);
     
   }
+
+  // wrap in use memo
+  const activeLocation = props.locations.find(l => l.id == activeLocationId);
   
   return (
     <>
@@ -30,32 +35,21 @@ const MapView: React.FC<MapViewProps> = (props) => {
             onLocationHovered={setHoveredLocation}
             onLocationClicked={viewCurrentLocation}
             hoveredLocationId={hoveredLocationId}
-            activeLocationId={activeLocation || undefined}
+            activeLocationId={activeLocationId || undefined}
             />
           </Suspense>
-          <Stats />
-          {/* <Html position={[3,1.5,0]}> */}
-          {/* <Html position={[0,0,0]}>
-            {activeLocation && 
-              <div className="locationInformation is-flex is-flex-direction-column">
-                <button className='mb-3 is-justify-self-flex-end' onClick={() => setActiveLocation(false)}>
-                  X
-                </button>
-                <p>
-                  {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
-                </p>
-              </div>
-            }
-          </Html> */}
         </Canvas>
         {activeLocation && 
           <div className="locationInformation is-flex is-flex-direction-column">
-            <button className='mb-3 is-justify-self-flex-end' onClick={() => setActiveLocation(false)}>
-              X
-            </button>
-            <p>
-              {JSON.stringify(activeLocation && props.locations[activeLocation - 1].placeName) || false}
-            </p>
+            <div className='locationInformationContainer m-3'>
+              <button className='button is-small ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
+                X
+              </button>
+              <p>
+                {JSON.stringify(activeLocation && activeLocation.placeName) || false}
+              </p>
+              <CrystalsOfLocation location={activeLocation} />
+            </div>
           </div>
         }
       </div>
@@ -65,11 +59,28 @@ const MapView: React.FC<MapViewProps> = (props) => {
 
 export default MapView
 
-type MapViewProps = {
-  locations: Location[] 
+export type MapViewProps = {
+  locations: CrystalLocationWithRelations[] 
+}
+
+const crystalIncludeConfig = {
+  select: { id: true } 
 }
 
 export const getServerSideProps: GetServerSideProps<MapViewProps> = async () => {
-  const locations = await prisma().location.findMany();
+  const locationsWithCrystalIds = await prisma().location.findMany({
+    include: {
+      crystalsOfOrigin: crystalIncludeConfig,
+      crystalsOfMemento: crystalIncludeConfig,
+    }
+  });
+
+  const locations = await Promise.all(locationsWithCrystalIds.map(async locationWithCrystalId => ({
+    ...locationWithCrystalId,
+    crystalsOfOrigin: await Promise.all(locationWithCrystalId.crystalsOfOrigin.map(({id}) => findAndSerializeCrystal(id))),
+    crystalsOfMemento: await Promise.all(locationWithCrystalId.crystalsOfMemento.map(({id}) => findAndSerializeCrystal(id)))
+  })))
+  console.log("locations", locations);
+  
   return { props: { locations: locations }}
 }

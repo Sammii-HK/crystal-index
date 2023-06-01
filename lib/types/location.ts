@@ -1,6 +1,7 @@
 import { basicField } from './field';
 import { Location } from '@prisma/client';
 import { BInput } from '../../components/Atoms';
+import { SerialisableCrystalWithUser } from './crystal';
 
 export type CrystalLocation = {
   id: number,
@@ -10,6 +11,11 @@ export type CrystalLocation = {
   country: string | null,
   lat: string,
   long: string,
+}
+
+export type CrystalLocationWithRelations = CrystalLocation & {
+  crystalsOfOrigin: SerialisableCrystalWithUser[],
+  crystalsOfMemento: SerialisableCrystalWithUser[],
 }
 
 export type ViewLocationProps = {
