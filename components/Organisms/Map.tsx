@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { CrystalLocation } from '../../lib/types/location';
 import { TextureLoader } from 'three';
 import { useFrame, useLoader } from '@react-three/fiber';
@@ -20,7 +20,7 @@ const Map: React.FC<
       hoveredLocationId: number,
       activeLocationId?: number,
       onLocationHovered: (locationId: number | false) => void,
-      onLocationClicked?: () => void
+      onLocationClicked?: (locationId: number) => void
     }
   > = (props) => {
     const {
@@ -133,7 +133,6 @@ const Map: React.FC<
 
 		return (
 			<>
-				{/* <PerspectiveCamera makeDefault position={[0, 0, globeGroupX]} /> */}
 				<ambientLight intensity={0.75} />
 				<Stars
 					radius={300}
@@ -154,7 +153,6 @@ const Map: React.FC<
 					/>
 				</mesh>
 				<group>
-					{/* <PerspectiveCamera makeDefault position={[2, 0, 5]} /> */}
 					<PerspectiveCamera makeDefault position={[2, 0, 5]} />
 					{locationData.map((location) => {
 						return (
