@@ -22,7 +22,7 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
             state: !modalState.state,
             crystalImageId: id,
           })}
-          className="button is-outlined is-pulled-right bring-to-front is-clear"
+          className="button is-pulled-right bring-to-front has-background-clear has-text-danger is-ghost"
         >
             <span className="icon is-small">
               <FaTimes />
@@ -49,13 +49,14 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
 
         <div className="modal-content">
           <div className="box">
-            <p>Are you sure you want to delete this image?</p>
+            <p>Are you sure you want to delete this image? <br />
+              This action can not be reversed</p>
           </div>
         </div>
 
         <footer className="modal-card-foot">
           <button 
-            className="button is-danger"
+            className="button has-text-danger"
             onClick={() => props.onRemoveImage?.(modalState.crystalImageId!)}
           >
               Delete Image
