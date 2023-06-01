@@ -20,8 +20,7 @@ On-going
 * SQL
 * GPT4
 * React 3 Fiber
-* Bcrypt
-* Hapi
+* NextAuth
 
 ### App Overview
 
