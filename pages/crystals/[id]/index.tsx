@@ -56,12 +56,12 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
 
   return (
     <div className="section container">
-      <div className='columns my-5'>
+      <div className='columns my-5 is-mobile is-centered'>
         <div className="column p-0 is-5 is-offset-1">
           <h1 className='title is-capitalized'>{crystal.name}</h1>
         </div>
         <div className="column is-flex is-justify-content-flex-end p-0 is-5">
-          <div className="columns">
+          <div className="columns is-mobile">
             {(userId === crystal.createdById) && 
               <div className="column">
                 <button type="button" className="button mb-4 is-pulled-right" onClick={editCrystal}>Edit</button>
@@ -81,24 +81,15 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className="columns pt-2">
-        <div className="column p-0 is-5 is-offset-1">
+      <div className="columns pt-2 is-centered">
+        <div className="column p-0 is-5 is-offset-1 is-10-mobile">
           <BCarousel imageIds={crystal.image} />
         </div>
-        <div className="column is-offset-1">
-          
-          {fieldsToShow.map(field => (
-            crystal[field] && <div key={field}>
-              <p className='my-3'>
-                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
-                {crystal[field]}
-              </p>
-            </div>
-          ))}
+        <div className="column is-4 is-offset-1">
           {infoFieldsToShow.map(field => (
             crystal.crystalInfo?.[field] && <div key={field}>
               <p className='my-3'>
-                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
+                <span className='has-text-weight-bold is-capitalized'>{field} </span><br />
                 {crystal.crystalInfo[field]}
               </p>
             </div>
@@ -109,6 +100,14 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
               <BTags options={crystal.crystalInfo?.[field]} value={crystal.crystalInfo?.[field]} />
             </div>
           ))}
+          {/* {fieldsToShow.map(field => (
+            crystal[field] && <div key={field}>
+              <p className='my-3'>
+                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
+                {crystal[field]}
+              </p>
+            </div>
+          ))} */}
         </div>
       </div>
     </div>
@@ -119,7 +118,7 @@ export default ViewCrystal;
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
   const { id } = context.params!;
-  const serialisableCrystal = await findAndSerializeCrystal(id as string)
+  const serialisableCrystal = await findAndSerializeCrystal(parseInt(id as string))
 
   return { props: { crystal: serialisableCrystal }}
 }
