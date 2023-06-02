@@ -28,11 +28,13 @@ const MapView: React.FC<MapViewProps> = (props) => {
     else return
   }).filter(e => e !== undefined)
   
-  const filteredCrystalsMemento = activeLocation && filterMementos(activeLocation.crystalsOfMemento)
+  const filteredCrystalsMemento = activeLocation && filterMementos(activeLocation.crystalsOfMemento);
+  
   const filteredCrystalsActiveLocation = { ...activeLocation, crystalsOfMemento: filteredCrystalsMemento}
 
   const filteredMapLocations = props.locations.map(location => {
-    if (location.crystalsOfOrigin.length < 1 && filterMementos(location.crystalsOfMemento)) return
+    const filteredMementos = filterMementos(location.crystalsOfMemento)
+    if (location.crystalsOfOrigin.length === 0 && filteredMementos.length === 0) return
     else return location
   }).filter(e => e !== undefined)
   
