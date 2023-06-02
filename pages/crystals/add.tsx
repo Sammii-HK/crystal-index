@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Crystal } from '@prisma/client';
 import { useCallback, useState } from 'react'
 import type { RestrictedReactFC } from '../../lib/hooks'
-import { CrystalRequestData, CrystalProps, CrystalResponse } from '../../lib/types/crystal';
+import { CrystalRequestData, CrystalProps } from '../../lib/types/crystal';
 import CrystalForm from '../../components/Organisms/CrystalForm';
 import { GetServerSideProps } from 'next';
 import prisma from '../../lib/prisma';

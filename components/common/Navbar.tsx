@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { signIn, signOut } from "next-auth/react"
 import router from "next/router";
 import { useState } from "react";
-import { checkUser } from "../../lib/helpers/checkUser";
+import { checkSub1, checkSuperUser } from "../../lib/helpers/checkUser";
 import useUser from "../../lib/hooks";
 
 
@@ -65,12 +65,14 @@ export default function Navbar() {
           }}>
           Crystals
         </a>
-        <a className="navbar-item" onClick={() => {
-            handleBurgerClick()
-            router.push('/locations')
-          }}>
-          Locations
-        </a>
+        {user && checkSub1(user) && 
+          <a className="navbar-item" onClick={() => {
+              handleBurgerClick()
+              router.push('/locations')
+            }}>
+            Locations
+          </a>
+        }
       </div>
 
       <div className="navbar-end is-align-content-center">
@@ -91,21 +93,23 @@ export default function Navbar() {
             </a>
           </div>
         }
-        {user && checkUser(user) && 
+        {user && checkSub1(user) && 
           <>
             <a className="navbar-item is-secondary" onClick={() => {
-                handleBurgerClick()
-                router.push('/crystals/add')
-              }}>
+              handleBurgerClick()
+              router.push('/crystals/add')
+            }}>
               Add Crystal
             </a>
-            <a className="navbar-item is-secondary" onClick={() => {
-                handleBurgerClick()
-                router.push('/users')
-              }}>
-              Admin
-            </a>
           </>
+        }
+        {user && checkSuperUser(user) &&
+          <a className="navbar-item is-secondary" onClick={() => {
+            handleBurgerClick()
+            router.push('/users')
+          }}>
+            Admin
+          </a>
         }
         {user?.userId && 
           <>

@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
 import ChooseLocationForm from './ChooseLocationForm';
 import { FaArrowLeft } from 'react-icons/fa';
-import { checkUser } from '../../lib/helpers/checkUser';
+import { checkSub1 } from '../../lib/helpers/checkUser';
 import { ChooseCrystalInfoForm } from './ChooseCrystalInfoForm';
 
 type CrystalFormProps = CrystalProps & {
@@ -69,7 +69,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
     router.push(crystalHref)
   }
 
-  if (crystal?.createdById !== user?.userId) router.push(crystalHref)
+  if (crystal && crystal.createdById !== user?.userId) router.push(crystalHref)
 
   return (
 		<div className="section">
@@ -143,7 +143,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
 							))}
 						</div>
 
-						{user && checkUser(user) && (
+						{user && checkSub1(user) && (
 							<div className="column is-12 is-flex is-justify-content-center m-0 p-0">
 								<button
 									type="button"

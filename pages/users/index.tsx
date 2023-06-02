@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import router from 'next/router';
 import { useCallback } from 'react';
 import { BField, BSelect } from '../../components/Atoms';
-import { checkUser } from '../../lib/helpers/checkUser';
+import { checkSuperUser } from '../../lib/helpers/checkUser';
 import useUser, { RestrictedReactFC } from '../../lib/hooks';
 import prisma from '../../lib/prisma';
 import { userRoles, UserRole } from '../../lib/types/user';
@@ -19,7 +19,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
     )
   }, [])
 
-  if (user && !checkUser(user)) router.push('/')
+  if (user && !checkSuperUser(user)) router.push('/')
 
   return (
     <div className="section is-flex is-justify-content-center">
@@ -50,7 +50,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
                   onChange={(newValue: any) => {
                     updateUserRole(user.id, newValue)
                   }}
-                  disabled={user && checkUser(user)}
+                  disabled={user && checkSuperUser(user)}
                 />
               </BField>
             </td>

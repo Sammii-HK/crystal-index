@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { User } from '@prisma/client'
 import prisma from '../../../../lib/prisma';
 import { getUserFromAPISession } from '../../../../lib/session';
-import { checkUser } from '../../../../lib/helpers/checkUser';
+import { checkSuperUser } from '../../../../lib/helpers/checkUser';
 
 type UserProps = {
   user: User | undefined,
@@ -15,7 +15,7 @@ export default async function main(
 ) {
   const user = await getUserFromAPISession(req);  
 
-  if (user && checkUser(user)) {
+  if (user && checkSuperUser(user)) {
     const { role } = req.body
     const { id } = req.query
     try {

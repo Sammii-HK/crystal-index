@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getUserFromAPISession } from "../../../lib/session";
-import { checkUser } from "../../../lib/helpers/checkUser";
+import { checkSuperUser } from "../../../lib/helpers/checkUser";
 import { Configuration, OpenAIApi } from "openai";
 import prisma from '../../../lib/prisma';
 
@@ -21,7 +21,7 @@ export default async function createCrystalInfo(
 ) {
   const user = await getUserFromAPISession(req);
 
-  if (user && checkUser(user)) {
+  if (user && checkSuperUser(user)) {
     const { name }: { name: string } = req.body;
 
     console.log("🐡🐠🐬 name", name);

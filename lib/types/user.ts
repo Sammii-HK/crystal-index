@@ -3,8 +3,8 @@ import { BInput, BSelect } from '../../components/Atoms';
 import { basicField } from './field';
 import { SerialisableCrystalWithUser } from '../types/crystal'
 
-export type UserRole = 'admin' | 'unicorn' | 'user'
-export const userRoles: UserRole[] = [ 'admin', 'unicorn', 'user' ]
+export type UserRole = 'admin' | 'unicorn' | 'user' | 'sub1'
+export const userRoles: UserRole[] = [ 'admin', 'unicorn', 'user', 'sub1' ]
 
 export type UserState = {
   name: string | undefined | null,
@@ -20,7 +20,7 @@ export type UserWithRelations = User & {
 
 export type UserSession = {
   userId: string,
-  role: "user" | "admin" | "unicorn",
+  role: UserRole,
   username: string | undefined,
   email: string,
   status?: "authenticated" | "loading" | "unauthenticated"

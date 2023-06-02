@@ -1,5 +1,6 @@
 import { Crystal, User, Image } from "@prisma/client";
 import prisma from "../prisma";
+import { getSuperUserId } from "./checkUser";
 
 type CrystalWithRelations = Crystal & {
   createdBy: User,
@@ -45,7 +46,9 @@ export const findAndSerializeCrystalWithLocations = async (id: number): Promise<
 }
 
 export const findAndSerializeAllCrystals = async (): Promise<any> => {
+  const superUserId = await getSuperUserId()
   const crystalsResults = await prisma().crystal.findMany({
+    where: { createdById: superUserId},
     include: { 
         createdBy: true,
         image: true,

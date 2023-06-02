@@ -1,4 +1,4 @@
-import { checkUser } from './../../../lib/helpers/checkUser';
+import { checkSuperUser } from './../../../lib/helpers/checkUser';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Location } from '@prisma/client'
 import prisma from '../../../lib/prisma';
@@ -16,7 +16,7 @@ export default async function main(
   const user = await getUserFromAPISession(req)
   const data = req.body;
 
-  if (user && checkUser(user)) {
+  if (user && checkSuperUser(user)) {
     try {
       const result = await prisma().location.create({
         data: { ...data },
