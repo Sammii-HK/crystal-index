@@ -8,9 +8,11 @@ import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
 import { CrystalLocationWithRelations } from '../../lib/types/location';
 import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
 import useUser from '../../lib/hooks';
+import { SerialisableCrystalWithUser } from '../../lib/types/crystal';
+
 
 const MapView: React.FC<MapViewProps> = (props) => {
-  const user = useUser()
+  const user = useUser();
   const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
   const [activeLocationId, setActiveLocation] = useState<number | false>();
 
@@ -19,14 +21,20 @@ const MapView: React.FC<MapViewProps> = (props) => {
   }
 
   // wrap in use memo
-  const activeLocation = props.locations.find(l => l.id == activeLocationId);
+  const activeLocation = props.locations.find(l => l.id == activeLocationId); 
 
-  const filteredMementoLocations = activeLocation?.crystalsOfMemento.forEach(crystal => {
+  const filterMementos = (mementoCrystals: SerialisableCrystalWithUser[]) => mementoCrystals.map(crystal => {
     if (crystal.createdById === user?.userId) return crystal
-    else return []
-  })
+    else return
+  }).filter(e => e !== undefined)
+  
+  const filteredCrystalsMemento = activeLocation && filterMementos(activeLocation.crystalsOfMemento)
+  const filteredCrystalsActiveLocation = { ...activeLocation, crystalsOfMemento: filteredCrystalsMemento}
 
-  const filteredCrystalsActiveLocation = {...activeLocation, crystalsOfMemento: filteredMementoLocations || [] };
+  const filteredMapLocations = props.locations.map(location => {
+    if (location.crystalsOfOrigin.length < 1 && filterMementos(location.crystalsOfMemento)) return
+    else return location
+  }).filter(e => e !== undefined)
   
   return (
     <>
@@ -34,7 +42,7 @@ const MapView: React.FC<MapViewProps> = (props) => {
         <Canvas>
           <Suspense fallback={null}>
             <Map 
-            locationData={props.locations} 
+            locationData={filteredMapLocations} 
             onLocationHovered={setHoveredLocation}
             onLocationClicked={viewCurrentLocation}
             hoveredLocationId={hoveredLocationId}
@@ -53,12 +61,8 @@ const MapView: React.FC<MapViewProps> = (props) => {
                 {" "}
                 {(activeLocation?.placeName.split(",", 1) === activeLocation?.city) ? activeLocation.city : activeLocation.country}
               </p>
-              {/* filter crystaks of memento lovations which do not belong to you */}
-              {/* {} */}
-              {/* {activeLocation.crystalsOfOrigin.length < 1 && activeLocation.crystalsOfMemento.length < 1 &&
-                <CrystalsOfLocation location={filteredCrystalsActiveLocation} />
-              }  */}
               <CrystalsOfLocation location={filteredCrystalsActiveLocation} />
+              {/* <CrystalsOfLocation location={activeLocation} /> */}
             </div>
           </div>
         }
