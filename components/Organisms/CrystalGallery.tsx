@@ -11,7 +11,16 @@ const CrystalGallery:React.FC<ViewCrystalsProps> = (props) => {
   if (!crystals) return <p>Crystals not found</p>;
 
   return (
-    <div className="columns is-multiline mt-5">
+    <div className={
+      classNames(
+        'columns is-multiline', 
+        {
+          'location-crystal-gallery': galleryView,
+          'mt-0': galleryView,
+          'mt-5': !galleryView,
+        },
+      )
+    }>
       {crystals.map(crystal => (
         <div key={crystal.id} 
         className={

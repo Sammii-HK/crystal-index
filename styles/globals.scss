@@ -77,11 +77,20 @@ select, div.select {
   width: 300px;
   background-color: hsla(211, 12%, 48%, 0.25);
   max-height: 90dvh;
-  overflow: scroll;
+  border-radius: 10px;
 }
 
-.locationInformationContaier {
-  border-radius: 10px;
+.location-crystal-gallery {
+  max-height: 70dvh;
+  overflow: scroll !important;
+}
+
+.location-tabs {
+  position: sticky; top: 0;
+  z-index: 10;
+  background-color: hsla(210, 14%, 3%, 0.25);
+  color: white;
+  border-radius: 5px 5px 0 0;
 }
 
 // DARK COLOUR SCHEME

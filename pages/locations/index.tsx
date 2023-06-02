@@ -40,7 +40,7 @@ const MapView: React.FC<MapViewProps> = (props) => {
           </Suspense>
         </Canvas>
         {activeLocation && 
-          <div className="locationInformation is-flex is-flex-direction-column">
+          <div className="locationInformation is-flex is-flex-direction-column mr-2 mt-3 mb-6">
             <div className='locationInformationContainer m-3'>
               <button className='button is-small ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
                 X
@@ -80,7 +80,6 @@ export const getServerSideProps: GetServerSideProps<MapViewProps> = async () => 
     crystalsOfOrigin: await Promise.all(locationWithCrystalId.crystalsOfOrigin.map(({id}) => findAndSerializeCrystal(id))),
     crystalsOfMemento: await Promise.all(locationWithCrystalId.crystalsOfMemento.map(({id}) => findAndSerializeCrystal(id)))
   })))
-  console.log("locations", locations);
   
   return { props: { locations: locations }}
 }

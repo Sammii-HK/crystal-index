@@ -26,11 +26,9 @@ const CrystalsOfLocation: React.FC<ViewCrystalsOfLocationProps> = (props) => {
     }
   ]
   const getActiveTab = (tabName: string) => tabList.find(tab => tab.name === tabName);
-  // if (!getActiveTab('memento')?.crystals.length) tabList.pop();
-  // if you have not created them, pop memento
   return (
-    <div className='section'>
-      <div className='tabs is-centered'>
+    <div className='container m-3 crystal-gallery'>
+      <div className='tabs is-centered location-tabs mb-0'>
         <ul>
           {tabList.map(tab => {
             return (getActiveTab(tab.name)?.crystals?.length) ? <li
