@@ -23,3 +23,7 @@ processes = []
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+
+  [[statics]]
+    guest_path = "/app/public"
+    url_prefix = "/public"
