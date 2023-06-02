@@ -29,6 +29,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
             <th>Index</th>
             <th>ID</th>
             <th>Name</th>
+            <th>Email</th>
             <th>Role</th>
             <th>Profile</th>
           </tr>
@@ -39,6 +40,7 @@ const UsersView: RestrictedReactFC<UsersViewProps> = (props) => {
             <th>{index}</th>
             <td>{user.id}</td>
             <td>{user.name}</td>
+            <td>{user.email}</td>
             <td>
               <BField>
                 <BSelect
