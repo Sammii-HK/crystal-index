@@ -100,14 +100,6 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
               <BTags options={crystal.crystalInfo?.[field]} value={crystal.crystalInfo?.[field]} />
             </div>
           ))}
-          {/* {fieldsToShow.map(field => (
-            crystal[field] && <div key={field}>
-              <p className='my-3'>
-                <span className='has-text-weight-bold is-capitalized'>{field}: </span>
-                {crystal[field]}
-              </p>
-            </div>
-          ))} */}
         </div>
       </div>
     </div>
