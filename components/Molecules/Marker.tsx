@@ -1,9 +1,8 @@
-// import type { EarthProps } from './Earth'
-import { CrystalInfo } from "@prisma/client";
 import { useSpring, animated } from "@react-spring/three";
 import { Html, Sphere } from "@react-three/drei";
 import classNames from "classnames";
 import { useState } from "react";
+import { CrystalLocation } from "../../lib/types/location";
 
 const A = {
 	Sphere: animated(Sphere),
@@ -31,7 +30,7 @@ interface MarkerProps {
 	markerId: number;
 	coord: { lat: number; lon: number };
 	radius: number;
-  label: string;
+  locationLabel: CrystalLocation;
   hoveredLocationId: number;
 	onLocationHovered: (locationId: number | false) => void;
 	onLocationClicked?: (locationId: number) => void;
@@ -41,7 +40,7 @@ export function Marker({
 	markerId,
 	coord,
 	radius,
-  label,
+  locationLabel,
 	onLocationHovered,
 	onLocationClicked,
   hoveredLocationId
@@ -82,9 +81,11 @@ export function Marker({
 			<meshBasicMaterial />
       <Html style={{pointerEvents: "none"}}>
         <div 
-        className={classNames("globe-label has-text-white is-size-4", {"is-hidden": (markerId !== hoveredLocationId)})}
+        className={classNames("globe-label has-text-white is-size-5 px-3 py-1", {"is-hidden": (markerId !== hoveredLocationId)})}
         >
-          {label.substring(0, 25)}
+          {locationLabel.placeName.split(",", 1)},
+          {" "}
+          {(locationLabel?.placeName.split(",", 1) === locationLabel?.city) ? locationLabel.city : locationLabel.country}
         </div>
       </Html>
 		</A.Sphere>
