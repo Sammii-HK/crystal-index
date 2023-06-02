@@ -28,7 +28,7 @@ const CrystalsOfLocation: React.FC<ViewCrystalsOfLocationProps> = (props) => {
   const getActiveTab = (tabName: string) => tabList.find(tab => tab.name === tabName);
   return (
     <div className='container m-3 crystal-gallery'>
-      <div className='tabs is-centered location-tabs mb-0'>
+      <div className='tabs is-centered location-tabs mb-0 is-fullwidth'>
         <ul>
           {tabList.map(tab => {
             return (getActiveTab(tab.name)?.crystals?.length) ? <li

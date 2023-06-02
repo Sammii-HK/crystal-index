@@ -7,23 +7,26 @@ import { Canvas } from '@react-three/fiber'
 import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
 import { CrystalLocationWithRelations } from '../../lib/types/location';
 import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
+import useUser from '../../lib/hooks';
 
 const MapView: React.FC<MapViewProps> = (props) => {
+  const user = useUser()
   const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
   const [activeLocationId, setActiveLocation] = useState<number | false>();
 
   const viewCurrentLocation = (locationId: Location["id"]) => {
-
-    console.log("props.locations[locationId]", props.locations[locationId]);
-    
-    
     setActiveLocation(locationId)
-    console.log("activeLocation", activeLocationId);
-    
   }
 
   // wrap in use memo
   const activeLocation = props.locations.find(l => l.id == activeLocationId);
+
+  const filteredMementoLocations = activeLocation?.crystalsOfMemento.forEach(crystal => {
+    if (crystal.createdById === user?.userId) return crystal
+    else return []
+  })
+
+  const filteredCrystalsActiveLocation = {...activeLocation, crystalsOfMemento: filteredMementoLocations || [] };
   
   return (
     <>
@@ -45,12 +48,17 @@ const MapView: React.FC<MapViewProps> = (props) => {
               <button className='delete ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
                 X
               </button>
-              <p className='mx-3'>
+              <p className='mx-3 pr-6'>
                 {activeLocation?.placeName.split(",", 1) || false}, 
                 {" "}
                 {(activeLocation?.placeName.split(",", 1) === activeLocation?.city) ? activeLocation.city : activeLocation.country}
               </p>
-              <CrystalsOfLocation location={activeLocation} />
+              {/* filter crystaks of memento lovations which do not belong to you */}
+              {/* {} */}
+              {/* {activeLocation.crystalsOfOrigin.length < 1 && activeLocation.crystalsOfMemento.length < 1 &&
+                <CrystalsOfLocation location={filteredCrystalsActiveLocation} />
+              }  */}
+              <CrystalsOfLocation location={filteredCrystalsActiveLocation} />
             </div>
           </div>
         }
