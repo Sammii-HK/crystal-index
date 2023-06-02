@@ -16,7 +16,7 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
 
   const imageElements = imageIds?.map(id => (
     <div key={id}>
-      {imageIds.length > 1 &&
+      {props.view === "form" && imageIds.length > 1 &&
         <button
           onClick={() => setModalState({
             state: !modalState.state,
@@ -76,5 +76,6 @@ export default BCarousel
 
 type CarouselProps = {
   imageIds: number[] | undefined
+  view?: string
   onRemoveImage?: (removedImageId: number) => void
 }

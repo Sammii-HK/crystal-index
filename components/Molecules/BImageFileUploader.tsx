@@ -15,7 +15,8 @@ const BImageFileUploader: React.FC<BImageFileUploaderProps> = (props) => {
         <div className="mb-6">
           <BCarousel 
             imageIds={imageIds} 
-            onRemoveImage={props.onRemoveImage} 
+            onRemoveImage={props.onRemoveImage}
+            view="form"
           />
         </div>
       }

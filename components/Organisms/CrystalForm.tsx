@@ -69,6 +69,8 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
     router.push(crystalHref)
   }
 
+  if (crystal?.createdById !== user?.userId) router.push(crystalHref)
+
   return (
 		<div className="section">
 			{form === "update" && (
