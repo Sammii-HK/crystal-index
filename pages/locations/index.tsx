@@ -42,11 +42,13 @@ const MapView: React.FC<MapViewProps> = (props) => {
         {activeLocation && 
           <div className="locationInformation is-flex is-flex-direction-column mr-2 mt-3 mb-6">
             <div className='locationInformationContainer m-3'>
-              <button className='button is-small ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
+              <button className='delete ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
                 X
               </button>
-              <p>
-                {JSON.stringify(activeLocation && activeLocation.placeName) || false}
+              <p className='mx-3'>
+                {activeLocation?.placeName.split(",", 1) || false}, 
+                {" "}
+                {(activeLocation?.placeName.split(",", 1) === activeLocation?.city) ? activeLocation.city : activeLocation.country}
               </p>
               <CrystalsOfLocation location={activeLocation} />
             </div>
