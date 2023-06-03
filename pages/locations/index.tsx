@@ -7,12 +7,11 @@ import { Canvas } from '@react-three/fiber'
 import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
 import { CrystalLocationWithRelations } from '../../lib/types/location';
 import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
-import useUser from '../../lib/hooks';
-import { SerialisableCrystalWithUser } from '../../lib/types/crystal';
+import { getSuperUserId } from '../../lib/helpers/checkUser';
+import { getUserFromServerSidePropsContext } from '../../lib/session';
 
 
 const MapView: React.FC<MapViewProps> = (props) => {
-  const user = useUser();
   const [hoveredLocationId, setHoveredLocation] = useState<number | false>();
   const [activeLocationId, setActiveLocation] = useState<number | false>();
 
@@ -21,22 +20,14 @@ const MapView: React.FC<MapViewProps> = (props) => {
   }
 
   // wrap in use memo
-  const activeLocation = props.locations.find(l => l.id == activeLocationId); 
+  const activeLocation = props.locations.find(l => l.id == activeLocationId);
 
-  const filterMementos = (mementoCrystals: SerialisableCrystalWithUser[]) => mementoCrystals.map(crystal => {
-    if (crystal.createdById === user?.userId) return crystal
-    else return
-  }).filter(e => e !== undefined)
-  
-  const filteredCrystalsMemento = activeLocation && filterMementos(activeLocation.crystalsOfMemento);
-  
-  const filteredCrystalsActiveLocation = { ...activeLocation, crystalsOfMemento: filteredCrystalsMemento}
+  const filteredMapLocations = props.locations.filter(location => {
+    return location.crystalsOfOrigin.length > 0 || location.crystalsOfMemento.length > 0
+  })
 
-  const filteredMapLocations = props.locations.map(location => {
-    const filteredMementos = filterMementos(location.crystalsOfMemento)
-    if (location.crystalsOfOrigin.length === 0 && filteredMementos.length === 0) return
-    else return location
-  }).filter(e => e !== undefined)
+  console.log("filteredMapLocations", filteredMapLocations);
+  
   
   return (
     <>
@@ -61,9 +52,9 @@ const MapView: React.FC<MapViewProps> = (props) => {
               <p className='mx-3 pr-6'>
                 {activeLocation?.placeName.split(",", 1) || false}, 
                 {" "}
-                {(activeLocation?.placeName.split(",", 1) === activeLocation?.city) ? activeLocation.city : activeLocation.country}
+                {(activeLocation?.placeName.split(",", 1)[0] === activeLocation?.city) ? activeLocation.city : activeLocation.country}
               </p>
-              <CrystalsOfLocation location={filteredCrystalsActiveLocation} />
+              <CrystalsOfLocation location={activeLocation} />
               {/* <CrystalsOfLocation location={activeLocation} /> */}
             </div>
           </div>
@@ -83,11 +74,22 @@ const crystalIncludeConfig = {
   select: { id: true } 
 }
 
-export const getServerSideProps: GetServerSideProps<MapViewProps> = async () => {
+export const getServerSideProps: GetServerSideProps<MapViewProps> = async (context) => {
+  const session = await getUserFromServerSidePropsContext(context);
+
   const locationsWithCrystalIds = await prisma().location.findMany({
     include: {
-      crystalsOfOrigin: crystalIncludeConfig,
-      crystalsOfMemento: crystalIncludeConfig,
+      crystalsOfOrigin: {
+        select: { id: true },
+        where: {OR: [
+          { createdById: session?.userId || "" },
+          { createdById: await getSuperUserId()}
+        ]}
+      },
+      crystalsOfMemento: {
+        select: { id: true },
+        where: { createdById: session?.userId || "" }
+      },
     }
   });
 
