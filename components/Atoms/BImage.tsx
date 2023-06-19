@@ -8,6 +8,8 @@ const BImage: React.FC<InputProps> = (props) => {
       alt="picture of a crystal" // TODO: send alt info to component
       width={500}
       height={500}
+      quality={100}
+      style={{objectFit:"cover"}}
       />
     </figure>
   )
