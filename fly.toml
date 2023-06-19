@@ -24,6 +24,6 @@ processes = []
     handlers = ["tls", "http"]
     port = 443
 
-  [[statics]]
-    guest_path = "/app/public"
-    url_prefix = "/public"
+  # [[statics]]
+  #   url_prefix = "/public"
+    # guest_path = "/app/public"
