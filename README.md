@@ -20,7 +20,7 @@ On-going
 * SQL
 * GPT4
 * React 3 Fiber
-* NextAuth
+* Next Auth
 
 ### App Overview
 
@@ -49,6 +49,28 @@ All of the information about the crystal is displayed on each crystals' page. Th
 
 ![crystal view]('./../public/project-images/crystal-view.jpeg)
 
+##### Create/Edit crystals
+
+To create or edit a crystal, information is entered into a form, this form ustilises different field types depending on the information required. 
+For the ENUMs (eg: colour, chakra) tag buttons are created to avoid spelling mistakes
+For a crystals' locational relationships a location but already be entered into the database, for which the crystal is related to, to handle this data type a drop down list is used.
+
+![creating/editing crystals page]('./../public/project-images/crystal-edit.jpeg)
+
+##### Profile Page
+
+Every crystal a user has favourited is showcased on the profile page.
+
+
+![profile page]('./../public/project-images/profile.jpeg)
+
+
 ### Challenges & Achievements
 
 An achievement is storing images as binary arrays on the database, instilling a fast loading time for images, which will continue to increase in number.
+
+## Future enhancements
+
+The database needs to be fully populated with the entire collection of crystals, but this will be an ongoing process.
+
+Another enhancement is to create an extra tab on the profile page for all the crystals which a user has created, so they may easily look at their collection and review the information.
