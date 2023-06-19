@@ -24,10 +24,7 @@ const MapView: React.FC<MapViewProps> = (props) => {
 
   const filteredMapLocations = props.locations.filter(location => {
     return location.crystalsOfOrigin.length > 0 || location.crystalsOfMemento.length > 0
-  })
-
-  console.log("filteredMapLocations", filteredMapLocations);
-  
+  })  
   
   return (
     <>

@@ -4,7 +4,6 @@ import CrystalGallery from '../../components/Organisms/CrystalGallery';
 import { SerialisableCrystalWithUser, ViewCrystalsProps } from '../../lib/types/crystal';
 import { findAndSerializeAllCrystals } from '../../lib/helpers/serializeCrystalDates';
 import SearchCrystals from '../../components/Molecules/SearchCrystals';
-import { getSuperUserId } from '../../lib/helpers/checkUser';
 
 const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
   const crystals = props.crystals;
@@ -22,8 +21,6 @@ export default ViewCrystals;
 
 export const getServerSideProps: GetServerSideProps<ViewCrystalsProps> = async () => {
   let serializedCrystals = await findAndSerializeAllCrystals()
-  console.log("getSuperUser", await getSuperUserId());
-
   return { props: { crystals: serializedCrystals }}
 }
 
