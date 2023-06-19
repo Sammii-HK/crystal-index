@@ -7,26 +7,20 @@ export default async function crystalHandler(
   req: NextApiRequest,
   res: NextApiResponse<Buffer>
 ) {
-  const { id, width } = req.query;
+  const { id } = req.query;
   
   const result = await prisma().image.findUnique(
     { where: { id: parseInt(id as string) } }
   );
 
 
-  const image = result?.file
-  const numericalWidth = width ? parseInt(width as string) : 500;
+  const image = result?.file;
 
-  const resizedImage = await sharp(image)
-  .resize(numericalWidth, numericalWidth)
-  .jpeg()
-  .toBuffer()
-
-  if (result) {
+  if (image) {
     res.status(200);
     res.setHeader('Content-Disposition','inline');
     res.setHeader('Content-type', result.type);
-    res.setHeader('Cache-Control', 'max-age=3600000000000000000');
-    res.send(resizedImage);
+    res.setHeader('Cache-Control', 'max-age=31536000');
+    res.send(image);
   }
 }
