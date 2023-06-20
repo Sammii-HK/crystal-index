@@ -4,6 +4,11 @@ import CrystalGallery from '../../components/Organisms/CrystalGallery';
 import { SerialisableCrystalWithUser, ViewCrystalsProps } from '../../lib/types/crystal';
 import { findAndSerializeAllCrystals } from '../../lib/helpers/serializeCrystalDates';
 import SearchCrystals from '../../components/Molecules/SearchCrystals';
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Crystals',
+}
 
 const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
   const crystals = props.crystals;
