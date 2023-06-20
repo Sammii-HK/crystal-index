@@ -10,7 +10,7 @@ COPY . /app
 EXPOSE 3000
 RUN npx prisma generate
 RUN --mount=type=secret,id=NEXT_PUBLIC_OPENCAGE_API_KEY \
-    NEXT_PUBLIC_OPENCAGE_API_KEY="$(cat /run/secrets/NEXT_PUBLIC_OPENCAGE_API_KEY)" yarn build
+    NEXT_PUBLIC_OPENCAGE_API_KEY="$(cat /run/secrets/NEXT_PUBLIC_OPENCAGE_API_KEY)" yarn build && yarn postbuild
 
 
 
