@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 const config = {
-  siteUrl: process.env.SITE_URL || 'https://crystalindex.co.uk/',
+  siteUrl: 'https://crystalindex.co.uk/',
   generateRobotsTxt: true, // (optional)
   exclude: [
     '/admin', 
