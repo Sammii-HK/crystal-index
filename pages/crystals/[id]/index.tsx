@@ -17,6 +17,15 @@ const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [
   'memento'
 ]
 
+// const fieldLabels = {
+//   info: 'information',
+//   otherNames: 'other names',
+//   origin,
+//   memento,
+//   colour,
+//   chakras,
+// }
+
 const infoFieldsToShow: (keyof CrystalInfo)[] = [
   'info',
 ]
@@ -57,10 +66,10 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   return (
     <div className="section container">
       <div className='columns my-5 is-mobile is-centered'>
-        <div className="column p-0 is-5 is-offset-1">
+        <div className="column p-0 is-5 is-offset-1 is-6-mobile is-offset-0-mobile">
           <h1 className='title is-capitalized'>{crystal.name}</h1>
         </div>
-        <div className="column is-flex is-justify-content-flex-end p-0 is-5">
+        <div className="column is-flex is-justify-content-flex-end p-0 is-5 is-1-mobile">
           <div className="columns is-mobile">
             {(userId === crystal.createdById) && 
               <div className="column">
@@ -81,11 +90,11 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className="columns pt-2 is-centered">
-        <div className="column p-0 is-5 is-offset-1 is-10-mobile">
+      <div className="columns pt-2 is-centered is-multiline is-flex">
+        <div className="column p-0 is-10-mobile is-5 is-offset-1 is-offset-0-mobile">
           <BCarousel imageIds={crystal.image} />
         </div>
-        <div className="column is-4 is-offset-1">
+        <div className="column is-4 is-offset-1 is-10-mobile">
           {infoFieldsToShow.map(field => (
             crystal.crystalInfo?.[field] && <div key={field}>
               <p className='my-3'>
