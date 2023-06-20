@@ -28,7 +28,7 @@ const SearchCrystals: React.FC<
     <BField>
       <BInput
       id="search"
-      placeholder='Search...'
+      placeholder='Search by name, colours, chakra or location...'
       value={searchState}
       onChange={(newValue: string) => {
         setSearchState(newValue)
