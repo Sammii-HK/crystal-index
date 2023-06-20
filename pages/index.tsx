@@ -6,7 +6,7 @@ const Home: NextPage = () => {
     <div className="main-container">
       <Head>
         <title>The Crystal Index, the most personal, beautiful and informative way to index your crystal collection.</title>
-        <link rel="icon" type="image/x-icon" href="../public/favicon.ico"></link>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
         <meta name="google" content="nositelinkssearchbox" key="sitelinks" />
       </Head>
       <section className="hero is-fullheight-with-navbar">
