@@ -6,9 +6,11 @@ const Layout: React.FC<any> = (props) => {
   return (
     <div className="container is-fullheight">
       <Head>
-        <title>Next Typescript</title>
+        <title>The Crystal Index, the most personal, beautiful and informative way to index your crystal collection.</title>
         <meta name="Crystal Index" content="An Index of Crystals" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"></link>
+        <meta name="google" content="nositelinkssearchbox" key="sitelinks" />
       </Head>
 
       <Navbar />
