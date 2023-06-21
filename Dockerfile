@@ -10,7 +10,7 @@ COPY . /app
 EXPOSE 3000
 RUN npx prisma generate
 RUN --mount=type=secret,id=NEXT_PUBLIC_OPENCAGE_API_KEY \
-    NEXT_PUBLIC_OPENCAGE_API_KEY="$(cat /run/secrets/NEXT_PUBLIC_OPENCAGE_API_KEY)" yarn build && yarn postbuild
+    NEXT_PUBLIC_OPENCAGE_API_KEY="$(cat /run/secrets/NEXT_PUBLIC_OPENCAGE_API_KEY)" yarn build
 
 
 
@@ -24,6 +24,13 @@ WORKDIR /app
 COPY --from=builder /app/prisma /app/prisma
 COPY --from=builder /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=builder /app/.next /app/.next
+COPY --from=builder /app/public /app/public
+COPY --from=builder /app/public /srv/http
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 COPY package.json /app
 COPY yarn.lock /app
