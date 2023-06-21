@@ -31,7 +31,7 @@ export type ViewCrystalProps = {
 
 export type ViewCrystalsProps = {
   crystals: null | SerialisableCrystalWithUser[],
-  galleryView: 'location' | 'profile'
+  galleryView: 'location' | 'profile' | 'mainGallery'
 }
 
 export type CrystalProps = {

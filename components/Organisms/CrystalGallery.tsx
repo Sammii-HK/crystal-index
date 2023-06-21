@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {BImage } from '../../components/Atoms';
 import { ViewCrystalsProps } from '../../lib/types/crystal';
 import classNames from 'classnames';
@@ -29,6 +30,9 @@ const CrystalGallery:React.FC<ViewCrystalsProps> = (props) => {
             // "is-4": galleryView === 'profile',
           })
         }>
+          {/* <Link onClick={() => router.push(`/crystals/${crystal.id}`)}>
+            <BImage imageId={crystal.image[0]} />
+          </Link> */}
           <a onClick={() => router.push(`/crystals/${crystal.id}`)}>
             <BImage imageId={crystal.image[0]} />
           </a>
