@@ -12,6 +12,6 @@ export default async function Page(props: ViewCrystalsProps) {
   const crystals = await findAndSerializeAllCrystals();
 
   return (
-    <ViewCrystals crystals={crystals} galleryView="mainGallery"  />
+    <ViewCrystals crystals={crystals} galleryView={props.galleryView}  />
   )
 };
