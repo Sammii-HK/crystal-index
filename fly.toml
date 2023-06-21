@@ -26,4 +26,4 @@ processes = []
 
   # [[statics]]
   #   url_prefix = "/public"
-    # guest_path = "/app/public"
+  #   guest_path = "/app/public"
