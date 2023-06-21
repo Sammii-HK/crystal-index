@@ -7,7 +7,7 @@ import { Canvas } from '@react-three/fiber'
 import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
 import { CrystalLocationWithRelations } from '../../lib/types/location';
 import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
-import { getSuperUserId } from '../../lib/helpers/checkUser';
+import { getSuperUserId } from '../../lib/helpers/getSuperUserId';
 import { getUserFromServerSidePropsContext } from '../../lib/session';
 
 

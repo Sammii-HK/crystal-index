@@ -1,6 +1,8 @@
+'use client'
+
 import classNames from "classnames";
 import { signIn, signOut } from "next-auth/react"
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { checkSub1, checkSuperUser } from "../../lib/helpers/checkUser";
 import useUser from "../../lib/hooks";
@@ -8,6 +10,7 @@ import useUser from "../../lib/hooks";
 
 export default function Navbar() {
   const user = useUser()
+  const router = useRouter();
 
   const [ isBurgerActive, toggleBurgerMenu] = useState<boolean>(false);
 

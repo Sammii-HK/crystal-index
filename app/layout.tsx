@@ -1,7 +1,10 @@
+// 'use client'
 // import Head from 'next/head'
 import { Metadata } from 'next';
 import '../styles/globals.scss'
-// import Navbar from '../components/common/Navbar'
+import Navbar from '../components/common/Navbar'
+import { AppProps } from "next/app";
+import { NextAuthProvider } from './sessionProvider';
 
 export const metadata: Metadata = {
   title: {
@@ -10,20 +13,20 @@ export const metadata: Metadata = {
   },
   description: 'The most personal, beautiful and informative way to discover crystal meanings and index your crystal collection.',
   keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal' ]
-  // icons: {
-  //   icon: '/favicon.ico'
-  // },
 };
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+  children
+}: { children: React.ReactNode}
+) {
   return (
     <html lang="en">
-      {/* <Navbar /> */}
-      <body>{children}</body>
+      <body>
+        <NextAuthProvider>
+          <Navbar />
+          <>{children}</>
+        </NextAuthProvider>
+      </body>
     </html>
   )
 }
