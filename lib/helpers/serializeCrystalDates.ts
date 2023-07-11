@@ -1,6 +1,6 @@
 import { Crystal, User, Image } from "@prisma/client";
 import prisma from "../prisma";
-import { getSuperUserId } from "./getSuperUserId";
+// import { getSuperUserId } from "./getSuperUserId";
 
 type CrystalWithRelations = Crystal & {
   createdBy: User,
@@ -10,7 +10,7 @@ type CrystalWithRelations = Crystal & {
   favouritedBy: { id: string; }[],
 }
 
-const serializeCrystal = (crystal: CrystalWithRelations) => ({
+export const serializeCrystal = (crystal: CrystalWithRelations) => ({
   ...crystal,
   createdAt: crystal.createdAt.toISOString(),
   updatedAt: crystal.updatedAt.toISOString(),
@@ -46,8 +46,7 @@ export const findAndSerializeCrystalWithLocations = async (id: number): Promise<
 }
 
 export const findAndSerializeAllCrystals = async (): Promise<any> => {
-  const superUserId = await getSuperUserId()
-  console.log("superUserId", superUserId);
+  const superUserId = process.env.SUPER_USER_ID
   
   const crystalsResults = await prisma().crystal.findMany({
     where: { createdById: superUserId },

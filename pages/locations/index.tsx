@@ -7,7 +7,7 @@ import { Canvas } from '@react-three/fiber'
 import CrystalsOfLocation from '../../components/Organisms/CrystalsOfLocation';
 import { CrystalLocationWithRelations } from '../../lib/types/location';
 import { findAndSerializeCrystal } from '../../lib/helpers/serializeCrystalDates'
-import { getSuperUserId } from '../../lib/helpers/getSuperUserId';
+// import { getSuperUserId } from '../../lib/helpers/getSuperUserId';
 import { getUserFromServerSidePropsContext } from '../../lib/session';
 
 
@@ -80,7 +80,7 @@ export const getServerSideProps: GetServerSideProps<MapViewProps> = async (conte
         select: { id: true },
         where: {OR: [
           { createdById: session?.userId || "" },
-          { createdById: await getSuperUserId()}
+          { createdById: process.env.SUPER_USER_ID}
         ]}
       },
       crystalsOfMemento: {
