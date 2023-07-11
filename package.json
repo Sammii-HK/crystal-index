@@ -16,7 +16,8 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "npx prisma migrate dev",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
