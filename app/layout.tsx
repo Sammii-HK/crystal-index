@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'The Crystal Index',
     template: '%s | The Crystal Index',
   },
-  description: 'The most personal, beautiful and informative way to discover crystal meanings and index your crystal collection.',
+  description: 'The most personal, beautiful and informative way to discover crystal meanings, identify crystals and index your crystal collection.',
   keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal' ]
 };
 

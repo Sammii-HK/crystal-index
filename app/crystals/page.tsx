@@ -6,6 +6,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Crystal Gallery',
+  description: 'Discover crystal meanings and identify crystals in the most beautiful, informative and personal way.',
+  keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal', 'personal' ]
 };
 
 async function getCrystals() {
