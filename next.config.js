@@ -10,7 +10,14 @@ const nextConfig = {
     ignoreBuildErrors: true
   },
 
-  productionBrowserSourceMaps: false
+  productionBrowserSourceMaps: false,
+
+  // publicRuntimeConfig: {
+  //   // Will be available on both server and client
+  //   DATABASE_URL: process.env.DATABASE_URL,
+  //   // NEXT_PUBLIC_
+  // },
+
 }
 
 export default nextConfig
