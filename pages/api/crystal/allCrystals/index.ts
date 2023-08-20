@@ -3,11 +3,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Crystal } from '@prisma/client'
 import prisma from '../../../../lib/prisma';
 import { serializeCrystal } from '../../../../lib/helpers/serializeCrystalDates';
-// import { SerialisableCrystalWithUser } from '../../../../lib/types/crystal';
+import { SerialisableCrystalWithUser } from '../../../../lib/types/crystal';
 
 type CrystalProps = {
-  crystals: Crystal[]
-  // crystals: SerialisableCrystalWithUser[]
+  // crystals: Crystal[]
+  crystals: SerialisableCrystalWithUser[]
 }
 
 // export const config = {
