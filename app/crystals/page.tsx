@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} | null> {
-  if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) { return null };
+  // if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) { return null };
   const basePath = process.env.SITE_URL
   const allCrystalsPath = `${basePath}/api/crystal/allCrystals`;
   // const allCrystalsPath = 'localhost:3000/api/crystal/allCrystals';
