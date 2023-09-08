@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} | null> {
   if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) { return null };
   const basePath = process.env.SITE_URL
-  // const allCrystalsPath = `${basePath}/api/crystal/allCrystals`;
-  const allCrystalsPath = 'https://crystalindex.co.uk/api/crystal/allCrystals';
+  const allCrystalsPath = `${basePath}/api/crystal/allCrystals`;
+  // const allCrystalsPath = 'localhost:3000/api/crystal/allCrystals';
   
-  const res = await fetch(allCrystalsPath);
+  const res = await fetch(allCrystalsPath, {next: { revalidate: 60 }});
   
   if (!res.ok) {
     throw new Error('Failed to fetch data')
