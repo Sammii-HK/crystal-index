@@ -21,7 +21,7 @@ export default async function crystalsHandler(
   res: NextApiResponse<CrystalProps>
 ) {
   const results = await prisma().crystal.findMany({
-    where: { createdById: process.env.SUPER_USER_ID },
+    // where: { createdById: process.env.SUPER_USER_ID },
     include: { 
         createdBy: true,
         image: true,
@@ -35,6 +35,7 @@ export default async function crystalsHandler(
   const serialisedCrystals = results.map(crystal => crystal && serializeCrystal(crystal))
 
   console.log("serialisedCrystals", serialisedCrystals);
+  console.log("process.env.SUPER_USER_ID", process.env.SUPER_USER_ID);
   
   // return results.map(crystal => crystal && serializeCrystal(crystal))
   return res.status(200).json({ crystals: serialisedCrystals })
