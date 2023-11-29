@@ -33,6 +33,8 @@ export default async function crystalsHandler(
   });
 
   const serialisedCrystals = results.map(crystal => crystal && serializeCrystal(crystal))
+
+  console.log(process.env.SUPER_USER_ID, results, serialisedCrystals);
   
   // return results.map(crystal => crystal && serializeCrystal(crystal))
   return res.status(200).json({ crystals: serialisedCrystals })
