@@ -29,6 +29,8 @@ async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} 
 export default async function Page(props: ViewCrystalsProps) {
   const allCrystals = await getCrystals();
 
+  console.log("all crystals result in Page", allCrystals)
+
   return (
     <ViewCrystals crystals={allCrystals?.crystals || null} galleryView={props.galleryView}  />
   )
