@@ -24,7 +24,7 @@ export default async function crystalsHandler(
     where: { createdById: process.env.SUPER_USER_ID },
     include: { 
         createdBy: true,
-        image: true,
+        image: {select: {id: true}},
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},
         favouritedBy: { select: { id: true }},

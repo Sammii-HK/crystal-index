@@ -20,7 +20,7 @@ export default async function crystalHandler(
         createdBy: true, 
         originLocation: true, 
         mementoLocation: true,
-        image: true,
+        image: { select: { id: true }},
       },
     }
   )

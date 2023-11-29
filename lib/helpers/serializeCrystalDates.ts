@@ -26,7 +26,7 @@ export const findAndSerializeCrystal = async (id: number): Promise<any> => {
       where: { id },
       include: {
         createdBy: true,
-        image: true,
+        image: { select: { id: true }},
         crystalInfo: true,
         originLocation: { select: { placeName: true }},
         mementoLocation: { select: { placeName: true }},
@@ -52,7 +52,7 @@ export const findAndSerializeAllCrystals = async (): Promise<any> => {
     where: { createdById: superUserId },
     include: { 
         createdBy: true,
-        image: true,
+        image: { select: { id: true }},
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},
         favouritedBy: { select: { id: true }},
