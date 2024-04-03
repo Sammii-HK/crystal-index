@@ -1,14 +1,14 @@
-import useUser from '../../../lib/hooks';
-import { GetServerSideProps } from 'next';
-import { BCarousel, BTags } from '../../../components/Molecules';
+'use client'
+
+import useUser from '../lib/hooks';
+import { BCarousel, BTags } from './Molecules';
 import { Crystal, CrystalInfo } from '@prisma/client';
-import { useRouter } from 'next/router'
+import { useRouter, useParams, usePathname } from 'next/navigation'
 import { FormEventHandler, useCallback } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import axios from 'axios';
 import classNames from "classnames";
-import { ViewCrystalProps, SerialisableCrystalWithUser } from '../../../lib/types/crystal';
-import { findAndSerializeCrystal } from '../../../lib/helpers/serializeCrystalDates';
+import { ViewCrystalProps, SerialisableCrystalWithUser } from '../lib/types/crystal';
+import axios from 'axios';
 
 const fieldsToShow: (keyof SerialisableCrystalWithUser)[] = [ 
   'bio', 
@@ -31,11 +31,12 @@ const infoFieldsToShow: (keyof CrystalInfo)[] = [
 ]
 const tagsToShow: ('colour' | 'chakra')[] = [ 'colour', 'chakra' ]
 
-const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
+export default function ViewCrystal(props: ViewCrystalProps) {
   const user = useUser();
   const userId = user?.userId;
   const crystal = props.crystal;
-  const router = useRouter();
+  const router = useRouter();  
+  
   if (user && userId !== crystal?.createdById) fieldsToShow.pop()
   
   const editCrystal: FormEventHandler = useCallback(async (event) => {
@@ -44,22 +45,30 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
   }, []);
 
   const isFavourite = userId && crystal?.favouritedBy?.includes(userId) ? true : false;
+  const params = useParams();
+  const pathname = usePathname();
   
   const handleFavouriteCrystal: FormEventHandler = useCallback(async (event) => {
     event.preventDefault();
     if (!userId) return
     const setFavourite = !isFavourite;
 
+    console.log("setFavourite", setFavourite);
+    console.log("isFavourite", isFavourite);
+    
+    
+
+    console.log("🍓🍋🍊 params", params);
 
     await axios.put<{crystal?: Crystal, error: string}>(
-      `/api/crystal/${router.query.id}/set-favourite`,
+      `/api/crystal/${params!.id}/set-favourite`,
       { userId, setFavourite },
       { headers: { 'Content-Type': 'application/json' } }
     )
 
-    router.replace(router.asPath);
+    router.replace(pathname!);
 
-  }, [userId, router.query.id, isFavourite])
+  }, [userId, params, isFavourite])
 
   if (!crystal) return <p>Crystal not found</p>;
 
@@ -118,13 +127,4 @@ const ViewCrystal: React.FC<ViewCrystalProps> = (props) => {
       </div>
     </div>
   )
-}
-
-export default ViewCrystal;
-
-export const getServerSideProps: GetServerSideProps<ViewCrystalProps> = async (context) => {
-  const { id } = context.params!;
-  const serialisableCrystal = await findAndSerializeCrystal(parseInt(id as string))
-
-  return { props: { crystal: serialisableCrystal }}
 }
