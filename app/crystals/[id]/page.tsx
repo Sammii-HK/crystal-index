@@ -11,7 +11,7 @@ export async function generateMetadata(
   return {
     title: `${serialisableCrystal.name}`,
     description: serialisableCrystal.crystalInfo?.info,
-    keywords: ['crystal index', 'crystal identification', ...serialisableCrystal.crystalInfo?.colour, 'color', 'colour', ...serialisableCrystal.crystalInfo?.chakra, 'chakra']
+    keywords: ['crystal index', 'crystal identification', " " + serialisableCrystal.name, ...serialisableCrystal.crystalInfo?.colour, 'color', 'colour', ...serialisableCrystal.crystalInfo?.chakra, 'chakra']
   }
 }
 
