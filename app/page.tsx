@@ -1,8 +1,10 @@
 import { Metadata } from 'next'
 
-// export const metadata: Metadata = {
-//   title: 'Homepage'
-// }
+export const metadata: Metadata = {
+  title: 'The Crystal Index',
+  description: 'The home of crystal discovery, meanings and identification.',
+  keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal', 'personal' ]
+};
 
 export default function Page() {
   return (
