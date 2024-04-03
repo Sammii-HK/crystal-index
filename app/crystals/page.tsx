@@ -1,7 +1,5 @@
-import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants";
 import ViewCrystals from "../../components/Organisms/ViewCrystals";
-import { findAndSerializeAllCrystals } from "../../lib/helpers/serializeCrystalDates";
-import { CrystalProps, SerialisableCrystalWithUser, ViewCrystalsProps } from "../../lib/types/crystal";
+import { SerialisableCrystalWithUser, ViewCrystalsProps } from "../../lib/types/crystal";
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -11,10 +9,8 @@ export const metadata: Metadata = {
 };
 
 async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} | null> {
-  // if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) { return null };
   const basePath = process.env.SITE_URL
   const allCrystalsPath = `${basePath}/api/crystal/allCrystals`;
-  // const allCrystalsPath = 'localhost:3000/api/crystal/allCrystals';
   
   const res = await fetch(allCrystalsPath, {next: { revalidate: 60 }});
   
@@ -25,7 +21,6 @@ async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} 
   return res.json()
 }
 
-// const ViewCrystals: React.FC<ViewCrystalsProps> = (props) => {
 export default async function Page(props: ViewCrystalsProps) {
   const allCrystals = await getCrystals();
 
