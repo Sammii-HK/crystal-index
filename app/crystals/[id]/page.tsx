@@ -9,9 +9,9 @@ export async function generateMetadata(
   const serialisableCrystal = await findAndSerializeCrystal(parseInt(params.id as string))
 
   return {
-    title: `${serialisableCrystal.name}`,
+    title: `${serialisableCrystal.name} Identification, Healing Properties & Meaning`,
     description: serialisableCrystal.crystalInfo?.info,
-    keywords: ['crystal index', 'crystal identification', " " + serialisableCrystal.name, ...serialisableCrystal.crystalInfo?.colour, 'color', 'colour', ...serialisableCrystal.crystalInfo?.chakra, 'chakra']
+    keywords: ['crystal index', 'crystal identification', "healing", "properties", "identification", "meaning", "power", " " + serialisableCrystal.name, ...serialisableCrystal.crystalInfo?.colour, 'color', 'colour', ...serialisableCrystal.crystalInfo?.chakra, 'chakra']
   }
 }
 
