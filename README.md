@@ -4,7 +4,7 @@
 
 A full-stack Next.js app, which is an index to record crystals, employing a Prisma as an ORM. Crystal information is created with GPT4. Location data is looked up and added using the OpenCage API. Location data is visualised with a 3D globe created with React 3 Fiber.
 
-![main gallery]('./public/project-images/gallery.jpeg)
+![main gallery]('./public/project-images/gallery.png)
 
 ## Details
 
@@ -40,13 +40,13 @@ The homepage is a gallery view of all the crystals on the database.
 
 This page includes a search feature where crystals may be searched by multiple properties including: name, origin location, memento location, colour and chakra.
 
-![search](./public/project-images/search.jpeg)
+![search](./public/project-images/search.png)
 
 ##### Crystal Page
 
 All of the information about the crystal is displayed on each crystals' page. This is where users can favourite a crystal, and if they are the creator of the entry, a user can amend information and see crystal properties which are personal to them, such as the memento location.
 
-![crystal view]('./public/project-images/crystal-view.jpeg)
+![crystal view]('./public/project-images/crystal-view.png)
 
 ##### Create/Edit crystals
 
@@ -54,19 +54,19 @@ To create or edit a crystal, information is entered into a form, this form utili
 For the ENUMs (eg: colour, chakra) tag buttons are created to avoid spelling mistakes
 For a crystals' locational relationships a location but already be entered into the database, for which the crystal is related to, to handle this data type a drop down list is used.
 
-![creating/editing crystals page]('./public/project-images/crystal-edit.jpeg)
+![creating/editing crystals page]('./public/project-images/crystal-edit.png)
 
 ##### Profile Page
 
 Every crystal a user has favourited is showcased on the profile page.
 
-![profile page]('./public/project-images/profile.jpeg)
+![profile page]('./public/project-images/profile.png)
 
 ##### Location Page
 
 Each crystal can be related to a location by either origin or memento; this is then visualised on an interactive globe.
 
-![profile page]('./public/project-images/location-view.jpeg)
+![profile page]('./public/project-images/location-view.png)
 
 ### Challenges & Achievements
 
