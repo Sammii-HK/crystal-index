@@ -1,6 +1,6 @@
 # 🔮 The Crystal Index
 
-[Live Site](www.crystalindex.co.uk)
+[Live Site](https://www.crystalindex.co.uk)
 
 A full-stack Next.js app, which is an index to record crystals, employing a Prisma as an ORM. Crystal information is created with GPT4. Location data is looked up and added using the OpenCage API. Location data is visualised with a 3D globe created with React 3 Fiber.
 
@@ -37,7 +37,6 @@ I wanted to record the basic information about the crystals alongside locational
 
 The homepage is a gallery view of all the crystals on the database.
 
-![main gallery view]('./../public/project-images/gallery-view.jpeg)
 
 This page includes a search feature where crystals may be searched by multiple properties including: name, origin location, memento location, colour and chakra.
 
@@ -51,7 +50,7 @@ All of the information about the crystal is displayed on each crystals' page. Th
 
 ##### Create/Edit crystals
 
-To create or edit a crystal, information is entered into a form, this form ustilises different field types depending on the information required. 
+To create or edit a crystal, information is entered into a form, this form utilises different field types depending on the information required.
 For the ENUMs (eg: colour, chakra) tag buttons are created to avoid spelling mistakes
 For a crystals' locational relationships a location but already be entered into the database, for which the crystal is related to, to handle this data type a drop down list is used.
 
@@ -61,9 +60,13 @@ For a crystals' locational relationships a location but already be entered into 
 
 Every crystal a user has favourited is showcased on the profile page.
 
-
 ![profile page]('./../public/project-images/profile.jpeg)
 
+##### Location Page
+
+Each crystal can be related to a location by either origin or memento; this is then visualised on an interactive globe.
+
+![profile page]('./../public/project-images/location-view.jpeg)
 
 ### Challenges & Achievements
 
