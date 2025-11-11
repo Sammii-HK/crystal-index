@@ -1,13 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 
-let prisma: PrismaClient;
-
-export default function initOrGetPrisma() {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
-  return prisma;
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
+
+export function prisma() {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    });
+  }
+  return globalForPrisma.prisma;
+}
+
+// For backward compatibility
+export default prisma;
 
 // import { PrismaClient } from "@prisma/client";
 

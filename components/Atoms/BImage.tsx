@@ -1,23 +1,45 @@
 import Image from 'next/image'
 
-const BImage: React.FC<InputProps> = (props) => {
+type BImageProps = {
+  imageId?: number
+  blobUrl?: string
+  alt?: string
+  width?: number
+  height?: number
+  priority?: boolean
+  className?: string
+  sizes?: string
+}
+
+const BImage: React.FC<BImageProps> = ({
+  imageId,
+  blobUrl,
+  alt = 'Picture of a crystal',
+  width = 500,
+  height = 500,
+  priority = false,
+  className = '',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+}) => {
+  // Support both old API route and new Blob URLs
+  const src = blobUrl || (imageId ? `/api/image/${imageId}` : '/placeholder-crystal.jpg')
+
   return (
-    <figure className="image is-square">
+    <figure className={`image is-square ${className}`}>
       <Image
-      src={'/api/image/' + props.imageId}
-      alt="picture of a crystal" // TODO: send alt info to component
-      width={500}
-      height={500}
-      quality={100}
-      style={{objectFit:"cover"}}
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        quality={85}
+        priority={priority}
+        sizes={sizes}
+        style={{ objectFit: 'cover' }}
+        loading={priority ? undefined : 'lazy'}
       />
     </figure>
   )
 }
 
 export default BImage
-
-type InputProps = {
-  imageId: number,
-}
 
