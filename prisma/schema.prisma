@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -45,26 +45,26 @@ enum UserPlan {
 }
 
 model User {
-  id                String    @id @default(cuid())
-  username          String?   @unique
-  name              String?
-  email             String?   @unique
-  emailVerified     DateTime?
-  image             String?
-  accounts          Account[]
-  sessions          Session[]
-  createdCrystals   Crystal[]  @relation("createdBy")
-  favouriteCrystals Crystal[]  @relation("favouriteCrystals")
-  role              String?    @default("user")
-  plan              UserPlan  @default(FREE)
-  credits           Int       @default(0)
-  subscriptionId    String?
+  id                 String           @id @default(cuid())
+  username           String?          @unique
+  name               String?
+  email              String?          @unique
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  createdCrystals    Crystal[]        @relation("createdBy")
+  favouriteCrystals  Crystal[]        @relation("favouriteCrystals")
+  role               String?          @default("user")
+  plan               UserPlan         @default(FREE)
+  credits            Int              @default(0)
+  subscriptionId     String?
   subscriptionStatus String?
-  identifications   Identification[]
-  collections       UserCrystal[]
-  apiKeys           ApiKey[]
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  identifications    Identification[]
+  collections        UserCrystal[]
+  apiKeys            ApiKey[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
 
 model VerificationToken {
@@ -77,136 +77,138 @@ model VerificationToken {
 
 // CRYSTALS
 model Crystal {
-  id                Int           @default(autoincrement()) @id
-  createdById       String
-  createdBy         User          @relation("createdBy", fields: [createdById], references: [id])
-  name              String
-  bio               String?
-  crystalInfoId     Int?
-  crystalInfo       CrystalInfo?  @relation(fields: [crystalInfoId], references: [id])
-  otherNames        String?
-  colour            String[]
-  chakra            String[]
-  createdAt         DateTime      @default(now()) @map(name: "created_at")
-  updatedAt         DateTime      @default(now()) @map(name: "updated_at")
-  memento           String?   
-  mementoLocation   Location?     @relation("memento", fields: [memento], references: [placeName])
-  origin            String?   
-  originLocation    Location?     @relation("origin", fields: [origin], references: [placeName])
-  favouritedBy      User[]        @relation("favouriteCrystals")
-  image             Image[]
-  verified          Boolean       @default(false)
-  hardness          Float?
-  luster            String?
-  intention         String[]
-  identifications   Identification[]
-  userCrystals      UserCrystal[]
+  id              Int              @id @default(autoincrement())
+  createdById     String
+  createdBy       User             @relation("createdBy", fields: [createdById], references: [id])
+  name            String
+  bio             String?
+  crystalInfoId   Int?
+  crystalInfo     CrystalInfo?     @relation(fields: [crystalInfoId], references: [id])
+  otherNames      String?
+  colour          String[]
+  chakra          String[]
+  createdAt       DateTime         @default(now()) @map(name: "created_at")
+  updatedAt       DateTime         @default(now()) @map(name: "updated_at")
+  memento         String?
+  mementoLocation Location?        @relation("memento", fields: [memento], references: [placeName])
+  origin          String?
+  originLocation  Location?        @relation("origin", fields: [origin], references: [placeName])
+  favouritedBy    User[]           @relation("favouriteCrystals")
+  image           Image[]
+  verified        Boolean          @default(false)
+  hardness        Float?
+  luster          String?
+  intention       String[]
+  identifications Identification[] @relation("CrystalIdentifications")
+  userCrystals    UserCrystal[]
 }
 
 model Location {
-  id                  Int         @default(autoincrement()) @id
-  placeName           String      @unique
-  city                String?
-  county              String?
-  country             String
-  lat                 String
-  long                String
-  crystalsOfMemento   Crystal[]   @relation("memento")
-  crystalsOfOrigin    Crystal[]   @relation("origin")
+  id                Int       @id @default(autoincrement())
+  placeName         String    @unique
+  city              String?
+  county            String?
+  country           String
+  lat               String
+  long              String
+  crystalsOfMemento Crystal[] @relation("memento")
+  crystalsOfOrigin  Crystal[] @relation("origin")
 }
 
 model Image {
-  id                Int      @default(autoincrement()) @id
-  name              String
-  type              String
-  file              Bytes?   // Keep for backward compatibility during migration
-  blobUrl           String?  // Vercel Blob URL
-  blobUrlProcessed  String?  // Background-removed version
-  crystalId         Int?     
-  crystal           Crystal?  @relation(fields: [crystalId], references: [id])
-  identificationId  String?
-  identification    Identification? @relation(fields: [identificationId], references: [id])
-  createdAt         DateTime @default(now())
+  id               Int              @id @default(autoincrement())
+  name             String
+  type             String
+  file             Bytes? // Keep for backward compatibility during migration
+  blobUrl          String? // Vercel Blob URL
+  blobUrlProcessed String? // Background-removed version
+  crystalId        Int?
+  crystal          Crystal?         @relation(fields: [crystalId], references: [id])
+  identifications  Identification[] // One image can be used in multiple identifications
+  createdAt        DateTime         @default(now())
 }
 
 model CrystalInfo {
-  id            Int          @default(autoincrement()) @id
-  name          String       @unique
-  info          String       @unique
-  colour        String[]
-  chakra        String[]
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  info       String    @unique
+  colour     String[]
+  chakra     String[]
   // crystals   Crystal[]    @relation("crystalInfo")
-  crystalIds    Crystal[]
+  crystalIds Crystal[]
 }
 
 // IDENTIFICATION
 model Identification {
-  id              String   @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  imageUrl        String
-  imageId         String?
-  image           Image?   @relation(fields: [imageId], references: [id])
-  guess           String   // Top match crystal name
-  confidence      Float    // Confidence score 0-1
-  topMatches      Json     // Array of top 5 matches with scores
-  confirmedLabel  String?  // User-confirmed correct label
-  feedback        String?  // User feedback ("wrong", "correct", etc.)
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  imageUrl          String
+  imageId           Int? // Reference to Image model
+  image             Image?   @relation(fields: [imageId], references: [id])
+  crystalId         Int? // Reference to identified crystal
+  crystal           Crystal? @relation("CrystalIdentifications", fields: [crystalId], references: [id])
+  guess             String // Top match crystal name
+  confidence        Float // Confidence score 0-1
+  topMatches        Json // Array of top 5 matches with scores
+  confirmedLabel    String? // User-confirmed correct label
+  feedback          String? // User feedback ("wrong", "correct", etc.)
   processedImageUrl String? // Background-removed image URL
-  createdAt       DateTime @default(now())
-  
+  createdAt         DateTime @default(now())
+
   @@index([userId])
   @@index([createdAt])
+  @@index([crystalId])
 }
 
 // USER COLLECTIONS
 model UserCrystal {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  crystalId   Int?
-  crystal     Crystal? @relation(fields: [crystalId], references: [id])
-  customName  String?
-  photos      String[] // Array of image URLs
-  notes       String?  @db.Text
-  tags        String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  crystalId  Int?
+  crystal    Crystal? @relation(fields: [crystalId], references: [id])
+  customName String?
+  photos     String[] // Array of image URLs
+  notes      String?  @db.Text
+  tags       String[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   @@index([userId])
 }
 
 // BLOG POSTS
 model BlogPost {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  content     String   @db.Text
-  excerpt     String?  @db.Text
-  featuredImage String?
-  published   Boolean  @default(false)
-  publishedAt DateTime?
-  authorId    String?  // Optional: track who generated/edited
-  tags        String[]
-  seoTitle    String?
-  seoDescription String? @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  content        String    @db.Text
+  excerpt        String?   @db.Text
+  featuredImage  String?
+  published      Boolean   @default(false)
+  publishedAt    DateTime?
+  authorId       String? // Optional: track who generated/edited
+  tags           String[]
+  seoTitle       String?
+  seoDescription String?   @db.Text
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
   @@index([slug])
   @@index([published, publishedAt])
 }
 
 // RATE LIMITING
 model RateLimit {
-  id          String   @id @default(cuid())
-  userId      String
-  identifier  String   // Can be userId or IP address
-  action      String   // e.g., "identification", "api_call"
-  count       Int      @default(1)
-  resetAt     DateTime
-  createdAt   DateTime @default(now())
-  
+  id         String   @id @default(cuid())
+  userId     String
+  identifier String // Can be userId or IP address
+  action     String // e.g., "identification", "api_call"
+  count      Int      @default(1)
+  resetAt    DateTime
+  createdAt  DateTime @default(now())
+
   @@unique([identifier, action, resetAt])
   @@index([userId])
   @@index([identifier, action])
@@ -214,13 +216,13 @@ model RateLimit {
 
 // API KEYS (for Retail/API tier)
 model ApiKey {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  keyHash     String   @unique // Hashed API key
-  name        String?  // User-friendly name
-  lastUsedAt  DateTime?
-  createdAt   DateTime @default(now())
-  
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  keyHash    String    @unique // Hashed API key
+  name       String? // User-friendly name
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+
   @@index([userId])
 }
