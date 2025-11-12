@@ -2,33 +2,34 @@
 
 ## Database Setup
 
-### Option 1: Vercel Postgres (Recommended)
+### Use Neon Directly (3GB Free Tier + Preview Branches)
 
-1. Go to your Vercel project dashboard
-2. Navigate to **Storage** → **Create Database** → **Postgres**
-3. Once created, Vercel automatically sets `DATABASE_URL` as an environment variable
-4. Copy the connection string from Vercel dashboard
-5. Add it to your local `.env` file:
+**Recommended:** Use Neon directly for 3GB storage and preview branch support:
 
-```bash
-DATABASE_URL="postgresql://user:password@host:5432/database?sslmode=require"
-```
+1. Sign up at https://neon.tech (3GB free tier)
+2. Create a new project (this is your production database)
+3. Create a preview branch for preview deployments:
+   - Go to **Branches** → **Create Branch**
+   - Name it `preview`
+   - Copy the connection string
+4. Add connection strings to Vercel:
+   - **Production**: Main branch connection string
+   - **Preview**: Preview branch connection string
+   - Go to Vercel → Settings → Environment Variables
+   - Add `DATABASE_URL` for each environment
+5. Add to local `.env`:
+   ```bash
+   DATABASE_URL="postgresql://user:password@ep-xxx.region.neon.tech/dbname?sslmode=require"
+   ```
 
-### Option 2: Local Development (Docker)
+**Benefits:**
 
-1. Create a `.env` file in the root directory:
+- ✅ 3GB storage (vs 0.5GB through Vercel)
+- ✅ Preview branches for isolated testing
+- ✅ Schema sync between branches
+- ✅ Easy cleanup of preview data
 
-```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/crystal_index_dev?schema=public"
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-```
-
-2. Start the database:
-
-```bash
-docker-compose up -d crystalsdb
-```
+See [NEON_SETUP.md](./NEON_SETUP.md) for detailed setup instructions with preview branches.
 
 ## Environment Variables
 
@@ -85,11 +86,12 @@ The app will be available at http://localhost:3000
 ## Troubleshooting
 
 ### Prisma errors about DATABASE_URL
+
 - Make sure `.env` file exists and contains `DATABASE_URL`
 - Check that the database is running (if using Docker)
 - Verify the connection string format is correct
 
 ### Package installation errors
+
 - Make sure you're using Node.js 18+ (`node --version`)
 - Try deleting `node_modules` and `pnpm-lock.yaml`, then `pnpm install` again
-
