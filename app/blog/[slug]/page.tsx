@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { prisma } from '../../../lib/prisma'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { ArticleSchema, BreadcrumbSchema } from '../../../components/common/StructuredData'
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,21 @@ export default async function BlogPostPage({
 
   return (
     <article className="container mt-5">
+      <ArticleSchema
+        title={post.title}
+        description={post.seoDescription || post.excerpt || undefined}
+        image={post.featuredImage || undefined}
+        publishedAt={post.publishedAt || undefined}
+        updatedAt={post.updatedAt}
+        tags={post.tags}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+          { name: post.title, url: `/blog/${post.slug}` },
+        ]}
+      />
       <div className="columns is-centered">
         <div className="column is-8">
           {post.featuredImage && (

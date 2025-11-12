@@ -3,6 +3,7 @@ import '../styles/globals.scss'
 import Navbar from '../components/common/Navbar'
 import { NextAuthProvider } from './sessionProvider';
 import { PostHogProvider } from '../components/Providers/PostHogProvider';
+import { OrganizationSchema, WebSiteSchema } from '../components/common/StructuredData';
 
 export const metadata: Metadata = {
   title: {
@@ -31,6 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
+        <OrganizationSchema />
+        <WebSiteSchema />
         <NextAuthProvider>
           <PostHogProvider>
             <Navbar />
