@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSessionApp } from '../../../lib/session-app'
-import { processBackgroundRemoval } from '../../../lib/backgroundRemoval'
+import { getSessionApp } from '../../../../lib/session-app'
+import { processBackgroundRemoval } from '../../../../lib/backgroundRemoval'
 
 export async function POST(req: NextRequest) {
   try {

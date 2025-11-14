@@ -14,7 +14,7 @@ const BFile: React.FC<InputProps> = (props) => {
     formData.append('name', file.name);
     formData.append('type', file.type);
 
-    const response = await axios.post('/api/image/create', formData);
+    const response = await axios.post('/api/image', formData);
 
     if (response.data.imageId === undefined) {
       setError("UPLOAD FAILED")

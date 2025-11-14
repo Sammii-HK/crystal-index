@@ -2,7 +2,8 @@
 
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { initPostHog, posthog } from '../../lib/posthog'
+import { initPostHog } from '../../lib/posthog'
+import posthog from '../../lib/posthog'
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession()

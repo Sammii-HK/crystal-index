@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSessionApp } from '../../../../lib/session-app'
 import { prisma } from '../../../../lib/prisma'
-import OpenAI from 'openai'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+import { generateBlogPost } from '../../../../lib/ai'
 
 export async function POST(req: NextRequest) {
   try {
@@ -55,35 +51,16 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Generate blog post using OpenAI
-    const prompt = `Write a comprehensive, SEO-optimized blog post about ${crystal.name} crystal. Include:
-- Introduction to the crystal
-- Physical properties and appearance
-- Healing properties and metaphysical meanings
-- Chakra associations: ${crystal.chakra.join(', ')}
-- Color properties: ${crystal.colour.join(', ')}
-- How to use and care for this crystal
-- Common uses and rituals
-- Conclusion
-
-Make it engaging, informative, and approximately 1000-1500 words. Use proper headings and formatting.`
-
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a knowledgeable crystal expert writing engaging, SEO-optimized blog content.',
-        },
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-      temperature: 0.7,
-    })
-
-    const content = completion.choices[0]?.message?.content || ''
+    // Generate blog post using AI SDK (unified interface, easy to switch models)
+    const content = await generateBlogPost(
+      crystal.name,
+      {
+        chakra: crystal.chakra,
+        colour: crystal.colour,
+      }
+      // Optional: override default model config
+      // { provider: 'anthropic', model: 'claude-3-opus-20240229' }
+    )
 
     // Generate slug from crystal name
     const slug = crystal.name

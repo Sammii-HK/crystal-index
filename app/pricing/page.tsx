@@ -32,7 +32,7 @@ export default async function PricingPage() {
       <div className="has-text-centered mb-6">
         <h1 className="title is-2">Choose Your Plan</h1>
         <p className="subtitle is-5">
-          The world's most accurate crystal identifier
+          The world&apos;s most accurate crystal identifier
         </p>
       </div>
 

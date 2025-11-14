@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import posthog from '../../lib/posthog'
 
 interface IdentificationResult {
@@ -91,9 +92,9 @@ export default function IdentifyCrystal() {
       <div className="box has-text-centered">
         <h2 className="title is-4">Sign in to identify crystals</h2>
         <p className="mb-4">Create an account to start identifying your crystals with AI.</p>
-        <a href="/api/auth/signin" className="button is-primary is-large">
+        <Link href="/api/auth/signin" className="button is-primary is-large">
           Sign In
-        </a>
+        </Link>
       </div>
     )
   }
