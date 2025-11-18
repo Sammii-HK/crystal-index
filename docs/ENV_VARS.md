@@ -74,27 +74,29 @@ openssl rand -base64 32
 
 ### Where to Get Each Key
 
-| Variable | Where to Get |
-|----------|-------------|
-| `DATABASE_URL` | Neon: https://neon.tech or Vercel Postgres |
-| `GITHUB_ID/SECRET` | https://github.com/settings/developers |
-| `GOOGLE_ID/SECRET` | https://console.cloud.google.com/apis/credentials |
-| `OPENAI_API_KEY` | https://platform.openai.com/api-keys |
-| `REPLICATE_API_TOKEN` | https://replicate.com/account/api-tokens |
-| `STRIPE_SECRET_KEY` | https://dashboard.stripe.com/test/apikeys |
-| `STRIPE_PUBLISHABLE_KEY` | https://dashboard.stripe.com/test/apikeys |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Dashboard → Storage → Blob |
-| `POSTHOG_KEY` | https://app.posthog.com → Project Settings |
+| Variable                 | Where to Get                                      |
+| ------------------------ | ------------------------------------------------- |
+| `DATABASE_URL`           | Neon: https://neon.tech or Vercel Postgres        |
+| `GITHUB_ID/SECRET`       | https://github.com/settings/developers            |
+| `GOOGLE_ID/SECRET`       | https://console.cloud.google.com/apis/credentials |
+| `OPENAI_API_KEY`         | https://platform.openai.com/api-keys              |
+| `REPLICATE_API_TOKEN`    | https://replicate.com/account/api-tokens          |
+| `STRIPE_SECRET_KEY`      | https://dashboard.stripe.com/test/apikeys         |
+| `STRIPE_PUBLISHABLE_KEY` | https://dashboard.stripe.com/test/apikeys         |
+| `BLOB_READ_WRITE_TOKEN`  | Vercel Dashboard → Storage → Blob                 |
+| `POSTHOG_KEY`            | https://app.posthog.com → Project Settings        |
 
 ## 📝 Production vs Development
 
 ### Development (.env.local)
+
 ```bash
 NEXTAUTH_URL="http://localhost:3000"
 STRIPE_SECRET_KEY="sk_test_..."  # Test keys
 ```
 
 ### Production (Vercel Environment Variables)
+
 ```bash
 NEXTAUTH_URL="https://crystalindex.co.uk"
 STRIPE_SECRET_KEY="sk_live_..."  # Live keys
@@ -126,4 +128,3 @@ BLOB_READ_WRITE_TOKEN="..."
 # List all env vars (without values)
 cat .env.local | grep -E "^[A-Z]" | cut -d'=' -f1 | sort
 ```
-
