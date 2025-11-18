@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import IdentifyCrystal from '../../components/Organisms/IdentifyCrystal'
+import RateLimitWarning from '../../components/Molecules/RateLimitWarning'
 
 export const metadata: Metadata = {
   title: 'Identify Crystal',
@@ -18,6 +19,7 @@ export default function IdentifyPage() {
           <h1 className="title is-2 has-text-centered mb-5">
             Identify Your Crystal
           </h1>
+          <RateLimitWarning />
           <IdentifyCrystal />
         </div>
       </div>
