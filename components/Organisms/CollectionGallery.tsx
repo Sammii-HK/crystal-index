@@ -118,38 +118,98 @@ export default function CollectionGallery({ collections }: CollectionGalleryProp
         })}
       </div>
 
-      {/* Detail Modal */}
-      {selectedCollection && (
-        <div className="modal is-active">
-          <div className="modal-background" onClick={() => setSelectedCollection(null)}></div>
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">
-                {selectedCollection.customName || selectedCollection.crystal?.name || 'Collection Item'}
-              </p>
-              <button
-                className="delete"
-                onClick={() => setSelectedCollection(null)}
-              ></button>
-            </header>
-            <section className="modal-card-body">
-              {selectedCollection.notes && (
-                <div className="content">
-                  <h4>Notes</h4>
-                  <p>{selectedCollection.notes}</p>
-                </div>
-              )}
-              {selectedCollection.tags.length > 0 && (
-                <div className="tags">
-                  {selectedCollection.tags.map((tag, i) => (
-                    <span key={i} className="tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-            </section>
-          </div>
-        </div>
-      )}
+          {/* Detail Modal */}
+          {selectedCollection && (
+            <div className="modal is-active">
+              <div className="modal-background" onClick={() => setSelectedCollection(null)}></div>
+              <div className="modal-card">
+                <header className="modal-card-head">
+                  <p className="modal-card-title">
+                    {selectedCollection.customName || selectedCollection.crystal?.name || 'Collection Item'}
+                  </p>
+                  <button
+                    className="delete"
+                    onClick={() => setSelectedCollection(null)}
+                  ></button>
+                </header>
+                <section className="modal-card-body">
+                  {selectedCollection.photos.length > 0 && (
+                    <div className="mb-4">
+                      <h4 className="title is-6">Photos</h4>
+                      <div className="columns is-multiline">
+                        {selectedCollection.photos.map((photo, i) => (
+                          <div key={i} className="column is-4">
+                            <figure className="image is-square">
+                              <Image
+                                src={photo}
+                                alt={`Photo ${i + 1}`}
+                                width={300}
+                                height={300}
+                                style={{ objectFit: 'cover' }}
+                                className="has-rounded-corners"
+                              />
+                            </figure>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {selectedCollection.crystal?.crystalInfo && (
+                    <div className="content mb-4">
+                      <h4 className="title is-6">Crystal Information</h4>
+                      <p>{selectedCollection.crystal.crystalInfo.info}</p>
+                      {selectedCollection.crystal.crystalInfo.chakra.length > 0 && (
+                        <div className="tags mt-2">
+                          <span className="tag is-light">Chakras:</span>
+                          {selectedCollection.crystal.crystalInfo.chakra.map((chakra, i) => (
+                            <span key={i} className="tag">{chakra}</span>
+                          ))}
+                        </div>
+                      )}
+                      {selectedCollection.crystal.crystalInfo.colour.length > 0 && (
+                        <div className="tags mt-2">
+                          <span className="tag is-light">Colors:</span>
+                          {selectedCollection.crystal.crystalInfo.colour.map((color, i) => (
+                            <span key={i} className="tag">{color}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {selectedCollection.notes && (
+                    <div className="content mb-4">
+                      <h4 className="title is-6">Your Notes</h4>
+                      <p>{selectedCollection.notes}</p>
+                    </div>
+                  )}
+                  
+                  {selectedCollection.tags.length > 0 && (
+                    <div className="mb-4">
+                      <h4 className="title is-6">Tags</h4>
+                      <div className="tags">
+                        {selectedCollection.tags.map((tag, i) => (
+                          <span key={i} className="tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedCollection.crystal && (
+                    <div className="mt-4">
+                      <Link
+                        href={`/crystals/${selectedCollection.crystal.id}`}
+                        className="button is-primary"
+                      >
+                        View Full Crystal Details
+                      </Link>
+                    </div>
+                  )}
+                </section>
+              </div>
+            </div>
+          )}
     </div>
   )
 }
