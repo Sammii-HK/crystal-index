@@ -36,14 +36,32 @@ export async function POST(req: NextRequest) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        const customerId = session.customer as string
-        
-        // Get customer to find user
-        const customer = await stripe.customers.retrieve(customerId)
-        if (typeof customer === 'object' && customer.metadata?.userId) {
-          const subscriptionId = session.subscription as string
+        const metadata = session.metadata || {}
+        const userId = metadata.userId
+
+        if (!userId) {
+          console.error('No userId in session metadata')
+          break
+        }
+
+        // Handle credit bundle purchases
+        if (metadata.type === 'credit_bundle' && metadata.credits) {
+          const credits = parseInt(metadata.credits)
+          await prisma().user.update({
+            where: { id: userId },
+            data: {
+              credits: { increment: credits },
+            },
+          })
+          console.log(`Added ${credits} credits to user ${userId}`)
+          break
+        }
+
+        // Handle subscription purchases
+        const subscriptionId = session.subscription as string
+        if (subscriptionId) {
           await updateUserSubscription(
-            customer.metadata.userId,
+            userId,
             subscriptionId,
             'active'
           )
