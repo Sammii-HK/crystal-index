@@ -72,29 +72,22 @@ export async function checkRateLimit(
 export async function checkIdentificationRateLimit(
   userId: string,
   userPlan: string
-): Promise<RateLimitResult> {
+): Promise<RateLimitResult & { limit: number }> {
   // Free tier: 3 per month
   if (userPlan === 'FREE') {
-    return checkRateLimit(userId, 'identification', 3, 30 * 24 * 60) // 30 days
-  }
-
-  // Pro and above: unlimited (but still check cooldown)
-  // Check 1-minute cooldown for free users, no cooldown for paid
-  if (userPlan === 'FREE') {
-    const cooldown = await checkRateLimit(userId, 'identification_cooldown', 1, 1)
-    if (!cooldown.allowed) {
-      return {
-        allowed: false,
-        remaining: 0,
-        resetAt: cooldown.resetAt,
-      }
+    const result = await checkRateLimit(userId, 'identification', 3, 30 * 24 * 60) // 30 days
+    return {
+      ...result,
+      limit: 3,
     }
   }
 
+  // Pro and above: unlimited
   return {
     allowed: true,
     remaining: Infinity,
     resetAt: new Date(),
+    limit: Infinity,
   }
 }
 

@@ -214,6 +214,50 @@ export default function IdentifyCrystal() {
                 Remaining identifications this month: {result.remaining}
               </p>
             )}
+
+            <div className="mt-4">
+              <button
+                className="button is-primary"
+                onClick={async () => {
+                  try {
+                    // Find crystal ID from name
+                    const crystalResponse = await fetch(`/api/crystals/search?name=${encodeURIComponent(result.topMatches[0]?.crystal || '')}`)
+                    const crystalData = await crystalResponse.json()
+                    const crystalId = crystalData.crystal?.id
+
+                    // Save to collection
+                    const saveResponse = await fetch('/api/collections', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        crystalId,
+                        photos: [result.imageUrl],
+                        notes: `Identified with ${(result.confidence * 100).toFixed(1)}% confidence`,
+                        tags: [result.topMatches[0]?.crystal || 'Unknown'],
+                      }),
+                    })
+
+                    if (saveResponse.ok) {
+                      alert('Saved to collection!')
+                    } else {
+                      throw new Error('Failed to save')
+                    }
+                  } catch (error) {
+                    alert('Failed to save to collection. Please try again.')
+                  }
+                }}
+              >
+                Save to Collection
+              </button>
+              {result.topMatches[0]?.crystal && (
+                <Link
+                  href={`/crystals/search?q=${encodeURIComponent(result.topMatches[0].crystal)}`}
+                  className="button is-light ml-2"
+                >
+                  View Crystal Details
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       )}
