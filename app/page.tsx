@@ -1,22 +1,62 @@
 import { Metadata } from 'next'
+import {
+  Hero,
+  TrustSignals,
+  WhyCrystalIndex,
+  Features,
+  HowItWorks,
+  WhoItsFor,
+  Comparison,
+  Pricing,
+  FAQ,
+  SEOSection,
+  FinalCTA,
+} from '../components/Landing'
 
 export const metadata: Metadata = {
-  title: 'The Crystal Index',
-  description: 'The home of crystal discovery, meanings and identification.',
-  keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal', 'personal' ]
-};
+  title: 'Crystal Index - Crystal identification and reference platform',
+  description: 'Identify any crystal instantly with AI, or explore a crystal reference library online. Built for collectors, healers, jewellers, and the simply curious.',
+  keywords: [
+    'crystal identification',
+    'crystal meanings',
+    'identify crystals',
+    'crystal guide',
+    'crystal database',
+    'crystal library',
+    'crystal reference',
+    'crystal identifier',
+    'crystal meanings',
+    'chakra crystals',
+    'crystal care',
+    'crystal cleansing',
+  ],
+  openGraph: {
+    title: 'Crystal Index - Crystal identification and reference platform',
+    description: 'Identify any crystal instantly with AI, or explore a crystal reference library online.',
+    type: 'website',
+    siteName: 'Crystal Index',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Crystal Index - Crystal identification and reference platform',
+    description: 'Identify any crystal instantly with AI, or explore a crystal reference library online.',
+  },
+}
 
 export default function Page() {
   return (
     <div className="main-container">
-      <section className="hero is-fullheight-with-navbar">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            <h1 className="title is-size-1">Welcome to the Crystal Index 🌈</h1>
-            <p>The most personal, beautiful and informative way to index your crystal collection.</p>
-          </div>
-        </div>
-      </section>
+      <Hero />
+      <TrustSignals />
+      <WhyCrystalIndex />
+      <Features />
+      <HowItWorks />
+      <WhoItsFor />
+      <Comparison />
+      <Pricing />
+      <FAQ />
+      <SEOSection />
+      <FinalCTA />
     </div>
   )
 }

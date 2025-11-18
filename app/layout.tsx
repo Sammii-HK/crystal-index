@@ -10,18 +10,18 @@ export const metadata: Metadata = {
     default: 'The Crystal Index',
     template: '%s | The Crystal Index',
   },
-  description: 'The most personal, beautiful and informative way to discover crystal meanings, identify crystals and index your crystal collection.',
+  description: 'A crystal identification and reference platform. Identify crystals with AI or explore the crystal library.',
   keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal' ],
   openGraph: {
     title: 'The Crystal Index',
-    description: 'The world\'s most accurate crystal identifier and index.',
+    description: 'A crystal identification and reference platform.',
     type: 'website',
     siteName: 'Crystal Index',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'The Crystal Index',
-    description: 'The world\'s most accurate crystal identifier and index.',
+    description: 'A crystal identification and reference platform.',
   },
 };
 
