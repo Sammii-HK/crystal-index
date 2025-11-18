@@ -1,30 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getSessionApp } from '../../../lib/session-app'
-import { prisma } from '../../../lib/prisma'
-import { generateApiKey, hashApiKey } from '../../../lib/api-auth'
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionApp } from "../../../lib/session-app";
+import { prisma } from "../../../lib/prisma";
+import { generateApiKey, hashApiKey } from "../../../lib/api-auth";
 
 // Get all API keys for current user
 export async function GET(req: NextRequest) {
   try {
-    const session = await getSessionApp()
+    const session = await getSessionApp();
     if (!session?.userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Check if user has RETAIL plan
     const user = await prisma().user.findUnique({
       where: { id: session.userId },
       select: { plan: true },
-    })
+    });
 
-    if (user?.plan !== 'RETAIL') {
+    if (user?.plan !== "RETAIL") {
       return NextResponse.json(
-        { error: 'API access requires Retail/API tier subscription' },
+        { error: "API access requires Retail/API tier subscription" },
         { status: 403 }
-      )
+      );
     }
 
     const apiKeys = await prisma().apiKey.findMany({
@@ -36,58 +33,55 @@ export async function GET(req: NextRequest) {
         createdAt: true,
         // Never return the keyHash or actual key
       },
-      orderBy: { createdAt: 'desc' },
-    })
+      orderBy: { createdAt: "desc" },
+    });
 
-    return NextResponse.json({ apiKeys })
+    return NextResponse.json({ apiKeys });
   } catch (error) {
-    console.error('API keys fetch error:', error)
+    console.error("API keys fetch error:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch API keys' },
+      { error: "Failed to fetch API keys" },
       { status: 500 }
-    )
+    );
   }
 }
 
 // Create a new API key
 export async function POST(req: NextRequest) {
   try {
-    const session = await getSessionApp()
+    const session = await getSessionApp();
     if (!session?.userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Check if user has RETAIL plan
     const user = await prisma().user.findUnique({
       where: { id: session.userId },
       select: { plan: true },
-    })
+    });
 
-    if (user?.plan !== 'RETAIL') {
+    if (user?.plan !== "RETAIL") {
       return NextResponse.json(
-        { error: 'API access requires Retail/API tier subscription' },
+        { error: "API access requires Retail/API tier subscription" },
         { status: 403 }
-      )
+      );
     }
 
-    const body = await req.json()
-    const { name } = body
+    const body = await req.json();
+    const { name } = body;
 
     // Generate new API key
-    const plaintextKey = generateApiKey()
-    const keyHash = hashApiKey(plaintextKey)
+    const plaintextKey = generateApiKey();
+    const keyHash = hashApiKey(plaintextKey);
 
     // Store hashed key
     const apiKey = await prisma().apiKey.create({
       data: {
         userId: session.userId,
         keyHash,
-        name: name || 'Unnamed API Key',
+        name: name || "Unnamed API Key",
       },
-    })
+    });
 
     // Return the plaintext key (only shown once!)
     return NextResponse.json({
@@ -95,14 +89,13 @@ export async function POST(req: NextRequest) {
       key: plaintextKey, // Only time this is returned
       name: apiKey.name,
       createdAt: apiKey.createdAt,
-      warning: 'Save this key securely. It will not be shown again.',
-    })
+      warning: "Save this key securely. It will not be shown again.",
+    });
   } catch (error) {
-    console.error('API key creation error:', error)
+    console.error("API key creation error:", error);
     return NextResponse.json(
-      { error: 'Failed to create API key' },
+      { error: "Failed to create API key" },
       { status: 500 }
-    )
+    );
   }
 }
-
