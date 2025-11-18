@@ -1,9 +1,9 @@
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getSessionApp } from '../../../../lib/session-app'
-import { prisma } from '../../../../lib/prisma'
-import BlogPostEditor from '../../../../components/Organisms/BlogPostEditor'
+import { getSessionApp } from '../../../../../lib/session-app'
+import { prisma } from '../../../../../lib/prisma'
+import BlogPostEditor from '../../../../../components/Organisms/BlogPostEditor'
 
 export const metadata: Metadata = {
   title: 'Edit Blog Post - Crystal Index',
