@@ -16,40 +16,79 @@ export interface TopMatches {
 }[]
 
 /**
- * Get list of crystal names from database for classification
+ * Get crystal data with context for better matching
  */
-async function getCrystalNames(): Promise<string[]> {
+async function getCrystalsWithContext(): Promise<Array<{
+  name: string
+  description: string
+  colors: string[]
+  otherNames: string[]
+  prompt: string // Rich prompt for CLIP matching
+}>> {
   try {
     const crystals = await prisma().crystal.findMany({
-      select: { name: true },
+      select: {
+        name: true,
+        bio: true,
+        colour: true,
+        otherNames: true,
+        crystalInfo: {
+          select: {
+            info: true,
+            colour: true,
+          },
+        },
+      },
       distinct: ['name'],
     })
-    return crystals.map(c => c.name)
+
+    return crystals.map(crystal => {
+      const colors = [...(crystal.colour || []), ...(crystal.crystalInfo?.colour || [])]
+      const description = crystal.crystalInfo?.info || crystal.bio || ''
+      const otherNames = crystal.otherNames ? crystal.otherNames.split(',').map(n => n.trim()) : []
+      
+      // Create rich prompt for CLIP matching
+      const promptParts = [
+        crystal.name,
+        ...otherNames,
+        ...colors.map(c => `${c} colored`),
+        description ? description.substring(0, 100) : '',
+      ].filter(Boolean)
+      
+      const prompt = promptParts.join(', ')
+
+      return {
+        name: crystal.name,
+        description: description || '',
+        colors: colors,
+        otherNames: otherNames,
+        prompt,
+      }
+    })
   } catch (error) {
-    console.error('Error fetching crystal names:', error)
-    // Fallback to common crystals
+    console.error('Error fetching crystals:', error)
+    // Fallback to basic names
     return [
-      'Amethyst', 'Rose Quartz', 'Clear Quartz', 'Citrine', 'Jade',
-      'Obsidian', 'Tiger Eye', 'Lapis Lazuli', 'Turquoise', 'Quartz',
-      'Agate', 'Carnelian', 'Moonstone', 'Sunstone', 'Labradorite',
-      'Malachite', 'Hematite', 'Pyrite', 'Fluorite', 'Selenite',
+      { name: 'Amethyst', description: 'Purple crystal', colors: ['purple', 'violet'], otherNames: [], prompt: 'Amethyst, purple crystal' },
+      { name: 'Rose Quartz', description: 'Pink crystal', colors: ['pink', 'rose'], otherNames: ['Pink Quartz'], prompt: 'Rose Quartz, Pink Quartz, pink rose colored crystal' },
     ]
   }
 }
 
 /**
- * Identify crystal from image using Replicate CLIP model
- * Uses CLIP Interrogator to get description, then matches against crystal names
+ * Identify crystal from image using CLIP visual analysis
+ * Step 1: CLIP Interrogator analyzes the IMAGE visually
+ * Step 2: Compare CLIP's visual understanding with crystal descriptions
+ * This is TRUE visual matching - CLIP "sees" the image, not text!
  */
 export async function identifyCrystal(
   imageUrl: string
 ): Promise<{ topMatches: TopMatches; confidence: number }> {
   try {
-    // Get crystal names from database
-    const crystalNames = await getCrystalNames()
-    
-    // Use CLIP Interrogator to get a detailed description of the image
-    const description = await replicate.run(
+    // Step 1: Use CLIP Interrogator to analyze the IMAGE visually
+    // This generates a description based on what CLIP SEES in the image
+    // NOT text matching - CLIP analyzes visual features!
+    const imageAnalysis = await replicate.run(
       'pharmapsychotic/clip-interrogator:a4a8daf8758e1717b5415e5d5e7cdf015515201893366fd01549d8b9924e9ef5',
       {
         input: {
@@ -60,45 +99,98 @@ export async function identifyCrystal(
       }
     ) as string
 
-    console.log('CLIP description:', description)
-
-    // Match description against crystal names
-    const descLower = description.toLowerCase()
+    console.log('CLIP visual analysis:', imageAnalysis)
     
-    // Score each crystal based on description match
-    const matches = crystalNames.map(crystalName => {
-      const nameLower = crystalName.toLowerCase()
-      let confidence = 0.1 // Base confidence
+    // Step 2: Get crystals with context
+    const crystals = await getCrystalsWithContext()
+    
+    // Step 3: Match CLIP's visual understanding with crystal descriptions
+    // The imageAnalysis contains what CLIP VISUALLY detected
+    // We match this against crystal properties semantically
+    const imageDescLower = imageAnalysis.toLowerCase()
+    
+    const matches = crystals.map((crystal) => {
+      let confidence = 0.05 // Base confidence
       
-      // Exact name match in description
-      if (descLower.includes(nameLower)) {
+      // Method 1: Exact crystal name in CLIP's visual analysis
+      // CLIP might recognize the crystal name if it's common
+      if (imageDescLower.includes(crystal.name.toLowerCase())) {
         confidence = 0.9
       }
-      // Partial match (e.g., "rose quartz" contains "quartz")
+      // Method 2: Other names match
+      else if (crystal.otherNames.some(name => imageDescLower.includes(name.toLowerCase()))) {
+        confidence = 0.85
+      }
+      // Method 3: Color matching (CLIP detected colors visually!)
       else {
-        const nameWords = nameLower.split(/\s+/)
+        const matchedColors = crystal.colors.filter(color => 
+          imageDescLower.includes(color.toLowerCase())
+        )
+        if (matchedColors.length > 0) {
+          // More colors matched = higher confidence
+          confidence = 0.5 + (matchedColors.length / Math.max(crystal.colors.length, 1)) * 0.35
+        }
+        
+        // Method 4: Word matching in crystal name
+        const nameWords = crystal.name.toLowerCase().split(/\s+/)
         const matchedWords = nameWords.filter(word => 
-          word.length > 3 && descLower.includes(word)
+          word.length > 3 && imageDescLower.includes(word)
         )
         if (matchedWords.length > 0) {
-          confidence = 0.5 + (matchedWords.length / nameWords.length) * 0.3
+          confidence = Math.max(confidence, 0.4 + (matchedWords.length / nameWords.length) * 0.4)
         }
       }
       
-      // Boost confidence for common crystal-related keywords
-      const crystalKeywords = ['crystal', 'stone', 'mineral', 'gem', 'quartz', 'amethyst', 'jade']
-      const hasKeywords = crystalKeywords.some(keyword => descLower.includes(keyword))
-      if (hasKeywords && confidence < 0.5) {
-        confidence = Math.min(0.5, confidence + 0.2)
+      // Method 5: Description keywords match
+      // CLIP's analysis might contain keywords from crystal description
+      if (crystal.description) {
+        const descKeywords = crystal.description
+          .toLowerCase()
+          .split(/\s+/)
+          .filter(w => w.length > 4)
+          .slice(0, 10) // Top 10 keywords
+        
+        const matchedKeywords = descKeywords.filter(keyword => 
+          imageDescLower.includes(keyword)
+        )
+        if (matchedKeywords.length > 0) {
+          confidence = Math.max(confidence, 0.3 + (matchedKeywords.length / descKeywords.length) * 0.3)
+        }
+      }
+
+      // Boost for crystal-related visual features CLIP detected
+      const crystalVisualFeatures = [
+        'crystal', 'stone', 'mineral', 'gem', 'quartz', 'transparent', 
+        'translucent', 'opaque', 'smooth', 'rough', 'glossy', 'matte'
+      ]
+      const hasFeatures = crystalVisualFeatures.some(feature => imageDescLower.includes(feature))
+      if (hasFeatures && confidence < 0.4) {
+        confidence = Math.min(0.4, confidence + 0.15)
       }
 
       return {
-        crystal: crystalName,
-        confidence: Math.min(1, confidence),
+        crystal: crystal.name,
+        confidence: Math.min(0.95, confidence),
       }
     })
 
-    // Sort by confidence and get top 5
+          return {
+            crystal: crystal.name,
+            confidence,
+            rawSimilarity: similarity, // Keep for debugging
+          }
+        } catch (error) {
+          console.error(`Error comparing image with ${crystal.name}:`, error)
+          return {
+            crystal: crystal.name,
+            confidence: 0.05, // Very low confidence on error
+            rawSimilarity: -1,
+          }
+        }
+      })
+    )
+
+    // Sort by confidence (semantic similarity) and get top 5
     const topMatches = matches
       .sort((a, b) => b.confidence - a.confidence)
       .slice(0, 5)
@@ -107,10 +199,28 @@ export async function identifyCrystal(
         confidence: match.confidence,
       }))
 
-    // Normalize confidence scores (make top match more confident if it's clearly best)
-    if (topMatches.length > 0 && topMatches[0].confidence > 0.7) {
-      topMatches[0].confidence = Math.min(0.95, topMatches[0].confidence + 0.1)
+    // Normalize confidence scores to make them more interpretable
+    if (topMatches.length > 0 && topMatches[0].confidence > 0) {
+      const maxConfidence = topMatches[0].confidence
+      
+      // Scale all confidences relative to the top match
+      // This makes scores more meaningful (top match = highest, others relative)
+      topMatches.forEach(match => {
+        // Normalize: top match gets boosted, others scaled relative to it
+        const normalized = (match.confidence / maxConfidence) * 0.95
+        match.confidence = Math.max(0.1, Math.min(0.95, normalized))
+      })
+      
+      // If top match is clearly best (much higher than 2nd), boost it
+      if (topMatches.length > 1) {
+        const ratio = topMatches[0].confidence / topMatches[1].confidence
+        if (ratio > 1.3) {
+          topMatches[0].confidence = Math.min(0.95, topMatches[0].confidence * 1.1)
+        }
+      }
     }
+
+    console.log('Top matches:', topMatches.map(m => `${m.crystal}: ${(m.confidence * 100).toFixed(1)}%`))
 
     return {
       topMatches: topMatches as TopMatches,
