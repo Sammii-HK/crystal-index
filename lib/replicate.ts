@@ -1,5 +1,6 @@
 import Replicate from 'replicate'
 import { prisma } from './prisma'
+import { getCrystalContext, createCLIPPrompt, type CrystalContext } from './crystal-context'
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -43,26 +44,49 @@ async function getCrystalsWithContext(): Promise<Array<{
     })
 
     return crystals.map(crystal => {
+      // Try to get rich context from crystal-context.ts first
+      const context = getCrystalContext(crystal.name)
+      
+      if (context) {
+        // Use optimized context file description
+        return {
+          name: crystal.name,
+          description: context.visualDescription,
+          colors: context.colors,
+          otherNames: context.otherNames,
+          prompt: createCLIPPrompt(context), // Rich prompt optimized for CLIP
+        }
+      }
+      
+      // Fallback to database data
       const colors = [...(crystal.colour || []), ...(crystal.crystalInfo?.colour || [])]
       const description = crystal.crystalInfo?.info || crystal.bio || ''
       const otherNames = crystal.otherNames ? crystal.otherNames.split(',').map(n => n.trim()) : []
       
-      // Create rich prompt for CLIP matching
-      const promptParts = [
-        crystal.name,
-        ...otherNames,
-        ...colors.map(c => `${c} colored`),
-        description ? description.substring(0, 100) : '',
-      ].filter(Boolean)
+      // Create description from database data
+      const descriptionParts: string[] = []
+      descriptionParts.push(crystal.name)
       
-      const prompt = promptParts.join(', ')
+      if (otherNames.length > 0) {
+        descriptionParts.push(`also known as ${otherNames.join(' or ')}`)
+      }
+      
+      if (colors.length > 0) {
+        descriptionParts.push(`${colors.join(', ')} colored`)
+      }
+      
+      if (description) {
+        descriptionParts.push(description.substring(0, 200))
+      } else {
+        descriptionParts.push(`a crystal stone`)
+      }
 
       return {
         name: crystal.name,
         description: description || '',
         colors: colors,
         otherNames: otherNames,
-        prompt,
+        prompt: descriptionParts.join(', '),
       }
     })
   } catch (error) {
