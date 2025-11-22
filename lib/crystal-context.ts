@@ -960,12 +960,29 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
   },
   "Smoky Quartz": {
     name: "Smoky Quartz",
-    otherNames: ["Smoky Topaz"],
+    otherNames: ["Smoky Topaz", "Smokey Quartz"],
     visualDescription:
-      "A brown to gray-brown colored transparent to translucent crystal. Can range from pale brown to very dark, almost black. Hexagonal form with vitreous luster.",
-    colors: ["brown", "gray", "dark brown", "black"],
-    visualFeatures: ["transparent", "translucent", "hexagonal", "vitreous"],
-    keywords: ["smoky quartz", "brown", "dark", "hexagonal"],
+      "A brown to gray-brown colored transparent to translucent crystal with distinctive smoky appearance. Can range from pale brown to very dark, almost black. Hexagonal prismatic form with vitreous luster. The smoky coloration creates a hazy, clouded appearance within the transparent crystal. Often shows internal clarity despite the dark color.",
+    colors: ["brown", "gray", "dark brown", "black", "gray-brown"],
+    visualFeatures: [
+      "transparent",
+      "translucent",
+      "hexagonal",
+      "prismatic",
+      "vitreous",
+      "smoky",
+      "hazy",
+      "clouded",
+    ],
+    keywords: [
+      "smoky quartz",
+      "smokey quartz",
+      "brown",
+      "dark",
+      "hexagonal",
+      "smoky",
+      "hazy",
+    ],
   },
   Sodalite: {
     name: "Sodalite",
@@ -1011,12 +1028,27 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
   },
   Unakite: {
     name: "Unakite",
-    otherNames: [],
+    otherNames: ["Epidote Feldspar"],
     visualDescription:
-      "A green and pink colored opaque stone. Shows mottled pattern of green epidote and pink feldspar. Polished smooth with vitreous luster.",
-    colors: ["green", "pink", "mottled"],
-    visualFeatures: ["opaque", "mottled", "polished", "vitreous"],
-    keywords: ["unakite", "green", "pink", "mottled"],
+      "A distinctive combination stone showing green epidote and pink feldspar together. Opaque stone with mottled or patchy pattern where green and pink areas meet. The green epidote appears as bright green patches, while pink feldspar shows as pink or salmon-colored areas. Polished smooth with vitreous luster. The mottled pattern is very distinctive.",
+    colors: ["green", "pink", "salmon", "mottled"],
+    visualFeatures: [
+      "opaque",
+      "mottled",
+      "patchy",
+      "polished",
+      "vitreous",
+      "combination",
+    ],
+    keywords: [
+      "unakite",
+      "epidote",
+      "feldspar",
+      "green",
+      "pink",
+      "mottled",
+      "combination",
+    ],
   },
   Zircon: {
     name: "Zircon",
@@ -1392,15 +1424,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     ],
     keywords: ["labradorite", "iridescent", "colorful", "flashing"],
   },
-  "Lapis Lazuli": {
-    name: "Lapis Lazuli",
-    otherNames: ["Lapis"],
-    visualDescription:
-      "A deep blue to azure colored opaque stone, often with white calcite veins and golden pyrite flecks. Rich royal blue color, typically polished smooth. Opaque with a vitreous to dull luster.",
-    colors: ["blue", "azure", "royal blue", "deep blue"],
-    visualFeatures: ["opaque", "polished", "speckled", "veined", "dense"],
-    keywords: ["lapis lazuli", "royal blue", "speckled", "veined"],
-  },
   Larimar: {
     name: "Larimar",
     otherNames: ["Blue Pectolite"],
@@ -1418,12 +1441,55 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
   },
   Lepidolite: {
     name: "Lepidolite",
-    otherNames: [],
+    otherNames: ["Lepidolite Mica", "Pink Mica"],
     visualDescription:
-      "A pink to purple colored opaque to translucent mica. Often shows flaky or scaly appearance. Can be very bright pink or purple. Vitreous to pearly luster.",
+      "A pink to purple colored opaque to translucent mica. Often shows flaky or scaly appearance. Can be very bright pink or purple. Vitreous to pearly luster. Distinctive flaky, layered structure typical of mica minerals.",
     colors: ["pink", "purple", "lavender"],
-    visualFeatures: ["opaque", "translucent", "flaky", "scaly", "vitreous"],
-    keywords: ["lepidolite", "pink mica", "flaky", "scaly"],
+    visualFeatures: [
+      "opaque",
+      "translucent",
+      "flaky",
+      "scaly",
+      "layered",
+      "vitreous",
+      "pearly",
+    ],
+    keywords: [
+      "lepidolite",
+      "lepidolite mica",
+      "pink mica",
+      "flaky",
+      "scaly",
+      "mica",
+      "layered",
+    ],
+  },
+  "Lepidolite Mica": {
+    name: "Lepidolite Mica",
+    otherNames: ["Lepidolite", "Pink Mica"],
+    visualDescription:
+      "A pink to purple colored opaque to translucent mica mineral. Shows distinctive flaky, scaly, or layered appearance typical of mica minerals. Can be very bright pink or purple. Vitreous to pearly luster. Often appears in sheets or flakes.",
+    colors: ["pink", "purple", "lavender", "rose"],
+    visualFeatures: [
+      "opaque",
+      "translucent",
+      "flaky",
+      "scaly",
+      "layered",
+      "sheet-like",
+      "vitreous",
+      "pearly",
+    ],
+    keywords: [
+      "lepidolite mica",
+      "lepidolite",
+      "pink mica",
+      "flaky",
+      "scaly",
+      "mica",
+      "layered",
+      "sheet-like",
+    ],
   },
   Magnesite: {
     name: "Magnesite",
@@ -1460,21 +1526,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["red", "yellow", "white", "brown", "multicolored"],
     visualFeatures: ["opaque", "patterned", "polished", "vitreous"],
     keywords: ["mookaite", "australian jasper", "multicolored", "patterned"],
-  },
-  "Moss Agate": {
-    name: "Moss Agate",
-    otherNames: [],
-    visualDescription:
-      "A translucent to opaque agate with green, brown, or black dendritic inclusions resembling moss or trees. Often white or clear base with dark inclusions. Polished smooth.",
-    colors: ["white", "clear", "green", "brown"],
-    visualFeatures: [
-      "translucent",
-      "opaque",
-      "dendritic",
-      "polished",
-      "inclusions",
-    ],
-    keywords: ["moss agate", "dendritic", "moss-like", "inclusions"],
   },
   Nuummite: {
     name: "Nuummite",
@@ -1574,20 +1625,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["golden", "yellow", "red"],
     visualFeatures: ["transparent", "translucent", "needle-like", "adamantine"],
     keywords: ["rutile", "golden", "needle-like", "bright"],
-  },
-  "Rutilated Quartz": {
-    name: "Rutilated Quartz",
-    otherNames: ["Rutile Quartz"],
-    visualDescription:
-      "A clear to white translucent quartz with golden or red needle-like rutile inclusions. The inclusions form distinctive patterns. Vitreous luster.",
-    colors: ["clear", "white", "golden"],
-    visualFeatures: ["translucent", "inclusions", "needle-like", "vitreous"],
-    keywords: [
-      "rutilated quartz",
-      "rutile quartz",
-      "golden needles",
-      "inclusions",
-    ],
   },
   Sardonyx: {
     name: "Sardonyx",
@@ -1729,22 +1766,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     visualFeatures: ["opaque", "banded", "layered", "polished"],
     keywords: ["tiger iron", "banded", "layered", "multicolored"],
   },
-  "Tiger Eye": {
-    name: "Tiger Eye",
-    otherNames: ["Tigers Eye"],
-    visualDescription:
-      "A golden brown to yellow colored stone with distinctive chatoyant (cat's eye) effect. Shows silky bands of light that move across the surface. Opaque with a silky to vitreous luster.",
-    colors: ["golden", "brown", "yellow", "amber"],
-    visualFeatures: [
-      "opaque",
-      "chatoyant",
-      "silky",
-      "banded",
-      "striped",
-      "fibrous",
-    ],
-    keywords: ["tiger eye", "cat's eye", "chatoyant", "banded", "silky"],
-  },
   Tourmaline: {
     name: "Tourmaline",
     otherNames: [],
@@ -1775,15 +1796,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
       "smooth",
     ],
     keywords: ["turquoise", "blue-green", "veined", "matrix"],
-  },
-  Unakite: {
-    name: "Unakite",
-    otherNames: [],
-    visualDescription:
-      "A green and pink colored opaque stone. Shows mottled pattern of green epidote and pink feldspar. Polished smooth with vitreous luster.",
-    colors: ["green", "pink", "mottled"],
-    visualFeatures: ["opaque", "mottled", "polished", "vitreous"],
-    keywords: ["unakite", "green", "pink", "mottled"],
   },
   Vanadinite: {
     name: "Vanadinite",
@@ -2301,26 +2313,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     visualFeatures: ["opaque", "metallic", "shiny", "reflective", "polished"],
     keywords: ["hematite", "metallic", "shiny", "silver"],
   },
-  "Herkimer Diamond": {
-    name: "Herkimer Diamond",
-    otherNames: ["Herkimer Quartz"],
-    visualDescription:
-      "A very clear, double-terminated quartz crystal. Extremely clear and transparent, often perfectly formed. Very shiny and brilliant with vitreous luster.",
-    colors: ["clear", "colorless"],
-    visualFeatures: [
-      "transparent",
-      "double-terminated",
-      "clear",
-      "brilliant",
-      "vitreous",
-    ],
-    keywords: [
-      "herkimer diamond",
-      "clear quartz",
-      "double-terminated",
-      "brilliant",
-    ],
-  },
   Hessonite: {
     name: "Hessonite",
     otherNames: ["Cinnamon Stone"],
@@ -2339,15 +2331,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     visualFeatures: ["transparent", "translucent", "prismatic", "vitreous"],
     keywords: ["hiddenite", "green spodumene", "green", "prismatic"],
   },
-  "Honey Calcite": {
-    name: "Honey Calcite",
-    otherNames: [],
-    visualDescription:
-      "A golden yellow to honey colored transparent to translucent calcite. Warm golden color. Rhombohedral form with vitreous to pearly luster.",
-    colors: ["yellow", "golden", "honey"],
-    visualFeatures: ["transparent", "translucent", "rhombohedral", "vitreous"],
-    keywords: ["honey calcite", "golden", "honey", "yellow"],
-  },
   Hornblende: {
     name: "Hornblende",
     otherNames: [],
@@ -2365,21 +2348,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["colorless", "white", "clear"],
     visualFeatures: ["transparent", "translucent", "clear", "vitreous"],
     keywords: ["hyalite opal", "water opal", "clear", "glass-like"],
-  },
-  "Iceland Spar": {
-    name: "Iceland Spar",
-    otherNames: ["Optical Calcite"],
-    visualDescription:
-      "A perfectly clear, transparent calcite crystal. Extremely clear, shows double refraction. Rhombohedral form with vitreous luster.",
-    colors: ["clear", "colorless"],
-    visualFeatures: [
-      "transparent",
-      "clear",
-      "rhombohedral",
-      "vitreous",
-      "double-refracting",
-    ],
-    keywords: ["iceland spar", "optical calcite", "clear", "double-refracting"],
   },
   Indicolite: {
     name: "Indicolite",
@@ -2439,15 +2407,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     ],
     keywords: ["kyanite", "blue crystal", "bladed", "tabular"],
   },
-  "Lapis Lazuli": {
-    name: "Lapis Lazuli",
-    otherNames: ["Lapis"],
-    visualDescription:
-      "A deep blue to azure colored opaque stone, often with white calcite veins and golden pyrite flecks. Rich royal blue color, typically polished smooth. Opaque with a vitreous to dull luster.",
-    colors: ["blue", "azure", "royal blue", "deep blue"],
-    visualFeatures: ["opaque", "polished", "speckled", "veined", "dense"],
-    keywords: ["lapis lazuli", "royal blue", "speckled", "veined"],
-  },
   Larimar: {
     name: "Larimar",
     otherNames: ["Blue Pectolite"],
@@ -2462,15 +2421,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
       "vitreous",
     ],
     keywords: ["larimar", "blue pectolite", "ocean blue", "streaked"],
-  },
-  Lepidolite: {
-    name: "Lepidolite",
-    otherNames: [],
-    visualDescription:
-      "A pink to purple colored opaque to translucent mica. Often shows flaky or scaly appearance. Can be very bright pink or purple. Vitreous to pearly luster.",
-    colors: ["pink", "purple", "lavender"],
-    visualFeatures: ["opaque", "translucent", "flaky", "scaly", "vitreous"],
-    keywords: ["lepidolite", "pink mica", "flaky", "scaly"],
   },
   Lepidocrocite: {
     name: "Lepidocrocite",
@@ -2498,15 +2448,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["white", "colorless", "cream"],
     visualFeatures: ["opaque", "translucent", "botryoidal", "vitreous"],
     keywords: ["magnesite", "white", "botryoidal", "cream"],
-  },
-  "Mahogany Obsidian": {
-    name: "Mahogany Obsidian",
-    otherNames: [],
-    visualDescription:
-      "A dark brown to black colored volcanic glass with reddish-brown streaks or patches. Opaque with vitreous luster. Shows mahogany-colored patterns.",
-    colors: ["black", "brown", "reddish-brown"],
-    visualFeatures: ["opaque", "glassy", "vitreous", "streaked"],
-    keywords: ["mahogany obsidian", "brown", "streaked", "volcanic glass"],
   },
   Malachite: {
     name: "Malachite",
@@ -2565,21 +2506,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     ],
     keywords: ["morganite", "pink beryl", "peach", "hexagonal"],
   },
-  "Moss Agate": {
-    name: "Moss Agate",
-    otherNames: [],
-    visualDescription:
-      "A translucent to opaque agate with green, brown, or black dendritic inclusions resembling moss or trees. Often white or clear base with dark inclusions. Polished smooth.",
-    colors: ["white", "clear", "green", "brown"],
-    visualFeatures: [
-      "translucent",
-      "opaque",
-      "dendritic",
-      "polished",
-      "inclusions",
-    ],
-    keywords: ["moss agate", "dendritic", "moss-like", "inclusions"],
-  },
   Nuummite: {
     name: "Nuummite",
     otherNames: [],
@@ -2588,15 +2514,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["black", "gray", "iridescent"],
     visualFeatures: ["opaque", "iridescent", "polished", "vitreous"],
     keywords: ["nuummite", "black", "iridescent", "flashing"],
-  },
-  "Ocean Jasper": {
-    name: "Ocean Jasper",
-    otherNames: [],
-    visualDescription:
-      "A multicolored opaque jasper with circular or orbicular patterns. Often shows pink, green, white, and yellow circles. Very distinctive orbicular patterns.",
-    colors: ["pink", "green", "white", "yellow", "multicolored"],
-    visualFeatures: ["opaque", "orbicular", "patterned", "polished"],
-    keywords: ["ocean jasper", "orbicular", "circular", "multicolored"],
   },
   Olivine: {
     name: "Olivine",
@@ -2662,15 +2579,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     ],
     keywords: ["pectolite", "white", "radiating", "fibrous"],
   },
-  "Peruvian Opal": {
-    name: "Peruvian Opal",
-    otherNames: [],
-    visualDescription:
-      "A blue-green to pink colored translucent to opaque stone. Often shows play of color. Smooth and polished with waxy to vitreous luster.",
-    colors: ["blue-green", "pink", "various"],
-    visualFeatures: ["translucent", "opaque", "polished", "waxy", "vitreous"],
-    keywords: ["peruvian opal", "blue-green", "pink", "polished"],
-  },
   "Petrified Wood": {
     name: "Petrified Wood",
     otherNames: ["Fossil Wood"],
@@ -2688,15 +2596,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["colorless", "white"],
     visualFeatures: ["transparent", "rhombohedral", "prismatic", "vitreous"],
     keywords: ["phenakite", "clear", "colorless", "rhombohedral"],
-  },
-  "Picture Jasper": {
-    name: "Picture Jasper",
-    otherNames: [],
-    visualDescription:
-      "An opaque jasper with landscape-like patterns resembling pictures or scenes. Often shows brown, tan, and cream colors creating scenic patterns. Polished smooth.",
-    colors: ["brown", "tan", "cream"],
-    visualFeatures: ["opaque", "patterned", "landscape-like", "polished"],
-    keywords: ["picture jasper", "landscape", "patterned", "scenic"],
   },
   Pietersite: {
     name: "Pietersite",
@@ -2758,24 +2657,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     visualFeatures: ["opaque", "metallic", "shiny", "cubic", "crystalline"],
     keywords: ["pyrite", "fool's gold", "metallic", "cubic"],
   },
-  "Rainbow Obsidian": {
-    name: "Rainbow Obsidian",
-    otherNames: [],
-    visualDescription:
-      "A black volcanic glass with iridescent rainbow sheen. Appears black but shows rainbow colors when polished and viewed at angles. Vitreous luster.",
-    colors: ["black", "iridescent"],
-    visualFeatures: ["opaque", "glassy", "iridescent", "vitreous"],
-    keywords: ["rainbow obsidian", "iridescent", "rainbow", "volcanic glass"],
-  },
-  "Red Jasper": {
-    name: "Red Jasper",
-    otherNames: [],
-    visualDescription:
-      "A red to reddish-brown colored opaque stone. Rich red color, can range from bright red to dark red-brown. Polished smooth with vitreous to dull luster.",
-    colors: ["red", "reddish-brown", "dark red"],
-    visualFeatures: ["opaque", "polished", "vitreous", "dull"],
-    keywords: ["red jasper", "red", "brown-red", "opaque"],
-  },
   Rhodizite: {
     name: "Rhodizite",
     otherNames: [],
@@ -2811,20 +2692,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["golden", "yellow", "red"],
     visualFeatures: ["transparent", "translucent", "needle-like", "adamantine"],
     keywords: ["rutile", "golden", "needle-like", "bright"],
-  },
-  "Rutilated Quartz": {
-    name: "Rutilated Quartz",
-    otherNames: ["Rutile Quartz"],
-    visualDescription:
-      "A clear to white translucent quartz with golden or red needle-like rutile inclusions. The inclusions form distinctive patterns. Vitreous luster.",
-    colors: ["clear", "white", "golden"],
-    visualFeatures: ["translucent", "inclusions", "needle-like", "vitreous"],
-    keywords: [
-      "rutilated quartz",
-      "rutile quartz",
-      "golden needles",
-      "inclusions",
-    ],
   },
   Sardonyx: {
     name: "Sardonyx",
@@ -2862,15 +2729,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     visualFeatures: ["opaque", "translucent", "mottled", "waxy", "vitreous"],
     keywords: ["serpentine", "green", "mottled", "waxy"],
   },
-  "Shiva Lingam": {
-    name: "Shiva Lingam",
-    otherNames: [],
-    visualDescription:
-      "An egg-shaped stone from India, typically brown to gray with red or white markings. Smooth, polished surface. Opaque with vitreous luster.",
-    colors: ["brown", "gray", "red", "white"],
-    visualFeatures: ["opaque", "smooth", "polished", "egg-shaped", "vitreous"],
-    keywords: ["shiva lingam", "egg-shaped", "smooth", "polished"],
-  },
   Smithsonite: {
     name: "Smithsonite",
     otherNames: [],
@@ -2879,20 +2737,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     colors: ["blue", "green", "pink", "yellow", "various"],
     visualFeatures: ["translucent", "opaque", "botryoidal", "vitreous"],
     keywords: ["smithsonite", "botryoidal", "colorful", "blue-green"],
-  },
-  "Snowflake Obsidian": {
-    name: "Snowflake Obsidian",
-    otherNames: [],
-    visualDescription:
-      "A black volcanic glass with white snowflake-like patterns. Black base with white cristobalite inclusions forming snowflake patterns. Polished smooth.",
-    colors: ["black", "white"],
-    visualFeatures: ["opaque", "patterned", "snowflake-like", "polished"],
-    keywords: [
-      "snowflake obsidian",
-      "snowflake",
-      "patterned",
-      "black and white",
-    ],
   },
   Sodalite: {
     name: "Sodalite",
@@ -3032,31 +2876,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
     ],
     keywords: ["thulite", "pink zoisite", "pink", "rose"],
   },
-  "Tiger Iron": {
-    name: "Tiger Iron",
-    otherNames: [],
-    visualDescription:
-      "A banded stone showing alternating layers of tiger eye, red jasper, and black hematite. Very distinctive banded pattern. Polished smooth.",
-    colors: ["brown", "red", "black", "golden"],
-    visualFeatures: ["opaque", "banded", "layered", "polished"],
-    keywords: ["tiger iron", "banded", "layered", "multicolored"],
-  },
-  "Tiger Eye": {
-    name: "Tiger Eye",
-    otherNames: ["Tigers Eye"],
-    visualDescription:
-      "A golden brown to yellow colored stone with distinctive chatoyant (cat's eye) effect. Shows silky bands of light that move across the surface. Opaque with a silky to vitreous luster.",
-    colors: ["golden", "brown", "yellow", "amber"],
-    visualFeatures: [
-      "opaque",
-      "chatoyant",
-      "silky",
-      "banded",
-      "striped",
-      "fibrous",
-    ],
-    keywords: ["tiger eye", "cat's eye", "chatoyant", "banded", "silky"],
-  },
   Tourmaline: {
     name: "Tourmaline",
     otherNames: [],
@@ -3087,15 +2906,6 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
       "smooth",
     ],
     keywords: ["turquoise", "blue-green", "veined", "matrix"],
-  },
-  Unakite: {
-    name: "Unakite",
-    otherNames: [],
-    visualDescription:
-      "A green and pink colored opaque stone. Shows mottled pattern of green epidote and pink feldspar. Polished smooth with vitreous luster.",
-    colors: ["green", "pink", "mottled"],
-    visualFeatures: ["opaque", "mottled", "polished", "vitreous"],
-    keywords: ["unakite", "green", "pink", "mottled"],
   },
   Vanadinite: {
     name: "Vanadinite",
@@ -3174,6 +2984,146 @@ export const CRYSTAL_CONTEXT: Record<string, CrystalContext> = {
       "vitreous",
     ],
     keywords: ["zoisite", "green", "prismatic", "striated"],
+  },
+  "Rubellite in Granite": {
+    name: "Rubellite in Granite",
+    otherNames: ["Pink Tourmaline in Granite", "Rubellite Granite"],
+    visualDescription:
+      "A combination stone featuring pink to red rubellite (pink tourmaline) crystals embedded in granite matrix. The granite base is typically gray, white, or black with visible feldspar and mica crystals. The rubellite appears as bright pink to deep red prismatic crystals scattered throughout the granite. The tourmaline crystals are transparent to translucent with vitreous luster, contrasting sharply with the opaque, granular granite background. Often shows a speckled or mottled appearance.",
+    colors: ["pink", "red", "white", "black", "gray"],
+    visualFeatures: [
+      "opaque",
+      "translucent",
+      "transparent",
+      "prismatic",
+      "granular",
+      "speckled",
+      "mottled",
+      "embedded",
+      "vitreous",
+      "contrasting",
+    ],
+    keywords: [
+      "rubellite",
+      "pink tourmaline",
+      "granite",
+      "feldspar",
+      "mica",
+      "embedded",
+      "combination",
+      "speckled",
+    ],
+  },
+  "Super Seven": {
+    name: "Super Seven",
+    otherNames: ["Melody Stone", "Sacred Seven"],
+    visualDescription:
+      "A powerful combination crystal containing seven minerals: Amethyst (purple), Cacoxenite (golden yellow), Goethite (brown/black), Lepidocrocite (red), Clear Quartz (transparent), Rutile (golden needles), and Smoky Quartz (brown/black). The stone typically shows a purple base (amethyst) with visible inclusions of golden yellow fibers (cacoxenite), brown/black patches (goethite), red streaks (lepidocrocite), golden needle-like inclusions (rutile), and smoky brown areas (smoky quartz). Transparent to translucent areas (clear quartz) allow light to pass through. The overall appearance is complex and multicolored with a vitreous to glassy luster.",
+    colors: [
+      "purple",
+      "yellow",
+      "golden",
+      "brown",
+      "black",
+      "red",
+      "clear",
+      "multicolored",
+    ],
+    visualFeatures: [
+      "transparent",
+      "translucent",
+      "opaque",
+      "vitreous",
+      "glassy",
+      "included",
+      "fibrous",
+      "needle-like",
+      "streaked",
+      "patched",
+      "complex",
+      "multicolored",
+    ],
+    keywords: [
+      "super seven",
+      "melody stone",
+      "sacred seven",
+      "amethyst",
+      "cacoxenite",
+      "rutile",
+      "combination",
+      "included",
+      "multimineral",
+    ],
+  },
+  "Angel Aura Quartz": {
+    name: "Angel Aura Quartz",
+    otherNames: ["Opal Aura Quartz", "Rainbow Aura Quartz"],
+    visualDescription:
+      "A transparent to translucent clear quartz crystal with an iridescent rainbow coating. The base crystal is clear and glass-like, but the surface displays a brilliant rainbow or opalescent sheen that shifts colors in the light. Colors include pink, blue, purple, gold, and green iridescence. The coating creates a metallic or pearlescent appearance over the transparent crystal. Hexagonal prismatic form with vitreous luster enhanced by the rainbow coating. The iridescent effect is most visible when viewed at different angles.",
+    colors: [
+      "clear",
+      "rainbow",
+      "iridescent",
+      "pink",
+      "blue",
+      "purple",
+      "gold",
+      "green",
+    ],
+    visualFeatures: [
+      "transparent",
+      "translucent",
+      "iridescent",
+      "opalescent",
+      "pearlescent",
+      "metallic",
+      "hexagonal",
+      "prismatic",
+      "vitreous",
+      "coated",
+      "shimmering",
+      "rainbow",
+    ],
+    keywords: [
+      "angel aura",
+      "aura quartz",
+      "rainbow",
+      "iridescent",
+      "opalescent",
+      "coated",
+      "shimmering",
+      "clear quartz",
+    ],
+  },
+  "Azurite Malachite": {
+    name: "Azurite Malachite",
+    otherNames: ["Azure-Malachite", "Blue-Green Combination"],
+    visualDescription:
+      "A combination crystal featuring both azurite (blue) and malachite (green) minerals together. The stone displays distinctive blue and green banding, swirling patterns, or patches where the two minerals meet. Azurite appears as deep blue to azure blue areas, while malachite shows bright green to emerald green areas. The colors often blend together creating turquoise-like zones. Opaque to translucent in different areas. Can have a vitreous to silky luster. The banding patterns are often concentric, swirling, or irregular. The blue and green colors create a striking contrast.",
+    colors: ["blue", "green", "azure", "emerald", "turquoise", "blue-green"],
+    visualFeatures: [
+      "opaque",
+      "translucent",
+      "banded",
+      "swirling",
+      "patched",
+      "concentric",
+      "irregular",
+      "vitreous",
+      "silky",
+      "contrasting",
+      "multicolored",
+    ],
+    keywords: [
+      "azurite",
+      "malachite",
+      "blue-green",
+      "banded",
+      "swirling",
+      "combination",
+      "azure",
+      "emerald",
+    ],
   },
 };
 

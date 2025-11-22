@@ -21,7 +21,10 @@
     "db:analyze": "tsx scripts/analyze-db-size.ts",
     "db:cleanup": "tsx scripts/cleanup-db.ts",
     "db:migrate-images": "tsx scripts/migrate-images-to-blob.ts",
-    "db:remove-binary": "tsx scripts/remove-binary-images.ts"
+    "db:remove-binary": "tsx scripts/remove-binary-images.ts",
+    "test:identify": "tsx scripts/test-identification.ts",
+    "test:crystals": "tsx scripts/test-multiple-crystals.ts",
+    "test:random": "tsx scripts/test-random-crystals.ts"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
@@ -68,6 +71,7 @@
     "@testing-library/react": "^13.0.0",
     "@types/node": "^20.0.0",
     "@types/react": "17.0.40",
+    "dotenv": "^17.2.3",
     "eslint": "8.11.0",
     "eslint-config-next": "^13.3.1",
     "jest": "^27.5.1",
