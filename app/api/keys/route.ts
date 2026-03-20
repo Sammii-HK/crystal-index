@@ -11,19 +11,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check if user has RETAIL plan
-    const user = await prisma().user.findUnique({
-      where: { id: session.userId },
-      select: { plan: true },
-    });
-
-    if (user?.plan !== "RETAIL") {
-      return NextResponse.json(
-        { error: "API access requires Retail/API tier subscription" },
-        { status: 403 }
-      );
-    }
-
     const apiKeys = await prisma().apiKey.findMany({
       where: { userId: session.userId },
       select: {
@@ -52,19 +39,6 @@ export async function POST(req: NextRequest) {
     const session = await getSessionApp();
     if (!session?.userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Check if user has RETAIL plan
-    const user = await prisma().user.findUnique({
-      where: { id: session.userId },
-      select: { plan: true },
-    });
-
-    if (user?.plan !== "RETAIL") {
-      return NextResponse.json(
-        { error: "API access requires Retail/API tier subscription" },
-        { status: 403 }
-      );
     }
 
     const body = await req.json();

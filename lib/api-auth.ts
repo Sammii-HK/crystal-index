@@ -35,11 +35,6 @@ export async function verifyApiKey(req: NextRequest): Promise<string | null> {
     return null
   }
 
-  // Check if user has RETAIL plan
-  if (apiKeyRecord.user.plan !== 'RETAIL') {
-    return null
-  }
-
   // Update last used timestamp
   await prisma().apiKey.update({
     where: { id: apiKeyRecord.id },
