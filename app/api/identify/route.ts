@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSessionApp } from '../../../lib/session-app'
 import { prisma } from '../../../lib/prisma'
 import { checkIdentificationRateLimit } from '../../../lib/rateLimit'
-import { identifyCrystal } from '../../../lib/replicate'
+import { identifyCrystalWithVision } from '../../../lib/openai-identify'
 import { uploadImageToBlob, blobExists } from '../../../lib/blob'
 import { generateImageHash } from '../../../lib/imageHash'
 import { processBackgroundRemoval } from '../../../lib/backgroundRemoval'
@@ -88,8 +88,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Identify crystal using Replicate
-    const identificationResult = await identifyCrystal(
+    // Identify crystal using GPT-4o vision
+    const identificationResult = await identifyCrystalWithVision(
       processedImageUrl || imageUrl
     )
 
