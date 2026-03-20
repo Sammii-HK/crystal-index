@@ -14,24 +14,30 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
   const { imageIds } = props
   const [modalState, setModalState] = useState<{state: boolean, crystalImageId?: number}>({state: false})
 
-  const imageElements = imageIds?.map(id => (
-    <div key={id}>
-      {props.view === "form" && imageIds.length > 1 &&
-        <button
-          onClick={() => setModalState({
-            state: !modalState.state,
-            crystalImageId: id,
-          })}
-          className="button is-pulled-right bring-to-front has-background-clear has-text-danger is-ghost"
-        >
-            <span className="icon is-small">
-              <FaTimes />
-            </span>
-        </button>
-      }
-      <BImage imageId={id} />
-    </div>
-  ));
+  const imageElements = imageIds?.map((imageData) => {
+    // Handle both old format (number[]) and new format ({id, blobUrl}[])
+    const imageId = typeof imageData === 'object' ? imageData.id : imageData;
+    const blobUrl = typeof imageData === 'object' ? imageData.blobUrl : undefined;
+    
+    return (
+      <div key={imageId}>
+        {props.view === "form" && imageIds.length > 1 &&
+          <button
+            onClick={() => setModalState({
+              state: !modalState.state,
+              crystalImageId: imageId,
+            })}
+            className="button is-pulled-right bring-to-front has-background-clear has-text-danger is-ghost"
+          >
+              <span className="icon is-small">
+                <FaTimes />
+              </span>
+          </button>
+        }
+        <BImage imageId={imageId} blobUrl={blobUrl} />
+      </div>
+    );
+  });
   
   if (imageIds && imageIds.length === 1)
     return <>
@@ -75,7 +81,7 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
 export default BCarousel
 
 type CarouselProps = {
-  imageIds: number[] | undefined
+  imageIds: Array<number | { id: number; blobUrl: string | null }> | undefined
   view?: string
   onRemoveImage?: (removedImageId: number) => void
 }

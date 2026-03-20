@@ -1,21 +1,18 @@
 import { Metadata } from 'next'
 import {
   Hero,
-  TrustSignals,
-  WhyCrystalIndex,
   Features,
+  FeaturedCrystals,
+  AppShowcase,
   HowItWorks,
-  WhoItsFor,
-  Comparison,
-  Pricing,
   FAQ,
   SEOSection,
   FinalCTA,
 } from '../components/Landing'
 
 export const metadata: Metadata = {
-  title: 'Crystal Index - Crystal identification and reference platform',
-  description: 'Identify any crystal instantly with AI, or explore a crystal reference library online. Built for collectors, healers, jewellers, and the simply curious.',
+  title: 'Crystal Index — Every crystal has a story',
+  description: 'Explore 200+ crystals with detailed properties, chakra associations, zodiac connections, care guides, and AI identification. Your complete crystal encyclopaedia.',
   keywords: [
     'crystal identification',
     'crystal meanings',
@@ -25,21 +22,23 @@ export const metadata: Metadata = {
     'crystal library',
     'crystal reference',
     'crystal identifier',
-    'crystal meanings',
+    'crystal encyclopaedia',
     'chakra crystals',
     'crystal care',
     'crystal cleansing',
+    'crystal app',
+    'crystal collection',
   ],
   openGraph: {
-    title: 'Crystal Index - Crystal identification and reference platform',
-    description: 'Identify any crystal instantly with AI, or explore a crystal reference library online.',
+    title: 'Crystal Index — Every crystal has a story',
+    description: 'Explore 200+ crystals with detailed properties, chakra associations, zodiac connections, and AI identification.',
     type: 'website',
     siteName: 'Crystal Index',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Crystal Index - Crystal identification and reference platform',
-    description: 'Identify any crystal instantly with AI, or explore a crystal reference library online.',
+    title: 'Crystal Index — Every crystal has a story',
+    description: 'Explore 200+ crystals with detailed properties, chakra associations, zodiac connections, and AI identification.',
   },
 }
 
@@ -47,13 +46,10 @@ export default function Page() {
   return (
     <div className="main-container">
       <Hero />
-      <TrustSignals />
-      <WhyCrystalIndex />
+      <FeaturedCrystals />
       <Features />
       <HowItWorks />
-      <WhoItsFor />
-      <Comparison />
-      <Pricing />
+      <AppShowcase />
       <FAQ />
       <SEOSection />
       <FinalCTA />

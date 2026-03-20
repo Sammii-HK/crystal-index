@@ -3,22 +3,22 @@ export default function HowItWorks() {
     {
       number: 1,
       title: 'Take a photo',
-      description: 'Snap a clear picture of your crystal, whether it\'s raw, tumbled, in jewellery, or sitting on your altar.',
+      description: 'Snap a clear picture of your crystal, whether it is raw, tumbled, in jewellery, or sitting on your altar.',
     },
     {
       number: 2,
       title: 'Upload to Crystal Index',
-      description: 'Our visual model analyses colour, structure, texture, and common patterns.',
+      description: 'Our AI model analyses colour, structure, texture, and common patterns to find the best match.',
     },
     {
       number: 3,
       title: 'See likely matches',
-      description: 'Get a ranked list of likely crystals, lookalikes, and variations, with photos and key differences.',
+      description: 'Get a ranked list of likely crystals with lookalikes, variations, and key differences.',
     },
     {
       number: 4,
       title: 'Dive into the details',
-      description: 'Explore metaphysical meanings, science, uses, cleansing methods, and how to work with your crystal in practice.',
+      description: 'Explore properties, meanings, chakra associations, care guides, and how to work with your crystal.',
     },
   ]
 
@@ -31,18 +31,25 @@ export default function HowItWorks() {
         <div className="columns is-multiline">
           {steps.map((step) => (
             <div key={step.number} className="column is-3">
-              <div className="box has-text-centered" style={{ height: '100%' }}>
-                <div className="is-size-1 has-text-primary has-text-weight-bold mb-3">
+              <div className="box has-text-centered" style={{
+                height: '100%',
+                border: '1px solid rgba(147, 51, 234, 0.1)',
+                borderRadius: '12px',
+              }}>
+                <div className="is-size-1 has-text-weight-bold mb-3" style={{
+                  color: '#9333EA',
+                  opacity: 0.8,
+                }}>
                   {step.number}
                 </div>
                 <h3 className="title is-5 mb-4">{step.title}</h3>
-                <p className="content">{step.description}</p>
+                <p style={{ opacity: 0.75, lineHeight: 1.6 }}>{step.description}</p>
               </div>
             </div>
           ))}
         </div>
         <div className="has-text-centered mt-5">
-          <p className="is-size-7 has-text-grey">
+          <p className="is-size-7" style={{ opacity: 0.5 }}>
             We don&apos;t store your images without permission. You stay in control of your data.
           </p>
         </div>
@@ -50,5 +57,3 @@ export default function HowItWorks() {
     </section>
   )
 }
-
-

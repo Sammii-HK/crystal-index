@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { slugify } from '../../lib/helpers/slugify'
 
 interface CollectionItem {
   id: string
@@ -10,6 +11,7 @@ interface CollectionItem {
   crystal?: {
     id: number
     name: string
+    slug?: string | null
     crystalInfo?: {
       info: string
       colour: string[]
@@ -104,7 +106,7 @@ export default function CollectionGallery({ collections }: CollectionGalleryProp
                     </button>
                     {crystal && (
                       <Link
-                        href={`/crystals/${crystal.id}`}
+                        href={`/crystals/${crystal.slug || slugify(crystal.name)}`}
                         className="button is-small ml-2"
                       >
                         View Crystal Info
@@ -199,7 +201,7 @@ export default function CollectionGallery({ collections }: CollectionGalleryProp
                   {selectedCollection.crystal && (
                     <div className="mt-4">
                       <Link
-                        href={`/crystals/${selectedCollection.crystal.id}`}
+                        href={`/crystals/${selectedCollection.crystal.slug || slugify(selectedCollection.crystal.name)}`}
                         className="button is-primary"
                       >
                         View Full Crystal Details

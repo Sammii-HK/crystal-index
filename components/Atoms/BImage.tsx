@@ -9,6 +9,7 @@ type BImageProps = {
   priority?: boolean
   className?: string
   sizes?: string
+  fill?: boolean // For responsive containers
 }
 
 const BImage: React.FC<BImageProps> = ({
@@ -20,9 +21,29 @@ const BImage: React.FC<BImageProps> = ({
   priority = false,
   className = '',
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  fill = false,
 }) => {
-  // Support both old API route and new Blob URLs
+  // Prefer blobUrl for better performance (CDN, optimized)
+  // Fallback to API route for backward compatibility
   const src = blobUrl || (imageId ? `/api/image/${imageId}` : '/placeholder-crystal.jpg')
+
+  // For responsive containers, use fill prop
+  if (fill) {
+    return (
+      <figure className={`image is-square ${className}`} style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          quality={85}
+          priority={priority}
+          sizes={sizes}
+          style={{ objectFit: 'cover' }}
+          loading={priority ? undefined : 'lazy'}
+        />
+      </figure>
+    )
+  }
 
   return (
     <figure className={`image is-square ${className}`}>

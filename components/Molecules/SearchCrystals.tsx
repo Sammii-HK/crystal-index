@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BField, BInput } from "../Atoms";
 import { SerialisableCrystalWithUser } from "../../lib/types/crystal";
+import { FaTimes } from "react-icons/fa";
 
 const SearchCrystals: React.FC<
   {
@@ -10,11 +11,12 @@ const SearchCrystals: React.FC<
 > = (props) => {
   const crystals = props.crystals;
   const [searchState, setSearchState] = useState<string>('')
+  const [matchCount, setMatchCount] = useState<number | null>(null)
 
   useEffect(() => {
     const searchValue = searchState.toLowerCase();
     const matchingCrystals = (crystals || []).filter(crystal => {
-      return (crystal.name && crystal.name.toLowerCase().includes(searchValue)) 
+      return (crystal.name && crystal.name.toLowerCase().includes(searchValue))
         || (crystal.memento && crystal.memento.toLowerCase().includes(searchValue))
         || (crystal.origin && crystal.origin.toLowerCase().includes(searchValue))
         || (crystal.colour && crystal.crystalInfo?.colour.find(colour => colour.toLowerCase().includes(searchValue)))
@@ -22,18 +24,36 @@ const SearchCrystals: React.FC<
       }
     );
     props.onCrystalSearch(matchingCrystals);
+    setMatchCount(searchValue ? matchingCrystals.length : null);
   }, [crystals, searchState]);
 
   return (
     <BField>
-      <BInput
-      id="search"
-      placeholder='Search by name, colours, chakra or location...'
-      value={searchState}
-      onChange={(newValue: string) => {
-        setSearchState(newValue)
-      }}
-      />
+      <div className="search-container" style={{ position: 'relative' }}>
+        <BInput
+          id="search"
+          placeholder='Search by name, colours, chakra or location...'
+          value={searchState}
+          onChange={(newValue: string) => {
+            setSearchState(newValue)
+          }}
+        />
+        {searchState && (
+          <button
+            className="search-clear-btn"
+            onClick={() => setSearchState('')}
+            type="button"
+            aria-label="Clear search"
+          >
+            <FaTimes />
+          </button>
+        )}
+      </div>
+      {matchCount !== null && (
+        <p className="search-result-count">
+          {matchCount} crystal{matchCount !== 1 ? 's' : ''} found
+        </p>
+      )}
     </BField>
   )
 }

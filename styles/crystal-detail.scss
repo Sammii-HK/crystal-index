@@ -1,0 +1,671 @@
+// ============================================
+// Crystal Detail Page — Premium Design
+// ============================================
+
+// Hero section
+.crystal-hero {
+  position: relative;
+  padding: 3rem 1.5rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background: radial-gradient(ellipse at 30% 20%, var(--crystal-accent, $primary) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &__name {
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.25rem;
+    text-transform: capitalize;
+  }
+
+  &__alt-names {
+    font-size: 0.95rem;
+    opacity: 0.55;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  &__keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  &__keyword {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--crystal-accent, $primary);
+    color: var(--crystal-accent, $primary);
+    background: transparent;
+  }
+}
+
+// Back link
+.crystal-detail__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+// Gallery
+.crystal-gallery {
+  margin-bottom: 2rem;
+
+  &__main {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  &__thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  &__thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border: 2px solid transparent;
+
+    &:hover,
+    &--active {
+      opacity: 1;
+      border-color: var(--crystal-accent, $primary);
+      transform: scale(1.05);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+// Quick facts sidebar
+.crystal-quick-facts {
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+    max-width: 60%;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-quick-facts {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-quick-facts {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
+
+// Section headings
+.crystal-section {
+  margin-bottom: 2.5rem;
+
+  &__heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.25rem;
+      border-radius: 2px;
+      background: var(--crystal-accent, $primary);
+    }
+  }
+
+  &__text {
+    font-size: 1rem;
+    line-height: 1.75;
+    opacity: 0.85;
+  }
+}
+
+// Properties grid (chakras, zodiac, elements, etc.)
+.crystal-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.crystal-property-card {
+  border-radius: 14px;
+  padding: 1.25rem;
+  transition: transform 0.2s ease;
+
+  &__title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.75rem;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-property-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-property-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Chakra badges
+.chakra-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1.5px solid;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+// Generic tag badge
+.crystal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 16px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-badge {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-badge {
+    background: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.75);
+  }
+}
+
+// Rarity badge
+.rarity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+}
+
+// Care instructions grid
+.crystal-care-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.crystal-care-card {
+  border-radius: 14px;
+  padding: 1.25rem;
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.75rem;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0.35rem 0;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: capitalize;
+
+      &::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--crystal-accent, $primary);
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &__text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-care-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-care-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Working with section
+.crystal-working-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.crystal-working-card {
+  border-radius: 14px;
+  padding: 1.25rem;
+
+  &__icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+  }
+
+  &__text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-working-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-working-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Combination links
+.crystal-combinations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+
+  &__group {
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  &__group-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.75rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__text {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-style: italic;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-combinations__group {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .crystal-combinations__link {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff !important;
+    }
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-combinations__group {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .crystal-combinations__link {
+    background: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.75) !important;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #000 !important;
+    }
+  }
+}
+
+// Correspondences
+.crystal-correspondences {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.crystal-correspondence-card {
+  border-radius: 14px;
+  padding: 1.25rem;
+
+  &__title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.6rem;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-correspondence-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-correspondence-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+// CTA section
+.crystal-cta {
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2.5rem 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--crystal-accent, $primary) 0%, transparent 100%);
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-bottom: 1.25rem;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--crystal-accent, $primary);
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      color: #fff !important;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-cta {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-cta {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Description block
+.crystal-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  max-width: 720px;
+}
+
+// Divider
+.crystal-divider {
+  border: none;
+  height: 1px;
+  margin: 2rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .crystal-divider {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .crystal-divider {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+  .crystal-hero__name {
+    font-size: 2rem;
+  }
+
+  .crystal-properties {
+    grid-template-columns: 1fr;
+  }
+
+  .crystal-care-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crystal-working-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crystal-combinations {
+    grid-template-columns: 1fr;
+  }
+
+  .crystal-correspondences {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .crystal-correspondences {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Staggered entrance animation
+.crystal-detail {
+  animation: fade-in 0.4s ease;
+}
+
+.crystal-detail .crystal-section {
+  opacity: 0;
+  animation: fade-in-up 0.5s ease forwards;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.06}s;
+    }
+  }
+}

@@ -12,28 +12,24 @@ export default function FAQ() {
 
   const faqs: FAQItem[] = [
     {
-      question: 'Is Crystal Index free to use?',
-      answer: 'Yes. You can browse the crystal library, read meanings, and use basic search for free. Premium unlocks AI image identification and advanced tools.',
+      question: 'How does AI crystal identification work?',
+      answer: 'Upload a clear photo of your crystal and our AI model analyses colour, texture, structure, and surface patterns to suggest likely matches. You will see a ranked list of candidates along with lookalikes and key differences, so you can make an informed identification.',
     },
     {
-      question: 'How accurate is the AI identification?',
-      answer: 'No AI is perfect, but we train our model specifically on crystals and minerals. You\'ll see a list of likely matches, along with lookalikes and key differences, so you can make an informed decision.',
+      question: 'How many crystals are in the database?',
+      answer: 'Crystal Index currently features over 200 crystals and minerals, each with detailed descriptions, chakra and zodiac associations, metaphysical properties, and care instructions. The collection is growing regularly as new entries are researched and added.',
     },
     {
-      question: 'Do you store my photos?',
-      answer: 'We don\'t store or use your photos for training without your explicit consent. You stay in control of your images and your data.',
+      question: 'Is Crystal Index free?',
+      answer: 'Yes. You can browse the full crystal encyclopaedia, read meanings, explore chakra and zodiac connections, and search the entire library for free on the web. The iOS app offers additional features such as personal collection management and AI identification.',
     },
     {
-      question: 'Do I need to know anything about crystals to use this?',
-      answer: 'Not at all. Crystal Index is designed for beginners and experts alike. Whether you\'re identifying your first crystal or your hundredth, the platform guides you through the process.',
+      question: 'How do I add crystals to my collection?',
+      answer: 'Download the Crystal Index app for iOS, then tap any crystal to add it to your personal collection. You can also use the Quick Add feature to photograph a crystal and add it in one step. Your collection syncs across devices so it is always up to date.',
     },
     {
-      question: 'What\'s the difference between Free and Premium?',
-      answer: 'Free gives you access to browse the crystal library, read meanings, and use basic search. Premium adds AI image identification, unlimited identifications, collections, comparison tools, and early access to new features.',
-    },
-    {
-      question: 'Can I use this for my shop or business?',
-      answer: 'Yes. Crystal Index is ideal for shop owners, jewellers, and healers who want faster, more accurate identification and better product descriptions.',
+      question: 'What information is included for each crystal?',
+      answer: 'Every crystal page includes a detailed description, appearance notes, colour and structure information, chakra associations, zodiac connections, metaphysical properties, common uses, and a care and cleansing guide so you know exactly how to look after it.',
     },
   ]
 
@@ -51,7 +47,10 @@ export default function FAQ() {
             </h2>
             <div className="content">
               {faqs.map((faq, index) => (
-                <div key={index} className="box mb-4">
+                <div key={index} className="box mb-4" style={{
+                  border: '1px solid rgba(147, 51, 234, 0.1)',
+                  borderRadius: '12px',
+                }}>
                   <div
                     className="is-flex is-justify-content-space-between is-align-items-center is-clickable"
                     onClick={() => toggleFAQ(index)}
@@ -64,7 +63,7 @@ export default function FAQ() {
                   </div>
                   {openIndex === index && (
                     <div className="mt-4">
-                      <p>{faq.answer}</p>
+                      <p style={{ lineHeight: 1.7, opacity: 0.85 }}>{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -76,5 +75,3 @@ export default function FAQ() {
     </section>
   )
 }
-
-

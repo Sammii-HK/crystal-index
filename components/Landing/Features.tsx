@@ -1,39 +1,49 @@
 export default function Features() {
   const features = [
     {
-      title: 'AI visual identification',
-      description: 'Upload a photo. Get an answer. Our AI helps you identify crystals from your camera roll, altar, shop counter, or field collection. See likely matches, lookalikes, and detailed information in seconds.',
+      icon: '\u{1F48E}',
+      title: '200+ crystal guides',
+      description: 'Detailed properties, chakra associations, zodiac signs, and care instructions for every crystal in the collection.',
     },
     {
-      title: 'Complete crystal library',
-      description: 'A living crystal encyclopedia. Browse crystals, each with detailed appearance notes, structure, metaphysical meanings, chakra and zodiac associations, uses, and care guidelines.',
+      icon: '\u{1F4F7}',
+      title: 'AI identification',
+      description: 'Photograph any crystal and identify it instantly. See likely matches, lookalikes, and key differences.',
     },
     {
-      title: 'Search by anything',
-      description: 'Find crystals by colour, pattern, or purpose. Search by "green banded", "throat chakra", "anxiety support", "Capricorn", "raw cluster", and more. Crystal Index speaks your language, not just mineral jargon.',
+      icon: '\u2728',
+      title: 'Personal collection',
+      description: 'Catalogue your crystals with the iOS app. Track what you own, where it came from, and build your personal library.',
     },
     {
-      title: 'Collections & favourites',
-      description: 'Organise your personal collection. Save crystals you own, create sets for your altar, jewellery line, client work, or rituals, and keep everything in one place.',
-    },
-    {
-      title: 'Care & cleansing guides',
-      description: 'No more guessing what\'s water-safe. Every crystal page includes clear care, cleansing, and charging information so you can treat your collection with respect (and avoid dissolving it in salt water).',
+      icon: '\u{1F52E}',
+      title: 'Search by chakra',
+      description: 'Find the right crystal for any chakra, intention, or zodiac sign. Search by colour, pattern, or purpose.',
     },
   ]
 
   return (
     <section className="section">
       <div className="container">
-        <h2 className="title is-2 has-text-centered mb-6">
-          Everything you need to understand your crystals
+        <h2 className="title is-2 has-text-centered mb-2">
+          Everything you need
         </h2>
+        <p className="has-text-centered mb-6" style={{ opacity: 0.6, maxWidth: '540px', margin: '0 auto 2rem' }}>
+          One place for crystal identification, meanings, care guides, and collection management.
+        </p>
         <div className="columns is-multiline">
           {features.map((feature, index) => (
-            <div key={index} className="column is-4">
-              <div className="box" style={{ height: '100%' }}>
-                <h3 className="title is-4 mb-4">{feature.title}</h3>
-                <p className="content">{feature.description}</p>
+            <div key={index} className="column is-3">
+              <div className="box" style={{
+                height: '100%',
+                border: '1px solid rgba(147, 51, 234, 0.1)',
+                borderRadius: '12px',
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>
+                  {feature.icon}
+                </div>
+                <h3 className="title is-5 mb-3">{feature.title}</h3>
+                <p style={{ opacity: 0.75, lineHeight: 1.6 }}>{feature.description}</p>
               </div>
             </div>
           ))}
@@ -42,4 +52,3 @@ export default function Features() {
     </section>
   )
 }
-

@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '../lib/prisma'
+import { slugify } from '../lib/helpers/slugify'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://crystalindex.co.uk'
@@ -10,9 +11,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, updatedAt: true },
   })
 
-  // Get all crystals
+  // Get all crystals — use stored slug if present, else derive from name
   const crystals = await prisma().crystal.findMany({
-    select: { id: true, updatedAt: true },
+    select: { id: true, name: true, slug: true, updatedAt: true },
   })
 
   // Static pages
@@ -49,9 +50,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Crystal pages
+  // Crystal pages — canonical slug URLs
   const crystalPages: MetadataRoute.Sitemap = crystals.map((crystal) => ({
-    url: `${baseUrl}/crystals/${crystal.id}`,
+    url: `${baseUrl}/crystals/${crystal.slug || slugify(crystal.name)}`,
     lastModified: crystal.updatedAt,
     changeFrequency: 'weekly',
     priority: 0.7,
@@ -65,8 +66,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  return [...staticPages, ...crystalPages, ...blogPages]
+  // Chakra filter pages for SEO
+  const chakras = ['root', 'sacral', 'solar-plexus', 'heart', 'throat', 'third-eye', 'crown']
+  const chakraPages: MetadataRoute.Sitemap = chakras.map((chakra) => ({
+    url: `${baseUrl}/crystals?chakra=${chakra}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }))
+
+  // Colour filter pages for SEO
+  const colours = ['red', 'pink', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'brown', 'black', 'white', 'clear']
+  const colourPages: MetadataRoute.Sitemap = colours.map((colour) => ({
+    url: `${baseUrl}/crystals?colour=${colour}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.5,
+  }))
+
+  return [...staticPages, ...crystalPages, ...blogPages, ...chakraPages, ...colourPages]
 }
-
-
-

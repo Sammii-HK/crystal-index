@@ -81,6 +81,7 @@ model Crystal {
   createdById     String
   createdBy       User             @relation("createdBy", fields: [createdById], references: [id])
   name            String
+  slug            String?          @unique
   bio             String?
   crystalInfoId   Int?
   crystalInfo     CrystalInfo?     @relation(fields: [crystalInfoId], references: [id])

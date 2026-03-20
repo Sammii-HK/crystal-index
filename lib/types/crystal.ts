@@ -44,7 +44,7 @@ export type SerialisableCrystalWithUser = Omit<Crystal, 'createdAt' | 'updatedAt
   {
     // createdBy: User, 
     createdBy: string | null, 
-    image: number[],
+    image: Array<number | { id: number; blobUrl: string | null }>, // Support both old (number[]) and new ({id, blobUrl}) formats
     crystalInfo: CrystalInfo | null,
     originLocation: string | null, 
     mementoLocation: string | null,

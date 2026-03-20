@@ -1,135 +1,81 @@
 'use client'
 
 import classNames from "classnames";
-import { signIn, signOut } from "next-auth/react"
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
-import { checkSub1, checkSuperUser } from "../../lib/helpers/checkUser";
-import useUser from "../../lib/hooks";
-
 
 export default function Navbar() {
-  const user = useUser()
-  const router = useRouter();
-
-  const [ isBurgerActive, toggleBurgerMenu] = useState<boolean>(false);
+  const [isBurgerActive, toggleBurgerMenu] = useState<boolean>(false);
 
   function handleBurgerClick() {
     toggleBurgerMenu(!isBurgerActive);
   }
 
+  function closeBurger() {
+    toggleBurgerMenu(false);
+  }
+
   return (
-  <nav className="navbar" role="navigation" aria-label="main navigation">
-    <div className="navbar-brand">
-      <a className="navbar-item" onClick={() => {
-          handleBurgerClick()
-          router.push('/')
-        }}>
-        Crystal Index
-      </a>
-
-      <a 
-      role="button" 
-      className={
-        classNames({
-        "navbar-burger": true,
-        "is-active": isBurgerActive,
-        })
-      } 
-      aria-label="menu" 
-      aria-expanded="false" 
-      data-target="navbarBasicExample"
-      onClick={handleBurgerClick}
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div 
-    id="navbarBasicExample" 
-    className={
-      classNames({
-        "navbar-menu": true,
-        "is-active": isBurgerActive,
-      })
-    }
+    <nav
+      className="navbar is-fixed-top ci-navbar"
+      role="navigation"
+      aria-label="main navigation"
     >
-      <div className="navbar-start">
-        {user?.userId &&
-          <div className="navbar-item">
-            <p className="body is-text-weight-bold is-hidden-desktop">Hi {user.username}! 💎</p>
-          </div>
-        }
-        <a className="navbar-item" onClick={() => {
-            handleBurgerClick()
-            router.push('/crystals')
-          }}>
-          Crystals
-        </a>
-        {user && checkSub1(user) && 
-          <a className="navbar-item" onClick={() => {
-              handleBurgerClick()
-              router.push('/locations')
-            }}>
-            Locations
-          </a>
-        }
-      </div>
+      <div className="container">
+        <div className="navbar-brand">
+          <Link className="navbar-item ci-navbar__brand" href="/" onClick={closeBurger}>
+            <span className="ci-navbar__icon">&#9670;</span>
+            <span className="ci-navbar__title">Crystal Index</span>
+          </Link>
 
-      <div className="navbar-end is-align-content-center">
-        {user?.userId && 
-          <div className=" is-flex">
-            <div className="navbar-item is-hidden-touch">
-              <p className="body is-text-weight-bold mb-1 mr-3">Hi {user.username}!
-                <span>
-                  {user.role === 'unicorn' ? ' 🦄' : ' 💎'}
-                </span>
-              </p>
-            </div>
-            <a className="navbar-item" onClick={() => {
-                handleBurgerClick()
-                router.push(`/profile/${user.userId}` )
-              }}>
-              Profile
-            </a>
-          </div>
-        }
-        {user && checkSub1(user) && 
-          <>
-            <a className="navbar-item is-secondary" onClick={() => {
-              handleBurgerClick()
-              router.push('/crystals/add')
-            }}>
-              Add Crystal
-            </a>
-          </>
-        }
-        {user && checkSuperUser(user) &&
-          <a className="navbar-item is-secondary" onClick={() => {
-            handleBurgerClick()
-            router.push('/users')
-          }}>
-            Admin
+          <a
+            role="button"
+            className={classNames({
+              "navbar-burger": true,
+              "is-active": isBurgerActive,
+            })}
+            aria-label="menu"
+            aria-expanded={isBurgerActive}
+            onClick={handleBurgerClick}
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </a>
-        }
-        {user?.userId && 
-          <>
-            <button className="navbar-item button is-primary is-hidden-touch mt-1 ml-3" onClick={() => signOut()}>Sign out</button>
-            <p className="navbar-item is-hidden-desktop has-text-pink is-clickable" onClick={() => signOut()}>Sign out</p>
-          </>
-        }
-        {!user?.userId && 
-          <div>
-            <button className="navbar-item button is-primary is-hidden-touch mb-0" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</button>
-            <p className="navbar-item is-hidden-desktop has-text-green is-clickable" onClick={() => signIn(undefined, { callbackUrl: '/' })}>Sign in</p>
+        </div>
+
+        <div
+          className={classNames({
+            "navbar-menu": true,
+            "is-active": isBurgerActive,
+          })}
+        >
+          <div className="navbar-start">
+            <Link className="navbar-item ci-navbar__link" href="/crystals" onClick={closeBurger}>
+              Crystals
+            </Link>
+            <Link className="navbar-item ci-navbar__link" href="/identify" onClick={closeBurger}>
+              Identify
+            </Link>
+            <Link className="navbar-item ci-navbar__link" href="/blog" onClick={closeBurger}>
+              Blog
+            </Link>
           </div>
-        }
-        <div className="buttons">
+
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <a
+                className="button ci-navbar__cta"
+                href="https://apps.apple.com/app/crystal-index/id6741419625"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get the App
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-  )
+    </nav>
+  );
 }
