@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getSessionApp } from '../../../lib/session-app'
-import { prisma } from '../../../lib/prisma'
 import ApiKeyManager from '../../../components/Organisms/ApiKeyManager'
 
 export const metadata: Metadata = {
@@ -18,16 +17,6 @@ export default async function ApiKeysPage() {
   
   if (!session?.userId) {
     redirect('/api/auth/signin')
-  }
-
-  // Check if user has RETAIL plan
-  const user = await prisma().user.findUnique({
-    where: { id: session.userId },
-    select: { plan: true },
-  })
-
-  if (user?.plan !== 'RETAIL') {
-    redirect('/pricing')
   }
 
   return (
