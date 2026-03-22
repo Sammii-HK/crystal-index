@@ -1,19 +1,5 @@
 import Link from 'next/link'
-import { slugify } from '../../lib/helpers/slugify'
-
-interface FeaturedCrystal {
-  id: number
-  name: string
-  slug?: string | null
-  chakra: string[]
-  colour: string[]
-  crystalInfo: {
-    info: string | null
-    colour: string[] | null
-    chakra: string[] | null
-  } | null
-  image: Array<{ blobUrl: string | null }>
-}
+import crystalData from '../../data/crystals.json'
 
 const CHAKRA_COLOURS: Record<string, string> = {
   crown: '#9c4cc5',
@@ -25,28 +11,15 @@ const CHAKRA_COLOURS: Record<string, string> = {
   root: '#c82020',
 }
 
-async function getFeaturedCrystals(): Promise<FeaturedCrystal[]> {
-  const basePath = process.env.NEXT_PUBLIC_SITE_URL
-    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+const FEATURED_NAMES = [
+  'Rose Quartz', 'Amethyst', 'Black Tourmaline', 'Citrine',
+  'Lapis Lazuli', 'Selenite', 'Obsidian', 'Moonstone',
+]
 
-  try {
-    const res = await fetch(`${basePath}/api/v1/crystals?limit=8`, {
-      next: { revalidate: 3600 },
-    })
-
-    if (!res.ok) return []
-
-    const data = await res.json()
-    return data.crystals || []
-  } catch {
-    return []
-  }
-}
-
-export default async function FeaturedCrystals() {
-  const crystals = await getFeaturedCrystals()
-
-  if (crystals.length === 0) return null
+export default function FeaturedCrystals() {
+  const crystals = FEATURED_NAMES.map(name =>
+    (crystalData as any[]).find(c => c.name === name)
+  ).filter(Boolean)
 
   return (
     <section className="section" style={{
@@ -61,75 +34,36 @@ export default async function FeaturedCrystals() {
         </p>
 
         <div className="columns is-multiline">
-          {crystals.map((crystal) => {
-            const imageUrl = crystal.image?.[0]?.blobUrl
-            const primaryChakra = crystal.chakra?.[0]
-            const description = crystal.crystalInfo?.info
-            const truncated = description
-              ? description.length > 80
-                ? description.slice(0, 80).trim() + '...'
-                : description
-              : null
+          {crystals.map((crystal: any) => {
+            const slug = crystal.name.toLowerCase().replace(/\s+/g, '-')
+            const primaryChakra = crystal.chakras?.[0]?.toLowerCase()
+            const description = crystal.description
 
             return (
               <div key={crystal.id} className="column is-3">
-                <Link href={`/crystals/${crystal.slug || slugify(crystal.name)}`} style={{ display: 'block' }}>
-                  <div className="box featured-crystal-card" style={{
+                <Link href={`/crystals/${slug}`} style={{ display: 'block', height: '100%' }}>
+                  <div className="box" style={{
                     height: '100%',
                     border: '1px solid rgba(147, 51, 234, 0.1)',
                     borderRadius: '12px',
-                    overflow: 'hidden',
-                    padding: 0,
-                    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
                   }}>
-                    {imageUrl && (
-                      <div style={{
-                        width: '100%',
-                        paddingBottom: '100%',
-                        position: 'relative',
-                        overflow: 'hidden',
+                    <h3 className="title is-6 mb-2">{crystal.name}</h3>
+                    {primaryChakra && (
+                      <span className="tag is-small mb-3" style={{
+                        backgroundColor: CHAKRA_COLOURS[primaryChakra] || '#9333EA',
+                        color: '#fff',
+                        borderRadius: '4px',
+                        fontSize: '0.7rem',
+                        textTransform: 'capitalize',
                       }}>
-                        <img
-                          src={imageUrl}
-                          alt={crystal.name}
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
-                          loading="lazy"
-                        />
-                      </div>
+                        {primaryChakra} chakra
+                      </span>
                     )}
-                    <div style={{ padding: '1rem' }}>
-                      <h3 className="title is-6 mb-2" style={{ textTransform: 'capitalize' }}>
-                        {crystal.name}
-                      </h3>
-                      {primaryChakra && (
-                        <span className="tag is-small mb-2" style={{
-                          backgroundColor: CHAKRA_COLOURS[primaryChakra] || '#9333EA',
-                          color: '#fff',
-                          borderRadius: '4px',
-                          fontSize: '0.7rem',
-                          textTransform: 'capitalize',
-                        }}>
-                          {primaryChakra}
-                        </span>
-                      )}
-                      {truncated && (
-                        <p style={{
-                          fontSize: '0.85rem',
-                          opacity: 0.65,
-                          lineHeight: 1.5,
-                          marginTop: '0.5rem',
-                        }}>
-                          {truncated}
-                        </p>
-                      )}
-                    </div>
+                    {description && (
+                      <p style={{ fontSize: '0.85rem', opacity: 0.65, lineHeight: 1.5 }}>
+                        {description.length > 100 ? description.slice(0, 100).trim() + '\u2026' : description}
+                      </p>
+                    )}
                   </div>
                 </Link>
               </div>
@@ -143,7 +77,7 @@ export default async function FeaturedCrystals() {
             className="button is-primary is-outlined"
             style={{ borderRadius: '8px', fontWeight: 600 }}
           >
-            View all crystals &rarr;
+            View all 215 crystals &rarr;
           </Link>
         </div>
       </div>

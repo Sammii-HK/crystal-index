@@ -1,10 +1,12 @@
 import { Metadata } from 'next'
 import {
   Hero,
+  TrustSignals,
   Features,
   FeaturedCrystals,
   AppShowcase,
   HowItWorks,
+  Pricing,
   FAQ,
   SEOSection,
   FinalCTA,
@@ -46,10 +48,12 @@ export default function Page() {
   return (
     <div className="main-container">
       <Hero />
+      <TrustSignals />
       <FeaturedCrystals />
       <Features />
-      <HowItWorks />
       <AppShowcase />
+      <HowItWorks />
+      <Pricing />
       <FAQ />
       <SEOSection />
       <FinalCTA />
