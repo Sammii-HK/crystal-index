@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Metadata } from 'next'
 import { getSessionApp } from '../../lib/session-app'
 import { prisma } from '../../lib/prisma'

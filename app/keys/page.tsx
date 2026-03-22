@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getSessionApp } from '../../lib/session-app'

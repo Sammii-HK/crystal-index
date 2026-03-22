@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Metadata } from 'next'
 import { prisma } from '../../lib/prisma'
 import Link from 'next/link'

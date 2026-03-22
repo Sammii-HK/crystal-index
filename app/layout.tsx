@@ -3,6 +3,7 @@ import '../styles/globals.scss'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
 import { PostHogProvider } from '../components/Providers/PostHogProvider';
+import { NextAuthProvider } from './sessionProvider';
 import { OrganizationSchema, WebSiteSchema } from '../components/common/StructuredData';
 
 export const metadata: Metadata = {
@@ -39,11 +40,13 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <OrganizationSchema />
         <WebSiteSchema />
-        <PostHogProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </PostHogProvider>
+        <NextAuthProvider>
+          <PostHogProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </PostHogProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

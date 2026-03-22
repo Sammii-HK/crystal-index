@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Metadata } from 'next'
 import IdentifyCrystal from '../../components/Organisms/IdentifyCrystal'
 import RateLimitWarning from '../../components/Molecules/RateLimitWarning'
