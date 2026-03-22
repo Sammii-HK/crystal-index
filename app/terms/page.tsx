@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
-  const lastUpdated = '20 March 2025'
+  const lastUpdated = '22 March 2026'
 
   return (
     <div className="section">
@@ -65,17 +65,25 @@ export default function TermsPage() {
             To the maximum extent permitted by applicable law, Monkey Taps Ltd shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Crystal Index, even if we have been advised of the possibility of such damages.
           </p>
 
-          <h2 className="title is-4 has-text-white">9. Governing law</h2>
+          <h2 className="title is-4 has-text-white">9. End User Licence Agreement (iOS)</h2>
+          <p className="has-text-grey-light">
+            The Crystal Index iOS app is licensed to you by Monkey Taps Ltd, not sold. This licence is non-transferable and permits use on any Apple device you own or control, as permitted by the App Store Usage Rules. Monkey Taps Ltd is solely responsible for the app and its content. Apple has no obligation to provide maintenance, support, warranty, or product claims for Crystal Index.
+          </p>
+          <p className="has-text-grey-light">
+            In the event of any third-party claim that the app infringes intellectual property rights, Monkey Taps Ltd — not Apple — is solely responsible for the investigation, defence, settlement, and discharge of such claim. Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce them against you.
+          </p>
+
+          <h2 className="title is-4 has-text-white">10. Governing law</h2>
           <p className="has-text-grey-light">
             These Terms of Use shall be governed by and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.
           </p>
 
-          <h2 className="title is-4 has-text-white">10. Changes to these terms</h2>
+          <h2 className="title is-4 has-text-white">11. Changes to these terms</h2>
           <p className="has-text-grey-light">
             We may update these Terms of Use from time to time. We will post the revised terms on this page with an updated date. Continued use of Crystal Index after any changes constitutes your acceptance of the new terms.
           </p>
 
-          <h2 className="title is-4 has-text-white">11. Contact us</h2>
+          <h2 className="title is-4 has-text-white">12. Contact us</h2>
           <p className="has-text-grey-light">
             If you have any questions about these Terms of Use, please contact us at:{' '}
             <a href="mailto:hello@crystalindex.co.uk">hello@crystalindex.co.uk</a>

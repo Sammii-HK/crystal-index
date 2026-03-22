@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPage() {
-  const lastUpdated = '20 March 2025'
+  const lastUpdated = '22 March 2026'
 
   return (
     <div className="section">
@@ -32,7 +32,8 @@ export default function PrivacyPage() {
             <strong className="has-text-white">Photos you take:</strong> Photos you add to your crystal collection are stored locally on your device (or in your iCloud if CloudKit sync is enabled). We do not upload your photos to our servers.
           </p>
           <p className="has-text-grey-light">
-            <strong className="has-text-white">AI identification:</strong> When you use the AI crystal identification feature, the photo you submit is sent to a third-party AI provider (DeepInfra) for processing. The photo is not stored by us after processing. Please review DeepInfra&apos;s privacy policy for their data handling practices.
+            <strong className="has-text-white">AI identification:</strong> When you use the AI crystal identification feature, the photo you submit is temporarily uploaded to our secure image store (Vercel Blob) and sent to OpenAI for processing using their vision model. The image may be retained briefly for processing purposes. Please review{' '}
+            <a href="https://openai.com/policies/privacy-policy">OpenAI&apos;s privacy policy</a> for their data handling practices. We do not use your images to train AI models.
           </p>
           <p className="has-text-grey-light">
             <strong className="has-text-white">Purchases:</strong> Subscriptions are managed via RevenueCat and Apple&apos;s App Store. We receive anonymised purchase data (subscription status, product ID) but do not receive your payment details.
@@ -50,10 +51,22 @@ export default function PrivacyPage() {
             <li>Understand how users interact with the app (anonymised analytics only)</li>
           </ul>
 
+          <h2 className="title is-4 has-text-white">3a. Camera and photo library</h2>
+          <p className="has-text-grey-light">
+            The iOS app requests access to your camera and photo library solely to enable the crystal identification and collection features. This access is used only when you explicitly choose to take or select a photo. We do not access your camera or photos in the background.
+          </p>
+
           <h2 className="title is-4 has-text-white">4. Data sharing</h2>
           <p className="has-text-grey-light">
-            We do not sell your personal data. We share data only with the third-party service providers listed above (Apple iCloud/CloudKit, RevenueCat, DeepInfra, PostHog) as necessary to provide our services.
+            We do not sell your personal data. We share data only with the following third-party service providers as necessary to provide our services:
           </p>
+          <ul className="has-text-grey-light">
+            <li><strong className="has-text-white">Apple iCloud / CloudKit</strong> — optional data sync for premium subscribers</li>
+            <li><strong className="has-text-white">RevenueCat</strong> — subscription management and purchase verification</li>
+            <li><strong className="has-text-white">OpenAI</strong> — AI crystal identification (images only, not stored by us after processing)</li>
+            <li><strong className="has-text-white">Vercel</strong> — image hosting and web infrastructure</li>
+            <li><strong className="has-text-white">PostHog</strong> — anonymised website analytics</li>
+          </ul>
 
           <h2 className="title is-4 has-text-white">5. Data retention</h2>
           <p className="has-text-grey-light">
