@@ -1,56 +1,36 @@
 import Link from 'next/link'
+import { Zap, Camera, Scissors, Library } from 'lucide-react'
+
+const features = [
+  { icon: Zap,      title: 'Quick add',           description: 'Add any crystal to your collection in seconds.' },
+  { icon: Camera,   title: 'AI identification',   description: 'Photograph a crystal and let AI identify it for you.' },
+  { icon: Scissors, title: 'Background removal',  description: 'Clean, professional images of your crystals automatically.' },
+  { icon: Library,  title: 'Personal collection', description: 'Catalogue everything you own in one beautiful library.' },
+]
 
 export default function AppShowcase() {
-  const features = [
-    {
-      icon: '\u26A1',
-      title: 'Quick add',
-      description: 'Add any crystal to your collection in seconds.',
-    },
-    {
-      icon: '\u{1F4F7}',
-      title: 'AI identification',
-      description: 'Photograph a crystal and let AI identify it for you.',
-    },
-    {
-      icon: '\u2702\uFE0F',
-      title: 'Background removal',
-      description: 'Clean, professional images of your crystals automatically.',
-    },
-    {
-      icon: '\u{1F4DA}',
-      title: 'Personal collection',
-      description: 'Catalogue everything you own in one beautiful library.',
-    },
-  ]
-
   return (
-    <section className="section" style={{
-      background: 'radial-gradient(ellipse at 80% 50%, rgba(147, 51, 234, 0.08) 0%, transparent 60%)',
-    }}>
+    <section
+      className="section"
+      aria-label="iOS app"
+      style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(147,51,234,0.08) 0%, transparent 60%)' }}
+    >
       <div className="container">
         <div className="columns is-vcentered">
           <div className="column is-5">
-            <p className="is-size-7 has-text-weight-semibold mb-3" style={{
-              color: '#9333EA',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-            }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#9333ea', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
               iOS app
             </p>
-            <h2 className="title is-2 mb-4">
+            <h2 className="title is-2 mb-4" style={{ color: '#f8f8ff' }}>
               Your crystal companion
             </h2>
-            <p className="mb-5" style={{ opacity: 0.75, lineHeight: 1.7, fontSize: '1.1rem' }}>
+            <p className="mb-5" style={{ color: 'rgba(248,248,255,0.7)', lineHeight: 1.7, fontSize: '1.05rem' }}>
               Take Crystal Index everywhere. Identify crystals on the go, build your personal collection, and access the full encyclopaedia from your pocket.
             </p>
             <Link
               href="https://apps.apple.com/app/crystal-index/id6740543879"
               className="button is-primary is-medium"
-              style={{
-                borderRadius: '8px',
-                fontWeight: 600,
-              }}
+              style={{ borderRadius: '10px', fontWeight: 600 }}
             >
               Download on the App Store
             </Link>
@@ -58,19 +38,24 @@ export default function AppShowcase() {
 
           <div className="column is-6 is-offset-1">
             <div className="columns is-multiline">
-              {features.map((feature, index) => (
-                <div key={index} className="column is-6">
-                  <div style={{ padding: '1rem 0' }}>
-                    <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
-                      {feature.icon}
+              {features.map((feature) => {
+                const Icon = feature.icon
+                return (
+                  <div key={feature.title} className="column is-6">
+                    <div style={{ padding: '1.25rem 0' }}>
+                      <div style={{
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        width: '40px', height: '40px', borderRadius: '9px',
+                        background: 'rgba(147,51,234,0.15)', marginBottom: '0.75rem',
+                      }}>
+                        <Icon size={18} color="#a855f7" aria-hidden="true" />
+                      </div>
+                      <h3 className="title is-6 mb-1" style={{ color: '#f8f8ff' }}>{feature.title}</h3>
+                      <p style={{ color: 'rgba(248,248,255,0.6)', fontSize: '0.88rem', lineHeight: 1.55 }}>{feature.description}</p>
                     </div>
-                    <h3 className="title is-6 mb-2">{feature.title}</h3>
-                    <p style={{ opacity: 0.65, fontSize: '0.9rem', lineHeight: 1.5 }}>
-                      {feature.description}
-                    </p>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>

@@ -429,33 +429,39 @@ $ci-dark-surface: #1a1a24;
 // ============================================
 // Fixed Navbar Body Offset
 // ============================================
+html {
+  background-color: #0f0f14 !important;
+}
+
 body {
   padding-top: 3.25rem;
+  background-color: #0f0f14 !important;
+  color: #f8f8ff !important;
+}
+
+// Force dark always — the site has a dark-first design
+.title, .subtitle {
+  color: #f8f8ff !important;
+}
+
+a:not(.button):not(.navbar-item):not(.tag) {
+  color: #a855f7;
+}
+
+a:not(.button):not(.navbar-item):not(.tag):hover {
+  color: #c084fc;
 }
 
 // ============================================
 // Navbar Styles
 // ============================================
-.ci-navbar {
+.ci-navbar,
+.ci-navbar .navbar-menu {
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: rgba($ci-dark-bg, 0.85) !important;
   transition: background-color 0.3s ease;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ci-navbar,
-  .ci-navbar .navbar-menu {
-    background-color: rgba($ci-dark-bg, 0.85) !important;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-navbar,
-  .ci-navbar .navbar-menu {
-    background-color: rgba(255, 255, 255, 0.85) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  }
 }
 
 .ci-navbar__brand {

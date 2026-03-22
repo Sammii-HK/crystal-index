@@ -42,12 +42,14 @@ export default function FeaturedCrystals() {
             return (
               <div key={crystal.id} className="column is-3">
                 <Link href={`/crystals/${slug}`} style={{ display: 'block', height: '100%' }}>
-                  <div className="box" style={{
+                  <div style={{
                     height: '100%',
-                    border: '1px solid rgba(147, 51, 234, 0.1)',
+                    border: '1px solid rgba(147, 51, 234, 0.15)',
                     borderRadius: '12px',
+                    backgroundColor: 'rgba(26, 26, 36, 0.8)',
+                    padding: '1.25rem',
                   }}>
-                    <h3 className="title is-6 mb-2">{crystal.name}</h3>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8f8ff', marginBottom: '0.5rem' }}>{crystal.name}</h3>
                     {primaryChakra && (
                       <span className="tag is-small mb-3" style={{
                         backgroundColor: CHAKRA_COLOURS[primaryChakra] || '#9333EA',

@@ -48,12 +48,11 @@ export default function Hero() {
 
   return (
     <section className="hero" style={{
-      minHeight: '90vh',
       background: 'radial-gradient(ellipse at 30% 60%, rgba(147,51,234,0.12) 0%, transparent 60%)',
       display: 'flex',
       alignItems: 'center',
     }}>
-      <div className="hero-body" style={{ width: '100%', padding: '5rem 1.5rem' }}>
+      <div className="hero-body" style={{ width: '100%', padding: '4rem 1.5rem 3rem' }}>
         <div className="container">
           <div className="columns is-vcentered">
 
@@ -139,7 +138,7 @@ export default function Hero() {
                 ].map(stat => (
                   <div key={stat.label}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', lineHeight: 1 }}>{stat.value}</div>
-                    <div style={{ fontSize: '0.75rem', opacity: 0.45, textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '0.25rem' }}>{stat.label}</div>
+                    <div style={{ fontSize: '0.75rem', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '0.25rem' }}>{stat.label}</div>
                   </div>
                 ))}
               </div>
