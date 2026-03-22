@@ -1,13 +1,17 @@
 import OpenAI from 'openai'
 import { getAllEnrichedCrystalNames } from './crystal-data-enrichment'
 
-let openaiClient: OpenAI | null = null
+// DeepInfra uses an OpenAI-compatible API
+let deepinfraClient: OpenAI | null = null
 
-function getOpenAI(): OpenAI {
-  if (!openaiClient) {
-    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+function getClient(): OpenAI {
+  if (!deepinfraClient) {
+    deepinfraClient = new OpenAI({
+      apiKey: process.env.DEEPINFRA_API_TOKEN,
+      baseURL: 'https://api.deepinfra.com/v1/openai',
+    })
   }
-  return openaiClient
+  return deepinfraClient
 }
 
 export interface IdentifyMatch {
@@ -21,7 +25,7 @@ export interface IdentifyResponse {
 }
 
 /**
- * Identify a crystal from an image URL using GPT-4o vision.
+ * Identify a crystal from an image URL using DeepInfra vision model.
  * Returns top matches ranked by confidence.
  */
 export async function identifyCrystalWithVision(imageUrl: string): Promise<IdentifyResponse> {
@@ -57,11 +61,15 @@ Rules:
 - Always provide 4-5 matches even if uncertain
 - Confidence reflects certainty of identification (0.0 to 1.0)`
 
-  const response = await getOpenAI().chat.completions.create({
-    model: 'gpt-4o-mini',
+  const response = await getClient().chat.completions.create({
+    model: 'meta-llama/Llama-3.2-11B-Vision-Instruct',
     max_tokens: 300,
     temperature: 0.1,
     messages: [
+      {
+        role: 'system',
+        content: systemPrompt,
+      },
       {
         role: 'user',
         content: [
@@ -76,8 +84,6 @@ Rules:
         ],
       },
     ],
-    response_format: { type: 'json_object' },
-    system: systemPrompt,
   } as any)
 
   const content = response.choices[0]?.message?.content

@@ -32,8 +32,8 @@ export default function PrivacyPage() {
             <strong className="has-text-white">Photos you take:</strong> Photos you add to your crystal collection are stored locally on your device (or in your iCloud if CloudKit sync is enabled). We do not upload your photos to our servers.
           </p>
           <p className="has-text-grey-light">
-            <strong className="has-text-white">AI identification:</strong> When you use the AI crystal identification feature, the photo you submit is temporarily uploaded to our secure image store (Vercel Blob) and sent to OpenAI for processing using their vision model. The image may be retained briefly for processing purposes. Please review{' '}
-            <a href="https://openai.com/policies/privacy-policy">OpenAI&apos;s privacy policy</a> for their data handling practices. We do not use your images to train AI models.
+            <strong className="has-text-white">AI identification:</strong> When you use the AI crystal identification feature, the photo you submit is temporarily uploaded to our secure image store and sent to DeepInfra for processing using their vision model. The image may be retained briefly for processing purposes. Please review{' '}
+            <a href="https://deepinfra.com/privacy">DeepInfra&apos;s privacy policy</a> for their data handling practices. We do not use your images to train AI models.
           </p>
           <p className="has-text-grey-light">
             <strong className="has-text-white">Purchases:</strong> Subscriptions are managed via RevenueCat and Apple&apos;s App Store. We receive anonymised purchase data (subscription status, product ID) but do not receive your payment details.
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
           <ul className="has-text-grey-light">
             <li><strong className="has-text-white">Apple iCloud / CloudKit</strong> — optional data sync for premium subscribers</li>
             <li><strong className="has-text-white">RevenueCat</strong> — subscription management and purchase verification</li>
-            <li><strong className="has-text-white">OpenAI</strong> — AI crystal identification (images only, not stored by us after processing)</li>
+            <li><strong className="has-text-white">DeepInfra</strong> — AI crystal identification via vision model (images only, not stored by us after processing)</li>
             <li><strong className="has-text-white">Vercel</strong> — image hosting and web infrastructure</li>
             <li><strong className="has-text-white">PostHog</strong> — anonymised website analytics</li>
           </ul>
