@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev",
@@ -64,7 +64,8 @@
     "sharp": "^0.33.0",
     "stripe": "^14.0.0",
     "three": "^0.152.1",
-    "topojson": "^3.0.2"
+    "topojson": "^3.0.2",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.3",

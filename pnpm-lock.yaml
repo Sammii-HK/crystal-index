@@ -113,6 +113,9 @@ importers:
       topojson:
         specifier: ^3.0.2
         version: 3.0.2
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
     devDependencies:
       '@testing-library/jest-dom':
         specifier: ^5.16.3
