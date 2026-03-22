@@ -1,37 +1,44 @@
 import Link from 'next/link'
 import crystalData from '../../data/crystals.json'
 
+// Background colours for crystal mosaic tiles
 const COLOUR_MAP: Record<string, string> = {
-  purple: 'rgba(147,51,234,0.75)',
-  violet: 'rgba(124,58,237,0.75)',
-  lavender: 'rgba(167,139,250,0.65)',
-  pink: 'rgba(236,72,153,0.75)',
-  rose: 'rgba(244,63,94,0.75)',
-  red: 'rgba(220,38,38,0.75)',
-  orange: 'rgba(234,88,12,0.75)',
-  yellow: 'rgba(202,138,4,0.75)',
-  gold: 'rgba(161,98,7,0.75)',
-  green: 'rgba(22,163,74,0.75)',
-  teal: 'rgba(13,148,136,0.75)',
-  blue: 'rgba(37,99,235,0.75)',
-  indigo: 'rgba(67,56,202,0.75)',
-  white: 'rgba(100,116,139,0.5)',
-  grey: 'rgba(71,85,105,0.65)',
-  gray: 'rgba(71,85,105,0.65)',
-  black: 'rgba(15,23,42,0.9)',
-  brown: 'rgba(120,53,15,0.75)',
-  silver: 'rgba(100,116,139,0.55)',
-  copper: 'rgba(180,83,9,0.75)',
+  purple:   'rgba(147,51,234,0.88)',
+  violet:   'rgba(124,58,237,0.88)',
+  lavender: 'rgba(109,40,217,0.88)',   // darkened so white text works in dark; class handles light
+  pink:     'rgba(236,72,153,0.88)',
+  rose:     'rgba(244,63,94,0.88)',
+  red:      'rgba(220,38,38,0.88)',
+  orange:   'rgba(234,88,12,0.88)',
+  yellow:   'rgba(161,98,7,0.92)',      // amber-gold, dark enough
+  gold:     'rgba(133,77,14,0.92)',     // dark amber
+  green:    'rgba(21,128,61,0.92)',     // darker green
+  teal:     'rgba(15,118,110,0.92)',    // darker teal
+  blue:     'rgba(37,99,235,0.88)',
+  indigo:   'rgba(67,56,202,0.88)',
+  white:    'rgba(71,85,105,0.92)',     // slate — dark enough for white text in dark mode
+  grey:     'rgba(51,65,85,0.92)',
+  gray:     'rgba(51,65,85,0.92)',
+  black:    'rgba(15,23,42,0.95)',
+  brown:    'rgba(120,53,15,0.88)',
+  silver:   'rgba(71,85,105,0.88)',
+  copper:   'rgba(154,52,18,0.88)',
 }
 
-function getColour(colors: string[]): string {
+// These colours, even darkened, may render light-ish on a light page background.
+// The CSS class ci-tile-text--on-light switches text to dark in light mode.
+const NEEDS_DARK_TEXT_IN_LIGHT = new Set(['white', 'grey', 'gray', 'silver'])
+
+function getColour(colors: string[]): { bg: string; lightClass: boolean } {
   for (const c of colors) {
     const lower = c.toLowerCase()
     for (const [key, value] of Object.entries(COLOUR_MAP)) {
-      if (lower.includes(key)) return value
+      if (lower.includes(key)) {
+        return { bg: value, lightClass: NEEDS_DARK_TEXT_IN_LIGHT.has(key) }
+      }
     }
   }
-  return 'rgba(147,51,234,0.55)'
+  return { bg: 'rgba(147,51,234,0.88)', lightClass: false }
 }
 
 const FEATURED = [
@@ -48,7 +55,7 @@ export default function Hero() {
 
   return (
     <section className="hero" style={{
-      background: 'radial-gradient(ellipse at 30% 60%, rgba(147,51,234,0.12) 0%, transparent 60%)',
+      background: 'radial-gradient(ellipse at 30% 60%, rgba(147,51,234,0.1) 0%, transparent 60%)',
       display: 'flex',
       alignItems: 'center',
     }}>
@@ -59,7 +66,7 @@ export default function Hero() {
             {/* Left — copy */}
             <div className="column is-5">
               <p style={{
-                color: '#9333EA',
+                color: 'var(--ci-accent)',
                 fontSize: '0.75rem',
                 fontWeight: 700,
                 letterSpacing: '0.12em',
@@ -69,11 +76,12 @@ export default function Hero() {
                 Crystal encyclopaedia + iOS app
               </p>
 
-              <h1 className="title has-text-white" style={{
+              <h1 className="title" style={{
                 fontSize: 'clamp(2.4rem, 4vw, 3.6rem)',
                 fontWeight: 800,
                 lineHeight: 1.1,
                 marginBottom: '1.5rem',
+                color: 'var(--ci-text)',
               }}>
                 Every crystal<br />has a story
               </h1>
@@ -96,8 +104,8 @@ export default function Hero() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.6rem',
-                    background: '#fff',
-                    color: '#000',
+                    background: 'var(--ci-text)',
+                    color: 'var(--ci-bg)',
                     borderRadius: '10px',
                     padding: '0.7rem 1.3rem',
                     fontWeight: 600,
@@ -105,7 +113,7 @@ export default function Hero() {
                     textDecoration: 'none',
                   }}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                   </svg>
                   Download on App Store
@@ -120,9 +128,9 @@ export default function Hero() {
                     fontWeight: 600,
                     fontSize: '0.9rem',
                     textDecoration: 'none',
-                    color: '#fff',
-                    border: '1px solid rgba(147,51,234,0.45)',
-                    background: 'rgba(147,51,234,0.1)',
+                    color: 'var(--ci-accent)',
+                    border: '1px solid var(--ci-accent)',
+                    background: 'var(--ci-icon-bg)',
                   }}
                 >
                   Browse crystals
@@ -151,29 +159,26 @@ export default function Hero() {
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '0.65rem',
               }}>
-                {featured.map(({ name, colors }, i) => (
-                  <Link
-                    key={name}
-                    href={`/crystals/${name.toLowerCase().replace(/\s+/g, '-')}`}
-                    style={{
-                      display: 'block',
-                      background: getColour(colors),
-                      borderRadius: '10px',
-                      padding: '1.1rem 0.85rem',
-                      textDecoration: 'none',
-                      border: '1px solid rgba(255,255,255,0.07)',
-                    }}
-                  >
-                    <p style={{
-                      color: '#fff',
-                      fontWeight: 600,
-                      fontSize: '0.85rem',
-                      lineHeight: 1.3,
-                    }}>
-                      {name}
-                    </p>
-                  </Link>
-                ))}
+                {featured.map(({ name, colors }) => {
+                  const { bg, lightClass } = getColour(colors)
+                  return (
+                    <Link
+                      key={name}
+                      href={`/crystals/${name.toLowerCase().replace(/\s+/g, '-')}`}
+                      style={{
+                        display: 'block',
+                        background: bg,
+                        borderRadius: '10px',
+                        padding: '1.1rem 0.85rem',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <p className={lightClass ? 'ci-tile-text ci-tile-text--on-light' : 'ci-tile-text'}>
+                        {name}
+                      </p>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
 

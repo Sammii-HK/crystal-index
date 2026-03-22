@@ -138,16 +138,16 @@ export default function CrystalSEOContent({ crystal, enrichedData }: Props) {
     <section
       aria-label={`About ${name}`}
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--ci-card-bg)',
+        borderTop: '1px solid var(--ci-divider)',
         marginTop: '3rem',
         padding: '2.5rem 1.5rem',
       }}
     >
       <div className="container" style={{ maxWidth: '860px' }}>
         <h2
-          className="title is-4 has-text-white"
-          style={{ marginBottom: '2rem' }}
+          className="title is-4"
+          style={{ marginBottom: '2rem', color: 'var(--ci-text)' }}
         >
           About {name}
         </h2>
@@ -155,12 +155,18 @@ export default function CrystalSEOContent({ crystal, enrichedData }: Props) {
           {sections.map((s, i) => (
             <div key={i} className="column is-half" style={{ marginBottom: '1.5rem' }}>
               <h3
-                className="has-text-white"
-                style={{ fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.4rem', opacity: 0.7 }}
+                style={{
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  marginBottom: '0.4rem',
+                  color: 'var(--ci-text-muted)',
+                }}
               >
                 {s.heading}
               </h3>
-              <p className="has-text-grey-light" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '0.92rem', lineHeight: '1.6', color: 'var(--ci-text-muted)' }}>
                 {s.body}
               </p>
             </div>

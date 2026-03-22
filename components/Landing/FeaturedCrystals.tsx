@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import crystalData from '../../data/crystals.json'
 
-const CHAKRA_COLOURS: Record<string, string> = {
-  crown: '#9c4cc5',
-  'third eye': '#0066cc',
-  throat: '#16c3c3',
-  heart: '#95c012',
-  'solar plexus': '#daa000',
-  sacral: '#eb5e00',
-  root: '#c82020',
+const CHAKRA_COLOURS: Record<string, { bg: string; color: string }> = {
+  crown:         { bg: '#9c4cc5', color: '#fff' },
+  'third eye':   { bg: '#0055bb', color: '#fff' },
+  throat:        { bg: '#0e9090', color: '#fff' },
+  heart:         { bg: '#4a7c00', color: '#fff' },    // darkened from #95c012 for contrast
+  'solar plexus':{ bg: '#a06a00', color: '#fff' },    // darkened from #daa000 for contrast
+  sacral:        { bg: '#c04a00', color: '#fff' },
+  root:          { bg: '#b01c1c', color: '#fff' },
 }
 
 const FEATURED_NAMES = [
@@ -53,8 +53,8 @@ export default function FeaturedCrystals() {
                     {primaryChakra && (
                       <span style={{
                         display: 'inline-block',
-                        backgroundColor: CHAKRA_COLOURS[primaryChakra] || '#9333EA',
-                        color: '#fff',
+                        backgroundColor: CHAKRA_COLOURS[primaryChakra]?.bg || '#9333EA',
+                        color: CHAKRA_COLOURS[primaryChakra]?.color || '#fff',
                         borderRadius: '4px',
                         fontSize: '0.7rem',
                         fontWeight: 600,

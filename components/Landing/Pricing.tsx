@@ -38,7 +38,7 @@ const plans = [
   {
     name: 'Yearly',
     price: '£39.99',
-    period: 'per year — 2 months free',
+    period: 'per year — save 17%',
     features: [
       'Everything in Premium',
       'Just £3.33/month billed annually',

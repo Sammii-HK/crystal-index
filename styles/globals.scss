@@ -468,6 +468,24 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 }
 
 // ============================================
+// Crystal mosaic tile text — WCAG contrast aware
+// ============================================
+.ci-tile-text {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+// Slate/grey tiles are still dark enough in dark mode, but become
+// medium-grey on a light page — switch to dark text in light mode
+@media (prefers-color-scheme: light) {
+  .ci-tile-text--on-light {
+    color: #1e293b;
+  }
+}
+
+// ============================================
 // Focus styles — WCAG 2.4.7
 // ============================================
 :focus-visible {
