@@ -93,7 +93,7 @@ export default function Hero() {
                 marginBottom: '2.25rem',
                 maxWidth: '480px',
               }}>
-                215 crystals with detailed properties, chakra associations, zodiac connections, care guides, and AI identification — free on the web and in your pocket.
+                215 crystals with detailed properties, chakra associations, zodiac connections, care guides, and AI identification. Browse on the web or start your collection with the iOS app.
               </p>
 
               {/* CTA buttons */}
@@ -142,7 +142,7 @@ export default function Hero() {
                 {[
                   { value: '215+', label: 'Crystals' },
                   { value: 'AI', label: 'Identification' },
-                  { value: 'Free', label: 'To start' },
+                  { value: '7 Days', label: 'Full access' },
                 ].map(stat => (
                   <div key={stat.label}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--ci-text)', lineHeight: 1 }}>{stat.value}</div>

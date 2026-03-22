@@ -73,17 +73,17 @@ export default function PricingTiers({ currentPlan }: PricingTiersProps) {
 
   const tiers = [
     {
-      name: 'Free',
+      name: 'Web access',
       price: '£0',
-      period: 'Forever',
+      period: 'Browse forever',
       features: [
         '3 identifications per month',
-        'Read-only access to index',
+        'Read-only access to encyclopaedia',
         'Watermarked results',
         'Basic crystal information',
       ],
       plan: 'FREE',
-      cta: currentPlan === 'FREE' ? 'Current Plan' : 'Get Started',
+      cta: currentPlan === 'FREE' ? 'Current plan' : 'Browse crystals',
       disabled: currentPlan === 'FREE',
     },
     {
@@ -98,7 +98,7 @@ export default function PricingTiers({ currentPlan }: PricingTiersProps) {
         'Priority support',
       ],
       plan: 'PRO',
-      cta: currentPlan === 'PRO' ? 'Current Plan' : 'Upgrade to Pro',
+      cta: currentPlan === 'PRO' ? 'Current plan' : 'Start your 7-day access',
       disabled: currentPlan === 'PRO',
       popular: true,
     },

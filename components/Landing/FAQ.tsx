@@ -16,7 +16,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'Is Crystal Index free?',
-    answer: 'Yes. Browse the full encyclopaedia, read meanings, explore chakra and zodiac connections, and search the library for free on the web. The iOS app adds personal collection management and unlimited AI identification.',
+    answer: 'The crystal encyclopaedia at crystalindex.co.uk is free to browse forever. The iOS app gives you full premium access to start — unlimited AI identification, personal collection management, and CloudKit sync across your devices.',
   },
   {
     question: 'How do I add crystals to my collection?',

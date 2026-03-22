@@ -5,16 +5,16 @@ import { Check } from 'lucide-react'
 
 const plans = [
   {
-    name: 'Free',
+    name: 'Web access',
     price: '£0',
-    period: 'Forever',
+    period: 'Browse forever',
     features: [
-      'Search the database',
-      'Browse all crystal pages',
+      'Search the full encyclopaedia',
+      'Browse all 215+ crystal pages',
       'Learn meanings, uses, correspondences',
-      'Basic filters',
+      'Filter by chakra, zodiac, or colour',
     ],
-    cta: 'Get Started',
+    cta: 'Browse crystals',
     ctaLink: '/crystals',
     isPrimary: false,
   },
@@ -23,15 +23,15 @@ const plans = [
     price: '£3.99',
     period: 'per month',
     features: [
-      'Everything in Free, plus:',
+      'Everything in Web access, plus:',
       'AI image identification',
       'Unlimited identification results',
-      'Save crystals & create collections',
+      'Save crystals and create collections',
       'Remove watermark from results',
       'Faster inference',
       'Priority support',
     ],
-    cta: 'Upgrade to Premium',
+    cta: 'Start your 7-day access',
     ctaLink: '/pricing',
     isPrimary: true,
   },
@@ -44,7 +44,7 @@ const plans = [
       'Just £3.33/month billed annually',
       'Best value for collectors',
     ],
-    cta: 'Choose Yearly',
+    cta: 'Choose yearly',
     ctaLink: '/pricing',
     isPrimary: false,
   },
@@ -60,7 +60,7 @@ export default function Pricing() {
           Simple, clear pricing
         </h2>
         <p className="has-text-centered mb-6" style={{ color: 'var(--ci-text-muted)' }}>
-          Start free. Upgrade when you&apos;re ready.
+          Browse the encyclopaedia on the web, or download the app for full premium access.
         </p>
         <div className="columns is-multiline">
           {plans.map((plan) => (

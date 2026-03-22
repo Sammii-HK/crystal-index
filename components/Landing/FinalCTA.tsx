@@ -12,7 +12,7 @@ export default function FinalCTA() {
               Start exploring
             </h2>
             <p className="subtitle is-5 mb-6" style={{ color: 'var(--ci-text-muted)' }}>
-              Browse 200+ crystals, identify what you are holding, and build a collection you truly understand.
+              Browse 200+ crystals on the web, or download the app to identify, collect, and build your personal crystal library.
             </p>
             <div className="buttons is-centered">
               <Link
