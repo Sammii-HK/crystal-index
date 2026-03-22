@@ -28,9 +28,9 @@ async function resolveCrystal(param: string) {
 }
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: { params: { id: string } }
 ): Promise<Metadata> {
-  const serialisableCrystal = await resolveCrystal(params.slug)
+  const serialisableCrystal = await resolveCrystal(params.id)
 
   if (!serialisableCrystal) {
     return { title: 'Crystal not found | Crystal Index' }
@@ -87,11 +87,11 @@ export async function generateMetadata(
 export default async function Page({
   params,
 }: {
-  params: { slug: string }
+  params: { id: string }
 }) {
   // resolveCrystal may internally call redirect() for numeric IDs — that throws
   // a Next.js redirect which propagates correctly
-  const serialisableCrystal = await resolveCrystal(params.slug)
+  const serialisableCrystal = await resolveCrystal(params.id)
 
   if (!serialisableCrystal) {
     notFound()
