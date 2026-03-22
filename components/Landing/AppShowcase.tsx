@@ -13,18 +13,18 @@ export default function AppShowcase() {
     <section
       className="section"
       aria-label="iOS app"
-      style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(147,51,234,0.08) 0%, transparent 60%)' }}
+      style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(147,51,234,0.07) 0%, transparent 60%)' }}
     >
       <div className="container">
         <div className="columns is-vcentered">
           <div className="column is-5">
-            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#9333ea', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--ci-accent)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
               iOS app
             </p>
-            <h2 className="title is-2 mb-4" style={{ color: '#f8f8ff' }}>
+            <h2 className="title is-2 mb-4" style={{ color: 'var(--ci-text)' }}>
               Your crystal companion
             </h2>
-            <p className="mb-5" style={{ color: 'rgba(248,248,255,0.7)', lineHeight: 1.7, fontSize: '1.05rem' }}>
+            <p className="mb-5" style={{ color: 'var(--ci-text-muted)', lineHeight: 1.7, fontSize: '1.05rem' }}>
               Take Crystal Index everywhere. Identify crystals on the go, build your personal collection, and access the full encyclopaedia from your pocket.
             </p>
             <Link
@@ -46,12 +46,12 @@ export default function AppShowcase() {
                       <div style={{
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                         width: '40px', height: '40px', borderRadius: '9px',
-                        background: 'rgba(147,51,234,0.15)', marginBottom: '0.75rem',
+                        background: 'var(--ci-icon-bg)', marginBottom: '0.75rem',
                       }}>
-                        <Icon size={18} color="#a855f7" aria-hidden="true" />
+                        <Icon size={18} color="var(--ci-accent-light)" aria-hidden="true" />
                       </div>
-                      <h3 className="title is-6 mb-1" style={{ color: '#f8f8ff' }}>{feature.title}</h3>
-                      <p style={{ color: 'rgba(248,248,255,0.6)', fontSize: '0.88rem', lineHeight: 1.55 }}>{feature.description}</p>
+                      <h3 className="title is-6 mb-1" style={{ color: 'var(--ci-text)' }}>{feature.title}</h3>
+                      <p style={{ color: 'var(--ci-text-muted)', fontSize: '0.88rem', lineHeight: 1.55 }}>{feature.description}</p>
                     </div>
                   </div>
                 )

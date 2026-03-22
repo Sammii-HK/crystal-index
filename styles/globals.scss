@@ -9,6 +9,48 @@
 // 2. Set your own initial variables
 @import "./colours";
 
+// ============================================
+// CSS Design Tokens — light/dark theme
+// ============================================
+:root {
+  color-scheme: dark light;
+
+  // Dark (default)
+  --ci-bg:             #0f0f14;
+  --ci-surface:        #1a1a24;
+  --ci-card-bg:        rgba(26, 26, 36, 0.92);
+  --ci-card-border:    rgba(147, 51, 234, 0.18);
+  --ci-text:           #f0f0fa;
+  --ci-text-muted:     #9898aa;
+  --ci-text-subtle:    rgba(240, 240, 250, 0.45);
+  --ci-accent:         #9333ea;
+  --ci-accent-light:   #a855f7;
+  --ci-icon-bg:        rgba(147, 51, 234, 0.18);
+  --ci-navbar-bg:      rgba(15, 15, 20, 0.88);
+  --ci-navbar-border:  rgba(255, 255, 255, 0.07);
+  --ci-input-bg:       #1a1a24;
+  --ci-divider:        rgba(255, 255, 255, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --ci-bg:             #f4f4f8;
+    --ci-surface:        #ffffff;
+    --ci-card-bg:        #ffffff;
+    --ci-card-border:    rgba(124, 58, 237, 0.2);
+    --ci-text:           #111827;
+    --ci-text-muted:     #4b5563;
+    --ci-text-subtle:    rgba(17, 24, 39, 0.4);
+    --ci-accent:         #7c3aed;
+    --ci-accent-light:   #9333ea;
+    --ci-icon-bg:        rgba(124, 58, 237, 0.1);
+    --ci-navbar-bg:      rgba(244, 244, 248, 0.92);
+    --ci-navbar-border:  rgba(0, 0, 0, 0.07);
+    --ci-input-bg:       #ffffff;
+    --ci-divider:        rgba(0, 0, 0, 0.08);
+  }
+}
+
 // Global Styles
 * {
   // color: $primary;
@@ -91,54 +133,30 @@ select, div.select {
   border-radius: 5px 5px 0 0;
 }
 
-// DARK COLOUR SCHEME
+// Form elements pick up theme colours
 @media (prefers-color-scheme: dark) {
-  html, input, label, textarea, select, button, .file-cta {
-    background-color: $black !important;
+  input, textarea, select, .file-cta {
+    background-color: var(--ci-input-bg) !important;
+    color: var(--ci-text) !important;
   }
-  body, input, label, textarea, select, button, li, .file-cta {
-    color: $white !important;
-  }
-  .title, .subtitle, .body, .textarea {
-    color: $white !important;
-  }
-  a, ::placeholder {
-    color: #777676 !important;
-  }
-  a.navbar-item {
-    &:hover {
-      color: $pink !important;
-      background-color: #262124 !important;
-    }
-  }
-  span.tag {
-    border: 0.1px solid $white;
-  }
+  ::placeholder { color: var(--ci-text-muted); }
+  span.tag { border: 0.1px solid rgba(255, 255, 255, 0.2); }
 }
 
-// LIGHT COLOUR SCHEME
 @media (prefers-color-scheme: light) {
-  html, input, label, textarea, select, button, .file-cta {
-    background-color: $white !important;
+  input, textarea, select, .file-cta {
+    background-color: var(--ci-input-bg) !important;
+    color: var(--ci-text) !important;
   }
-  body, input, label, textarea, select, button, li, .file-cta {
-    color: $black !important;
-  }
-  .title, .subtitle, .body, .textarea {
-    color: $black !important;
-  }
-  a, ::placeholder {
-    color: #454545 !important;
-  }
-  a.navbar-item {
-    &:hover {
-      color: $pink !important;
-      background-color: #262124 !important;
-    }
-  }
-  span.tag {
-    border: 0.1px solid $black;
-  }
+  ::placeholder { color: var(--ci-text-muted); }
+  span.tag { border: 0.1px solid rgba(0, 0, 0, 0.2); }
+}
+
+// Bare buttons (no Bulma .button class) should be transparent
+button:not(.button):not(.navbar-burger):not([class*="is-"]) {
+  background: transparent;
+  color: inherit;
+  border: none;
 }
 
 // ============================================
@@ -419,37 +437,43 @@ select, div.select {
 @import "./crystal-gallery";
 
 // ============================================
-// Accent colour
+// SCSS variables (used in SCSS only, not in components)
 // ============================================
 $ci-accent: #9333EA;
 $ci-accent-light: #a855f7;
-$ci-dark-bg: #0f0f14;
-$ci-dark-surface: #1a1a24;
 
 // ============================================
-// Fixed Navbar Body Offset
+// Base — theme-aware
 // ============================================
 html {
-  background-color: #0f0f14 !important;
+  background-color: var(--ci-bg) !important;
 }
 
 body {
   padding-top: 3.25rem;
-  background-color: #0f0f14 !important;
-  color: #f8f8ff !important;
+  background-color: var(--ci-bg) !important;
+  color: var(--ci-text) !important;
 }
 
-// Force dark always — the site has a dark-first design
 .title, .subtitle {
-  color: #f8f8ff !important;
+  color: var(--ci-text) !important;
 }
 
 a:not(.button):not(.navbar-item):not(.tag) {
-  color: #a855f7;
+  color: var(--ci-accent-light);
 }
 
 a:not(.button):not(.navbar-item):not(.tag):hover {
-  color: #c084fc;
+  color: var(--ci-accent);
+}
+
+// ============================================
+// Focus styles — WCAG 2.4.7
+// ============================================
+:focus-visible {
+  outline: 2px solid var(--ci-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 // ============================================
@@ -459,8 +483,8 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 .ci-navbar .navbar-menu {
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background-color: rgba($ci-dark-bg, 0.85) !important;
+  border-bottom: 1px solid var(--ci-navbar-border);
+  background-color: var(--ci-navbar-bg) !important;
   transition: background-color 0.3s ease;
 }
 
@@ -474,20 +498,12 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 }
 
 .ci-navbar__icon {
-  color: $ci-accent;
+  color: var(--ci-accent);
   font-size: 1.1rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .ci-navbar__title {
-    color: #fff !important;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-navbar__title {
-    color: #111 !important;
-  }
+.ci-navbar__title {
+  color: var(--ci-text) !important;
 }
 
 .ci-navbar__link {
@@ -495,9 +511,11 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
   font-size: 0.95rem;
   letter-spacing: 0.01em;
   transition: color 0.2s ease;
+  color: var(--ci-text) !important;
 
   &:hover {
-    color: $ci-accent !important;
+    color: var(--ci-accent) !important;
+    background-color: var(--ci-icon-bg) !important;
   }
 }
 
@@ -524,33 +542,15 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 .ci-footer {
   padding: 3rem 1.5rem 1.5rem;
   margin-top: 3rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--ci-divider);
+  background-color: var(--ci-surface) !important;
+  color: var(--ci-text-muted);
 }
 
-@media (prefers-color-scheme: dark) {
-  .ci-footer {
-    background-color: $ci-dark-surface !important;
-    color: #ccc;
-  }
-  .ci-footer a {
-    color: #999 !important;
-    &:hover {
-      color: $ci-accent-light !important;
-    }
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-footer {
-    background-color: #f5f5f7 !important;
-    color: #555;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
-  .ci-footer a {
-    color: #666 !important;
-    &:hover {
-      color: $ci-accent !important;
-    }
+.ci-footer a {
+  color: var(--ci-text-muted) !important;
+  &:hover {
+    color: var(--ci-accent-light) !important;
   }
 }
 
@@ -562,7 +562,7 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 }
 
 .ci-footer__icon {
-  color: $ci-accent;
+  color: var(--ci-accent);
   font-size: 1.2rem;
 }
 
@@ -570,24 +570,13 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: -0.02em;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ci-footer__title {
-    color: #fff !important;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-footer__title {
-    color: #111 !important;
-  }
+  color: var(--ci-text) !important;
 }
 
 .ci-footer__tagline {
   font-size: 0.9rem;
   line-height: 1.6;
-  opacity: 0.8;
+  color: var(--ci-text-muted);
   max-width: 320px;
 }
 
@@ -597,19 +586,8 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.75rem;
+  color: var(--ci-text) !important;
   opacity: 0.7;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ci-footer__heading {
-    color: #fff !important;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-footer__heading {
-    color: #333 !important;
-  }
 }
 
 .ci-footer__links {
@@ -641,19 +619,7 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 .ci-footer__divider {
   height: 1px;
   margin: 2rem 0 1rem;
-  opacity: 0.15;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ci-footer__divider {
-    background-color: #fff;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .ci-footer__divider {
-    background-color: #000;
-  }
+  background-color: var(--ci-divider);
 }
 
 .ci-footer__bottom {
@@ -662,5 +628,6 @@ a:not(.button):not(.navbar-item):not(.tag):hover {
 
 .ci-footer__copyright {
   font-size: 0.8rem;
-  opacity: 0.5;
+  color: var(--ci-text-muted);
+  opacity: 0.6;
 }

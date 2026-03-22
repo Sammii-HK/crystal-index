@@ -34,7 +34,7 @@ export default function HowItWorks() {
         <h2 className="title is-2 has-text-centered mb-2">
           How AI identification works
         </h2>
-        <p className="has-text-centered mb-6" style={{ color: 'rgba(248,248,255,0.6)', maxWidth: '480px', margin: '0 auto 2.5rem' }}>
+        <p className="has-text-centered mb-6" style={{ color: 'var(--ci-text-muted)', maxWidth: '480px', margin: '0 auto 2.5rem' }}>
           From photo to full crystal profile in seconds.
         </p>
         <div className="columns is-multiline">
@@ -44,8 +44,8 @@ export default function HowItWorks() {
               <div key={step.number} className="column is-3">
                 <div style={{
                   height: '100%',
-                  background: 'rgba(255,255,255,0.025)',
-                  border: '1px solid rgba(147,51,234,0.12)',
+                  background: 'var(--ci-card-bg)',
+                  border: '1px solid var(--ci-card-border)',
                   borderRadius: '14px',
                   padding: '1.75rem',
                 }}>
@@ -57,23 +57,23 @@ export default function HowItWorks() {
                       width: '40px',
                       height: '40px',
                       borderRadius: '9px',
-                      background: 'rgba(147,51,234,0.15)',
+                      background: 'var(--ci-icon-bg)',
                       flexShrink: 0,
                     }}>
-                      <Icon size={18} color="#a855f7" aria-hidden="true" />
+                      <Icon size={18} color="var(--ci-accent-light)" aria-hidden="true" />
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'rgba(147,51,234,0.7)', letterSpacing: '0.1em' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--ci-accent)', letterSpacing: '0.1em' }}>
                       STEP {step.number}
                     </span>
                   </div>
-                  <h3 className="title is-5 mb-2" style={{ color: '#f8f8ff' }}>{step.title}</h3>
-                  <p style={{ color: 'rgba(248,248,255,0.65)', lineHeight: 1.65, fontSize: '0.92rem' }}>{step.description}</p>
+                  <h3 className="title is-5 mb-2" style={{ color: 'var(--ci-text)' }}>{step.title}</h3>
+                  <p style={{ color: 'var(--ci-text-muted)', lineHeight: 1.65, fontSize: '0.92rem' }}>{step.description}</p>
                 </div>
               </div>
             )
           })}
         </div>
-        <div className="has-text-centered mt-5" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', color: 'rgba(248,248,255,0.4)', fontSize: '0.82rem' }}>
+        <div className="has-text-centered mt-5" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', color: 'var(--ci-text-muted)', fontSize: '0.82rem' }}>
           <ShieldCheck size={14} aria-hidden="true" />
           <span>Your images are not stored without permission. You stay in control of your data.</span>
         </div>

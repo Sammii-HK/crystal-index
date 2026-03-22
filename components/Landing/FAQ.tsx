@@ -36,7 +36,7 @@ export default function FAQ() {
       <div className="container">
         <div className="columns is-centered">
           <div className="column is-8">
-            <h2 className="title is-2 has-text-centered mb-6" style={{ color: '#f8f8ff' }}>
+            <h2 className="title is-2 has-text-centered mb-6">
               Frequently asked questions
             </h2>
             <div>
@@ -44,8 +44,8 @@ export default function FAQ() {
                 const isOpen = openIndex === index
                 return (
                   <div key={index} style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(147,51,234,0.12)',
+                    background: 'var(--ci-card-bg)',
+                    border: '1px solid var(--ci-card-border)',
                     borderRadius: '12px',
                     marginBottom: '0.75rem',
                     overflow: 'hidden',
@@ -60,24 +60,25 @@ export default function FAQ() {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '1.25rem 1.5rem',
-                        background: 'none',
+                        background: 'transparent',
                         border: 'none',
                         cursor: 'pointer',
                         textAlign: 'left',
                         gap: '1rem',
+                        color: 'inherit',
                       }}
                     >
-                      <span style={{ fontWeight: 600, fontSize: '1rem', color: '#f8f8ff', lineHeight: 1.4 }}>
+                      <span style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--ci-text)', lineHeight: 1.4 }}>
                         {faq.question}
                       </span>
                       {isOpen
-                        ? <ChevronUp size={18} color="#a855f7" aria-hidden="true" style={{ flexShrink: 0 }} />
-                        : <ChevronDown size={18} color="rgba(248,248,255,0.4)" aria-hidden="true" style={{ flexShrink: 0 }} />
+                        ? <ChevronUp size={18} color="var(--ci-accent)" aria-hidden="true" style={{ flexShrink: 0 }} />
+                        : <ChevronDown size={18} color="var(--ci-text-muted)" aria-hidden="true" style={{ flexShrink: 0 }} />
                       }
                     </button>
                     {isOpen && (
                       <div id={`faq-answer-${index}`} style={{ padding: '0 1.5rem 1.25rem' }}>
-                        <p style={{ color: 'rgba(248,248,255,0.7)', lineHeight: 1.7, fontSize: '0.95rem' }}>{faq.answer}</p>
+                        <p style={{ color: 'var(--ci-text-muted)', lineHeight: 1.7, fontSize: '0.95rem' }}>{faq.answer}</p>
                       </div>
                     )}
                   </div>

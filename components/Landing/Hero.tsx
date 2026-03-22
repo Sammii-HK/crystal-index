@@ -80,7 +80,7 @@ export default function Hero() {
 
               <p style={{
                 fontSize: '1.15rem',
-                opacity: 0.72,
+                color: 'var(--ci-text-muted)',
                 lineHeight: 1.75,
                 marginBottom: '2.25rem',
                 maxWidth: '480px',
@@ -137,8 +137,8 @@ export default function Hero() {
                   { value: 'Free', label: 'To start' },
                 ].map(stat => (
                   <div key={stat.label}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', lineHeight: 1 }}>{stat.value}</div>
-                    <div style={{ fontSize: '0.75rem', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '0.25rem' }}>{stat.label}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--ci-text)', lineHeight: 1 }}>{stat.value}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--ci-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '0.25rem' }}>{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -162,7 +162,6 @@ export default function Hero() {
                       padding: '1.1rem 0.85rem',
                       textDecoration: 'none',
                       border: '1px solid rgba(255,255,255,0.07)',
-                      transform: i % 2 !== 0 ? 'translateY(10px)' : 'none',
                     }}
                   >
                     <p style={{
