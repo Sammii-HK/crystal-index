@@ -7,6 +7,7 @@ import { identifyCrystalWithVision } from '../../../../lib/openai-identify'
 import { uploadImageToBlob } from '../../../../lib/blob'
 import { generateImageHash } from '../../../../lib/imageHash'
 import { processBackgroundRemoval } from '../../../../lib/backgroundRemoval'
+import { generateClipEmbedding, findSimilarConfirmed } from '../../../../lib/clip-embedding'
 
 /**
  * API v1: Identify Crystal
@@ -144,9 +145,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Identify crystal using GPT-4o vision
+    // Query learning DB for visually similar confirmed images (few-shot context)
+    let fewShotExamples: Array<{ crystalName: string }> = []
+    try {
+      const clipEmbedding = await generateClipEmbedding(processedImageUrl || imageUrl)
+      if (clipEmbedding) {
+        const similar = await findSimilarConfirmed(clipEmbedding, 5)
+        // Only use examples with reasonable similarity (>0.7)
+        fewShotExamples = similar
+          .filter(s => s.similarity > 0.7)
+          .map(s => ({ crystalName: s.crystalName }))
+      }
+    } catch (err) {
+      console.error('Learning DB lookup failed (non-fatal):', err)
+    }
+
+    // Identify crystal using Qwen3-VL-30B on DeepInfra
     const identificationResult = await identifyCrystalWithVision(
-      processedImageUrl || imageUrl
+      processedImageUrl || imageUrl,
+      fewShotExamples.length > 0 ? fewShotExamples : undefined
     )
 
     // Store identification
@@ -155,6 +172,7 @@ export async function POST(req: NextRequest) {
         userId,
         imageUrl,
         processedImageUrl,
+        imageHash,
         guess: identificationResult.topMatches[0]?.crystal || 'Unknown',
         confidence: identificationResult.confidence,
         topMatches: identificationResult.topMatches as any,

@@ -1,7 +1,6 @@
 import OpenAI from 'openai'
 import { getAllEnrichedCrystalNames } from './crystal-data-enrichment'
 
-// DeepInfra uses an OpenAI-compatible API
 let deepinfraClient: OpenAI | null = null
 
 function getClient(): OpenAI {
@@ -25,11 +24,20 @@ export interface IdentifyResponse {
 }
 
 /**
- * Identify a crystal from an image URL using DeepInfra vision model.
- * Returns top matches ranked by confidence.
+ * Identify a crystal from an image URL using Qwen3-VL-30B on DeepInfra.
+ * Optionally accepts few-shot examples from the learning DB to boost accuracy.
  */
-export async function identifyCrystalWithVision(imageUrl: string): Promise<IdentifyResponse> {
+export async function identifyCrystalWithVision(
+  imageUrl: string,
+  fewShotExamples?: Array<{ crystalName: string }>
+): Promise<IdentifyResponse> {
   const crystalNames = getAllEnrichedCrystalNames().join(', ')
+
+  let fewShotText = ''
+  if (fewShotExamples && fewShotExamples.length > 0) {
+    const names = [...new Set(fewShotExamples.map(e => `"${e.crystalName}"`))]
+    fewShotText = `\n\nVisually similar confirmed crystals from our learning database:\n${names.join(', ')}\nWeigh these heavily when making your identification.`
+  }
 
   const systemPrompt = `You are an expert gemologist and crystal identifier with decades of experience.
 Your task is to identify crystals and minerals from photographs.
@@ -43,7 +51,7 @@ Analyse the photo carefully, considering:
 - Crystal structure and habit (cubic, hexagonal, prismatic, massive, botryoidal, etc.)
 - Surface texture and any visible patterns
 - Special optical effects (chatoyancy, iridescence, asterism, fluorescence clues)
-- Inclusions or internal features
+- Inclusions or internal features${fewShotText}
 
 Respond ONLY with valid JSON in exactly this format — no markdown, no explanation:
 {
@@ -62,8 +70,8 @@ Rules:
 - Confidence reflects certainty of identification (0.0 to 1.0)`
 
   const response = await getClient().chat.completions.create({
-    model: 'meta-llama/Llama-3.2-11B-Vision-Instruct',
-    max_tokens: 300,
+    model: 'Qwen/Qwen3-VL-30B-A3B-Instruct',
+    max_tokens: 400,
     temperature: 0.1,
     messages: [
       {
@@ -86,14 +94,20 @@ Rules:
     ],
   } as any)
 
-  const content = response.choices[0]?.message?.content
-  if (!content) throw new Error('No response from vision model')
+  const rawContent = response.choices[0]?.message?.content
+  if (!rawContent) throw new Error('No response from vision model')
+
+  // Qwen3-VL sometimes wraps output in ```json ... ``` blocks — strip them
+  const content = rawContent
+    .replace(/^```json\s*/i, '')
+    .replace(/\s*```$/, '')
+    .trim()
 
   let parsed: { topMatches?: IdentifyMatch[] }
   try {
     parsed = JSON.parse(content)
   } catch {
-    throw new Error('Failed to parse vision model response')
+    throw new Error(`Failed to parse vision model response: ${content.slice(0, 200)}`)
   }
 
   const topMatches = (parsed.topMatches || []).filter(

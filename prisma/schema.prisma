@@ -152,14 +152,31 @@ model Identification {
   guess             String // Top match crystal name
   confidence        Float // Confidence score 0-1
   topMatches        Json // Array of top 5 matches with scores
-  confirmedLabel    String? // User-confirmed correct label
-  feedback          String? // User feedback ("wrong", "correct", etc.)
+  confirmedLabel    String? // User-confirmed correct label (null = not reviewed)
+  userConfirmed     Boolean? // true = correct, false = wrong, null = not reviewed
+  correctedCrystal  String? // What the user said it actually is (when userConfirmed=false)
+  imageHash         String? // SHA-256 of image bytes, links to ImageEmbedding
+  feedback          String? // Legacy free-text feedback field
   processedImageUrl String? // Background-removed image URL
   createdAt         DateTime @default(now())
 
   @@index([userId])
   @@index([createdAt])
   @@index([crystalId])
+  @@index([imageHash])
+}
+
+// LEARNING DATABASE — CLIP embeddings for visual similarity search
+model ImageEmbedding {
+  id             String   @id @default(cuid())
+  imageHash      String   @unique // SHA-256 of original image bytes
+  crystalName    String   // Confirmed correct crystal name
+  embedding      Unsupported("vector(512)")? // CLIP ViT-B/32 embedding
+  confirmedCount Int      @default(1) // Number of user confirmations
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([crystalName])
 }
 
 // USER COLLECTIONS
