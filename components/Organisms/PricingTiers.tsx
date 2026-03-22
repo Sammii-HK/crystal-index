@@ -88,8 +88,8 @@ export default function PricingTiers({ currentPlan }: PricingTiersProps) {
     },
     {
       name: 'Pro',
-      price: '£4.99',
-      period: 'per month',
+      price: '£3.99',
+      period: 'per month · or £39.99/year',
       features: [
         'Unlimited identifications',
         'Save full collection',

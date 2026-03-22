@@ -7,7 +7,7 @@ import CreditBundleButton from '../../components/Molecules/CreditBundleButton'
 
 export const metadata: Metadata = {
   title: 'Pricing - Crystal Index',
-  description: 'Choose the perfect plan for your crystal identification needs. Free tier available, Pro plans starting at £4.99/month.',
+  description: 'Choose the perfect plan for your crystal identification needs. Free tier available, Premium from £3.99/month or £39.99/year.',
   openGraph: {
     title: 'Pricing - Crystal Index',
     description: 'Choose the perfect plan for your crystal identification needs.',

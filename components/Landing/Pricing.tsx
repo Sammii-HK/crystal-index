@@ -21,7 +21,7 @@ export default function Pricing() {
     },
     {
       name: 'Premium',
-      price: '£4.99',
+      price: '£3.99',
       period: 'per month',
       features: [
         'Everything in Free, plus:',
@@ -39,11 +39,11 @@ export default function Pricing() {
     {
       name: 'Yearly',
       price: '£39.99',
-      period: 'per year',
+      period: 'per year — 2 months free',
       features: [
         'Everything in Premium',
-        '2 months free',
-        'Best value for regular use',
+        'Just £3.33/month billed annually',
+        'Best value for collectors',
       ],
       cta: 'Choose Yearly',
       ctaLink: '/pricing',
