@@ -1,24 +1,23 @@
-import ViewCrystals from "../../components/Organisms/ViewCrystals";
-import { SerialisableCrystalWithUser, ViewCrystalsProps } from "../../lib/types/crystal";
+import FilterableCrystalGallery from "../../components/Organisms/FilterableCrystalGallery";
+import { SerialisableCrystalWithUser } from "../../lib/types/crystal";
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Crystal Gallery',
-  description: 'Easily discover crystal meanings and identify crystals in the most beautiful, informative and personal way.',
-  keywords: ['crystals', 'identification', 'index', 'meaning', 'identifier', 'crystal', 'personal' ]
+  title: 'Crystal Directory — Browse 200+ Crystals by Chakra, Colour, Zodiac & Properties',
+  description: 'Explore our crystal directory. Filter by chakra, colour, zodiac sign, element and more. Discover meanings, properties and healing uses for over 200 crystals.',
+  keywords: ['crystals', 'crystal directory', 'crystal meanings', 'chakra crystals', 'zodiac crystals', 'crystal colours', 'healing crystals', 'crystal properties']
 };
 
 async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} | null> {
-  // Determine base URL for API calls
-  const basePath = process.env.NEXT_PUBLIC_SITE_URL 
+  const basePath = process.env.NEXT_PUBLIC_SITE_URL
     || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
   const allCrystalsPath = `${basePath}/api/crystal/allCrystals`;
-  
+
   try {
     const res = await fetch(allCrystalsPath, {
       next: { revalidate: 60 },
     });
-    
+
     if (!res.ok) {
       console.error('Failed to fetch crystals:', res.status)
       return null
@@ -26,19 +25,27 @@ async function getCrystals(): Promise<{crystals: SerialisableCrystalWithUser[]} 
 
     return res.json()
   } catch (error) {
-    // During build, API might not be available - return empty array
     console.error('Error fetching crystals during build:', error)
     return { crystals: [] }
   }
 }
 
-export default async function Page(props: ViewCrystalsProps) {
+export default async function Page() {
   const allCrystals = await getCrystals();
 
   return (
-    <ViewCrystals crystals={allCrystals?.crystals || []} galleryView={props.galleryView}  />
+    <div className="section crystal-directory">
+      <div className="container">
+        <div className="crystal-directory__header mb-5">
+          <h1 className="title is-3 has-text-white">Crystal Directory</h1>
+          <p className="subtitle is-6 has-text-grey-light">
+            Browse and filter our collection of crystals by chakra, colour, zodiac sign and more.
+          </p>
+        </div>
+        <FilterableCrystalGallery crystals={allCrystals?.crystals || []} />
+      </div>
+    </div>
   )
-};
+}
 
-// Make this page dynamic to avoid build-time fetch issues
 export const dynamic = 'force-dynamic'
