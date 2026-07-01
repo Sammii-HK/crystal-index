@@ -53,7 +53,8 @@ export default function Page() {
       <Features />
       <AppShowcase />
       <HowItWorks />
-      <Pricing />
+      {/* Pricing is iOS-owned (App Store IAP + in-app paywall); no web pricing table to keep in sync. */}
+      {/* <Pricing /> */}
       <FAQ />
       <SEOSection />
       <FinalCTA />

@@ -142,7 +142,7 @@ export default function Hero() {
                 {[
                   { value: '215+', label: 'Crystals' },
                   { value: 'AI', label: 'Identification' },
-                  { value: '7 Days', label: 'Full access' },
+                  { value: 'Free', label: 'To try' },
                 ].map(stat => (
                   <div key={stat.label}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--ci-text)', lineHeight: 1 }}>{stat.value}</div>
