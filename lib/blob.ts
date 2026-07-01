@@ -1,5 +1,4 @@
 import { put, list, del, head } from '@vercel/blob'
-import sharp from 'sharp'
 
 /**
  * Upload image to Vercel Blob storage
@@ -18,8 +17,11 @@ export async function uploadImageToBlob(
     buffer = file
   }
 
-  // Compress and optimize image if requested
+  // Compress/optimize if requested. sharp is imported LAZILY so this heavy native
+  // module only loads when compression is actually used — keeping it out of paths
+  // (like iOS identify) that don't compress, which avoids the serverless load crash.
   if (options?.compress || options?.maxWidth) {
+    const sharp = (await import('sharp')).default
     let sharpInstance = sharp(buffer)
 
     if (options.maxWidth) {

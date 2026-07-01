@@ -163,12 +163,10 @@ export async function POST(req: NextRequest) {
     // Generate image hash
     const imageHash = await generateImageHash(imageData)
 
-    // Upload to blob
-    const { url: imageUrl } = await uploadImageToBlob(
-      imageData,
-      'crystal.jpg',
-      { compress: true, maxWidth: 1920 }
-    )
+    // Upload to blob WITHOUT server-side compression: this keeps sharp out of the
+    // identify path entirely (sharp fails to load in the Vercel runtime). The app
+    // already sends a reasonably-sized JPEG.
+    const { url: imageUrl } = await uploadImageToBlob(imageData, 'crystal.jpeg')
 
     // Process background removal if requested
     let processedImageUrl: string | null = null
