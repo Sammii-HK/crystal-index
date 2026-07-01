@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="container">
         <div className="navbar-brand">
           <Link className="navbar-item ci-navbar__brand" href="/" onClick={closeBurger}>
-            <span className="ci-navbar__icon">&#9670;</span>
+            <img src="/app-icon.png" alt="Crystal Index" className="ci-navbar__icon" width={32} height={32} style={{ borderRadius: 8, verticalAlign: 'middle' }} />
             <span className="ci-navbar__title">Crystal Index</span>
           </Link>
 

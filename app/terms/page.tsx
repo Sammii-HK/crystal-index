@@ -52,7 +52,7 @@ export default function TermsPage() {
 
           <h2 className="title is-4 has-text-white">6. Intellectual property</h2>
           <p className="has-text-grey-light">
-            All content within Crystal Index, including but not limited to the encyclopaedia data, design, code, and imagery, is the property of Monkey Taps Ltd or its licensors and is protected by copyright and other intellectual property laws. Photos you upload remain your property.
+            All content within Crystal Index, including but not limited to the encyclopaedia data, design, code, and imagery, is the property of Lunar Computing, Inc or its licensors and is protected by copyright and other intellectual property laws. Photos you upload remain your property.
           </p>
 
           <h2 className="title is-4 has-text-white">7. Disclaimer of warranties</h2>
@@ -62,20 +62,20 @@ export default function TermsPage() {
 
           <h2 className="title is-4 has-text-white">8. Limitation of liability</h2>
           <p className="has-text-grey-light">
-            To the maximum extent permitted by applicable law, Monkey Taps Ltd shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Crystal Index, even if we have been advised of the possibility of such damages.
+            To the maximum extent permitted by applicable law, Lunar Computing, Inc shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of Crystal Index, even if we have been advised of the possibility of such damages.
           </p>
 
           <h2 className="title is-4 has-text-white">9. End User Licence Agreement (iOS)</h2>
           <p className="has-text-grey-light">
-            The Crystal Index iOS app is licensed to you by Monkey Taps Ltd, not sold. This licence is non-transferable and permits use on any Apple device you own or control, as permitted by the App Store Usage Rules. Monkey Taps Ltd is solely responsible for the app and its content. Apple has no obligation to provide maintenance, support, warranty, or product claims for Crystal Index.
+            The Crystal Index iOS app is licensed to you by Lunar Computing, Inc, not sold. This licence is non-transferable and permits use on any Apple device you own or control, as permitted by the App Store Usage Rules. Lunar Computing, Inc is solely responsible for the app and its content. Apple has no obligation to provide maintenance, support, warranty, or product claims for Crystal Index.
           </p>
           <p className="has-text-grey-light">
-            In the event of any third-party claim that the app infringes intellectual property rights, Monkey Taps Ltd — not Apple — is solely responsible for the investigation, defence, settlement, and discharge of such claim. Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce them against you.
+            In the event of any third-party claim that the app infringes intellectual property rights, Lunar Computing, Inc — not Apple — is solely responsible for the investigation, defence, settlement, and discharge of such claim. Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce them against you.
           </p>
 
           <h2 className="title is-4 has-text-white">10. Governing law</h2>
           <p className="has-text-grey-light">
-            These Terms of Use shall be governed by and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.
+            These Terms of Use shall be governed by and construed in accordance with the laws of the State of Delaware, United States, without regard to its conflict of law provisions. Any disputes shall be subject to the exclusive jurisdiction of the state and federal courts located in the State of Delaware.
           </p>
 
           <h2 className="title is-4 has-text-white">11. Changes to these terms</h2>

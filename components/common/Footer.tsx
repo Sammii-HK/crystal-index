@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="column is-4">
             <div className="ci-footer__brand">
-              <span className="ci-footer__icon">&#9670;</span>
+              <img src="/app-icon.png" alt="Crystal Index" className="ci-footer__icon" width={32} height={32} style={{ borderRadius: 8, verticalAlign: 'middle' }} />
               <span className="ci-footer__title">Crystal Index</span>
             </div>
             <p className="ci-footer__tagline">
@@ -34,6 +34,8 @@ export default function Footer() {
             <ul className="ci-footer__links">
               <li><Link href="/privacy">Privacy Policy</Link></li>
               <li><Link href="/terms">Terms of Use</Link></li>
+              <li><Link href="/support">Support</Link></li>
+              <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
 

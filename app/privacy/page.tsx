@@ -20,7 +20,7 @@ export default function PrivacyPage() {
 
           <h2 className="title is-4 has-text-white">1. Who we are</h2>
           <p className="has-text-grey-light">
-            Crystal Index (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by Monkey Taps Ltd. Our website is{' '}
+            Crystal Index (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by Lunar Computing, Inc. Our website is{' '}
             <a href="https://crystalindex.co.uk">crystalindex.co.uk</a> and our iOS app is available on the App Store.
           </p>
 
