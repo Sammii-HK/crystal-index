@@ -11,9 +11,11 @@ export function middleware(request: NextRequest) {
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
 
   // Cache static assets
+  // NB: /api/image is deliberately NOT cached here. Middleware runs before the
+  // handler, so a blanket immutable header also pinned FAILURES in the CDN for a
+  // year. That route sets its own Cache-Control, only on a successful lookup.
   if (
     request.nextUrl.pathname.startsWith('/_next/static') ||
-    request.nextUrl.pathname.startsWith('/api/image') ||
     request.nextUrl.pathname.match(/\.(jpg|jpeg|png|gif|ico|svg|webp)$/)
   ) {
     response.headers.set(
