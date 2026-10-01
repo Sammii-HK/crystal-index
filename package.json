@@ -16,7 +16,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "npx prisma migrate dev",
-    "test": "jest --watch",
+    "test": "jest --ci --forceExit",
     "vercel-build": "prisma generate && next build",
     "db:analyze": "tsx scripts/analyze-db-size.ts",
     "db:cleanup": "tsx scripts/cleanup-db.ts",
@@ -24,15 +24,22 @@
     "db:remove-binary": "tsx scripts/remove-binary-images.ts",
     "test:identify": "tsx scripts/test-identification.ts",
     "test:crystals": "tsx scripts/test-multiple-crystals.ts",
-    "test:random": "tsx scripts/test-random-crystals.ts"
+    "test:random": "tsx scripts/test-random-crystals.ts",
+    "test:watch": "jest --watch"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "pnpm": {
     "supportedArchitectures": {
-      "os": ["current", "linux"],
-      "cpu": ["current", "x64"]
+      "os": [
+        "current",
+        "linux"
+      ],
+      "cpu": [
+        "current",
+        "x64"
+      ]
     }
   },
   "dependencies": {
