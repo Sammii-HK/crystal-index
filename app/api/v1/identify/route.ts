@@ -4,7 +4,7 @@ import { verifyApiKey } from '../../../../lib/api-auth'
 import { prisma } from '../../../../lib/prisma'
 import { checkIdentificationRateLimit, checkRateLimit } from '../../../../lib/rateLimit'
 import { identifyCrystalWithVision } from '../../../../lib/openai-identify'
-import { uploadImageToBlob } from '../../../../lib/blob'
+import { uploadImageToBlob, deleteImageFromBlob } from '../../../../lib/blob'
 import { generateImageHash } from '../../../../lib/imageHash'
 import { processBackgroundRemoval } from '../../../../lib/backgroundRemoval'
 import { generateClipEmbedding, findSimilarConfirmed } from '../../../../lib/clip-embedding'
@@ -18,6 +18,13 @@ export const runtime = 'nodejs'
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
+  // Photos from the native app are anonymous and never saved to a record, so they are
+  // deleted as soon as they have been analysed (success or failure). Account / API-key
+  // callers keep theirs: it is the history feature on their own account.
+  const anonymousUploads: string[] = []
+  const discardAnonymousUploads = () =>
+    Promise.all(anonymousUploads.splice(0).map(url => deleteImageFromBlob(url)))
+
   try {
     // Auth: iOS app secret, then API key, then web session.
     let userId: string | null = null
@@ -101,6 +108,15 @@ export async function POST(req: NextRequest) {
           { status: 429, headers: { 'Retry-After': '3600' } }
         )
       }
+      // Cost circuit breaker: the shared secret can be extracted from the app, so cap total
+      // app-originated identifications per day no matter how many IPs they come from.
+      const globalLimit = await checkRateLimit('app-global', 'identification-app-global', 1500, 24 * 60)
+      if (!globalLimit.allowed) {
+        return NextResponse.json(
+          { error: 'Identification is busy right now. Please try again later.' },
+          { status: 503, headers: { 'Retry-After': '3600' } }
+        )
+      }
     }
 
     // Parse request body (JSON for API, FormData for web)
@@ -167,12 +183,14 @@ export async function POST(req: NextRequest) {
     // identify path entirely (sharp fails to load in the Vercel runtime). The app
     // already sends a reasonably-sized JPEG.
     const { url: imageUrl } = await uploadImageToBlob(imageData, 'crystal.jpeg')
+    if (isAppRequest) anonymousUploads.push(imageUrl)
 
     // Process background removal if requested
     let processedImageUrl: string | null = null
     if (removeBackground) {
       try {
         processedImageUrl = await processBackgroundRemoval(imageUrl, 'crystal.jpg')
+        if (isAppRequest && processedImageUrl) anonymousUploads.push(processedImageUrl)
       } catch (error) {
         console.error('Background removal failed:', error)
         // Continue without background removal
@@ -230,6 +248,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Analysis is done: drop the anonymous app photo(s) before responding.
+    await discardAnonymousUploads()
+
     // Return API response
     const headers: Record<string, string> = {}
     if (rateLimit) {
@@ -241,11 +262,12 @@ export async function POST(req: NextRequest) {
       id: identification?.id ?? null,
       topMatches: identificationResult.topMatches,
       confidence: identificationResult.confidence,
-      imageUrl,
-      processedImageUrl,
+      imageUrl: isAppRequest ? null : imageUrl,
+      processedImageUrl: isAppRequest ? null : processedImageUrl,
       createdAt: identification?.createdAt ?? new Date().toISOString(),
     }, { headers })
   } catch (error) {
+    await discardAnonymousUploads()
     console.error('API identification error:', error)
     return NextResponse.json(
       {
