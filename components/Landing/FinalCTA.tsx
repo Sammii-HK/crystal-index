@@ -1,3 +1,4 @@
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../../lib/app-links'
 import Link from 'next/link'
 
 export default function FinalCTA() {
@@ -23,7 +24,7 @@ export default function FinalCTA() {
                 Explore the crystal library
               </Link>
               <Link
-                href="https://apps.apple.com/app/crystal-index/id6740543879"
+                href={CRYSTAL_INDEX_APP_STORE_URL}
                 className="button is-large"
                 style={{
                   borderRadius: '8px',

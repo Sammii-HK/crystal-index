@@ -1,3 +1,4 @@
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../../lib/app-links'
 import Link from 'next/link'
 import crystalData from '../../data/crystals.json'
 
@@ -99,7 +100,7 @@ export default function Hero() {
               {/* CTA buttons */}
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem', alignItems: 'center' }}>
                 <Link
-                  href="https://apps.apple.com/app/crystal-index/id6740543879"
+                  href={CRYSTAL_INDEX_APP_STORE_URL}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',

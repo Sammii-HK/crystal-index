@@ -1,3 +1,4 @@
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../../lib/app-links'
 import Link from "next/link";
 
 export default function Footer() {
@@ -44,7 +45,7 @@ export default function Footer() {
             <h4 className="ci-footer__heading">Get the App</h4>
             <a
               className="ci-footer__app-badge"
-              href="https://apps.apple.com/app/crystal-index/id6741419625"
+              href={CRYSTAL_INDEX_APP_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download on the App Store"

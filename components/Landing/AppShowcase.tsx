@@ -1,3 +1,4 @@
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../../lib/app-links'
 import Link from 'next/link'
 import { Zap, Camera, Scissors, Library } from 'lucide-react'
 
@@ -28,7 +29,7 @@ export default function AppShowcase() {
               Take Crystal Index everywhere. Identify crystals on the go, build your personal collection, and access the full encyclopaedia from your pocket.
             </p>
             <Link
-              href="https://apps.apple.com/app/crystal-index/id6740543879"
+              href={CRYSTAL_INDEX_APP_STORE_URL}
               className="button is-primary is-medium"
               style={{ borderRadius: '10px', fontWeight: 600 }}
             >

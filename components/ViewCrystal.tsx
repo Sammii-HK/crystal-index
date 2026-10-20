@@ -1,5 +1,6 @@
 'use client'
 
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../lib/app-links'
 import { BCarousel } from './Molecules';
 import { useRouter } from 'next/navigation'
 import { FaArrowLeft } from 'react-icons/fa';
@@ -517,7 +518,7 @@ export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [
             Track your crystals, log your intentions, and build your personal crystal library.
           </p>
           <a
-            href="https://apps.apple.com/app/crystal-index/id6504834819"
+            href={CRYSTAL_INDEX_APP_STORE_URL}
             className="crystal-cta__button"
             target="_blank"
             rel="noopener noreferrer"

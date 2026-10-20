@@ -1,5 +1,6 @@
 'use client'
 
+import { CRYSTAL_INDEX_APP_STORE_URL } from '../../lib/app-links'
 import classNames from "classnames";
 import Link from "next/link";
 import { useState } from "react";
@@ -66,7 +67,7 @@ export default function Navbar() {
             <div className="navbar-item">
               <a
                 className="button ci-navbar__cta"
-                href="https://apps.apple.com/app/crystal-index/id6741419625"
+                href={CRYSTAL_INDEX_APP_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
