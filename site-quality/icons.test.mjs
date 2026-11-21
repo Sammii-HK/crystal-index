@@ -52,3 +52,20 @@ test('HTML scripts and styles keep comments and source comparisons separate from
  assert.ok(scanSource('<style>.next:after{content:"→"}</style>','page.html').some(f=>f.rule==='use-lucide-icon'));
  assert.equal(scanSource('<script type="application/ld+json">{"name":"Arrows → notation"}</script>','page.html').length,0);
 });
+
+
+test('playing-card emoji used as an interface icon are covered too', () => {
+ assert.ok(scanSource('<button>🃏 Start reading</button>').some(f => f.rule === 'use-lucide-icon'));
+});
+
+
+test('status comparisons are source logic rather than visible icon substitutes', () => {
+ const result = scanSource("<div className={log.includes('✅') ? 'success' : log.includes('❌') ? 'error' : ''}>{log}</div>");
+ assert.equal(result.filter(f => f.rule !== 'symbol-review').length, 0);
+ assert.ok(scanSource("<button>{busy ? '✓' : '+'}</button>").some(f => f.rule === 'use-lucide-icon'));
+});
+
+
+test('technical-block emoji used for loading and playback controls are covered', () => {
+ for (const glyph of ['⏳','⌚','⏯']) assert.ok(scanSource(`<button>${glyph}</button>`).some(f => f.rule === 'use-lucide-icon'));
+});

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 let ts;
 try { ts = require('typescript'); } catch { throw new Error('Icon lint requires the project’s TypeScript dev dependency.'); }
-const GLYPH = /[\u2190-\u21ff\u25a0-\u27bf\u2b00-\u2bff\u{1f300}-\u{1faff}›‹»«]/u;
+const GLYPH = /[\u231a\u231b\u23e9-\u23f3\u2190-\u21ff\u25a0-\u27bf\u2b00-\u2bff\u{1f000}-\u{1faff}›‹»«]/u;
 const ENTITIES = { rarr:'→',larr:'←',uarr:'↑',darr:'↓',harr:'↔',nearr:'↗',searr:'↘',raquo:'»',laquo:'«',rsaquo:'›',lsaquo:'‹',check:'✓',times:'×',plus:'+',minus:'−' };
 const decode = (s) => s.replace(/&(#x[\da-f]+|#\d+|\w+);/gi, (all, name) => {
   if (name[0] === '#') { const n=name[1].toLowerCase()==='x'?parseInt(name.slice(2),16):parseInt(name.slice(1),10);return n<=0x10ffff?String.fromCodePoint(n):all; }
@@ -68,11 +68,12 @@ export function scanSource(source, filename='component.tsx') {
       const key=ts.isPropertyAssignment(parent)?parent.name.getText(tree):'';
       if(!['href','src','aria-label','aria-description','title','alt'].includes(attribute)&&!ancestorTag(node,['code','pre','kbd','math'])) {
         const decorative=ts.isJsxExpression(parent)&&parent.parent && ts.isJsxElement(parent.parent)&&parent.parent.openingElement.attributes.properties.some(a=>ts.isJsxAttribute(a)&&a.name.getText(tree)==='aria-hidden');
+        const comparison = ts.isCallExpression(parent) && ts.isPropertyAccessExpression(parent.expression) && ['includes','startsWith','endsWith','indexOf','replace','replaceAll','split','match','search'].includes(parent.expression.name.text);
         const variable=ts.isVariableDeclaration(parent)?parent.name.getText(tree):'';
         const iconField=/(?:^|_)(?:icon|glyph)$|Icon$|Glyph$/i.test(key||variable);
         const rendered=ts.isJsxExpression(parent)||ts.isJsxAttribute(parent)||ancestorTag(node,['button','Button','IconButton','span','p','div','a','Text']);
         const chunk=ts.isTemplateHead(node)||ts.isTemplateMiddle(node)||ts.isTemplateTail(node);
-        inspect(node.text,node.getStart(tree),!chunk&&(decorative||iconField||ancestorTag(node,['button','Button','IconButton'])),!rendered&&!iconField);
+        inspect(node.text,node.getStart(tree),!chunk&&!comparison&&(decorative||iconField||ancestorTag(node,['button','Button','IconButton'])),comparison||(!rendered&&!iconField));
       }
     }
     ts.forEachChild(node,visit);
