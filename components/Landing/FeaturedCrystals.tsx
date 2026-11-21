@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import Link from 'next/link'
 import crystalData from '../../data/crystals.json'
 
@@ -85,7 +86,7 @@ export default function FeaturedCrystals() {
             className="button is-primary is-outlined"
             style={{ borderRadius: '8px', fontWeight: 600 }}
           >
-            View all 215 crystals &rarr;
+            Browse the crystal directory <ArrowUpRight size={16} aria-hidden />
           </Link>
         </div>
       </div>

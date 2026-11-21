@@ -116,14 +116,7 @@ export const chakraColours: Record<string, string> = {
 /**
  * Element icon mapping.
  */
-export const elementIcons: Record<string, string> = {
-  'fire': '🔥',
-  'water': '💧',
-  'earth': '🌍',
-  'air': '💨',
-  'spirit': '✦',
-  'storm': '⚡',
-}
+// Element UI icons are named Lucide components in ViewCrystal.
 
 /**
  * Rarity labels for display.

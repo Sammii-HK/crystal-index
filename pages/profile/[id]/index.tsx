@@ -45,7 +45,7 @@ const ViewProfile: React.FC<ViewProfileProps> = (props) => {
       <div>
         {
           (activeTab === 'favourited')
-            && !getActiveTab(activeTab)!.crystals.length && <p>You have no favourite crystals yet 😶</p>
+            && !getActiveTab(activeTab)!.crystals.length && <p>You have no favourite crystals yet.</p>
         }
         { 
           getActiveTab(activeTab)!.crystals && (

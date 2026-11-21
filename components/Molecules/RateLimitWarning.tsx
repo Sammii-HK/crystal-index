@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -52,7 +53,7 @@ export default function RateLimitWarning() {
           <>
             {' '}
             <Link href="/pricing" className="has-text-weight-bold">
-              Upgrade to Pro for unlimited identifications →
+              View identification plans <ArrowUpRight size={14} aria-hidden />
             </Link>
           </>
         )}

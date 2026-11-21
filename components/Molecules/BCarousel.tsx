@@ -1,8 +1,8 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import { BImage } from '../Atoms';
+import BImage from '../Atoms/BImage';
 import React, { useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { X as FaTimes } from "lucide-react";
 import classNames from "classnames";
 
 
@@ -23,6 +23,8 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
       <div key={imageId}>
         {props.view === "form" && imageIds.length > 1 &&
           <button
+            type="button"
+            aria-label="Remove crystal image"
             onClick={() => setModalState({
               state: !modalState.state,
               crystalImageId: imageId,
@@ -30,7 +32,7 @@ const BCarousel: React.FC<CarouselProps> = (props) => {
             className="button is-pulled-right bring-to-front has-background-clear has-text-danger is-ghost"
           >
               <span className="icon is-small">
-                <FaTimes />
+                <FaTimes size={16} aria-hidden />
               </span>
           </button>
         }

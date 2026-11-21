@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Location } from "@prisma/client";
 import { FormEventHandler, useCallback, useState } from "react";
-import { FaSearch, FaRegTimesCircle } from "react-icons/fa";
+import { Search as FaSearch, CircleX as FaRegTimesCircle } from "lucide-react";
 import { GeoencodedLocation } from "../../lib/types/geoencodedLocation";
 import { locationFields, CrystalLocation } from "../../lib/types/location";
 import { BField, BInput } from "../Atoms";

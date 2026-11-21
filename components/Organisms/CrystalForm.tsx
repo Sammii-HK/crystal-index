@@ -12,7 +12,7 @@ import {
 import { useRouter } from 'next/router';
 import { BImageFileUploader } from '../Molecules';
 import ChooseLocationForm from './ChooseLocationForm';
-import { FaArrowLeft } from 'react-icons/fa';
+import { ArrowLeft as FaArrowLeft } from "lucide-react";
 import { checkSub1 } from '../../lib/helpers/checkUser';
 import { ChooseCrystalInfoForm } from './ChooseCrystalInfoForm';
 
@@ -80,7 +80,7 @@ const CrystalForm: RestrictedReactFC<CrystalFormProps> = (props) => {
 							className={`icon is-small is-left is-clickable`}
 							onClick={backArrowOnClick}
 						>
-							<FaArrowLeft />
+							<FaArrowLeft size={16} aria-hidden />
 						</span>
 					</a>
 				</div>

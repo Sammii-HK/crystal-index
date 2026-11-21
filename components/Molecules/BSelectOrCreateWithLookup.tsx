@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BInput } from "../Atoms";
-import { FaCheck } from "react-icons/fa";
+import { Check as FaCheck } from "lucide-react";
 
 type BSelectOrCreateWithLookupProps<Item, CreateOption> = {
 	id: string;
@@ -111,7 +111,7 @@ export function BSelectOrCreateWithLookup<Item, CreateOption>(
 						}}
 					>
 						{entry.name}{" "}
-						{entry.id === props.selectedId ? <FaCheck /> : undefined}
+						{entry.id === props.selectedId ? <FaCheck size={16} aria-hidden /> : undefined}
 					</p>
 				))}
 			{searchText && searchTextDiffersFromSelected && createOptions.length === 0 && (

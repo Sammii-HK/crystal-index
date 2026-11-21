@@ -43,7 +43,7 @@ const CrystalsOfLocation: React.FC<ViewCrystalsOfLocationProps> = (props) => {
       <div>
         {
           (activeTab === 'favourited')
-            && !getActiveTab(activeTab)!.crystals?.length && <p>You have no favourite crystals yet 😶</p>
+            && !getActiveTab(activeTab)!.crystals?.length && <p>You have no favourite crystals yet.</p>
         }
         { 
           getActiveTab(activeTab)!.crystals && (

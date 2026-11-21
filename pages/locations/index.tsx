@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { Location } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import { useState, Suspense } from 'react';
@@ -43,8 +44,8 @@ const MapView: React.FC<MapViewProps> = (props) => {
         {activeLocation && 
           <div className="locationInformation is-flex is-flex-direction-column mr-2 mt-3 mb-6">
             <div className='locationInformationContainer m-3'>
-              <button className='delete ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
-                X
+              <button type="button" aria-label="Close location details" className='button is-ghost ml-3 is-pulled-right' onClick={() => setActiveLocation(false)}>
+                <X size={18} aria-hidden />
               </button>
               <p className='mx-3 pr-6'>
                 {activeLocation?.placeName.split(",", 1) || false}, 

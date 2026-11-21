@@ -176,7 +176,7 @@ function buildFaqItems(name: string, e: ReturnType<typeof enrichCrystalData>, cr
   return items
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params, searchParams }: { params: { id: string }, searchParams?: { directory?: string } }) {
   const crystal = await resolveCrystal(params.id)
   if (!crystal) notFound()
 
@@ -254,6 +254,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <StructuredData data={mineralSchema} />
       {faqSchema && <StructuredData data={faqSchema} />}
       <ViewCrystal
+        directoryQuery={typeof searchParams?.directory === "string" ? searchParams.directory : ""}
         crystal={crystal}
         enrichedData={enrichedData}
         allCrystalNames={allCrystalNames}

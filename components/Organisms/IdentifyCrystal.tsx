@@ -1,5 +1,6 @@
 'use client'
 
+import { Gem } from "lucide-react";
 import { useState, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -169,7 +170,7 @@ export default function IdentifyCrystal() {
           {result.watermarked && (
             <div className="notification is-info is-light">
               <p className="is-size-7">
-                💎 Upgrade to Pro to remove watermark and get unlimited identifications
+                <Gem size={16} aria-hidden /> View identification plans
               </p>
             </div>
           )}

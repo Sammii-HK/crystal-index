@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -48,7 +49,7 @@ export default async function EditBlogPostPage({
       <div className="box">
         <div className="mb-4">
           <Link href="/admin/blog" className="button is-light">
-            ← Back to Blog Admin
+            <ArrowLeft size={16} aria-hidden /> Back to Blog Admin
           </Link>
         </div>
         <h1 className="title is-3">Edit Blog Post</h1>

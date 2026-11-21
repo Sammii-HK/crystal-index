@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BField, BInput } from "../Atoms";
 import { SerialisableCrystalWithUser } from "../../lib/types/crystal";
-import { FaTimes } from "react-icons/fa";
+import { X as FaTimes } from "lucide-react";
 
 const SearchCrystals: React.FC<
   {
@@ -45,7 +45,7 @@ const SearchCrystals: React.FC<
             type="button"
             aria-label="Clear search"
           >
-            <FaTimes />
+            <FaTimes size={16} aria-hidden />
           </button>
         )}
       </div>

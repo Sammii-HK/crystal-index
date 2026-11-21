@@ -1,7 +1,7 @@
 import { CrystalInfo } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { BField, BInput } from "../Atoms";
-import { FaPlus } from "react-icons/fa";
+import { Plus as FaPlus } from "lucide-react";
 import axios from "axios";
 import { CrystalInfoResponse } from "../../pages/api/crystalInfo/create";
 import { BSelectOrCreate } from "../Molecules/BSelectOrCreate";

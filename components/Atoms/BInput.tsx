@@ -1,5 +1,5 @@
 import { FormEventHandler } from "react"
-import { IconType } from "react-icons/lib"
+import type { LucideIcon as IconType } from "lucide-react"
 
 const BInput: React.FC<InputProps> = (props) => {
   return (
@@ -13,14 +13,14 @@ const BInput: React.FC<InputProps> = (props) => {
       value={props.value}
       onChange={event => props.onChange(event.target.value)}
       onKeyDown={event => {
-        if (event.code === "Enter") props.onEnterKey}
+        if (event.code === "Enter") props.onEnterKey?.(event)}
       }
       />
-      {props.icon &&
-        <span className={`icon is-${props.iconSize} is-${props.iconAlign} is-clickable`} onClick={props.iconOnClick}>
-          <props.icon />
-        </span>
-      }
+      {props.icon && (props.iconOnClick ?
+        <button type="button" aria-label={props.iconLabel || "Search"} className={`icon is-${props.iconSize} is-${props.iconAlign} is-clickable`} onClick={props.iconOnClick} style={{border:0,background:"transparent",minWidth:44,minHeight:44}}>
+          <props.icon size={16} aria-hidden />
+        </button> : <span className={`icon is-${props.iconSize} is-${props.iconAlign}`} aria-hidden><props.icon size={16} /></span>
+      )}
     </p>
   )
 }
@@ -34,6 +34,7 @@ type InputProps = {
   value: string,
   onChange: (newValue: string) => void
   icon?: IconType,
+  iconLabel?: string,
   iconSize?: string,
   iconAlign?: string,
   iconOnClick?: FormEventHandler,

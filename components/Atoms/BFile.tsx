@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, useCallback, useState } from "react"
-import { FaUpload } from 'react-icons/fa';
+import { Upload as FaUpload } from "lucide-react";
 
 const BFile: React.FC<InputProps> = (props) => {
   const [error, setError] = useState<string | undefined>();
@@ -33,7 +33,7 @@ const BFile: React.FC<InputProps> = (props) => {
             />
           <span className="file-cta">
             <span className="file-icon">
-              <FaUpload />
+              <FaUpload size={16} aria-hidden />
             </span>
             <span className="file-label">
               Choose a file…

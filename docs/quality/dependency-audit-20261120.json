@@ -1,0 +1,197 @@
+{
+  "date": "2026-11-20",
+  "baselineProductCommit": "ba6f28e0",
+  "source": "pnpm audit registry response; no DB/provider calls",
+  "before": {
+    "production": {
+      "info": 0,
+      "low": 17,
+      "moderate": 78,
+      "high": 75,
+      "critical": 8
+    },
+    "full": {
+      "info": 0,
+      "low": 19,
+      "moderate": 87,
+      "high": 94,
+      "critical": 8
+    }
+  },
+  "after": {
+    "production": {
+      "info": 0,
+      "low": 16,
+      "moderate": 45,
+      "high": 38,
+      "critical": 3
+    },
+    "full": {
+      "info": 0,
+      "low": 17,
+      "moderate": 46,
+      "high": 41,
+      "critical": 3
+    }
+  },
+  "remainingCriticalAndHigh": [
+    {
+      "module": "next",
+      "severity": "high",
+      "advisoryRecords": 12,
+      "installedVersions": [
+        "13.5.11"
+      ],
+      "patchedRanges": [
+        ">=14.1.1",
+        ">=14.2.15",
+        ">=14.2.34",
+        ">=14.2.35",
+        ">=15.0.8",
+        ">=15.5.15",
+        ">=15.5.16",
+        ">=15.5.21",
+        ">=15.5.28"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-36qx-fr4f-26g5",
+        "https://github.com/advisories/GHSA-5j59-xgg2-r9c4",
+        "https://github.com/advisories/GHSA-7gfc-8cq8-jh5f",
+        "https://github.com/advisories/GHSA-8h8q-6873-q5fj",
+        "https://github.com/advisories/GHSA-c4j6-fc7j-m34r",
+        "https://github.com/advisories/GHSA-fr5h-rqp8-mj6g",
+        "https://github.com/advisories/GHSA-h25m-26qc-wcjf",
+        "https://github.com/advisories/GHSA-m99w-x7hq-7vfj",
+        "https://github.com/advisories/GHSA-mwv6-3258-q52c",
+        "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+        "https://github.com/advisories/GHSA-p9j2-gv94-2wf4",
+        "https://github.com/advisories/GHSA-q4gf-8mx6-v5v3"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "high",
+      "advisoryRecords": 10,
+      "installedVersions": [
+        "0.26.1"
+      ],
+      "patchedRanges": [
+        ">=0.30.0",
+        ">=0.30.3",
+        ">=0.31.1",
+        ">=0.32.0"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-3g43-6gmg-66jw",
+        "https://github.com/advisories/GHSA-43fc-jf86-j433",
+        "https://github.com/advisories/GHSA-6chq-wfr3-2hj9",
+        "https://github.com/advisories/GHSA-hfxv-24rg-xrqf",
+        "https://github.com/advisories/GHSA-j5f8-grm9-p9fc",
+        "https://github.com/advisories/GHSA-jr5f-v2jv-69x6",
+        "https://github.com/advisories/GHSA-p92q-9vqr-4j8v",
+        "https://github.com/advisories/GHSA-pf86-5x62-jrwf",
+        "https://github.com/advisories/GHSA-pjwm-pj3p-43mv",
+        "https://github.com/advisories/GHSA-pmwg-cvhr-8vh7"
+      ]
+    },
+    {
+      "module": "undici",
+      "severity": "high",
+      "advisoryRecords": 5,
+      "installedVersions": [
+        "5.28.2",
+        "5.29.0"
+      ],
+      "patchedRanges": [
+        ">=6.24.0",
+        ">=6.27.0",
+        ">=6.29.1"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-2m5v-pch6-74hx",
+        "https://github.com/advisories/GHSA-qrxm-fqhp-jwvm",
+        "https://github.com/advisories/GHSA-v9p9-hfj2-hcw8",
+        "https://github.com/advisories/GHSA-vrm6-8vpv-qv8q",
+        "https://github.com/advisories/GHSA-vxpw-j846-p89q"
+      ]
+    },
+    {
+      "module": "sharp",
+      "severity": "high",
+      "advisoryRecords": 3,
+      "installedVersions": [
+        "0.33.5"
+      ],
+      "patchedRanges": [
+        ">=0.35.0",
+        ">=0.35.4",
+        ">=0.35.5"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-f88m-g3jw-g9cj",
+        "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c",
+        "https://github.com/advisories/GHSA-wq5f-xc86-pv6w"
+      ]
+    },
+    {
+      "module": "d3-color",
+      "severity": "high",
+      "advisoryRecords": 1,
+      "installedVersions": [
+        "1.0.3"
+      ],
+      "patchedRanges": [
+        ">=3.1.0"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-36jr-mh4h-2g58"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "critical",
+      "advisoryRecords": 3,
+      "installedVersions": [
+        "13.5.11"
+      ],
+      "patchedRanges": [
+        ">=15.5.24",
+        ">=15.5.28"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+        "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+        "https://github.com/advisories/GHSA-p293-qw3h-jr36"
+      ]
+    },
+    {
+      "module": "@fastify/busboy",
+      "severity": "high",
+      "advisoryRecords": 1,
+      "installedVersions": [
+        "2.1.1"
+      ],
+      "patchedRanges": [
+        ">=3.2.1"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-x8mw-p69m-v3mx"
+      ]
+    },
+    {
+      "module": "zod",
+      "severity": "high",
+      "advisoryRecords": 1,
+      "installedVersions": [
+        "3.25.76"
+      ],
+      "patchedRanges": [
+        ">=4.6.6"
+      ],
+      "advisories": [
+        "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5"
+      ]
+    }
+  ],
+  "releaseReady": false
+}

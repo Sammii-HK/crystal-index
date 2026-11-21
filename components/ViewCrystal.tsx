@@ -1,14 +1,15 @@
 'use client'
 
 import { CRYSTAL_INDEX_APP_STORE_URL } from '../lib/app-links'
-import { BCarousel } from './Molecules';
-import { useRouter } from 'next/navigation'
-import { FaArrowLeft } from 'react-icons/fa';
-import { SerialisableCrystalWithUser } from '../lib/types/crystal';
+
+import BCarousel from './Molecules/BCarousel';
+import Link from 'next/link'
+import { catalogueBackHref } from '../lib/catalogue-filters'
+import { ArrowLeft as FaArrowLeft, Flame, Droplet, Globe2, Wind, Sparkles, Zap, Leaf, Heart, Gem, type LucideIcon } from "lucide-react";
+import type { SerialisableCrystalWithUser } from '../lib/types/crystal';
 import {
   EnrichedCrystalData,
   chakraColours,
-  elementIcons,
   rarityLabels,
 } from '../lib/crystal-data-enrichment';
 
@@ -16,17 +17,14 @@ export interface ViewCrystalProps {
   crystal: SerialisableCrystalWithUser | null
   enrichedData?: EnrichedCrystalData | null
   allCrystalNames?: string[]
+  directoryQuery?: string
 }
 
-const workingWithIcons: Record<string, string> = {
-  meditation: '🧘',
-  spellwork: '🕯️',
-  healing: '💎',
-  manifestation: '✨',
-}
+const workingWithIcons: Record<string, LucideIcon> = {meditation: Leaf, spellwork: Flame, healing: Heart, manifestation: Sparkles}
+const elementIcons: Record<string, LucideIcon> = {fire: Flame, water: Droplet, earth: Globe2, air: Wind, spirit: Sparkles, storm: Zap}
+function NamedIcon({icon: Icon = Gem}: {icon?: LucideIcon}) { return <Icon size={18} aria-hidden /> }
 
-export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [] }: ViewCrystalProps) {
-  const router = useRouter()
+export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [], directoryQuery = "" }: ViewCrystalProps) {
 
   if (!crystal) return <p>Crystal not found</p>
 
@@ -87,9 +85,9 @@ export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [
       <div className="container">
         {/* Back link */}
         <div className="px-4 pt-4">
-          <a className="crystal-detail__back-link" onClick={() => router.push('/crystals')}>
-            <FaArrowLeft /> Back to crystals
-          </a>
+          <Link className="crystal-detail__back-link" href={catalogueBackHref(directoryQuery)}>
+            <FaArrowLeft size={16} aria-hidden /> Back to crystals
+          </Link>
         </div>
 
         {/* Hero */}
@@ -275,7 +273,9 @@ export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [
                   <h3 className="crystal-property-card__title">Zodiac signs</h3>
                   <div className="crystal-property-card__items">
                     {zodiacSigns.map(sign => (
-                      <span key={sign} className="crystal-badge">{sign}</span>
+                      <span key={sign} className="crystal-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        {sign}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [
                     {elements.map(el => (
                       <span key={el} className="crystal-badge">
                         {elementIcons[el.toLowerCase()] && (
-                          <span>{elementIcons[el.toLowerCase()]}</span>
+                          <NamedIcon icon={elementIcons[el.toLowerCase()]} />
                         )}
                         {el}
                       </span>
@@ -355,7 +355,7 @@ export default function ViewCrystal({ crystal, enrichedData, allCrystalNames = [
                 value && (
                   <div key={key} className="crystal-working-card">
                     <div className="crystal-working-card__icon">
-                      {workingWithIcons[key] || '✦'}
+                      <NamedIcon icon={workingWithIcons[key]} />
                     </div>
                     <h3 className="crystal-working-card__title">{key}</h3>
                     <p className="crystal-working-card__text">{value}</p>

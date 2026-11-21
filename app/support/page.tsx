@@ -38,7 +38,7 @@ export default function SupportPage() {
 
           <h3 className="title is-5 has-text-white">How do I manage my subscription?</h3>
           <p className="has-text-grey-light">
-            Crystal Index subscriptions are managed through Apple. On your iPhone, go to Settings → [Your Name] → Subscriptions → Crystal Index to change plan, pause, or cancel. Cancellations take effect at the end of the current billing period.
+            Crystal Index subscriptions are managed through Apple. On your iPhone, go to Settings, then [Your Name], then Subscriptions, then Crystal Index to change plan, pause, or cancel. Cancellations take effect at the end of the current billing period.
           </p>
 
           <h3 className="title is-5 has-text-white">How do I restore a purchase?</h3>
