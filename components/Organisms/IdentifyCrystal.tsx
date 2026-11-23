@@ -170,7 +170,7 @@ export default function IdentifyCrystal() {
           {result.watermarked && (
             <div className="notification is-info is-light">
               <p className="is-size-7">
-                <Gem size={16} aria-hidden /> View identification plans
+                <Gem size={16} aria-hidden /> Upgrade to remove the watermark and get unlimited identifications
               </p>
             </div>
           )}

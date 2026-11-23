@@ -16,7 +16,7 @@
     "start": "next start",
     "lint": "node scripts/check-ui-icons.mjs && node --test site-quality/icons.test.mjs && next lint",
     "migrate": "npx prisma migrate dev",
-    "test": "npm run test:icons && node --test tests/merge-contract.test.mjs && jest --ci --forceExit",
+    "test": "npm run test:icons && npm run test:catalogue && node --test tests/auth-dependency.test.mjs && jest --ci --forceExit",
     "vercel-build": "node scripts/check-ui-icons.mjs && node --test site-quality/icons.test.mjs && prisma generate && next build",
     "db:analyze": "tsx scripts/analyze-db-size.ts",
     "db:cleanup": "tsx scripts/cleanup-db.ts",

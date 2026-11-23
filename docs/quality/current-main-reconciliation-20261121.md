@@ -1,7 +1,0 @@
-# Crystal Index current-main reconciliation, 21 November 2026
-
-This candidate starts at current origin/master c3a9ddc4. It ports the catalogue/filtering/accessibility and Lucide work plus compatible dependency fixes, without merging the old source branch's earlier API experiments or handler deletion. Current identification, image and authentication routes and the central store-link file remain byte-identical to that base. Existing app-icon artwork, support/contact links and corrected App Store destinations remain. The upstream support page's navigation instructions now use words rather than typed arrows.
-
-The complete source scan has zero blocking findings. Five catalogue model/response cases, four actual component DOM cases, eleven canonical icon cases, three dependency/auth-crypto/actual stylesheet cases and two current-base contracts pass. Component cases use mocked fetch and in-memory fixtures; no account, DB, AI identification, email or provider operation ran. Checks reused the previously installed compatible dependencies; the updated lockfile was resolved with scripts disabled. No full production build, clean install or new hosted journey is claimed.
-
-Known Next 13/framework and peer/dependency debt is still explicit in the historical dependency receipt; this source reconciliation is not production release certification. The old branch's full raw audit snapshot is historical, not a fresh result for the new base. No push, production merge or deployment occurred.
