@@ -40,6 +40,29 @@ const colourHex: Record<string, string> = {
   white: "#ffffff",
   clear: "#e0e0e0",
 };
+const chakraHex: Record<string, string> = {
+  root: "#c82020",
+  sacral: "#eb5e00",
+  "solar plexus": "#daa000",
+  heart: "#95c012",
+  throat: "#16c3c3",
+  "third eye": "#0066cc",
+  crown: "#9c4cc5",
+};
+const zodiacSymbol: Record<string, string> = {
+  aries: "\u2648",
+  taurus: "\u2649",
+  gemini: "\u264A",
+  cancer: "\u264B",
+  leo: "\u264C",
+  virgo: "\u264D",
+  libra: "\u264E",
+  scorpio: "\u264F",
+  sagittarius: "\u2650",
+  capricorn: "\u2651",
+  aquarius: "\u2652",
+  pisces: "\u2653",
+};
 const title = (value: string) =>
   value.replace(/\b\w/g, (letter) => letter.toUpperCase());
 export default function FilterableCrystalGallery({
@@ -52,7 +75,7 @@ export default function FilterableCrystalGallery({
   initialFilters?: CatalogueFilters;
 }) {
   const [filters, setFilters] = useState(initialFilters),
-    [expanded, setExpanded] = useState(false);
+    [expanded, setExpanded] = useState(true);
   const searchInput = useRef<HTMLInputElement>(null);
   function resetView() { update(emptyFilters()); searchInput.current?.focus() }
   function clearSearch() { update({ ...filters, search: "" }); searchInput.current?.focus() }
@@ -223,6 +246,18 @@ export default function FilterableCrystalGallery({
                     className={`filter-pill ${filters[group].includes(value) ? "filter-pill--active" : ""}`}
                     onClick={() => toggle(group, value)}
                   >
+                    {group === "chakras" && (
+                      <span
+                        className="directory-swatch"
+                        aria-hidden
+                        style={{ backgroundColor: chakraHex[value] }}
+                      />
+                    )}
+                    {group === "zodiac" && (
+                      <span className="filter-pill__symbol" aria-hidden>
+                        {`${zodiacSymbol[value]}\uFE0E`}
+                      </span>
+                    )}
                     {title(value)}
                   </button>
                 ))}

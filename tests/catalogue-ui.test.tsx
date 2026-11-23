@@ -32,7 +32,8 @@ test("real gallery exposes accessible filters, honest metadata results and resto
   try {
     assert.match(view.getByRole("status").textContent!, /2 of 2/);
     assert.equal(view.getAllByRole("link").length, 2);
-    fireEvent.click(view.getByRole("button", { name: "Show filters" }));
+    const facets = view.getByRole("button", { name: "Hide filters" });
+    assert.equal(facets.getAttribute("aria-expanded"), "true");
     const aries = view.getByRole("button", { name: "Aries", exact: true });
     fireEvent.click(aries);
     assert.equal(aries.getAttribute("aria-pressed"), "true");
