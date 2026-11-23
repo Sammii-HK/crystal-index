@@ -93,6 +93,8 @@ function allowed(
         .getAll(key)
         .flatMap((value) => value.split(","))
         .map(normal)
+        // "solar-plexus" (as the sitemap writes it) reads as "solar plexus".
+        .map((value) => (options.includes(value) ? value : value.replace(/-/g, " ")))
         .filter((value) => options.includes(value)),
     ),
   ];

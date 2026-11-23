@@ -4,7 +4,7 @@ import { slugify } from "./slugify";
 // import { getSuperUserId } from "./getSuperUserId";
 
 type CrystalWithRelations = Crystal & {
-  createdBy: User,
+  createdBy: Pick<User, "username" | "name"> | null,
   image: Image[],
   originLocation: { placeName: string } | null,
   mementoLocation: { placeName: string } | null,
@@ -13,6 +13,8 @@ type CrystalWithRelations = Crystal & {
 
 export const serializeCrystal = (crystal: CrystalWithRelations) => ({
   ...crystal,
+  // Only a display name leaves the server, never the account record.
+  createdBy: crystal.createdBy?.username ?? crystal.createdBy?.name ?? null,
   createdAt: crystal.createdAt.toISOString(),
   updatedAt: crystal.updatedAt.toISOString(),
   // Include both ID and blobUrl for image optimization
@@ -30,7 +32,7 @@ export const findAndSerializeCrystal = async (id: number): Promise<any> => {
     { 
       where: { id },
       include: {
-        createdBy: true,
+        createdBy: { select: { username: true, name: true } },
         image: { select: { id: true, blobUrl: true }}, // Include blobUrl for optimization
         crystalInfo: true,
         originLocation: { select: { placeName: true }},
@@ -49,7 +51,7 @@ export const findAndSerializeCrystalBySlug = async (slug: string): Promise<any> 
     {
       where: { slug },
       include: {
-        createdBy: true,
+        createdBy: { select: { username: true, name: true } },
         image: { select: { id: true, blobUrl: true } },
         crystalInfo: true,
         originLocation: { select: { placeName: true } },
@@ -69,7 +71,7 @@ export const findAndSerializeCrystalBySlug = async (slug: string): Promise<any> 
       crystal = await prisma().crystal.findUnique({
         where: { id: match.id },
         include: {
-          createdBy: true,
+          createdBy: { select: { username: true, name: true } },
           image: { select: { id: true, blobUrl: true } },
           crystalInfo: true,
           originLocation: { select: { placeName: true } },
@@ -96,7 +98,7 @@ export const findAndSerializeAllCrystals = async (): Promise<any> => {
   const crystalsResults = await prisma().crystal.findMany({
     where: { createdById: superUserId },
     include: { 
-        createdBy: true,
+        createdBy: { select: { username: true, name: true } },
         image: { select: { id: true, blobUrl: true }}, // Include blobUrl for optimization
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},

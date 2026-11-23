@@ -17,7 +17,7 @@ export default async function crystalHandler(
     { 
       where: { id: parseInt(id as string) },
       include: { 
-        createdBy: true, 
+        createdBy: { select: { username: true, name: true } }, 
         originLocation: true, 
         mementoLocation: true,
         image: { select: { id: true }},
@@ -25,5 +25,5 @@ export default async function crystalHandler(
     }
   )
   
-  if (result) res.status(200).json({ crystal: result })
+  if (result) res.status(200).json({ crystal: { ...result, createdBy: result.createdBy?.username ?? result.createdBy?.name ?? null } as any })
 }

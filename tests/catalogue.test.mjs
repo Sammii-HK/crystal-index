@@ -165,3 +165,8 @@ test("response validation distinguishes failure from empty data and strips unnee
   assert.equal("createdBy" in parsed.crystals[0], false);
   assert.equal("privateToken" in parsed.crystals[0], false);
 });
+
+test("hyphenated chakra names from the sitemap select the chakra", () => {
+  const value = parseCatalogueQuery(new URLSearchParams("chakra=solar-plexus,third-eye"));
+  assert.deepEqual(value.chakras, ["solar plexus", "third eye"]);
+});

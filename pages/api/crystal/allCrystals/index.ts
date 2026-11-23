@@ -23,7 +23,7 @@ export default async function crystalsHandler(
   const results = await prisma().crystal.findMany({
     where: { createdById: process.env.SUPER_USER_ID },
     include: { 
-        createdBy: true,
+        createdBy: { select: { username: true, name: true } },
         image: {select: {id: true, blobUrl: true}}, // Include blobUrl for optimization
         originLocation: {select: {placeName: true}},
         mementoLocation: {select: {placeName: true}},
